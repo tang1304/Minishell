@@ -6,14 +6,15 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:52:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/27 10:39:59 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 13:14:31 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
 // Gonna check the cmd line arguments typed in by the user
-void	error_quotes(char *line)
+// Needs to be improved in case 1 d_q between 2 s_q, the " must be considered as a word not as a d_quote
+int	error_quotes(char *line)
 {
 	int	i;
 	int	s_quote;
@@ -31,5 +32,6 @@ void	error_quotes(char *line)
 		i++;
 	}
 	if ((s_quote % 2 != 0) || (d_quote % 2 != 0))
-		exit(QUOTE_FAILURE);// a voir
+		return(QUOTE_FAILURE);// a voir
+	return (SUCCESS);
 }

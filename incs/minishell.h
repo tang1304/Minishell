@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/27 10:13:04 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 13:14:42 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ typedef struct s_data
 
 enum errors
 {
+	SUCCESS = 0,
 	QUOTE_FAILURE = 2,
 };
 
 void	prompt_loop();
-void	error_quotes(char *line);
+int		error_quotes(char *line);
 
 #endif
