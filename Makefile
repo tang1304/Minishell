@@ -30,6 +30,7 @@ D_LIBFT		=	libft/
 
 # FILES SO_LONG
 LST_SRCS	=	main.c \
+				data.c \
 				loop.c \
 				error_line.c
 
