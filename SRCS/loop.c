@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/29 12:05:50 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/03/29 13:26:49 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ void	prompt_loop(t_data *data)
 		prompt = ft_strjoin(data->prompt, data->prompt_pwd);
 		prompt = ft_strjoin(prompt, "$ ");
 		line = readline(prompt);
+		check_error(line);
+		//if (check_error(line) == SUCCESS)
+
 		// if (error_quotes(line) != 0)
 		// 	ft_putstr_fd("Error: Invalid syntax\n", 2);// Send the line into the lexer to check for errors and create the array of cmd/pipes/etc..
 		// ft_printf("%s\n", line);//juste a test line. Gotta be removed at the end
