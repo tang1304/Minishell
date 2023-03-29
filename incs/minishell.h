@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/29 13:07:05 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/03/29 16:27:04 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 typedef struct s_word
 {
+	char	*name;
 	char	**cmd;
 	int		fd_in;
 	int		ft_out;
@@ -58,7 +59,8 @@ enum errors
 {
 	SUCCESS = 0,
 	FAILURE = 1,
-	QUOTE_FAILURE = 2
+	QUOTE_FAILURE = 2,
+	PIPE_FAILURE = 3
 };
 
 void	data_initialize(t_data *data, char **envp);
@@ -66,5 +68,6 @@ void	update_pwd(t_data *data, char *s);
 void	prompt_loop(t_data *data);
 int		check_error(char *line);
 int		error_quotes(char *line);
+int		error_pipes(char *line);
 
 #endif

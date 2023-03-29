@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:53:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/29 14:39:18 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/03/29 16:39:27 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,63 @@ int	error_quotes(char *line)
 	return (SUCCESS);
 }
 
+int	error_pipes(char *line)
+{
+	int	word;
+	int	pipe;
+
+	while (*line)
+	{
+		word = 0;
+		pipe = 1;
+		if (ft_isprint(*line) == 1 && (*line != '|'))
+			word = 1;
+		while (ft_isprint(*line) == 1 && (*line != '|'))
+			line++;
+		if (*line == '|')
+			pipe = 0;
+		if ((*line == '|') && ((word == 0) || (pipe == 1)))
+			return (PIPE_FAILURE);
+		line++;
+	}
+	if (line[ft_strlen(line) - 1] == '|')
+		return (PIPE_FAILURE);
+	return (SUCCESS);
+}
+
+int	error_last_token(char *line)
+{
+	int	word;
+	int	pipe;
+	int	valid;
+
+	word = 0;
+	pipe = 0;
+	valid = 0;
+	while (*line)
+	{
+		if (ft_isprint(*line) == 1 && *line != '|' && *line != '<' && \
+		*line != '>')
+			word = 1;
+		while (ft_isprint(*line) == 1 && *line != '|' && *line != '<' && \
+		*line != '>')
+			line++;
+		if ()
+	}
+	return (0);
+}
+
 int	check_error(char *line)
 {
-	if (error_quotes(line) != SUCCESS)
+	if ((error_quotes(line) != SUCCESS) || (error_pipes(line) != SUCCESS))
 	{
 		ft_putstr_fd("Wrong input\n", 2);
 		return (FAILURE); // Not sure if we have to return 1 or another value like 3?
+	}
+	if (error_last_token(line) != SUCCESS)
+	{
+		ft_putstr_fd("Wrong input 2\n", 2);
+		return (FAILURE);
 	}
 	return (SUCCESS);
 }
