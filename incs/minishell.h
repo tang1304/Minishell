@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/30 14:57:42 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 16:46:46 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ typedef struct s_word
 {
 	char	*name;
 	char	**cmd;
-	int		fd_in;
-	int		ft_out;
+	char	*infile
+	char	*outfile;
 }				t_word;
 
 typedef struct s_token
@@ -84,5 +84,6 @@ int		count_quote(char *s, size_t *i, char c);
 
 /* parser.c */
 void	implement_redirections_cmds(t_data *data);
+void	add_infile(t_data *data);
 
 #endif
