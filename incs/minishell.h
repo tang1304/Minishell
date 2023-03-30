@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/29 11:56:53 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/03/29 16:46:15 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 typedef struct s_word
 {
+	char	*name;
 	char	**cmd;
 	int		fd_in;
 	int		ft_out;
@@ -37,7 +38,7 @@ typedef struct s_lexer
 	struct s_token	token;
 	int				index;
 	struct s_lexer	*next;
-	struct s_lexer	*prev;
+	struct s_lexer	*prev;// a voir
 }				t_lexer;
 
 typedef struct s_data
@@ -46,6 +47,7 @@ typedef struct s_data
 	char	*prompt; // has to be free at the end
 	char	*prompt_pwd;
 	char	**envp;
+	char	**tokens_tab;
 	int		tokens; // number of tokens inside line
 	int		cmds; // number of cmds
 	int		here_doc; // if here_doc or not
