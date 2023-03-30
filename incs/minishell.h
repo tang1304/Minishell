@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/30 11:05:25 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 16:21:03 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ int		lexer_init(t_data *data);
 
 /*	lexer_utils.c	*/
 int		ft_isspace(char c);
-void	*add_node(t_lexer *lexer, char *str, int token);
+int		add_node(t_lexer **lexer, char *str, int token);
 
 #endif
