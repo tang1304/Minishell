@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/29 16:27:04 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 09:09:30 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ enum errors
 	SUCCESS = 0,
 	FAILURE = 1,
 	QUOTE_FAILURE = 2,
-	PIPE_FAILURE = 3
+	PIPE_FAILURE = 3,
+	TOKEN_FAILURE = 4
 };
 
 void	data_initialize(t_data *data, char **envp);

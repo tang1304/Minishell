@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:53:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/29 16:39:27 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 09:23:31 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	error_pipes(char *line)
 	{
 		word = 0;
 		pipe = 1;
-		if (ft_isprint(*line) == 1 && (*line != '|'))
+		if (ft_isprint(*line) == 1 && (*line != '|') && (*line != ' '))
 			word = 1;
 		while (ft_isprint(*line) == 1 && (*line != '|'))
 			line++;
@@ -88,24 +88,18 @@ int	error_pipes(char *line)
 
 int	error_last_token(char *line)
 {
-	int	word;
-	int	pipe;
-	int	valid;
+	size_t	len;
 
-	word = 0;
-	pipe = 0;
-	valid = 0;
-	while (*line)
+	len = ft_strlen(line) - 1;
+	while ((int)len > -1)
 	{
-		if (ft_isprint(*line) == 1 && *line != '|' && *line != '<' && \
-		*line != '>')
-			word = 1;
-		while (ft_isprint(*line) == 1 && *line != '|' && *line != '<' && \
-		*line != '>')
-			line++;
-		if ()
+		while ((line[len] == ' ' || line[len] == '\t') && len > 0)
+			len--;
+		if (line[len] == '|' || line[len] == '>' || line[len] == '<')
+			return (TOKEN_FAILURE);
+		return (SUCCESS);
 	}
-	return (0);
+	return (SUCCESS);
 }
 
 int	check_error(char *line)
