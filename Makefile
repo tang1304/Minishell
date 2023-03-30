@@ -32,7 +32,9 @@ D_LIBFT		=	libft/
 LST_SRCS	=	main.c \
 				data.c \
 				loop.c \
-				error_line.c
+				error_line.c \
+				lexer.c \
+				lexer_utils.c
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/03/30 11:05:10 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 16:52:18 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,48 +19,50 @@ int	ft_isspace(char c)
 	return (0);
 }
 
-static t_lexer	*new_lexer_node(t_lexer *lexer, char *str, int token)
+static t_lexer	*new_lexer_node(char *str, int token)
 {
-	t_lexer	*node;
+	t_lexer		*node;
+	static int	i;
 
 	node = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!node)
 		return (NULL);
-	if (!node->prev)
-		node->index = 0;
-	else
-		node->index = node->prev->index + 1;
+	node->index = i;
+	i++;
 	if (token == 0)
 	{
 		node->word.name = str;
 		node->token.name = NULL;
+		printf("%s\n", node->word.name);
 	}
 	else
 	{
 		node->word.name = NULL;
 		node->token.name = str;
+		printf("%s\n", node->token.name);
 	}
 	node->next = NULL;
 	node->prev = NULL;
 	return (node);
 }
 
-void	*add_node(t_lexer *lexer, char *str, int token)
+int	add_node(t_lexer **lexer, char *str, int token)
 {
 	t_lexer	*new;
 	t_lexer	*tmp;
 
-	new = new_lexer_node(lexer, str, token);
+	new = new_lexer_node(str, token);
 	if (!new)
-		return (NULL);
-	if (!lexer)
+		return (0);
+	if (!*lexer)
 	{
-		lexer = new;
-		return ;
+		*lexer = new;
+		return (1);
 	}
-	tmp = lexer;
+	tmp = *lexer;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
 	new->prev = tmp;
+	return (1);
 }
