@@ -6,61 +6,11 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:53:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/30 09:23:31 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 11:00:40 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-
-// Gonna check the cmd line arguments typed in by the user
-// Needs to be improved in case 1 d_q between 2 s_q, the " must be considered as a word not as a d_quote
-
-static int	count_quote(char *s, size_t *i, char c)
-{
-	int		count;
-	size_t	len;
-
-	count = 0;
-	len = ft_strlen(s);
-	while (s[*i] != '\0')
-	{
-		if (s[*i] == c && *i < len)
-		{
-			count++;
-			*i = *i + 1;
-		}
-		while (s[*i] != c && *i < len)
-			*i = *i + 1;
-		if (s[*i] == c && *i < len)
-		{
-			count++;
-			return (count);
-		}
-	}
-	return (count);
-}
-
-int	error_quotes(char *line)
-{
-	size_t	i;
-	int		s_quote;
-	int		d_quote;
-
-	i = 0;
-	s_quote = 0;
-	d_quote = 0;
-	while (line[i] != '\0')
-	{
-		if (line[i] == '\'' && i < ft_strlen(line))
-			s_quote += count_quote(line, &i, '\'');
-		if (line[i] == '"' && i < ft_strlen(line))
-			d_quote += count_quote(line, &i, '"');
-		i++;
-	}
-	if ((s_quote % 2 != 0) || (d_quote % 2 != 0))
-		return(QUOTE_FAILURE);
-	return (SUCCESS);
-}
 
 int	error_pipes(char *line)
 {
@@ -93,26 +43,79 @@ int	error_last_token(char *line)
 	len = ft_strlen(line) - 1;
 	while ((int)len > -1)
 	{
-		while ((line[len] == ' ' || line[len] == '\t') && len > 0)
+		while ((line[len] == ' ' || line[len] == '\t') && (int)len > -1)
 			len--;
 		if (line[len] == '|' || line[len] == '>' || line[len] == '<')
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token", 2);
+			ft_printf(" `%c'\n", line[len]);
 			return (TOKEN_FAILURE);
+		}
 		return (SUCCESS);
 	}
 	return (SUCCESS);
 }
 
-int	check_error(char *line)
+int	error_great(char *line)
 {
-	if ((error_quotes(line) != SUCCESS) || (error_pipes(line) != SUCCESS))
+	size_t	i;
+	int		great;
+
+	i = 0;
+	while (line[i] != '\0')
 	{
-		ft_putstr_fd("Wrong input\n", 2);
-		return (FAILURE); // Not sure if we have to return 1 or another value like 3?
+		great = 0;
+		while (line[i] == '>' && i < ft_strlen(line))
+		{
+			great++;
+			i++;
+		}
+		if ((great > 2) || (line[i] == '<' && great > 0))
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token `>'\n", 2);
+			return (FAILURE);
+		}
+		i++;
 	}
-	if (error_last_token(line) != SUCCESS)
+	return (SUCCESS);
+}
+
+int	error_less(char *line)
+{
+	size_t	i;
+	int		less;
+
+	i = 0;
+	while (line[i] != '\0')
 	{
-		ft_putstr_fd("Wrong input 2\n", 2);
+		less = 0;
+		while (line[i] == '<' && i < ft_strlen(line))
+		{
+			less++;
+			i++;
+		}
+		if ((less > 2) || (line[i] == '>' && less > 0))
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token `<'\n", 2);
+			return (FAILURE);
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
+
+int	error_check(char *line)
+{
+	if (error_quotes(line) != SUCCESS)
+		return (FAILURE); // Not sure if we have to return 1 or another value like 3?
+	if (error_pipes(line) != SUCCESS)
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token `|''\n", 2);
 		return (FAILURE);
 	}
+	if (error_great(line) != SUCCESS || error_less(line) != SUCCESS)
+		return (FAILURE);
+	if (error_last_token(line) != SUCCESS)
+		return (FAILURE);
 	return (SUCCESS);
 }

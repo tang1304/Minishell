@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/29 13:26:49 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 10:26:31 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	prompt_loop(t_data *data)
 		prompt = ft_strjoin(data->prompt, data->prompt_pwd);
 		prompt = ft_strjoin(prompt, "$ ");
 		line = readline(prompt);
-		check_error(line);
+		error_check(line);
 		//if (check_error(line) == SUCCESS)
 
 		// if (error_quotes(line) != 0)
