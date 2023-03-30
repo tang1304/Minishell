@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/30 11:01:03 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 14:57:42 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ typedef struct s_data
 enum errors
 {
 	SUCCESS = 0,
-	FAILURE = 1,
-	QUOTE_FAILURE = 2,
-	PIPE_FAILURE = 3,
-	TOKEN_FAILURE = 4
+	FAILURE = 2,
+	QUOTE_FAILURE = 3,
+	PIPE_FAILURE = 5,
+	TOKEN_FAILURE = 5
 };
 
 /* data.c */
@@ -81,5 +81,8 @@ int		error_less(char *line);
 /* utils.c */
 int		error_quotes(char *line);
 int		count_quote(char *s, size_t *i, char c);
+
+/* parser.c */
+void	implement_redirections_cmds(t_data *data);
 
 #endif

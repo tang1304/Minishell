@@ -34,7 +34,8 @@ LST_SRCS	=	main.c \
 				builting.c \
 				loop.c \
 				utils.c \
-				check_error_input.c
+				check_error_input.c \
+				parser.c
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)
 
