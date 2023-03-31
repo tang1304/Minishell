@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/31 09:02:41 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 11:01:03 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,28 @@ enum errors
 {
 	SUCCESS = 0,
 	FAILURE = 1,
-	QUOTE_FAILURE = 2
+	QUOTE_FAILURE = 2,
+	PIPE_FAILURE = 3,
+	TOKEN_FAILURE = 4
 };
 
+/* data.c */
 void	data_initialize(t_data *data, char **envp);
 void	update_pwd(t_data *data, char *s);
+
+/* loop.c */
 void	prompt_loop(t_data *data);
-int		check_error(char *line);
+
+/* check_error_input.c */
+int		error_check(char *line);
+int		error_pipes(char *line);
+int		error_last_token(char *line);
+int		error_great(char *line);
+int		error_less(char *line);
+
+/* utils.c */
 int		error_quotes(char *line);
+int		count_quote(char *s, size_t *i, char c);
 
 /*	lexer.c	*/
 int		lexer_init(t_data *data);
