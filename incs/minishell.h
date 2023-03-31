@@ -59,12 +59,14 @@ typedef struct s_data
 enum errors
 {
 	SUCCESS = 0,
+	FAILURE = 1,
 	QUOTE_FAILURE = 2
 };
 
 void	data_initialize(t_data *data, char **envp);
 void	update_pwd(t_data *data, char *s);
 void	prompt_loop(t_data *data);
+int		check_error(char *line);
 int		error_quotes(char *line);
 
 /*	lexer.c	*/
