@@ -28,7 +28,7 @@ D_OBJS		=	objs/
 D_LIBFT		=	libft/
 
 
-# FILES SO_LONG
+# FILES MINISHELL
 LST_SRCS	=	main.c \
 				data.c \
 				builting.c \
@@ -49,6 +49,12 @@ OBJS		=	$(addprefix $(D_OBJS), $(LST_OBJS))
 
 LIBFTLIB	=	$(addprefix $(D_LIBFT), $(LIBFT))
 
+# COLORS
+_NOC	:=	\033[0m
+
+_RED	:=	\033[1;31m
+
+_GREEN	:=	\033[1;32m
 
 # RULES
 all		:	lib $(NAME)
@@ -58,6 +64,7 @@ lib :
 
 $(NAME)	:	$(OBJS)
 			$(CC) $(OBJS) -lreadline $(LIBFTLIB) -o $(NAME)
+			@echo "${_GREEN}### ${NAME} created ###${_NOC}\n"
 
 $(D_OBJS)%.o	:	$(D_SRCS)%.c $(INCS) Makefile $(LIBFTLIB)
 					mkdir -p $(D_OBJS)
@@ -67,11 +74,14 @@ clean	:
 			$(RM) $(OBJS)
 			$(RM) $(D_OBJS)
 			$(MAKE) clean -C $(D_LIBFT)
+			@echo "${_RED}### Removed ${NAME} object files ###${_NOC}"
 
 fclean	:
 			$(MAKE) clean
 			$(RM) $(NAME)
 			$(MAKE) fclean -C $(D_LIBFT)
+			@echo "${_RED}### Removed ${NAME} ###${_NOC}"
+
 
 re		:	fclean all
 

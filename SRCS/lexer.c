@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 13:45:15 by tgellon           #+#    #+#             */
-/*   Updated: 2023/03/30 16:56:06 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/03/31 08:51:18 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,12 @@ static int	worder(t_data *data, char *str, int i)
 	int		j;
 
 	j = 0;
-	while (str[i + j] != '\0' && !ft_isspace(str[i + j]) && !is_token(str, i + j))
+	while (str[i + j] && !ft_isspace(str[i + j]) && !is_token(str, i + j))
 	{
-		// if 
+		if (str[i + j] == '\'')
+			j = j + quote_handling(str, i + j, '\'');
+		if (str[i + j] == '"')
+			j = j + quote_handling(str, i + j, '"');
 		j++;
 	}
 	new = ft_substr(str, i, j);
