@@ -1,0 +1,84 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   add_infile_outfile.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
+/*   Updated: 2023/04/03 17:09:11 by rrebois          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../incs/minishell.h"
+
+void	add_infile(t_data *data, char *file)
+{
+	t_lexer	*tmp;
+
+	tmp = data->lexer;
+	while (tmp != NULL)
+	{
+		if (tmp->word.name == NULL && ft_strncmp(tmp->token.name, "|", 1) \
+		!= 0 && ft_strlen(tmp->token.name) <= 2)//len 1 ou 2 pour >> et <<
+		{
+			tmp = tmp->next;
+			tmp = tmp->next;
+		}
+		else if (tmp->word.name == NULL && \
+		ft_strncmp(tmp->token.name, "|", 1) == 0 && \
+		ft_strlen(tmp->token.name) == 1)
+			tmp = tmp->next;
+		if (tmp->word.name != NULL)
+		{
+			tmp->word.infile = file;
+			return ;
+		}
+	}
+}
+
+void	add_outfile(t_data *data, char *file) //ls |grep i>o<i ok
+{// ls | wc >o marche
+	t_lexer	*tkn;
+	t_lexer	*tmp;
+
+	tmp = data->lexer;
+	tkn = data->lexer;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	while (1)
+	{
+		while (tkn->next != tmp)
+			tkn = tkn->next;
+		if (tmp->word.name != NULL && tkn->word.name != NULL)
+		{
+			tkn->word.outfile = file;
+			return ;
+		}
+		else if ((tmp->word.name != NULL && \
+		ft_strncmp(tkn->token.name, "|", 1) == 0) || (tkn == tmp))
+		{
+			tmp->word.outfile = file;
+			return ;
+		}
+		tmp = tkn;
+		tkn = data->lexer;
+	}
+}
+
+void	files_redirection(t_data *data)//add si infile and outfile rights
+{
+	t_lexer	*tmp;
+
+	tmp = data->lexer;
+	while (tmp != NULL)
+	{
+		if (tmp->token.name != NULL && ft_strncmp(tmp->token.name, "<", 1) == \
+		0 && ft_strlen(tmp->token.name) == 1)
+			add_infile(data, tmp->next->word.name);
+		if (tmp->token.name != NULL && ft_strncmp(tmp->token.name, ">", 1) == \
+		0 && ft_strlen(tmp->token.name) == 1)
+			add_outfile(data, tmp->next->word.name);
+		tmp = tmp->next;
+	}
+}
