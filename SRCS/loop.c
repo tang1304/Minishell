@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/30 16:01:37 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 13:08:19 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,21 @@ void	prompt_loop(t_data *data)
 	while (1)
 	{
 		prompt = ft_strjoin(data->prompt, data->prompt_pwd);
-		prompt = ft_strjoin(prompt, "$ ")
-		data->str = readline(prompt);
-    check_error(dara->str);
-    if (ft_strlen(data->str) > 0)
+		prompt = ft_strjoin(prompt, "$ ");
+		data->str = ft_strdup(readline(prompt));
+		if (ft_strlen(data->str) > 0)
 			add_history(data->str);
-    //if (check_error(line) == SUCCESS)
+		if (error_check(data->str) == SUCCESS)
+		{
+			lexer_init(data);
+			implement_redirections_cmds(data);
+			//penser a free(data)
+		}
+	//if (check_error(line) == SUCCESS)
 		// if (error_quotes(line) != 0)
 		// 	ft_putstr_fd("Error: Invalid syntax\n", 2);// Send the line into the lexer to check for errors and create the array of cmd/pipes/etc..
 		// ft_printf("%s\n", line);//juste a test line. Gotta be removed at the end
-		lexer_init(data);
+
 		free(data->str);
 	}
 }

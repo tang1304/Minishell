@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/31 09:02:41 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 14:16:24 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@
 typedef struct s_word
 {
 	char	*name;
-	char	**cmd;
-	char	*infile
+	int		cmd;//si cmd => 0 else 1
+	// char	**cmd;//use??
+	char	*infile;
 	char	*outfile;
 }				t_word;
 
@@ -62,7 +63,7 @@ enum errors
 	FAILURE = 2,
 	QUOTE_FAILURE = 3,
 	PIPE_FAILURE = 5,
-	TOKEN_FAILURE = 5
+	TOKEN_FAILURE = 6
 };
 
 /* data.c */
@@ -85,7 +86,9 @@ int		count_quote(char *s, size_t *i, char c);
 
 /* parser.c */
 void	implement_redirections_cmds(t_data *data);
-void	add_infile(t_data *data);
+void	files_redirection(t_data *data);
+void	add_infile(t_data *data, char *file);
+void	add_outfile(t_data *data, char *file);
 
 /*	lexer.c	*/
 int		lexer_init(t_data *data);
