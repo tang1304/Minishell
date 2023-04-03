@@ -37,7 +37,8 @@ LST_SRCS	=	main.c \
 				parser.c \
 				lexer.c \
 				lexer_utils.c \
-				check_error_input.c
+				check_error_input.c \
+				add_infile_outfile.c
 
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)

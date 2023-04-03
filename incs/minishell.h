@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/03 14:16:24 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 17:08:52 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int		count_quote(char *s, size_t *i, char c);
 
 /* parser.c */
 void	implement_redirections_cmds(t_data *data);
+
+/* add_infile_outfile.c */
 void	files_redirection(t_data *data);
 void	add_infile(t_data *data, char *file);
 void	add_outfile(t_data *data, char *file);
