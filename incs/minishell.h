@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/03 17:08:52 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 17:33:21 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 typedef struct s_word
 {
@@ -54,6 +56,8 @@ typedef struct s_data
 	int		here_doc; // if here_doc or not
 	char	*pwd;
 	char	*oldpwd;
+	int		fdin;//infile
+	int		fdout;//outfile
 	struct s_lexer	*lexer;
 }				t_data;
 
@@ -91,6 +95,7 @@ void	implement_redirections_cmds(t_data *data);
 void	files_redirection(t_data *data);
 void	add_infile(t_data *data, char *file);
 void	add_outfile(t_data *data, char *file);
+void	file_check_access(t_data *data, char *file, int i);
 
 /*	lexer.c	*/
 int		lexer_init(t_data *data);

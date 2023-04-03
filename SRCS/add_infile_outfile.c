@@ -6,11 +6,31 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/03 17:09:11 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 17:39:24 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+void	file_check_access(t_data *data, char *file, int i)
+{
+	if (i == 0) // infile
+	{
+		data->fdin = open(file, O_RDONLY);
+		if (access(file, F_OK) != 0)
+			printf("%s: No such file or directory\n", file);
+		else if (access(file, R_OK) != 0)
+			ft_printf("%s: Permission denied\n", file);
+	}
+	else if (i == 1)
+	{
+		data->fdout = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		if (access(file, F_OK) != 0)
+			printf("%s: No such file or directory\n", file);
+		else if (access(file, W_OK) != 0)
+			ft_printf("%s: Permission denied\n", file);
+	}
+}
 
 void	add_infile(t_data *data, char *file)
 {
@@ -66,7 +86,7 @@ void	add_outfile(t_data *data, char *file) //ls |grep i>o<i ok
 	}
 }
 
-void	files_redirection(t_data *data)//add si infile and outfile rights
+void	files_redirection(t_data *data)//add si infile and outfile rights/ seg fault
 {
 	t_lexer	*tmp;
 
@@ -75,10 +95,16 @@ void	files_redirection(t_data *data)//add si infile and outfile rights
 	{
 		if (tmp->token.name != NULL && ft_strncmp(tmp->token.name, "<", 1) == \
 		0 && ft_strlen(tmp->token.name) == 1)
+		{
+			file_check_access(data, tmp->next->word.name, 0);
 			add_infile(data, tmp->next->word.name);
+		}
 		if (tmp->token.name != NULL && ft_strncmp(tmp->token.name, ">", 1) == \
 		0 && ft_strlen(tmp->token.name) == 1)
+		{
+			file_check_access(data, tmp->next->word.name, 1);
 			add_outfile(data, tmp->next->word.name);
+		}
 		tmp = tmp->next;
 	}
 }
