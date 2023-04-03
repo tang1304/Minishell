@@ -31,12 +31,11 @@ D_LIBFT		=	libft/
 # FILES MINISHELL
 LST_SRCS	=	main.c \
 				data.c \
-				builting.c \
 				loop.c \
 				utils.c \
-				error_line.c \
 				lexer.c \
-				lexer_utils.c
+				lexer_utils.c \
+				check_error_input.c
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)
 
