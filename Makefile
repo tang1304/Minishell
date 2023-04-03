@@ -34,10 +34,9 @@ LST_SRCS	=	main.c \
 				builting.c \
 				loop.c \
 				utils.c \
-				parser.c
-				error_line.c \
+				parser.c \
 				lexer.c \
-				lexer_utils.c
+				lexer_utils.c \
 				check_error_input.c
 
 

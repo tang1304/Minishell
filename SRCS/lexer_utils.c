@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/03/31 09:20:50 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 11:48:21 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,17 @@ static t_lexer	*new_lexer_node(char *str, int token)
 	i++;
 	if (token == 0)
 	{
-		node->word.name = str;
+		node->word.name = ft_strdup(str);
+		node->word.infile = NULL;
+		node->word.outfile = NULL;
 		node->token.name = NULL;
-		printf("%s\n", node->word.name);
+		//printf("%s\n", node->word.name);
 	}
 	else
 	{
 		node->word.name = NULL;
-		node->token.name = str;
-		printf("%s\n", node->token.name);
+		node->token.name = ft_strdup(str);
+		//printf("%s\n", node->token.name);
 	}
 	node->next = NULL;
 	node->prev = NULL;
