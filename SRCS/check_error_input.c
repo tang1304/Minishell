@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:53:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/03 15:23:04 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/04 09:33:20 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	error_pipes(char *line)
 	while (*line)
 	{
 		word = 0;
-		pipe = 1;
+		pipe = 0;
 		while (*line == ' ' || *line == '\t')
 			line++;
 		if (ft_isprint(*line) == 1 && (*line != '|') && (*line != ' '))
@@ -28,8 +28,8 @@ int	error_pipes(char *line)
 		while (ft_isprint(*line) == 1 && (*line != '|'))
 			line++;
 		if (*line == '|' || !*line)
-			pipe = 0;
-		if ((*line == '|') && ((word == 0) || (pipe == 1)))
+			pipe = 1;
+		if ((*line == '|') && ((word == 0) || (pipe == 0)))
 			return (PIPE_FAILURE);
 		line++;
 	}
@@ -112,7 +112,7 @@ int	error_check(char *line)
 		return (FAILURE); // Not sure if we have to return 1 or another value like 3?
 	if (error_pipes(line) != SUCCESS)
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `|''\n", 2);
+		printf("minishell: syntax error near unexpected token `|''\n");
 		return (FAILURE);
 	}
 	if (error_great(line) != SUCCESS || error_less(line) != SUCCESS)
