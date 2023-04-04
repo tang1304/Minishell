@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/29 15:45:31 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 13:31:31 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	data_initialize(t_data *data, char **envp)
 {
 	char	*user;
 
-	data->envp = envp;
+	data->envp = get_envp(envp);
 	data->lexer = NULL;
 	data->str = NULL;
 	data->prompt = NULL;
@@ -35,4 +35,24 @@ void	update_pwd(t_data *data, char *s)
 	data->pwd = s;
 	data->prompt_pwd = data->pwd;
 	prompt_loop(data);
+}
+
+char	**get_envp(char **envp)
+{
+	char	**new_envp;
+	int		i;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	new_envp = (char **)malloc(sizeof(char *) * (i + 1));
+	i = -1;
+	while (envp[++i])
+	{
+		new_envp[i] = ft_strdup(envp[i]);
+		if (!new_envp)
+			return (NULL);
+	}
+	new_envp[i] = NULL;
+	return (new_envp);
 }
