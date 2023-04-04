@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/30 11:01:03 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 17:33:21 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,16 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 typedef struct s_word
 {
 	char	*name;
-	char	**cmd;
-	int		fd_in;
-	int		ft_out;
+	int		cmd;//si cmd => 0 else 1
+	// char	**cmd;//use??
+	char	*infile;
+	char	*outfile;
 }				t_word;
 
 typedef struct s_token
@@ -53,16 +56,18 @@ typedef struct s_data
 	int		here_doc; // if here_doc or not
 	char	*pwd;
 	char	*oldpwd;
+	int		fdin;//infile
+	int		fdout;//outfile
 	struct s_lexer	*lexer;
 }				t_data;
 
 enum errors
 {
 	SUCCESS = 0,
-	FAILURE = 1,
-	QUOTE_FAILURE = 2,
-	PIPE_FAILURE = 3,
-	TOKEN_FAILURE = 4
+	FAILURE = 2,
+	QUOTE_FAILURE = 3,
+	PIPE_FAILURE = 5,
+	TOKEN_FAILURE = 6
 };
 
 /* data.c */
@@ -82,6 +87,15 @@ int		error_less(char *line);
 /* utils.c */
 int		error_quotes(char *line);
 int		count_quote(char *s, size_t *i, char c);
+
+/* parser.c */
+void	implement_redirections_cmds(t_data *data);
+
+/* add_infile_outfile.c */
+void	files_redirection(t_data *data);
+void	add_infile(t_data *data, char *file);
+void	add_outfile(t_data *data, char *file);
+void	file_check_access(t_data *data, char *file, int i);
 
 /*	lexer.c	*/
 int		lexer_init(t_data *data);

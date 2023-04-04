@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:53:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/30 11:00:40 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 15:23:04 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ int	error_pipes(char *line)
 	{
 		word = 0;
 		pipe = 1;
+		while (*line == ' ' || *line == '\t')
+			line++;
 		if (ft_isprint(*line) == 1 && (*line != '|') && (*line != ' '))
 			word = 1;
 		while (ft_isprint(*line) == 1 && (*line != '|'))
 			line++;
-		if (*line == '|')
+		if (*line == '|' || !*line)
 			pipe = 0;
 		if ((*line == '|') && ((word == 0) || (pipe == 1)))
 			return (PIPE_FAILURE);

@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/27 07:28:41 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/03 09:57:23 by rrebois          ###   ########lyon.fr   */
+/*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
+/*   Updated: 2023/04/03 17:08:04 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-//https://github.com/maiadegraaf/minishell
-int	main(int ac, char **av, char **envp)
-{
-	(void)av;
-	t_data	data;
 
-	if (ac != 1)
-	{
-		ft_putstr_fd("Error: Bad arguments\nRun ./minishell\n", 2);
-		exit(0);
-	}
-	// Create a loop to have the display prompt until exit
-	data_initialize(&data, envp);
-	return (0);
+void	implement_redirections_cmds(t_data *data)
+{
+	files_redirection(data);
 }
