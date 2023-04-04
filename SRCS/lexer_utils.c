@@ -45,13 +45,13 @@ static t_lexer	*new_lexer_node(char *str, int token)
 		node->word.infile = NULL;
 		node->word.outfile = NULL;
 		node->token.name = NULL;
-		//printf("%s\n", node->word.name);
+		printf("word: %s\n", node->word.name);
 	}
 	else
 	{
 		node->word.name = NULL;
 		node->token.name = ft_strdup(str);
-		//printf("%s\n", node->token.name);
+		printf("token: %s\n", node->token.name);
 	}
 	node->next = NULL;
 	node->prev = NULL;
