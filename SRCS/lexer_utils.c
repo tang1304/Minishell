@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/05 10:12:27 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 14:14:17 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ static t_lexer	*new_lexer_node(char *str, int token)
 	{
 		node->word = ft_strdup(str);
 		node->token = NULL;
+		printf("word: %s\n", node->word);
 	}
 	else
 	{
 		node->word = NULL;
 		node->token = ft_strdup(str);
+		printf("token: %s\n", node->token);
 	}
 	node->next = NULL;
 	node->prev = NULL;

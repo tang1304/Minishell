@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/05 09:35:58 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 11:01:58 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-typedef struct s_lexer//virer s_token & s_word et changer par char *word et char *token
+typedef struct s_lexer
 {
 	char			*word;
 	char			*token;

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/05 10:17:25 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 11:19:29 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	file_check_access(t_data *data, char *file, int i)
 void	add_infile(t_data *data, char *file)
 {
 	t_lexer	*tmp;
+	(void)file;
 
 	tmp = data->lexer;
 	while (tmp != NULL)
@@ -49,11 +50,11 @@ void	add_infile(t_data *data, char *file)
 		ft_strncmp(tmp->token, "|", 1) == 0 && \
 		ft_strlen(tmp->token) == 1)
 			tmp = tmp->next;
-		if (tmp->word != NULL)
-		{
-			tmp->infile = file;
-			return ;
-		}
+		// if (tmp->word != NULL)
+		// {
+		// 	tmp->infile = file; a revoir car infile dans data->cmd
+		// 	return ;
+		// }
 	}
 }
 
@@ -61,6 +62,7 @@ void	add_outfile(t_data *data, char *file) //ls |grep i>o<i ok
 {// ls | wc >o marche
 	t_lexer	*tkn;
 	t_lexer	*tmp;
+	(void)file;
 
 	tmp = data->lexer;
 	tkn = data->lexer;
@@ -70,9 +72,9 @@ void	add_outfile(t_data *data, char *file) //ls |grep i>o<i ok
 	{
 		while (tkn->next != tmp)
 			tkn = tkn->next;
-		if (tmp->word != NULL && tkn->word != NULL)
+/*		if (tmp->word != NULL && tkn->word != NULL)
 		{
-			tkn->word.outfile = file;
+			tkn->word.outfile = file; a revoir car outfile dans data->cmd
 			return ;
 		}
 		else if ((tmp->word != NULL && \
@@ -81,7 +83,7 @@ void	add_outfile(t_data *data, char *file) //ls |grep i>o<i ok
 			tmp->word = file;
 			return ;
 		}
-		tmp = tkn;
+*/		tmp = tkn;
 		tkn = data->lexer;
 	}
 }
