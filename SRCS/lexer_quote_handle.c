@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:13:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/04 16:25:47 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 10:05:30 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	quote_worder(t_data *data, char *str, int i)
 	int		j;
 
 	j = 0;
-	while (str[i + j] && !ft_isspace(str[i + j]) && !is_pipe(str, i + j))
+	while (str[i + j] && !is_pipe(str, i + j))
 	{
 		if (str[i + j] == '\'')
 			j = j + quote_handling(str, i + j, '\'');
