@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/05 08:37:31 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 09:35:58 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,17 @@ void	file_check_access(t_data *data, char *file, int i);
 
 /*	lexer.c	*/
 int		lexer_init(t_data *data);
+int		is_pipe(char *str, int i);
 
 /*	lexer_utils.c	*/
 int		ft_isspace(char c);
 int		quote_handling(char *str, int i, char quote);
 int		add_node(t_lexer **lexer, char *str, int token);
+
+/*	lexer_auote_handle	*/
+int		quote_handling(char *str, int i, char quote);
+int		is_quote(char c);
+int		quote_worder(t_data *data, char *str, int i);
 
 /*	builtins.c	*/
 

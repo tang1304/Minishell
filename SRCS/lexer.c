@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 13:45:15 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/05 08:35:39 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 10:12:16 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	spaces_skip(char *str, int i)
 	return (j);
 }
 
-static int	is_pipe(char *str, int i)
+int	is_pipe(char *str, int i)
 {
 	if (str[i] == '|')
 		return ((int)str[i]);
@@ -58,7 +58,7 @@ static int	worder(t_data *data, char *str, int i)
 	int		j;
 
 	j = 0;
-	while (str[i + j] && !ft_isspace(str[i + j]) && !is_pipe(str, i + j))
+	while (str[i + j] && !is_pipe(str, i + j))
 	{
 		if (str[i + j] == '\'')
 			j = j + quote_handling(str, i + j, '\'');
@@ -83,7 +83,7 @@ int	lexer_init(t_data *data)
 	{
 		j = 0;
 		i = i + spaces_skip(data->str, i);
-		if (is_quote(data->str, i))
+		if (is_quote(data->str[i]))
 			j = quote_worder(data, data->str, i);
 		else if (is_pipe(data->str, i))
 			j = tokenizer(data, data->str, i);
