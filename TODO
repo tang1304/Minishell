@@ -1,0 +1,1 @@
+Changer dans echeck_error_input les ft_putstr_fd /write &ft_printf par printf
