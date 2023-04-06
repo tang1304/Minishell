@@ -6,35 +6,39 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:53:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/04 09:11:39 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/06 09:59:25 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	error_pipes(char *line)
+int	error_pipes(char *line, int i)
 {
-	int	word;
-	int	pipe;
+	int	j;
 
-	while (*line)
+	if ((size_t)i == ft_strlen(line) || i == 0)
+		return (FAILURE);
+	j = i + 1;
+
+	while (line[j] != '\0')
 	{
-		word = 0;
-		pipe = 0;
-		while (*line == ' ' || *line == '\t')
-			line++;
-		if (ft_isprint(*line) == 1 && (*line != '|') && (*line != ' '))
-			word = 1;
-		while (ft_isprint(*line) == 1 && (*line != '|'))
-			line++;
-		if (*line == '|' || !*line)
-			pipe = 1;
-		if ((*line == '|') && ((word == 0) || (pipe == 0)))
-			return (PIPE_FAILURE);
-		line++;
+		while ((line[j] == ' ' || line[j] == '\t') && line[j] != '\0')
+			j++;
+		if (line[j] == '|' || (size_t)j == ft_strlen(line))
+			return (FAILURE);
+		else
+			break ;
 	}
-	if (line[ft_strlen(line) - 1] == '|')
-		return (PIPE_FAILURE);
+	j = i - 1;
+	while (j >= 0)
+	{
+		while ((line[j] == ' ' || line[j] == '\t') && j >= 0)
+			j--;
+		if (line[j] == '|' || j <= 0)
+			return (FAILURE);
+		else
+			break ;
+	}
 	return (SUCCESS);
 }
 
@@ -108,11 +112,14 @@ int	error_less(char *line)
 
 int	error_check(char *line)
 {
-	if (error_quotes(line) != SUCCESS)
+	int	error;
+
+	error = error_quotes(line);
+	if (error == QUOTE_FAILURE)
 		return (FAILURE); // Not sure if we have to return 1 or another value like 3?
-	if (error_pipes(line) != SUCCESS)
+	else if (error == PIPE_FAILURE)
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `|''\n", 2);
+		printf("minishell: syntax error near unexpected token `|'\n");
 		return (FAILURE);
 	}
 	if (error_great(line) != SUCCESS || error_less(line) != SUCCESS)
