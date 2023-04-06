@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   add_infile_outfile.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
 /*   Updated: 2023/04/04 11:08:32 by rrebois          ###   ########lyon.fr   */
@@ -51,7 +51,7 @@ void	add_infile(t_data *data, char *file)
 			tmp = tmp->next;
 		if (tmp->word != NULL)
 		{
-			//tmp->word.infile = file;
+			//tmp->word = file;
 			return ;
 		}
 	}
@@ -78,7 +78,7 @@ void	add_outfile(t_data *data, char *file) //ls |grep i>o<i ok
 		else if ((tmp->word != NULL &&
 		ft_strncmp(tkn->token, "|", 1) == 0) || (tmp == data->lexer))
 		{
-			//tmp->word.outfile = file;
+			//tmp->word = file;
 			return ;
 		}
 		tmp = tkn;
