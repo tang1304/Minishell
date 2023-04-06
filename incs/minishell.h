@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
 /*   Updated: 2023/04/06 09:54:08 by rrebois          ###   ########lyon.fr   */
@@ -13,12 +13,12 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "../libft/incs/libft.h"
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+# include "../libft/incs/libft.h"
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 typedef struct s_lexer//virer s_token & s_word et changer par char *word et char *token
 {
@@ -58,7 +58,7 @@ typedef struct s_data
 	struct s_command	*cmd;
 }				t_data;
 
-enum errors
+enum e_errors
 {
 	SUCCESS = 0,
 	FAILURE = 2,
@@ -98,13 +98,23 @@ void	file_check_access(t_data *data, char *file, int i);
 
 /*	lexer.c	*/
 int		lexer_init(t_data *data);
+int		is_pipe(char *str, int i);
 
 /*	lexer_utils.c	*/
 int		ft_isspace(char c);
 int		quote_handling(char *str, int i, char quote);
 int		add_node(t_lexer **lexer, char *str, int token);
 
+
 /*	cmd_struct.c	*/
 void	create_cmd_struct(t_data *data);
+
+/*	lexer_auote_handle	*/
+int		quote_handling(char *str, int i, char quote);
+int		is_quote(char c);
+int		quote_worder(t_data *data, char *str, int i);
+
+/*	builtins.c	*/
+
 
 #endif
