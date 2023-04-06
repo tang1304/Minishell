@@ -32,13 +32,15 @@ D_LIBFT		=	libft/
 LST_SRCS	=	main.c \
 				data.c \
 				loop.c \
-				utils.c \
+				check_error_utils.c \
+				parser.c \
 				lexer.c \
 				lexer_utils.c \
 				lexer_quote_handle.c \
 				check_error_input.c \
-				parser.c \
-				add_infile_outfile.c
+				add_infile_outfile.c \
+				cmd_struct.c
+
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)
 
