@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/06 09:54:08 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/06 17:01:47 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ typedef struct s_data
 	char				*oldpwd;
 	int					fdin;//infile
 	int					fdout;//outfile
+	size_t				child;
+	int					fd[2];//pipe for here_doc
+	int					*pipe;//pipes for other cmds
+	pid_t				*pids;//pids of child processes
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
 }				t_data;
@@ -91,7 +95,8 @@ int		count_quote(char *s, size_t *i, char c);
 void	implement_redirections_cmds(t_data *data);
 
 /*	add_infile_outfile.c	*/
-void	files_redirection(t_data *data);
+void	check_redirection(t_data *data);
+void	files_redirection(t_data *data, int index, int i);
 void	add_infile(t_data *data, char *file);
 void	add_outfile(t_data *data, char *file);
 void	file_check_access(t_data *data, char *file, int i);
