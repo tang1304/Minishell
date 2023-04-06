@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_infile_outfile.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/04 11:08:32 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/06 17:09:28 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	file_check_access(t_data *data, char *file, int i)
 {
-	if (i == 0) // infile
+	if (i == 2) // infile <
 	{
 		data->fdin = open(file, O_RDONLY);
 		if (access(file, F_OK) != 0)
@@ -22,9 +22,17 @@ void	file_check_access(t_data *data, char *file, int i)
 		else if (access(file, R_OK) != 0)
 			ft_printf("minishell: %s: Permission denied\n", file);
 	}
-	else if (i == 1)
+	else if (i == 1) //outfile >
 	{
 		data->fdout = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		if (access(file, F_OK) != 0)
+			printf("minishell: %s: No such file or directory\n", file);
+		else if (access(file, W_OK) != 0)
+			ft_printf("minishell: %s: Permission denied\n", file);
+	}
+	else if (i == 0) //outfile append >>
+	{
+		data->fdout = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (access(file, F_OK) != 0)
 			printf("minishell: %s: No such file or directory\n", file);
 		else if (access(file, W_OK) != 0)
@@ -85,36 +93,90 @@ void	add_outfile(t_data *data, char *file) //ls |grep i>o<i ok
 	}
 }
 
-void	files_redirection(t_data *data)
+void	files_redirection(t_data *data, int index, int i)
 {
+	t_lexer	*tmp;
+
+	tmp = data->lexer;
+	while (tmp->index != index)
+		tmp = tmp->next;
+	if (tmp->word[i] == '>' && tmp->word[i + 1] == '>')
+	{ft_printf("append\n");
+		// file_check_access(data, tmp->next->word, 0); //outfie append
+		// //file_check_access(data, i+1, 0); //changer proto par celui la
+		// add_infile(data, tmp->next->word);
+	}
+	else if (tmp->word[i] == '>' && tmp->word[i + 1] != '>') //outfile
+	{ft_printf("outfile\n");
+		// file_check_access(data, tmp->next->word, 1);
+		// add_infile(data, tmp->next->word);
+	}
+	else if (tmp->word[i] == '<' && tmp->word[i + 1] != '<') //infile
+	{ft_printf("infile\n");
+		// file_check_access(data, tmp->next->word, 2);
+		// add_infile(data, tmp->next->word);
+	}
+	else if (tmp->word[i] == '<' && tmp->word[i + 1] == '<') //here_doc
+	{ft_printf("here_doc\n");
+		// break ;
+		//here_doc()
+		//add_infile(data, tmp->next->word);
+	}
+
+
+
+	// t_lexer	*tmp;
+
+	// tmp = data->lexer;
+	// while (tmp != NULL)
+	// {
+	// 	if (tmp->token != NULL && ft_strncmp(tmp->token, "<", 1) ==
+	// 	0 && ft_strlen(tmp->token) == 1)
+	// 	{
+	// 		file_check_access(data, tmp->next->word, 0);
+	// 		add_infile(data, tmp->next->word);
+	// 	}
+	// 	if (tmp->token != NULL && ft_strncmp(tmp->token, ">", 1) ==
+	// 	0 && ft_strlen(tmp->token) == 1)
+	// 	{
+	// 		file_check_access(data, tmp->next->word, 1);
+	// 		add_outfile(data, tmp->next->word);
+	// 	}
+	// 	tmp = tmp->next;
+	// }
+
+
+	// tmp = data->lexer;
+	// while (tmp != NULL)
+	// {
+	// 	if (tmp->word != NULL)
+	// 		ft_printf("cmd: %s\n", tmp->word);
+	// 	else
+	// 		ft_printf("cmd: %s\n", tmp->token);
+	// 	tmp = tmp->next;
+	// }
+}
+
+void	check_redirection(t_data *data)
+{
+	int		i;
 	t_lexer	*tmp;
 
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
-		if (tmp->token != NULL && ft_strncmp(tmp->token, "<", 1) == \
-		0 && ft_strlen(tmp->token) == 1)
+		i = 0;
+		while (tmp->word[i])
 		{
-			file_check_access(data, tmp->next->word, 0);
-			add_infile(data, tmp->next->word);
-		}
-		if (tmp->token != NULL && ft_strncmp(tmp->token, ">", 1) == \
-		0 && ft_strlen(tmp->token) == 1)
-		{
-			file_check_access(data, tmp->next->word, 1);
-			add_outfile(data, tmp->next->word);
+			if (tmp->word[i] == '\'')
+				i += quote_handling(tmp->word, i, '\'');
+			else if (tmp->word[i] == '"')
+				i +=  quote_handling(tmp->word, i, '"');
+			if ((size_t)i < ft_strlen(tmp->word) && (tmp->word[i] == '>' || \
+			tmp->word[i] == '<'))
+				files_redirection(data, tmp->index, i);
+			i++;
 		}
 		tmp = tmp->next;
-	}
-
-
-	tmp = data->lexer;
-	while (tmp != NULL)
-	{
-		if (tmp->word != NULL)
-			ft_printf("cmd: %s\n", tmp->word);
-		else
-			ft_printf("cmd: %s\n", tmp->token);
-		tmp = tmp->next;
-	}
+	}//<inf ls >out >>    got an additional outfile
 }

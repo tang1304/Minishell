@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/04 16:31:06 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/06 17:02:31 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	prompt_loop(t_data *data)
 		if (error_check(data->str) == SUCCESS)
 		{
 			lexer_init(data);// si 1 ou 0 exit?
+			check_redirection(data);
 			//create_cmd_struct(data); // ou a mettre a la fin de lexer_init?
 			//penser a free(data)
 		}
