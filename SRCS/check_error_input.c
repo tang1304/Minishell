@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:53:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/30 11:00:40 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/04 09:11:39 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@ int	error_pipes(char *line)
 	while (*line)
 	{
 		word = 0;
-		pipe = 1;
+		pipe = 0;
+		while (*line == ' ' || *line == '\t')
+			line++;
 		if (ft_isprint(*line) == 1 && (*line != '|') && (*line != ' '))
 			word = 1;
 		while (ft_isprint(*line) == 1 && (*line != '|'))
 			line++;
-		if (*line == '|')
-			pipe = 0;
-		if ((*line == '|') && ((word == 0) || (pipe == 1)))
+		if (*line == '|' || !*line)
+			pipe = 1;
+		if ((*line == '|') && ((word == 0) || (pipe == 0)))
 			return (PIPE_FAILURE);
 		line++;
 	}

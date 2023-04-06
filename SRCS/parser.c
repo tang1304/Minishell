@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builting.c                                         :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/03/29 13:17:14 by rrebois          ###   ########lyon.fr   */
+/*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
+/*   Updated: 2023/04/03 17:08:04 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-// void	change_directory(t_data *data)
-// {
-
-// }
+void	implement_redirections_cmds(t_data *data)
+{
+	files_redirection(data);
+}
