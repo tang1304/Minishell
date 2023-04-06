@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/03 13:31:31 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/04 13:02:42 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	data_initialize(t_data *data, char **envp)
 {
 	char	*user;
 
+	data->cmd = NULL;
 	data->envp = get_envp(envp);
 	data->lexer = NULL;
 	data->str = NULL;
