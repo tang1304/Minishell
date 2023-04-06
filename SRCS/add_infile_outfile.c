@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/04 10:08:59 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/04 11:08:32 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,22 @@ void	add_infile(t_data *data, char *file)
 {
 	t_lexer	*tmp;
 
-	tmp = data->lexer;
+	tmp = data->lexer;(void)file;
 	while (tmp != NULL)
 	{
-		if (tmp->word.name == NULL && ft_strncmp(tmp->token.name, "|", 1) \
-		!= 0 && ft_strlen(tmp->token.name) <= 2)//len 1 ou 2 pour >> et <<
+		if (tmp->word == NULL && ft_strncmp(tmp->token, "|", 1) \
+		!= 0 && ft_strlen(tmp->token) <= 2)//len 1 ou 2 pour >> et <<
 		{
 			tmp = tmp->next;
 			tmp = tmp->next;
 		}
-		else if (tmp->word.name == NULL && \
-		ft_strncmp(tmp->token.name, "|", 1) == 0 && \
-		ft_strlen(tmp->token.name) == 1)
+		else if (tmp->word == NULL && \
+		ft_strncmp(tmp->token, "|", 1) == 0 && \
+		ft_strlen(tmp->token) == 1)
 			tmp = tmp->next;
-		if (tmp->word.name != NULL)
+		if (tmp->word != NULL)
 		{
-			tmp->word.infile = file;
+			//tmp->word.infile = file;
 			return ;
 		}
 	}
@@ -59,7 +59,7 @@ void	add_infile(t_data *data, char *file)
 
 void	add_outfile(t_data *data, char *file) //ls |grep i>o<i ok
 {// ls | wc >o marche
-	t_lexer	*tkn;
+	t_lexer	*tkn;(void)file;
 	t_lexer	*tmp;
 
 	tmp = data->lexer;
@@ -70,15 +70,15 @@ void	add_outfile(t_data *data, char *file) //ls |grep i>o<i ok
 	{
 		if (tmp != data->lexer)
 			tkn = tmp->prev;
-		if (tmp->word.name != NULL && tkn->word.name != NULL)
+		if (tmp->word != NULL && tkn->word != NULL)
 		{
-			tkn->word.outfile = file;
+			//tkn->word.outfile = file;
 			return ;
 		}
-		else if ((tmp->word.name != NULL &&
-		ft_strncmp(tkn->token.name, "|", 1) == 0) || (tmp == data->lexer))
+		else if ((tmp->word != NULL &&
+		ft_strncmp(tkn->token, "|", 1) == 0) || (tmp == data->lexer))
 		{
-			tmp->word.outfile = file;
+			//tmp->word.outfile = file;
 			return ;
 		}
 		tmp = tkn;
@@ -92,17 +92,17 @@ void	files_redirection(t_data *data)
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
-		if (tmp->token.name != NULL && ft_strncmp(tmp->token.name, "<", 1) == \
-		0 && ft_strlen(tmp->token.name) == 1)
+		if (tmp->token != NULL && ft_strncmp(tmp->token, "<", 1) == \
+		0 && ft_strlen(tmp->token) == 1)
 		{
-			file_check_access(data, tmp->next->word.name, 0);
-			add_infile(data, tmp->next->word.name);
+			file_check_access(data, tmp->next->word, 0);
+			add_infile(data, tmp->next->word);
 		}
-		if (tmp->token.name != NULL && ft_strncmp(tmp->token.name, ">", 1) == \
-		0 && ft_strlen(tmp->token.name) == 1)
+		if (tmp->token != NULL && ft_strncmp(tmp->token, ">", 1) == \
+		0 && ft_strlen(tmp->token) == 1)
 		{
-			file_check_access(data, tmp->next->word.name, 1);
-			add_outfile(data, tmp->next->word.name);
+			file_check_access(data, tmp->next->word, 1);
+			add_outfile(data, tmp->next->word);
 		}
 		tmp = tmp->next;
 	}
@@ -111,10 +111,10 @@ void	files_redirection(t_data *data)
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
-		if (tmp->word.name != NULL)
-			ft_printf("cmd: %s inf: %s outf: %s\n", tmp->word.name, tmp->word.infile, tmp->word.outfile);
+		if (tmp->word != NULL)
+			ft_printf("cmd: %s\n", tmp->word);
 		else
-			ft_printf("cmd: %s\n", tmp->token.name);
+			ft_printf("cmd: %s\n", tmp->token);
 		tmp = tmp->next;
 	}
 }
