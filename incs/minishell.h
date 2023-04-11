@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/05 11:01:58 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/11 13:59:46 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int		error_less(char *line);
 /* utils.c */
 int		error_quotes(char *line);
 int		count_quote(char *s, size_t *i, char c);
+char	*char_join_to_str(char *str, char c);
 
 /* parser.c */
 void	implement_redirections_cmds(t_data *data);
@@ -104,10 +105,13 @@ int		ft_isspace(char c);
 int		quote_handling(char *str, int i, char quote);
 int		add_node(t_lexer **lexer, char *str, int token);
 
-/*	lexer_auote_handle	*/
+/*	lexer_quote_handle	*/
 int		quote_handling(char *str, int i, char quote);
 int		is_quote(char c);
 int		quote_worder(t_data *data, char *str, int i);
+
+/*	expander.c	*/
+int		expand(t_data *data);
 
 /*	builtins.c	*/
 
