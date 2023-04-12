@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/11 16:45:17 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 10:36:57 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	prompt_loop(t_data *data)
 		// if (error_quotes(line) != 0)
 		// 	ft_putstr_fd("Error: Invalid syntax\n", 2);// Send the line into the lexer to check for errors and create the array of cmd/pipes/etc..
 		// ft_printf("%s\n", line);//juste a test line. Gotta be removed at the end
-
 		free(data->str);
+		
 	}
 }
