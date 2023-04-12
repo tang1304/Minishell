@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/04 11:08:32 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 14:37:25 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	file_check_access(t_data *data, char *file, int i)
 void	add_infile(t_data *data, char *file)
 {
 	t_lexer	*tmp;
+	(void)file;
 
 	tmp = data->lexer;(void)file;
 	while (tmp != NULL)
@@ -61,6 +62,7 @@ void	add_outfile(t_data *data, char *file) //ls |grep i>o<i ok
 {// ls | wc >o marche
 	t_lexer	*tkn;(void)file;
 	t_lexer	*tmp;
+	(void)file;
 
 	tmp = data->lexer;
 	tkn = data->lexer;
