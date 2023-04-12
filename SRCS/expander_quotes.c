@@ -1,15 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.c                                           :+:      :+:    :+:   */
+/*   expander_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/03 16:43:06 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/03 16:43:48 by rrebois          ###   ########lyon.fr   */
+/*   Created: 2023/04/12 13:19:22 by tgellon           #+#    #+#             */
+/*   Updated: 2023/04/12 13:23:15 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-
+int	quotes_removal(t_data *data)
+{
+	;
+}
