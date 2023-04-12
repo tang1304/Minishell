@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:58:08 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/06 09:59:24 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 14:38:56 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,28 @@ int	error_quotes(char *line)
 	if (d_quote % 2 != 0)
 		ft_putstr_fd("minishell: syntax error near unexpected token `\"'\n", 2);
 	if ((s_quote % 2 != 0) || (d_quote % 2 != 0))
-		return(QUOTE_FAILURE);
+		return (QUOTE_FAILURE);
 	return (SUCCESS);
+}
+
+char	*char_join_to_str(char *str, char c)
+{
+	char	*newstr;
+	int		i;
+
+	i = 0;
+	if (str == NULL)
+		return (NULL);
+	newstr = (char *)malloc(sizeof(char) * ft_strlen(str) + 2);
+	if (!newstr)
+		return (NULL);
+	while (str[i])
+	{
+		newstr[i] = str[i];
+		i++;
+	}
+	newstr[i] = c;
+	newstr[i + 1] = '\0';
+	free(str);
+	return (newstr);
 }

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/06 09:54:08 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 14:32:18 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-typedef struct s_lexer//virer s_token & s_word et changer par char *word et char *token
+typedef struct s_lexer
 {
 	char			*word;
 	char			*token;
 	int				index;
+	int				s_q;
+	int				d_q;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;// a voir
 }				t_lexer;
@@ -86,6 +88,7 @@ int		error_less(char *line);
 /*	check_error_utils.c	*/
 int		error_quotes(char *line);
 int		count_quote(char *s, size_t *i, char c);
+char	*char_join_to_str(char *str, char c);
 
 /*	parser.c	*/
 void	implement_redirections_cmds(t_data *data);
@@ -109,10 +112,15 @@ int		add_node(t_lexer **lexer, char *str, int token);
 /*	cmd_struct.c	*/
 void	create_cmd_struct(t_data *data);
 
-/*	lexer_auote_handle	*/
+/*	lexer_quote_handle	*/
 int		quote_handling(char *str, int i, char quote);
 int		is_quote(char c);
 int		quote_worder(t_data *data, char *str, int i);
+
+/*	expander_var.c	*/
+int		expand(t_data *data);
+
+/*	expander_quotes.c	*/
 
 /*	builtins.c	*/
 
