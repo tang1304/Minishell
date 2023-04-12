@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/11 14:54:22 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 14:41:27 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	data_initialize(t_data *data, char **envp)
 {
 	char	*user;
 
+	data->cmd = NULL;
 	data->envp = get_envp(envp);
 	data->lexer = NULL;
 	data->str = NULL;
