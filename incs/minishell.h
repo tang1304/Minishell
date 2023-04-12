@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/06 17:01:47 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 17:21:32 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,25 @@
 
 typedef struct s_lexer//virer s_token & s_word et changer par char *word et char *token
 {
+	char			**cmd;//malloc a free
 	char			*word;
 	char			*token;
+	char			*infile;//free if not NULL
+	char			*outfile;//free if not NULL
 	int				index;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;// a voir
 }				t_lexer;
 
-typedef struct s_command
-{
-	char				**cmd;//malloc a free
-	int					index;
-	char				*infile;
-	char				*outfile;
-	struct s_command	*next;
-	struct s_command	*prev;
-}				t_command;
+// typedef struct s_command
+// {
+// 	char				**cmd;//malloc a free
+// 	int					index;
+// 	char				*infile;
+// 	char				*outfile;
+// 	struct s_command	*next;
+// 	struct s_command	*prev;
+// }				t_command;
 
 typedef struct s_data
 {
@@ -50,6 +53,7 @@ typedef struct s_data
 	int					tokens; // number of tokens inside line
 	int					cmds; // number of cmds
 	int					here_doc; // if here_doc or not
+	char				*LIMITER;
 	char				*pwd;
 	char				*oldpwd;
 	int					fdin;//infile
@@ -69,7 +73,8 @@ enum e_errors
 	QUOTE_FAILURE = 3,
 	PIPE_FAILURE = 5,
 	TOKEN_FAILURE = 6,
-	NODE_FAILURE = 7
+	NODE_FAILURE = 7,
+	NOT_WORD = 8
 };
 
 /*	data.c	*/
@@ -95,11 +100,16 @@ int		count_quote(char *s, size_t *i, char c);
 void	implement_redirections_cmds(t_data *data);
 
 /*	add_infile_outfile.c	*/
+void	files_redirection(t_data *data, int index, size_t i);
 void	check_redirection(t_data *data);
-void	files_redirection(t_data *data, int index, int i);
 void	add_infile(t_data *data, char *file);
 void	add_outfile(t_data *data, char *file);
 void	file_check_access(t_data *data, char *file, int i);
+
+/*	add_infile_outfile_utils.c	*/
+char	*get_filename(char *s, size_t i);
+char	*remove_file(char *s, size_t i);
+int		check_if_cmd(char *s);
 
 /*	lexer.c	*/
 int		lexer_init(t_data *data);
