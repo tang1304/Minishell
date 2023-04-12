@@ -39,6 +39,7 @@ LST_SRCS	=	main.c \
 				lexer_quote_handle.c \
 				check_error_input.c \
 				add_infile_outfile.c \
+				add_infile_outfile_utils.c \
 				cmd_struct.c
 
 

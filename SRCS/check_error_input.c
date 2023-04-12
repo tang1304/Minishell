@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:53:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/06 09:59:25 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 10:26:23 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	error_last_token(char *line)
 	return (SUCCESS);
 }
 
-int	error_great(char *line)
+int	error_great(char *line)// regler le cas ou ls > | o erreur au lieu de rien
 {
 	size_t	i;
 	int		great;
