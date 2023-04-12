@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/12 10:52:19 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 13:20:09 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ typedef struct s_lexer
 	char			*word;
 	char			*token;
 	int				index;
-	int				s_quote;
-	int				d_quote;
+	int				s_q;
+	int				d_q;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;// a voir
 }				t_lexer;
@@ -112,8 +112,10 @@ int		quote_handling(char *str, int i, char quote);
 int		is_quote(char c);
 int		quote_worder(t_data *data, char *str, int i);
 
-/*	expander.c	*/
+/*	expander_var.c	*/
 int		expand(t_data *data);
+
+/*	expander_quotes.c	*/
 
 /*	builtins.c	*/
 
