@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/12 10:36:57 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 17:16:35 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	prompt_loop(t_data *data)
 		{
 			lexer_init(data);
 			expand(data);
-			// quotes_delete();
+			quotes_removal(data);
 			implement_redirections_cmds(data);
 			//penser a free(data)
 		}
