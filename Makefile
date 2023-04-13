@@ -32,7 +32,8 @@ D_LIBFT		=	libft/
 LST_SRCS	=	main.c \
 				data.c \
 				loop.c \
-				utils.c \
+				check_error_utils.c \
+				parser.c \
 				lexer.c \
 				lexer_utils.c \
 				lexer_quote_handle.c \

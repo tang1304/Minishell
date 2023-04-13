@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   check_error_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:58:08 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/11 14:01:47 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 14:38:56 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,11 @@ int	count_quote(char *s, size_t *i, char c)
 	int		count;
 	size_t	len;
 
-	count = 0;
+	count = 1;
 	len = ft_strlen(s);
-	while (s[*i] != '\0')
+	while (*i < len && *i + 1 < len)
 	{
-		if (s[*i] == c && *i < len)
-		{
-			count++;
-			*i = *i + 1;
-		}
+		*i = *i + 1;
 		while (s[*i] != c && *i < len)
 			*i = *i + 1;
 		if (s[*i] == c && *i < len)
@@ -50,8 +46,11 @@ int	error_quotes(char *line)
 	{
 		if (line[i] == '\'' && i < ft_strlen(line))
 			s_quote += count_quote(line, &i, '\'');
-		if (line[i] == '"' && i < ft_strlen(line))
+		else if (line[i] == '"' && i < ft_strlen(line))
 			d_quote += count_quote(line, &i, '"');
+		else if (line[i] == '|' && s_quote % 2 == 0 && d_quote % 2 == 0)
+			if (error_pipes(line, i) != SUCCESS)
+				return (PIPE_FAILURE);
 		i++;
 	}
 	if (s_quote % 2 != 0)
