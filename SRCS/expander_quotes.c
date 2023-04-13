@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:22 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/13 15:27:11 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 16:11:50 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,24 @@ static char	*word_without_quotes(char *str, int i, int j)
 	return (new_word);
 }
 
+static int	quote_starting_point(t_lexer *tmp)
+{
+	int	i;
+
+	i = 0;
+	while (tmp->word[i])
+	{
+		if (tmp->word[i] == '\'')
+			tmp->s_q = 1;
+		if (tmp->word[i] == '"')
+			tmp->d_q = 1;
+		if (tmp->word[i] == '\'' || tmp->word[i] == '"')
+			break ;
+		i++;
+	}
+	return (i);
+}
+
 int	quotes_removal(t_data *data)
 {
 	t_lexer	*tmp;
@@ -45,8 +63,6 @@ int	quotes_removal(t_data *data)
 	int		j;
 
 	tmp = data->lexer;
-	tmp->s_q = 0;
-	tmp->d_q = 0;
 	while (tmp != NULL)
 	{
 		if (tmp->word == NULL || ((ft_strchr(tmp->word, '\'') == NULL \
@@ -55,21 +71,8 @@ int	quotes_removal(t_data *data)
 			tmp = tmp->next;
 			continue ;
 		}
-		i = 0;
-		while (tmp->word[i])
-		{
-			if (tmp->word[i] == '\'')
-				tmp->s_q = 1;
-			if (tmp->word[i] == '"')
-				tmp->d_q = 1;
-			if (tmp->word[i] == '\'' || tmp->word[i] == '"')
-				break ;
-			i++;
-		}
+		i = quote_starting_point(tmp);
 		j = i++;
-		// i++;
-		// while ((tmp->word[++i] != '\'' && tmp->s_q == 1) 
-		// 		|| (tmp->word[++i] != '"' && tmp->d_q == 1))
 		while ((tmp->word[i] != '"' && tmp->d_q == 1) \
 				|| (tmp->word[i] != '\'' && tmp->s_q == 1))
 			i++;

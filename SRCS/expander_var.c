@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/13 14:44:52 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 16:06:13 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,6 @@ int	expand(t_data *data)
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
-		tmp->s_q = 0;
-		tmp->d_q = 0;
 		if (tmp->word == NULL)
 		{
 			tmp = tmp->next;
@@ -132,6 +130,8 @@ int	expand(t_data *data)
 		// 	return (0);
 		free(new_word);
 		printf("expand-> word :%s\n", tmp->word);
+		tmp->s_q = 0;
+		tmp->d_q = 0;
 		tmp = tmp->next;
 	}
 	return (1);
