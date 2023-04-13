@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/12 13:20:09 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 17:17:02 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int		quote_worder(t_data *data, char *str, int i);
 int		expand(t_data *data);
 
 /*	expander_quotes.c	*/
+int		quotes_removal(t_data *data);
 
 /*	builtins.c	*/
 

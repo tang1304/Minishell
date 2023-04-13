@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   expander_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/12 13:13:15 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 16:12:15 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,10 @@ int	expand(t_data *data)
 		tmp->s_q = 0;
 		tmp->d_q = 0;
 		if (tmp->word == NULL)
+		{
 			tmp = tmp->next;
+			continue ;
+		}
 		new_word = var_replacement(data, tmp);
 		// if (new_word == NULL)
 		// 	return (0);

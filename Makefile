@@ -39,7 +39,8 @@ LST_SRCS	=	main.c \
 				check_error_input.c \
 				parser.c \
 				add_infile_outfile.c \
-				expander_var.c
+				expander_var.c \
+				expander_quotes.c
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)
 
