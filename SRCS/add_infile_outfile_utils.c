@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:32:38 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/12 17:42:53 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 10:34:35 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ char	*remove_file(char *s, size_t i)
 	if (str == NULL)
 		return (NULL);
 	j = 0;
-ft_printf("start: %d end: %d\n", start, i);
+printf("start: %ld end: %ld len: %ld\n", start, i, ft_strlen(s));
 	while (j < start)
 	{
 		str[j] = s[j];
 		j++;
 	}
-	while (j >= start && j < ft_strlen(s) - i + start)
+	while (i < ft_strlen(s))
 	{
 		str[j] = s[i];
 		j++;

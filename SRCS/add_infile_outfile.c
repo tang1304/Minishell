@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/12 17:29:47 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 16:51:42 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,54 +49,45 @@ void	add_infile(t_data *data, char *file)
 	{
 		if (check_if_cmd(tmp->word) == SUCCESS)
 		{
-			if (tmp->infile != NULL && ft_strlen(file) == \
-			ft_strlen(data->LIMITER) && data->here_doc == 1 && \
-			ft_strncmp(data->LIMITER, file, ft_strlen(file)) == 0)
-			{
-				free(tmp->infile);
+			if (tmp->infile != NULL && file != NULL && data->here_doc == 1)
 				data->here_doc = 0;
-			}
-			else
+			if (tmp->infile != NULL)
 				free(tmp->infile);
 			if (file != NULL)
 				tmp->infile = file;
 			else
 				tmp->infile = data->LIMITER;
 if (tmp->infile != NULL)
-	ft_printf("%s: tmp->infile: %s\n", tmp->word, tmp->infile);
+	ft_printf("tmp->infile: %s\n", tmp->infile);
 			return ;
 		}
 		tmp = tmp->next;
 	}
 }
 
-// void	add_outfile(t_data *data, char *file) //ls |grep i>o<i ok
-// {// ls | wc >o marche
-// 	t_lexer	*tkn;(void)file;
-// 	t_lexer	*tmp;
-
-// 	tmp = data->lexer;
-// 	tkn = data->lexer;
-// 	while (tmp->next != NULL)
-// 		tmp = tmp->next;
-// 	while (1)
-// 	{
-// 		if (tmp != data->lexer)
-// 			tkn = tmp->prev;
-// 		if (tmp->word != NULL && tkn->word != NULL)
-// 		{
-// 			//tkn->word.outfile = file;
-// 			return ;
-// 		}
-// 		else if ((tmp->word != NULL &&
-// 		ft_strncmp(tkn->token, "|", 1) == 0) || (tmp == data->lexer))
-// 		{
-// 			//tmp->word = file;
-// 			return ;
-// 		}
-// 		tmp = tkn;
-// 	}
-// }
+void	add_outfile(t_data *data, char *file) //ls |grep i>o<i ok
+{// ls | wc >o marche
+	// t_lexer	*tkn;(void)file;
+	t_lexer	*tmp;
+(void)file;
+	tmp = data->lexer;
+	// tkn = data->lexer;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	while (1)
+	{
+		// if (tmp != data->lexer)
+		// 	tkn = tmp->prev;
+		if (check_if_cmd(tmp->word) == SUCCESS)
+		{
+			if (tmp->outfile != NULL)
+				free(tmp->outfile);
+			tmp->outfile = file;
+			return ;
+		}
+		tmp = tmp->prev;
+	}
+}// <Makefile ls -l |grep i| wc >outfile <TODO
 
 void	files_redirection(t_data *data, int index, size_t i)
 {
@@ -106,39 +97,39 @@ void	files_redirection(t_data *data, int index, size_t i)
 	tmp = data->lexer;
 	while (tmp->index != index)
 		tmp = tmp->next;
+	filename = get_filename(tmp->word, i);
 	if (tmp->word[i] == '>' && tmp->word[i + 1] == '>') //outfile append
 	{
-		filename = get_filename(tmp->word, i);
-ft_printf("filename: %s\n", filename);
+ft_printf("out app: %s\n", filename);
 
 		file_check_access(data, filename, 0);
-		//add_outfile(data, tmp->next->word);
+		add_outfile(data, filename);
 	}
 	else if (tmp->word[i] == '>' && tmp->word[i + 1] != '>') //outfile
 	{
-	filename = get_filename(tmp->word, i);
-ft_printf("filename: %s\n", filename);
+	// filename = get_filename(tmp->word, i);
+ft_printf("out: %s\n", filename);
 
 		file_check_access(data, filename, 1);
-		// add_outfile(data, tmp->next->word);
+		add_outfile(data, filename);
 	}
 	else if (tmp->word[i] == '<' && tmp->word[i + 1] != '<') // INFILE
 	{
-		filename = get_filename(tmp->word, i);
-ft_printf("filename: %s\n", filename);
+		// filename = get_filename(tmp->word, i);
+ft_printf("inf: %s\n", filename);
 
 		file_check_access(data, filename, 2);
 		add_infile(data, filename);
 	}
 	else if (tmp->word[i] == '<' && tmp->word[i + 1] == '<') //here_doc
 	{
-		data->LIMITER = get_filename(tmp->word, i);
+		data->LIMITER = filename;
 		data->here_doc = 1;
 		add_infile(data, NULL);
 	}
-	ft_printf("tmp->word: %s\n", tmp->word);
+	ft_printf("tmp->word before: %s\n", tmp->word);
 		tmp->word = remove_file(tmp->word, i);//pe a la fin pour le faire dans chaque??
-ft_printf("tmp->word: %s\n", tmp->word);
+ft_printf("tmp->word after: %s\n", tmp->word);
 }
 
 void	check_redirection(t_data *data)
@@ -150,7 +141,7 @@ void	check_redirection(t_data *data)
 	while (tmp != NULL)
 	{
 		i = 0;
-ft_printf("word redir: %s\n", tmp->word);
+// ft_printf("word redir: %s\n", tmp->word);
 		while (tmp->word[i] != '\0')
 		{
 			if (tmp->word[i] == '\'' || tmp->word[i] == '"')
@@ -164,8 +155,26 @@ ft_printf("word redir: %s\n", tmp->word);
 				tmp->word[i - 1] != '<'))
 					files_redirection(data, tmp->index, i);
 			}
-			i++;
+			else
+				i++;
 		}
 		tmp = tmp->next;
-	}//<inf ls >out >>    got an additional outfile
+	}
+
+
+
+
+
+	//test
+	t_data	*tmp2;
+	tmp2 = data;
+	while (tmp2->lexer != NULL)
+	{
+		ft_printf("\n\n");
+ft_printf("word node: %s\n", tmp2->lexer->word);
+ft_printf("infile node: %s\n", tmp2->lexer->infile);
+ft_printf("outfile node: %s\n", tmp2->lexer->outfile);
+ft_printf("h_doc: %d\n", tmp2->here_doc);
+		tmp2->lexer = tmp2->lexer->next;
+	}
 }
