@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/12 17:17:02 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 16:25:55 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,33 +66,34 @@ enum e_errors
 	FAILURE = 2,
 	QUOTE_FAILURE = 3,
 	PIPE_FAILURE = 5,
-	TOKEN_FAILURE = 6
+	TOKEN_FAILURE = 6,
+	NODE_FAILURE = 7
 };
 
-/* data.c */
+/*	data.c	*/
 void	data_initialize(t_data *data, char **envp);
 void	update_pwd(t_data *data, char *s);
 char	**get_envp(char **envp);
 
-/* loop.c */
+/*	loop.c	*/
 void	prompt_loop(t_data *data);
 
-/* check_error_input.c */
+/*	check_error_input.c	*/
 int		error_check(char *line);
-int		error_pipes(char *line);
+int		error_pipes(char *line, int i);
 int		error_last_token(char *line);
 int		error_great(char *line);
 int		error_less(char *line);
 
-/* utils.c */
+/*	check_error_utils.c	*/
 int		error_quotes(char *line);
 int		count_quote(char *s, size_t *i, char c);
 char	*char_join_to_str(char *str, char c);
 
-/* parser.c */
+/*	parser.c	*/
 void	implement_redirections_cmds(t_data *data);
 
-/* add_infile_outfile.c */
+/*	add_infile_outfile.c	*/
 void	files_redirection(t_data *data);
 void	add_infile(t_data *data, char *file);
 void	add_outfile(t_data *data, char *file);
@@ -106,6 +107,10 @@ int		is_pipe(char *str, int i);
 int		ft_isspace(char c);
 int		quote_handling(char *str, int i, char quote);
 int		add_node(t_lexer **lexer, char *str, int token);
+
+
+/*	cmd_struct.c	*/
+void	create_cmd_struct(t_data *data);
 
 /*	lexer_quote_handle	*/
 int		quote_handling(char *str, int i, char quote);

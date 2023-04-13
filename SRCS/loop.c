@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/12 17:16:35 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 16:25:26 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	prompt_loop(t_data *data)
 			expand(data);
 			quotes_removal(data);
 			implement_redirections_cmds(data);
+			lexer_init(data);// si 1 ou 0 exit?
+			//create_cmd_struct(data); // ou a mettre a la fin de lexer_init?
 			//penser a free(data)
 		}
 	//if (check_error(line) == SUCCESS)
