@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/12 16:12:15 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 14:44:52 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,27 @@
 static char	*env_var_search(t_data *data, char *tmp, int j)
 {
 	char	*var;
+	size_t	i;
+	size_t	k;
 
-	while (*data->envp)
+	k = 0;
+	var = ft_strdup("");
+	// if (var == NULL)
+	// 	return (NULL);
+	while (data->envp[k])
 	{
-		if (ft_strncmp(*data->envp, tmp, j - 1) == 0)
+		i = 0;
+		while (data->envp[k][i] != '=')
+			i++;
+		if (ft_strncmp(data->envp[k], tmp, j - 1) == 0 && ft_strlen(tmp) == i)
 		{
-			var = ft_substr(*data->envp, j, (ft_strlen(*data->envp) - j));
+			free(var);
+			var = ft_substr(data->envp[k], j, (ft_strlen(*data->envp) - j));
 			// if (var == NULL)
 			// 	return (NULL);
 			break ;
 		}
-		else
-			var = ft_strdup("");
-		// if (var == NULL)
-		// 	return (NULL);
-		data->envp++;
+		k++;
 	}
 	return (var);
 }
@@ -43,7 +49,7 @@ static int	dollar_handle(t_data *data, char *str, char **new_word, int i)
 	j = 1;
 	while (ft_isalnum(str[i + j]) || str[i + j] == '_')
 		j++;
-	tmp = ft_substr(str, i + 1, j);
+	tmp = ft_substr(str, i + 1, j - 1);
 	// if (tmp == NULL)
 	// 	return (-2);
 	var = env_var_search(data, tmp, j);
