@@ -6,13 +6,114 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:22 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/12 13:23:15 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 11:45:01 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	quotes_removal(t_data *data)
+static char	*word_without_quotes(char *str, int i, int j)
 {
-	;
+	char	*new_word;
+	int		k;
+
+	new_word = (char *)malloc(sizeof(char) * (ft_strlen(str) - 1));
+	if (!new_word)
+		return (NULL);
+	k = -1;
+	while (++k < j)
+		new_word[k] = str[k];
+	while (k < i)
+	{
+		new_word[k] = str[k + 1];
+		k++;
+	}
+	while (str[k])
+	{
+		new_word[k] = str[k + 2];
+		k++;
+	}
+	new_word[k] = '\0';
+	free(str);
+	return (new_word);
+}
+
+static int	quote_starting_point(char *str, int i)
+{
+	int	j;
+
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '"')
+			break ;
+		j++;
+		i++;
+	}
+	return (i);
+}
+
+static int	quote_pairs(char *str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '"')
+		{
+			j++;
+			i += quote_handling(str, i, str[i]) + 1;
+		}
+		else
+			i++;
+	}
+	return (j);
+}
+
+char	*str_quotes_removal(char *str)
+{
+	int	i;
+	int	j;
+	int	k;
+	int	q_pairs;
+
+	q_pairs = quote_pairs(str);
+	k = -1;
+	i = 0;
+	while (++k < q_pairs)
+	{
+		i = quote_starting_point(str, i);
+		j = i++;
+		while ((str[i] != '"' && str[j] == '"') \
+				|| (str[i] != '\'' && str[j] == '\''))
+			i++;
+		str = word_without_quotes(str, i - 1, j);
+		// if (!new_word)
+		// 	;
+		i--;
+		printf("quotes-> word :%s\n", str);
+	}
+	return (str);
+}
+
+int	quotes_removal(t_lexer *lexer)
+{
+	t_lexer	*tmp;
+
+	tmp = lexer;
+	while (tmp != NULL)
+	{
+		if (tmp->word == NULL || ((ft_strchr(tmp->word, '\'') == NULL \
+			&& ft_strchr(tmp->word, '"') == NULL)))
+		{
+			tmp = tmp->next;
+			continue ;
+		}
+		tmp->word = str_quotes_removal(tmp->word);
+		tmp = tmp->next;
+	}
+	return (1);
 }
