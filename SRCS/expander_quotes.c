@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:22 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/13 16:11:50 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 11:45:01 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,31 +38,72 @@ static char	*word_without_quotes(char *str, int i, int j)
 	return (new_word);
 }
 
-static int	quote_starting_point(t_lexer *tmp)
+static int	quote_starting_point(char *str, int i)
 {
-	int	i;
+	int	j;
 
-	i = 0;
-	while (tmp->word[i])
+	j = 0;
+	while (str[i])
 	{
-		if (tmp->word[i] == '\'')
-			tmp->s_q = 1;
-		if (tmp->word[i] == '"')
-			tmp->d_q = 1;
-		if (tmp->word[i] == '\'' || tmp->word[i] == '"')
+		if (str[i] == '\'' || str[i] == '"')
 			break ;
+		j++;
 		i++;
 	}
 	return (i);
 }
 
-int	quotes_removal(t_data *data)
+static int	quote_pairs(char *str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '"')
+		{
+			j++;
+			i += quote_handling(str, i, str[i]) + 1;
+		}
+		else
+			i++;
+	}
+	return (j);
+}
+
+char	*str_quotes_removal(char *str)
+{
+	int	i;
+	int	j;
+	int	k;
+	int	q_pairs;
+
+	q_pairs = quote_pairs(str);
+	k = -1;
+	i = 0;
+	while (++k < q_pairs)
+	{
+		i = quote_starting_point(str, i);
+		j = i++;
+		while ((str[i] != '"' && str[j] == '"') \
+				|| (str[i] != '\'' && str[j] == '\''))
+			i++;
+		str = word_without_quotes(str, i - 1, j);
+		// if (!new_word)
+		// 	;
+		i--;
+		printf("quotes-> word :%s\n", str);
+	}
+	return (str);
+}
+
+int	quotes_removal(t_lexer *lexer)
 {
 	t_lexer	*tmp;
-	int		i;
-	int		j;
 
-	tmp = data->lexer;
+	tmp = lexer;
 	while (tmp != NULL)
 	{
 		if (tmp->word == NULL || ((ft_strchr(tmp->word, '\'') == NULL \
@@ -71,15 +112,7 @@ int	quotes_removal(t_data *data)
 			tmp = tmp->next;
 			continue ;
 		}
-		i = quote_starting_point(tmp);
-		j = i++;
-		while ((tmp->word[i] != '"' && tmp->d_q == 1) \
-				|| (tmp->word[i] != '\'' && tmp->s_q == 1))
-			i++;
-		tmp->word = word_without_quotes(tmp->word, i - 1, j);
-		// if (!new_word)
-		// 	;
-		printf("quotes-> word :%s\n", tmp->word);
+		tmp->word = str_quotes_removal(tmp->word);
 		tmp = tmp->next;
 	}
 	return (1);
