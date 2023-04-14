@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/14 10:25:57 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 12:27:21 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ char	*filename_quote_removal(char *file)
 {
 	char	*filename;
 
-	filename = str_quote_removal(file);
-	free(file);
+	filename = str_quotes_removal(file);
 	return (filename);
 }
 
