@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/14 10:14:14 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 12:55:35 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ char	*filename_quote_removal(char *file);
 char	*get_filename(char *s, size_t i);
 char	*remove_file(char *s, size_t i);
 int		check_if_cmd(char *s);
-void	add_infile(t_data *data, char *file);
-void	add_outfile(t_data *data, char *file);
+void	add_infile(t_data *data, char *file, int i);
+void	add_outfile(t_data *data, char *file, int i);
 
 /*	lexer.c	*/
 int		lexer_init(t_data *data);

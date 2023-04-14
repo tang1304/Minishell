@@ -6,16 +6,21 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:32:38 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/14 12:27:04 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 13:37:31 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void	add_infile(t_data *data, char *file)//move to utils
+void	add_infile(t_data *data, char *file, int i)
 {
 	t_lexer	*tmp;
 
+	if (i == 2)
+	{
+		file = filename_quote_removal(file);
+		file_check_access(data, file, i);
+	}
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
@@ -29,18 +34,18 @@ void	add_infile(t_data *data, char *file)//move to utils
 				tmp->infile = file;
 			else
 				tmp->infile = data->LIMITER;
-// if (tmp->infile != NULL)
-// 	ft_printf("tmp->infile: %s\n", tmp->infile);
 			return ;
 		}
 		tmp = tmp->next;
 	}
 }
 
-void	add_outfile(t_data *data, char *file)// move to utils
+void	add_outfile(t_data *data, char *file, int i)
 {
 	t_lexer	*tmp;
 
+	file = filename_quote_removal(file);
+	file_check_access(data, file, i);
 	tmp = data->lexer;
 	while (tmp->next != NULL)
 		tmp = tmp->next;
@@ -60,7 +65,7 @@ void	add_outfile(t_data *data, char *file)// move to utils
 char	*remove_file(char *s, size_t i)
 {
 	size_t	start;
-	size_t	j;
+	int		j;
 	char	*str;
 
 	start = i;
@@ -71,13 +76,9 @@ char	*remove_file(char *s, size_t i)
 	str = (char *)malloc(sizeof(*str) * (ft_strlen(s) - i + start + 1));
 	if (str == NULL)
 		return (NULL);
-	j = 0;
-printf("start: %ld end: %ld len: %ld\n", start, i, ft_strlen(s));
-	while (j < start)
-	{
+	j = -1;
+	while ((size_t)++j < start)
 		str[j] = s[j];
-		j++;
-	}
 	while (i < ft_strlen(s))
 	{
 		str[j] = s[i];
@@ -85,8 +86,7 @@ printf("start: %ld end: %ld len: %ld\n", start, i, ft_strlen(s));
 		i++;
 	}
 	str[j] = '\0';
-	free(s);
-	return (str);
+	return (free(s), str);
 }
 
 int	check_if_cmd(char *s)
@@ -112,9 +112,8 @@ int	check_if_cmd(char *s)
 		}
 		else if (s[i] != '>' || s[i] != '<')
 			token = 1;
-		if (s[i] == '\0')
-			return (NOT_WORD);
-		i++;
+		if (s[i + 1] == '\0')
+			i++;
 	}
 	return (NOT_WORD);
 }
@@ -135,7 +134,6 @@ char	*get_filename(char *s, size_t i)
 			i++;
 		break ;
 	}
-// ft_printf("start: %d i: %d char: %c\n", start, i, s[start]);
 	filename = (char *)malloc(sizeof(*filename) * (i - start + 1));
 	if (filename == NULL)
 		return (NULL);
@@ -146,6 +144,5 @@ char	*get_filename(char *s, size_t i)
 		j++;
 	}
 	filename[j] = '\0';
-	filename = filename_quote_removal(filename);
 	return (filename);
 }
