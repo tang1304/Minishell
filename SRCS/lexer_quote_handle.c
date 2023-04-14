@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_quote_handle.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:13:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/05 10:05:30 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/06 16:22:01 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
