@@ -43,6 +43,8 @@ static t_lexer	*new_lexer_node(char *str, int token)
 	// 	node->token = ft_strdup(str);
 	// 	printf("token: %s\n", node->token);
 	// }
+	node->s_q = 0;
+	node->d_q = 0;
 	node->next = NULL;
 	node->prev = NULL;
 	return (node);

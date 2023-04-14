@@ -20,7 +20,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-typedef struct s_lexer//virer s_token & s_word et changer par char *word et char *token
+typedef struct s_lexer
 {
 	char			**cmd;//malloc a free
 	char			*word;
@@ -28,6 +28,9 @@ typedef struct s_lexer//virer s_token & s_word et changer par char *word et char
 	char			*infile;//free if not NULL
 	char			*outfile;//free if not NULL
 	int				index;
+	int				word_quote_pairs;
+	int				s_q;
+	int				d_q;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;// a voir
 }				t_lexer;
@@ -95,6 +98,7 @@ int		error_less(char *line);
 /*	check_error_utils.c	*/
 int		error_quotes(char *line);
 int		count_quote(char *s, size_t *i, char c);
+char	*char_join_to_str(char *str, char c);
 
 /*	parser.c	*/
 void	implement_redirections_cmds(t_data *data);
@@ -125,10 +129,17 @@ int		add_node(t_lexer **lexer, char *str, int token);
 /*	cmd_struct.c	*/
 void	create_cmd_struct(t_data *data);
 
-/*	lexer_auote_handle	*/
+/*	lexer_quote_handle	*/
 int		quote_handling(char *str, int i, char quote);
 int		is_quote(char c);
 int		quote_worder(t_data *data, char *str, int i);
+
+/*	expander_var.c	*/
+int		expand(t_data *data);
+
+/*	expander_quotes.c	*/
+char	*str_quotes_removal(char *str);
+int		quotes_removal(t_lexer *lexer);
 
 /*	builtins.c	*/
 

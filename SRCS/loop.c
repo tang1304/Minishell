@@ -29,6 +29,8 @@ void	prompt_loop(t_data *data)
 		{
 			lexer_init(data);// si 1 ou 0 exit?
 			check_redirection(data);
+      expand(data); // penser a : 'export a = "'" '
+			quotes_removal(data->lexer);
 			//create_cmd_struct(data); // ou a mettre a la fin de lexer_init?
 			//penser a free(data)
 		}
@@ -36,7 +38,6 @@ void	prompt_loop(t_data *data)
 		// if (error_quotes(line) != 0)
 		// 	ft_putstr_fd("Error: Invalid syntax\n", 2);// Send the line into the lexer to check for errors and create the array of cmd/pipes/etc..
 		// ft_printf("%s\n", line);//juste a test line. Gotta be removed at the end
-
 		free(data->str);
 	}
 }
