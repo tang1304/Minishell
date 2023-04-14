@@ -6,11 +6,56 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:32:38 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/13 10:34:35 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 10:14:40 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+void	add_infile(t_data *data, char *file)//move to utils
+{
+	t_lexer	*tmp;
+
+	tmp = data->lexer;
+	while (tmp != NULL)
+	{
+		if (check_if_cmd(tmp->word) == SUCCESS)
+		{
+			if (tmp->infile != NULL && file != NULL && data->here_doc == 1)
+				data->here_doc = 0;
+			if (tmp->infile != NULL)
+				free(tmp->infile);
+			if (file != NULL)
+				tmp->infile = file;
+			else
+				tmp->infile = data->LIMITER;
+// if (tmp->infile != NULL)
+// 	ft_printf("tmp->infile: %s\n", tmp->infile);
+			return ;
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	add_outfile(t_data *data, char *file)// move to utils
+{
+	t_lexer	*tmp;
+
+	tmp = data->lexer;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	while (1)
+	{
+		if (check_if_cmd(tmp->word) == SUCCESS)
+		{
+			if (tmp->outfile != NULL)
+				free(tmp->outfile);
+			tmp->outfile = file;
+			return ;
+		}
+		tmp = tmp->prev;
+	}
+}
 
 char	*remove_file(char *s, size_t i)
 {
@@ -101,5 +146,6 @@ char	*get_filename(char *s, size_t i)
 		j++;
 	}
 	filename[j] = '\0';
+	filename = filename_quote_removal(filename);
 	return (filename);
 }
