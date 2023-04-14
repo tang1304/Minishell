@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/14 11:45:48 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 10:14:14 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@
 
 typedef struct s_lexer
 {
+	char			**cmd;//malloc a free
 	char			*word;
 	char			*token;
+	char			*infile;//free if not NULL
+	char			*outfile;//free if not NULL
 	int				index;
 	int				word_quote_pairs;
 	int				s_q;
@@ -32,15 +35,15 @@ typedef struct s_lexer
 	struct s_lexer	*prev;// a voir
 }				t_lexer;
 
-typedef struct s_command
-{
-	char				**cmd;//malloc a free
-	int					index;
-	char				*infile;
-	char				*outfile;
-	struct s_command	*next;
-	struct s_command	*prev;
-}				t_command;
+// typedef struct s_command
+// {
+// 	char				**cmd;//malloc a free
+// 	int					index;
+// 	char				*infile;
+// 	char				*outfile;
+// 	struct s_command	*next;
+// 	struct s_command	*prev;
+// }				t_command;ls        | "grep >out" <Makefile| wc -l >outer
 
 typedef struct s_data
 {
@@ -53,10 +56,15 @@ typedef struct s_data
 	int					tokens; // number of tokens inside line
 	int					cmds; // number of cmds
 	int					here_doc; // if here_doc or not
+	char				*LIMITER;
 	char				*pwd;
 	char				*oldpwd;
 	int					fdin;//infile
 	int					fdout;//outfile
+	size_t				child;
+	int					fd[2];//pipe for here_doc
+	int					*pipe;//pipes for other cmds
+	pid_t				*pids;//pids of child processes
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
 }				t_data;
@@ -68,7 +76,8 @@ enum e_errors
 	QUOTE_FAILURE = 3,
 	PIPE_FAILURE = 5,
 	TOKEN_FAILURE = 6,
-	NODE_FAILURE = 7
+	NODE_FAILURE = 7,
+	NOT_WORD = 8
 };
 
 /*	data.c	*/
@@ -95,10 +104,17 @@ char	*char_join_to_str(char *str, char c);
 void	implement_redirections_cmds(t_data *data);
 
 /*	add_infile_outfile.c	*/
-void	files_redirection(t_data *data);
+void	files_redirection(t_data *data, int index, size_t i);
+void	check_redirection(t_data *data);
+void	file_check_access(t_data *data, char *file, int i);
+char	*filename_quote_removal(char *file);
+
+/*	add_infile_outfile_utils.c	*/
+char	*get_filename(char *s, size_t i);
+char	*remove_file(char *s, size_t i);
+int		check_if_cmd(char *s);
 void	add_infile(t_data *data, char *file);
 void	add_outfile(t_data *data, char *file);
-void	file_check_access(t_data *data, char *file, int i);
 
 /*	lexer.c	*/
 int		lexer_init(t_data *data);
