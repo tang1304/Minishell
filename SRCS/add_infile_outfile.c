@@ -6,11 +6,20 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/13 16:51:42 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 10:25:57 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h" // Get filename and check file permissions.
+
+char	*filename_quote_removal(char *file)
+{
+	char	*filename;
+
+	filename = str_quote_removal(file);
+	free(file);
+	return (filename);
+}
 
 void	file_check_access(t_data *data, char *file, int i)
 {
@@ -40,54 +49,12 @@ void	file_check_access(t_data *data, char *file, int i)
 	}
 }
 
-void	add_infile(t_data *data, char *file)
+static void	init_here_doc(t_data *data, char *filename)
 {
-	t_lexer	*tmp;
-
-	tmp = data->lexer;
-	while (tmp != NULL)
-	{
-		if (check_if_cmd(tmp->word) == SUCCESS)
-		{
-			if (tmp->infile != NULL && file != NULL && data->here_doc == 1)
-				data->here_doc = 0;
-			if (tmp->infile != NULL)
-				free(tmp->infile);
-			if (file != NULL)
-				tmp->infile = file;
-			else
-				tmp->infile = data->LIMITER;
-if (tmp->infile != NULL)
-	ft_printf("tmp->infile: %s\n", tmp->infile);
-			return ;
-		}
-		tmp = tmp->next;
-	}
+	data->LIMITER = filename;
+	data->here_doc = 1;
+	add_infile(data, NULL);
 }
-
-void	add_outfile(t_data *data, char *file) //ls |grep i>o<i ok
-{// ls | wc >o marche
-	// t_lexer	*tkn;(void)file;
-	t_lexer	*tmp;
-(void)file;
-	tmp = data->lexer;
-	// tkn = data->lexer;
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	while (1)
-	{
-		// if (tmp != data->lexer)
-		// 	tkn = tmp->prev;
-		if (check_if_cmd(tmp->word) == SUCCESS)
-		{
-			if (tmp->outfile != NULL)
-				free(tmp->outfile);
-			tmp->outfile = file;
-			return ;
-		}
-		tmp = tmp->prev;
-	}
-}// <Makefile ls -l |grep i| wc >outfile <TODO
 
 void	files_redirection(t_data *data, int index, size_t i)
 {
@@ -101,7 +68,6 @@ void	files_redirection(t_data *data, int index, size_t i)
 	if (tmp->word[i] == '>' && tmp->word[i + 1] == '>') //outfile append
 	{
 ft_printf("out app: %s\n", filename);
-
 		file_check_access(data, filename, 0);
 		add_outfile(data, filename);
 	}
@@ -109,7 +75,6 @@ ft_printf("out app: %s\n", filename);
 	{
 	// filename = get_filename(tmp->word, i);
 ft_printf("out: %s\n", filename);
-
 		file_check_access(data, filename, 1);
 		add_outfile(data, filename);
 	}
@@ -117,16 +82,11 @@ ft_printf("out: %s\n", filename);
 	{
 		// filename = get_filename(tmp->word, i);
 ft_printf("inf: %s\n", filename);
-
 		file_check_access(data, filename, 2);
 		add_infile(data, filename);
 	}
-	else if (tmp->word[i] == '<' && tmp->word[i + 1] == '<') //here_doc
-	{
-		data->LIMITER = filename;
-		data->here_doc = 1;
-		add_infile(data, NULL);
-	}
+	else
+		init_here_doc(data, filename);
 	ft_printf("tmp->word before: %s\n", tmp->word);
 		tmp->word = remove_file(tmp->word, i);//pe a la fin pour le faire dans chaque??
 ft_printf("tmp->word after: %s\n", tmp->word);
@@ -165,7 +125,7 @@ void	check_redirection(t_data *data)
 
 
 
-	//test
+	// test
 	t_data	*tmp2;
 	tmp2 = data;
 	while (tmp2->lexer != NULL)
@@ -177,4 +137,5 @@ ft_printf("outfile node: %s\n", tmp2->lexer->outfile);
 ft_printf("h_doc: %d\n", tmp2->here_doc);
 		tmp2->lexer = tmp2->lexer->next;
 	}
+	// end test
 }

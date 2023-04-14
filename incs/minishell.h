@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/12 17:21:32 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 10:14:14 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_lexer//virer s_token & s_word et changer par char *word et char
 // 	char				*outfile;
 // 	struct s_command	*next;
 // 	struct s_command	*prev;
-// }				t_command;
+// }				t_command;ls        | "grep >out" <Makefile| wc -l >outer
 
 typedef struct s_data
 {
@@ -102,14 +102,15 @@ void	implement_redirections_cmds(t_data *data);
 /*	add_infile_outfile.c	*/
 void	files_redirection(t_data *data, int index, size_t i);
 void	check_redirection(t_data *data);
-void	add_infile(t_data *data, char *file);
-void	add_outfile(t_data *data, char *file);
 void	file_check_access(t_data *data, char *file, int i);
+char	*filename_quote_removal(char *file);
 
 /*	add_infile_outfile_utils.c	*/
 char	*get_filename(char *s, size_t i);
 char	*remove_file(char *s, size_t i);
 int		check_if_cmd(char *s);
+void	add_infile(t_data *data, char *file);
+void	add_outfile(t_data *data, char *file);
 
 /*	lexer.c	*/
 int		lexer_init(t_data *data);
