@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_infile_outfile.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/14 12:27:21 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 13:18:33 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,22 +119,4 @@ void	check_redirection(t_data *data)
 		}
 		tmp = tmp->next;
 	}
-
-
-
-
-
-	// test
-	t_data	*tmp2;
-	tmp2 = data;
-	while (tmp2->lexer != NULL)
-	{
-		ft_printf("\n\n");
-ft_printf("word node: %s\n", tmp2->lexer->word);
-ft_printf("infile node: %s\n", tmp2->lexer->infile);
-ft_printf("outfile node: %s\n", tmp2->lexer->outfile);
-ft_printf("h_doc: %d\n", tmp2->here_doc);
-		tmp2->lexer = tmp2->lexer->next;
-	}
-	// end test
 }
