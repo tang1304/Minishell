@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   expander_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/12 13:13:15 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 11:47:25 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,27 @@
 static char	*env_var_search(t_data *data, char *tmp, int j)
 {
 	char	*var;
+	size_t	i;
+	size_t	k;
 
-	while (*data->envp)
+	k = 0;
+	var = ft_strdup("");
+	// if (var == NULL)
+	// 	return (NULL);
+	while (data->envp[k])
 	{
-		if (ft_strncmp(*data->envp, tmp, j - 1) == 0)
+		i = 0;
+		while (data->envp[k][i] != '=')
+			i++;
+		if (ft_strncmp(data->envp[k], tmp, j - 1) == 0 && ft_strlen(tmp) == i)
 		{
-			var = ft_substr(*data->envp, j, (ft_strlen(*data->envp) - j));
+			free(var);
+			var = ft_substr(data->envp[k], j, (ft_strlen(*data->envp) - j));
 			// if (var == NULL)
 			// 	return (NULL);
 			break ;
 		}
-		else
-			var = ft_strdup("");
-		// if (var == NULL)
-		// 	return (NULL);
-		data->envp++;
+		k++;
 	}
 	return (var);
 }
@@ -43,7 +49,7 @@ static int	dollar_handle(t_data *data, char *str, char **new_word, int i)
 	j = 1;
 	while (ft_isalnum(str[i + j]) || str[i + j] == '_')
 		j++;
-	tmp = ft_substr(str, i + 1, j);
+	tmp = ft_substr(str, i + 1, j - 1);
 	// if (tmp == NULL)
 	// 	return (-2);
 	var = env_var_search(data, tmp, j);
@@ -110,10 +116,11 @@ int	expand(t_data *data)
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
-		tmp->s_q = 0;
-		tmp->d_q = 0;
 		if (tmp->word == NULL)
+		{
 			tmp = tmp->next;
+			continue ;
+		}
 		new_word = var_replacement(data, tmp);
 		// if (new_word == NULL)
 		// 	return (0);
@@ -123,6 +130,8 @@ int	expand(t_data *data)
 		// 	return (0);
 		free(new_word);
 		printf("expand-> word :%s\n", tmp->word);
+		tmp->s_q = 0;
+		tmp->d_q = 0;
 		tmp = tmp->next;
 	}
 	return (1);

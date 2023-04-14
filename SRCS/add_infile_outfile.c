@@ -3,18 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   add_infile_outfile.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/12 14:37:25 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 12:27:21 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/minishell.h"
+#include "../incs/minishell.h" // Get filename and check file permissions.
+
+char	*filename_quote_removal(char *file)
+{
+	char	*filename;
+
+	filename = str_quotes_removal(file);
+	return (filename);
+}
 
 void	file_check_access(t_data *data, char *file, int i)
 {
-	if (i == 0) // infile
+	if (i == 2) // infile <
 	{
 		data->fdin = open(file, O_RDONLY);
 		if (access(file, F_OK) != 0)
@@ -22,7 +30,7 @@ void	file_check_access(t_data *data, char *file, int i)
 		else if (access(file, R_OK) != 0)
 			ft_printf("minishell: %s: Permission denied\n", file);
 	}
-	else if (i == 1)
+	else if (i == 1) //outfile >
 	{
 		data->fdout = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (access(file, F_OK) != 0)
@@ -30,93 +38,103 @@ void	file_check_access(t_data *data, char *file, int i)
 		else if (access(file, W_OK) != 0)
 			ft_printf("minishell: %s: Permission denied\n", file);
 	}
+	else if (i == 0) //outfile append >>
+	{
+		data->fdout = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		if (access(file, F_OK) != 0)
+			printf("minishell: %s: No such file or directory\n", file);
+		else if (access(file, W_OK) != 0)
+			ft_printf("minishell: %s: Permission denied\n", file);
+	}
 }
 
-void	add_infile(t_data *data, char *file)
+static void	init_here_doc(t_data *data, char *filename)
+{
+	data->LIMITER = filename;
+	data->here_doc = 1;
+	add_infile(data, NULL);
+}
+
+void	files_redirection(t_data *data, int index, size_t i)
 {
 	t_lexer	*tmp;
-	(void)file;
-
-	tmp = data->lexer;(void)file;
-	while (tmp != NULL)
-	{
-		if (tmp->word == NULL && ft_strncmp(tmp->token, "|", 1) \
-		!= 0 && ft_strlen(tmp->token) <= 2)//len 1 ou 2 pour >> et <<
-		{
-			tmp = tmp->next;
-			tmp = tmp->next;
-		}
-		else if (tmp->word == NULL && \
-		ft_strncmp(tmp->token, "|", 1) == 0 && \
-		ft_strlen(tmp->token) == 1)
-			tmp = tmp->next;
-		if (tmp->word != NULL)
-		{
-			//tmp->word = file;
-			return ;
-		}
-	}
-}
-
-void	add_outfile(t_data *data, char *file) //ls |grep i>o<i ok
-{// ls | wc >o marche
-	t_lexer	*tkn;(void)file;
-	t_lexer	*tmp;
-	(void)file;
+	char	*filename;
 
 	tmp = data->lexer;
-	tkn = data->lexer;
-	while (tmp->next != NULL)
+	while (tmp->index != index)
 		tmp = tmp->next;
-	while (1)
+	filename = get_filename(tmp->word, i);
+	if (tmp->word[i] == '>' && tmp->word[i + 1] == '>') //outfile append
 	{
-		if (tmp != data->lexer)
-			tkn = tmp->prev;
-		if (tmp->word != NULL && tkn->word != NULL)
-		{
-			//tkn->word.outfile = file;
-			return ;
-		}
-		else if ((tmp->word != NULL &&
-		ft_strncmp(tkn->token, "|", 1) == 0) || (tmp == data->lexer))
-		{
-			//tmp->word = file;
-			return ;
-		}
-		tmp = tkn;
+ft_printf("out app: %s\n", filename);
+		file_check_access(data, filename, 0);
+		add_outfile(data, filename);
 	}
+	else if (tmp->word[i] == '>' && tmp->word[i + 1] != '>') //outfile
+	{
+	// filename = get_filename(tmp->word, i);
+ft_printf("out: %s\n", filename);
+		file_check_access(data, filename, 1);
+		add_outfile(data, filename);
+	}
+	else if (tmp->word[i] == '<' && tmp->word[i + 1] != '<') // INFILE
+	{
+		// filename = get_filename(tmp->word, i);
+ft_printf("inf: %s\n", filename);
+		file_check_access(data, filename, 2);
+		add_infile(data, filename);
+	}
+	else
+		init_here_doc(data, filename);
+	ft_printf("tmp->word before: %s\n", tmp->word);
+		tmp->word = remove_file(tmp->word, i);//pe a la fin pour le faire dans chaque??
+ft_printf("tmp->word after: %s\n", tmp->word);
 }
 
-void	files_redirection(t_data *data)
+void	check_redirection(t_data *data)
 {
+	size_t	i;
 	t_lexer	*tmp;
 
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
-		if (tmp->token != NULL && ft_strncmp(tmp->token, "<", 1) == \
-		0 && ft_strlen(tmp->token) == 1)
+		i = 0;
+// ft_printf("word redir: %s\n", tmp->word);
+		while (tmp->word[i] != '\0')
 		{
-			file_check_access(data, tmp->next->word, 0);
-			add_infile(data, tmp->next->word);
-		}
-		if (tmp->token != NULL && ft_strncmp(tmp->token, ">", 1) == \
-		0 && ft_strlen(tmp->token) == 1)
-		{
-			file_check_access(data, tmp->next->word, 1);
-			add_outfile(data, tmp->next->word);
+			if (tmp->word[i] == '\'' || tmp->word[i] == '"')
+				i += quote_handling(tmp->word, i, tmp->word[i]);
+			if (i < ft_strlen(tmp->word) && (tmp->word[i] == '>' || \
+			tmp->word[i] == '<'))
+			{
+				if (i == 0)
+					files_redirection(data, tmp->index, i);
+				else if (i > 0 && (tmp->word[i - 1] != '>' && \
+				tmp->word[i - 1] != '<'))
+					files_redirection(data, tmp->index, i);
+			}
+			else
+				i++;
 		}
 		tmp = tmp->next;
 	}
 
 
-	tmp = data->lexer;
-	while (tmp != NULL)
+
+
+
+	// test
+	t_data	*tmp2;
+	tmp2 = data;
+	while (tmp2->lexer != NULL)
 	{
-		if (tmp->word != NULL)
-			ft_printf("cmd: %s\n", tmp->word);
-		else
-			ft_printf("cmd: %s\n", tmp->token);
-		tmp = tmp->next;
+		ft_printf("\n\n");
+ft_printf("word node: %s\n", tmp2->lexer->word);
+ft_printf("infile node: %s\n", tmp2->lexer->infile);
+ft_printf("outfile node: %s\n", tmp2->lexer->outfile);
+ft_printf("h_doc: %d\n", tmp2->here_doc);
+		tmp2->lexer = tmp2->lexer->next;
 	}
+	// end test
 }

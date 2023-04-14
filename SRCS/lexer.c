@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 13:45:15 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/05 10:12:16 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/12 11:55:06 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,28 @@ int	is_pipe(char *str, int i)
 	return (0);
 }
 
-static int	tokenizer(t_data *data, char *str, int i)
-{
-	char	*token;
+// static int	tokenizer(t_data *data, char *str, int i)
+// {
+// 	char	*token;
 
-	if ((str[i] == '>' && str[i + 1] == '>') \
-		|| (str[i] == '<' && str[i + 1] == '<'))
-	{
-		token = ft_substr(str, i, 2);
-		if (!add_node(&data->lexer, token, 1))
-			return (-1);
-		free(token);
-		return (2);
-	}
-	else
-	{
-		token = ft_substr(str, i, 1);
-		if (!add_node(&data->lexer, token, 1))
-			return (-1);
-		free(token);
-		return (1);
-	}
-}
+// 	if ((str[i] == '>' && str[i + 1] == '>')
+// 		|| (str[i] == '<' && str[i + 1] == '<'))
+// 	{
+// 		token = ft_substr(str, i, 2);
+// 		if (!add_node(&data->lexer, token, 1))
+// 			return (-1);
+// 		free(token);
+// 		return (2);
+// 	}
+// 	else
+// 	{
+// 		token = ft_substr(str, i, 1);
+// 		// if (!add_node(&data->lexer, token, 1))
+// 		// 	return (-1);
+// 		free(token);
+// 		return (1);
+// 	}
+// }
 
 static int	worder(t_data *data, char *str, int i)
 {
@@ -86,7 +86,7 @@ int	lexer_init(t_data *data)
 		if (is_quote(data->str[i]))
 			j = quote_worder(data, data->str, i);
 		else if (is_pipe(data->str, i))
-			j = tokenizer(data, data->str, i);
+			j++; //= tokenizer(data, data->str, i);
 		else
 			j = worder(data, data->str, i);
 		if (j == -1)
