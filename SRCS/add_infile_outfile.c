@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/17 19:05:56 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 19:39:43 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,69 +43,36 @@ void	file_check_access(t_data *data, char *file, int i)
 void	check_redirection(t_data *data, char *token, char *filename)
 {
 	filename = str_quotes_removal(filename);
-printf("\nfilename name: %s\n\n", filename);
 	if (ft_strncmp(token, ">", 1) == 0 && ft_strlen(token) == 1) // outfile
-	{printf("outfile\n");
+	{
 		file_check_access(data, filename, 1);
 		add_outfile(data, filename);
 	}
 	else if (ft_strncmp(token, ">>", 2) == 0 && ft_strlen(token) == 2) // out app
-	{printf("outfile append\n");
+	{
 		file_check_access(data, filename, 2);
 		add_outfile(data, filename);
 	}
 	else if (ft_strncmp(token, "<", 1) == 0 && ft_strlen(token) == 1) // inf
-	{printf("infile\n");
+	{
 		file_check_access(data, filename, 0);
-		add_infile(data, filename);
+		add_infile(data, filename, 0);
 	}
 	else
-	{
-		printf("Here_doc redirection\n");
-		data->LIMITER = filename;
-		data->here_doc = 1;
-		//if (data->lexer->infile != NULL alors free et NULL dans function add infile avec hd)
-	}
+		add_infile(data, filename, 1);
 }
 
-void	remove_nodes_redirection(t_lexer *lexer, size_t index)
+void	remove_nodes_redirection(t_data *data, size_t index)
 {
-	int		count;
-	t_lexer	*tmp;
-	t_lexer	*buffer;
-
-	count = 2;
-	tmp = lexer;
-	while (tmp->next->index != index)
-		tmp = tmp->next;
-	buffer = tmp;
-	while (count > 0)
-	{
-		tmp = buffer->next;
-		if (tmp->next != NULL)
-		{
-			buffer->next = tmp->next;//aussi gerer tmp->prev
-			tmp->next->prev = buffer;
-		}
-		else
-			buffer->next = NULL;
-		if (tmp->word != NULL)
-		{printf("freeing word: %s\n", tmp->word);
-			free(tmp->word);
-		}
-
-		if (tmp->token != NULL)
-		{
-			printf("freeing token: %s\n", tmp->token);free(tmp->token);
-		}
-
-		free(tmp);
-		tmp = buffer;
-		count --;
-	}
+	if (index == 0 || lstlen(data->lexer) == 2)
+		remove_front_nodes(data);
+	else if (index + 1 == lstlen(data->lexer) - 1 && lstlen(data->lexer) > 2)
+		remove_back_nodes(data);
+	else
+		remove_middle_nodes(data, index);
 }
 
-void	token_check(t_data *data)//add si infile and outfile rights/ seg fault
+void	token_check(t_data *data)//segfault si: <Makefile. on arrive a tout supprimer pas fait correctement
 {
 	t_lexer	*tmp;
 
@@ -129,14 +96,19 @@ void	token_check(t_data *data)//add si infile and outfile rights/ seg fault
 		0)
 		{
 			check_redirection(data, tmp->token, tmp->next->word);
-			remove_nodes_redirection(data->lexer, tmp->index);
+			remove_nodes_redirection(data, tmp->index);
+			add_index(data);
+			tmp = data->lexer;
+			continue ;
 		}
 		tmp = tmp->next;
 	}
-
+	check_heredoc(data);
 
 
 	// test
+	if (lstlen(data->lexer) > 0)
+	{
 	len = 0;
 	tmp = data->lexer;
 	while (tmp != NULL)
@@ -156,10 +128,12 @@ if (tmp2->lexer->word != NULL)
 	ft_printf("word node: %s\n", tmp2->lexer->word);
 else
 	ft_printf("token node: %s\n", tmp2->lexer->token);
+printf("index: %ld\n", tmp2->lexer->index);
 ft_printf("infile: %s\n", tmp2->lexer->infile);
 ft_printf("outfile: %s\n", tmp2->lexer->outfile);
-ft_printf("h_doc: %d\n", tmp2->here_doc);
+ft_printf("LIMITER: %s\n",tmp2->lexer->LIMITER);
+ft_printf("hdoc: %d\n",tmp2->heredoc);
 		tmp2->lexer = tmp2->lexer->next;
-	}
-	// end test
+	}}
+	// end test ls <TODO -l|wc -l >out>>out2<Makefile
 }
