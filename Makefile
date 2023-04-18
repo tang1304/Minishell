@@ -40,7 +40,9 @@ LST_SRCS	=	main.c \
 				check_error_utils.c \
 				expander_quotes.c \
 				add_infile_outfile.c \
-				add_infile_outfile_utils.c
+				add_infile_outfile_utils.c \
+				remove_nodes.c \
+				heredoc.c
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)
 

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 13:45:15 by tgellon           #+#    #+#             */
-/*   Updated: 2023/03/31 08:51:18 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 19:49:44 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-
+// Si line = "ls <Makefile ", Si espace à la fin on a creation de 4 nodes
+//n1= "ls", n2= "<", n3= "Makefile" et n4 = " " A corriger
 static int	spaces_skip(char *str, int i)
 {
 	int	j;
@@ -91,5 +92,6 @@ int	lexer_init(t_data *data)
 			return (0);
 		i = i + j;
 	}
+	add_index(data);
 	return (1);
 }

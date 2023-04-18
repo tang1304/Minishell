@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/17 17:54:39 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 19:39:57 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_data
 	char				**tokens_tab;
 	int					tokens; // number of tokens inside line
 	int					cmds; // number of cmds
-	int					here_doc; // if here_doc or not
+	int					heredoc; // if here_doc or not
 	char				*LIMITER;
 	char				*pwd;
 	char				*oldpwd;
@@ -93,29 +93,30 @@ int		count_quote(char *s, size_t *i, char c);
 // void	implement_redirections_cmds(t_data *data);
 
 /*	add_infile_outfile.c	*/
-void	remove_nodes_redirection(t_lexer *lexer, size_t index);
+void	remove_nodes_redirection(t_data *data, size_t index);
 void	token_check(t_data *data);
 void	check_redirection(t_data *data, char *token, char *filename);
 void	file_check_access(t_data *data, char *file, int i);
 
 /*	add_infile_outfile_utils.c	*/
-// char	*get_filename(char *s, size_t i);
-// char	*remove_file(char *s, size_t i);
-// int		check_if_cmd(char *s);
-// void	add_infile(t_data *data, char *file, int i);
-void	add_infile(t_data *data, char *file);
+void	add_infile(t_data *data, char *file, int i);
 void	add_outfile(t_data *data, char *file);
-// void	add_outfile(t_data *data, char *file, int i);
+size_t	lstlen(t_lexer *lexer);
+
+/*	remove_nodes.c	*/
+void	remove_front_nodes(t_data *data);
+void	remove_back_nodes(t_data *data);
+void	remove_middle_nodes(t_data *data, size_t index);
 
 /*	lexer.c	*/
 int		lexer_init(t_data *data);
 int		is_pipe(char *str, int i);
 
 /*	lexer_utils.c	*/
+void	add_index(t_data *data);
 int		ft_isspace(char c);
 int		quote_handling(char *str, int i, char quote);
 int		add_node(t_lexer **lexer, char *str, int token);
-
 
 /*	cmd_struct.c	*/
 void	create_cmd_struct(t_data *data);
@@ -133,5 +134,9 @@ char	*str_quotes_removal(char *str);
 int		quotes_removal(t_lexer *lexer);
 
 /*	builtins.c	*/
+
+/*	heredoc.c	*/
+void	check_heredoc(t_data *data);
+void	init_heredoc(t_data *data);
 
 #endif

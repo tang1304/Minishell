@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/17 16:26:50 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 19:12:20 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	data_initialize(t_data *data, char **envp)
 	data->lexer = NULL;
 	data->str = NULL;
 	data->prompt = NULL;
-	data->here_doc = 0;
+	data->LIMITER = NULL;
+	data->heredoc = 0;
 	user = getenv("USER");
 	if (user != NULL)
 		data->prompt = ft_strjoin(user, "@minishell:");

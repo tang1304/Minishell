@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/17 15:34:00 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 18:36:51 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,18 @@ int	quote_handling(char *str, int i, char quote)
 
 static t_lexer	*new_lexer_node(char *str, int token)
 {
-	static int	i;
-	t_lexer		*node;
+	t_lexer	*node;
 
 	node = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!node)
 		return (NULL);
-	node->index = i;
-	i++;
 	if (token == 0)
 	{
 		node->word = ft_strdup(str);
 		node->infile = NULL;
 		node->outfile = NULL;
 		node->token = NULL;
+		node->LIMITER = NULL;
 		printf("word: %s\n", node->word);
 	}
 	else
@@ -77,4 +75,23 @@ int	add_node(t_lexer **lexer, char *str, int token)
 	tmp->next = new;
 	new->prev = tmp;
 	return (1);
+}
+
+void	add_index(t_data *data)
+{
+	size_t	i;
+	t_lexer	*tmp;
+
+	i = 0;
+	tmp = data->lexer;
+	while (tmp != NULL)
+	{
+		tmp->index = i;
+if (tmp->word != NULL)
+	printf("word: %s index: %ld\n", tmp->word, tmp->index);
+else
+	printf("token: %s index: %ld\n", tmp->token, tmp->index);
+		i++;
+		tmp = tmp->next;
+	}
 }

@@ -12,7 +12,18 @@
 
 #include "../incs/minishell.h"
 
-void	add_infile(t_data *data, char *file) // seems OK
+static void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
+{
+	if (i == 0)
+		lexer->infile = ft_strdup(file);
+	else
+	{
+		lexer->LIMITER = ft_strdup(file);
+		data->heredoc = 1;
+	}
+}
+
+void	add_infile(t_data *data, char *file, int i)
 {
 	t_lexer	*tmp;
 
@@ -24,15 +35,24 @@ void	add_infile(t_data *data, char *file) // seems OK
 		ft_strncmp(tmp->prev->token, "|", 1) == 0))
 		{
 			if (tmp->infile != NULL)
-				free(tmp->infile);//dqtq limiter = NULL hdoc = 0
-			tmp->infile = ft_strdup(file);
+			{
+				free(tmp->infile);
+				tmp->infile = NULL;
+			}
+			if (tmp->LIMITER != NULL)
+			{
+				data->heredoc = 0;
+				free(tmp->LIMITER);
+				tmp->LIMITER = NULL;
+			}
+			add_file_node(data, tmp, file, i);
 			return ;
 		}
 		tmp = tmp->next;
 	}
 }
 
-void	add_outfile(t_data *data, char *file) //not working well we have 1 word node with nothign at the end +
+void	add_outfile(t_data *data, char *file)
 {
 	t_lexer	*tmp;
 
@@ -54,4 +74,21 @@ void	add_outfile(t_data *data, char *file) //not working well we have 1 word nod
 		tmp = tmp->prev; //<TODO >out ls | wc -l >>append
 
 	}
+}
+
+size_t	lstlen(t_lexer *lexer)
+{
+	size_t	len;
+	t_lexer	*tmp;
+
+	len = 0;
+	if (!lexer)
+		return (0);
+	tmp = lexer;
+	while (tmp != NULL)
+	{
+		len++;
+		tmp = tmp->next;
+	}printf("lstlen: %ld\n", len);
+	return (len);
 }
