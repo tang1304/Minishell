@@ -18,6 +18,8 @@ static void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
 		lexer->infile = ft_strdup(file);
 	else
 	{
+		if (lexer->LIMITER != NULL)
+			free(lexer->LIMITER);
 		lexer->LIMITER = ft_strdup(file);
 		data->heredoc = 1;
 	}
@@ -39,12 +41,11 @@ void	add_infile(t_data *data, char *file, int i)
 				free(tmp->infile);
 				tmp->infile = NULL;
 			}
-			if (tmp->LIMITER != NULL)
-			{
-				data->heredoc = 0;
-				free(tmp->LIMITER);
-				tmp->LIMITER = NULL;
-			}
+			// if (tmp->LIMITER != NULL)
+			// {
+			// 	free(tmp->LIMITER);
+			// 	tmp->LIMITER = NULL;
+			// }
 			add_file_node(data, tmp, file, i);
 			return ;
 		}
@@ -71,8 +72,7 @@ void	add_outfile(t_data *data, char *file)
 			tmp->outfile = ft_strdup(file);
 			return ;
 		}
-		tmp = tmp->prev; //<TODO >out ls | wc -l >>append
-
+		tmp = tmp->prev; //<TODO >out ls | wc -l >>append marche
 	}
 }
 

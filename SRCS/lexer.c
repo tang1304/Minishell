@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 13:45:15 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/19 14:33:17 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 19:09:21 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,8 @@ static int	worder(t_data *data, char *str, int i)
 	j = 0;
 	while (str[i + j] && !ft_isspace(str[i + j]) && !is_token(str, i + j))
 	{
-		if (str[i + j] == '\'')
-			j = j + quote_handling(str, i + j, '\'');
-		if (str[i + j] == '"')
-			j = j + quote_handling(str, i + j, '"');
+		if (str[i + j] == '\'' || str[i + j] == '"')
+			j = j + quote_handling(str, i + j, str[i + j]);
 		j++;
 	}
 	new = ft_substr(str, i, j);
