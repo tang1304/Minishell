@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/19 14:36:31 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 18:48:09 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <readline/history.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <sys/wait.h>
 
 typedef struct s_lexer
 {
@@ -129,7 +130,7 @@ void	create_cmd_struct(t_data *data);
 // int		quote_worder(t_data *data, char *str, int i);
 
 /*	expander_var.c	*/
-int		expand(t_data *data);
+void	expand(t_data *data);
 
 /*	expander_quotes.c	*/
 char	*str_quotes_removal(char *str);

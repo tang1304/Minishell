@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/18 19:39:43 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 19:58:12 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,17 @@ void	token_check(t_data *data)//segfault si: <Makefile. on arrive a tout supprim
 	t_lexer	*tmp;
 
 
-	//test
-	size_t len;
-	len = 0;
-	tmp = data->lexer;
-	while (tmp != NULL)
-	{
-		len++;
-		tmp = tmp->next;
-	}
-	printf("len: %ld\n", len);
-	//endtest
+	// //test
+	// size_t len;
+	// len = 0;
+	// tmp = data->lexer;
+	// while (tmp != NULL)
+	// {
+	// 	len++;
+	// 	tmp = tmp->next;
+	// }
+	// printf("len: %ld\n", len);
+	// //endtest
 
 	tmp = data->lexer;
 	while (tmp != NULL)
@@ -106,34 +106,34 @@ void	token_check(t_data *data)//segfault si: <Makefile. on arrive a tout supprim
 	check_heredoc(data);
 
 
-	// test
-	if (lstlen(data->lexer) > 0)
-	{
-	len = 0;
-	tmp = data->lexer;
-	while (tmp != NULL)
-	{
-		len++;
-		tmp = tmp->next;
-	}
-	printf("len: %ld\n", len);
+// 	// test
+// 	if (lstlen(data->lexer) > 0)
+// 	{
+// 	len = 0;
+// 	tmp = data->lexer;
+// 	while (tmp != NULL)
+// 	{
+// 		len++;
+// 		tmp = tmp->next;
+// 	}
+// 	printf("len: %ld\n", len);
 
 
-	t_data	*tmp2;
-	tmp2 = data;
-	while (tmp2->lexer != NULL)
-	{
-		ft_printf("\n\n");
-if (tmp2->lexer->word != NULL)
-	ft_printf("word node: %s\n", tmp2->lexer->word);
-else
-	ft_printf("token node: %s\n", tmp2->lexer->token);
-printf("index: %ld\n", tmp2->lexer->index);
-ft_printf("infile: %s\n", tmp2->lexer->infile);
-ft_printf("outfile: %s\n", tmp2->lexer->outfile);
-ft_printf("LIMITER: %s\n",tmp2->lexer->LIMITER);
-ft_printf("hdoc: %d\n",tmp2->heredoc);
-		tmp2->lexer = tmp2->lexer->next;
-	}}
+// 	t_data	*tmp2;
+// 	tmp2 = data;
+// 	while (tmp2->lexer != NULL)
+// 	{
+// 		ft_printf("\n\n");
+// if (tmp2->lexer->word != NULL)
+// 	ft_printf("word node: %s\n", tmp2->lexer->word);
+// else
+// 	ft_printf("token node: %s\n", tmp2->lexer->token);
+// printf("index: %ld\n", tmp2->lexer->index);
+// ft_printf("infile: %s\n", tmp2->lexer->infile);
+// ft_printf("outfile: %s\n", tmp2->lexer->outfile);
+// ft_printf("LIMITER: %s\n",tmp2->lexer->LIMITER);
+// ft_printf("hdoc: %d\n",tmp2->heredoc);
+// 		tmp2->lexer = tmp2->lexer->next;
+// 	}}
 	// end test ls <TODO -l|wc -l >out>>out2<Makefile
 }
