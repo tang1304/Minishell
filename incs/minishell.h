@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/18 19:39:57 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 11:11:31 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int		error_great(char *line);
 int		error_less(char *line);
 
 /*	check_error_utils.c	*/
+int		is_word(char *s, int i, char c);
 int		error_quotes(char *line);
 int		count_quote(char *s, size_t *i, char c);
 
