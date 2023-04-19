@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/19 11:11:31 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 14:36:31 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,16 @@ void	prompt_loop(t_data *data);
 
 /*	check_error_input.c	*/
 int		error_check(char *line);
-int		error_pipes(char *line, int i);
+int		error_pipes(char *line, size_t i);
 int		error_last_token(char *line);
-int		error_great(char *line);
-int		error_less(char *line);
+int		error_great(char *line, size_t i);
+int		error_less(char *line, size_t i);
 
 /*	check_error_utils.c	*/
 int		is_word(char *s, int i, char c);
-int		error_quotes(char *line);
-int		count_quote(char *s, size_t *i, char c);
+int		error_quotes(char *line, size_t i);
+int		check_token(char *s, size_t i);
+// int		count_quote(char *s, size_t *i, char c);
 
 /*	parser.c	*/
 // void	implement_redirections_cmds(t_data *data);
@@ -122,10 +123,10 @@ int		add_node(t_lexer **lexer, char *str, int token);
 /*	cmd_struct.c	*/
 void	create_cmd_struct(t_data *data);
 
-/*	lexer_quote_handle	*/
-int		quote_handling(char *str, int i, char quote);
-int		is_quote(char c);
-int		quote_worder(t_data *data, char *str, int i);
+// /*	lexer_quote_handle	*/
+// int		quote_handling(char *str, int i, char quote);
+// int		is_quote(char c);
+// int		quote_worder(t_data *data, char *str, int i);
 
 /*	expander_var.c	*/
 int		expand(t_data *data);

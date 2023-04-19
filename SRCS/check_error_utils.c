@@ -23,52 +23,41 @@ int	is_word(char *s, int i, char c)
 	return (NOT_WORD);
 }
 
-int	count_quote(char *s, size_t *i, char c)
+int	check_token(char *s, size_t i)
 {
-	int		count;
-	size_t	len;
-
-	count = 1;
-	len = ft_strlen(s);
-	while (*i < len && *i + 1 < len)
-	{
-		*i = *i + 1;
-		while (s[*i] != c && *i < len)
-			*i = *i + 1;
-		if (s[*i] == c && *i < len)
-		{
-			count++;
-			return (count);
-		}
-	}
-	return (count);
+	if (s[i] == '>')
+		if (error_great(s, i) != SUCCESS)
+			return (FAILURE);
+	if (s[i] == '<')
+		if (error_less(s, i) != SUCCESS)
+			return (FAILURE);
+	return (SUCCESS);
 }
 
-int	error_quotes(char *line)
+int	error_quotes(char *line, size_t i)
 {
-	size_t	i;
-	int		s_quote;
-	int		d_quote;
-
-	i = 0;
-	s_quote = 0;
-	d_quote = 0;
 	while (line[i] != '\0')
 	{
-		if (line[i] == '\'' && i < ft_strlen(line))
-			s_quote += count_quote(line, &i, '\'');
-		else if (line[i] == '"' && i < ft_strlen(line))
-			d_quote += count_quote(line, &i, '"');
-		// else if (line[i] == '|' && s_quote % 2 == 0 && d_quote % 2 == 0)
-		// 	if (error_pipes(line, i) != SUCCESS)
-		// 		return (PIPE_FAILURE);
-		i++;
+		if (line[i] == '\'')
+		{
+			i++;
+			while (i < ft_strlen(line) && line[i] != '\'')
+				i++;
+			if (line[i] == '\0')
+				return (printf("minishell: syntax error near unexpected token \
+`\''\n"), QUOTE_FAILURE);
+			return (SUCCESS);
+		}
+		if (line[i] == '"')
+		{
+			i++;
+			while (i < ft_strlen(line) && line[i] != '"')
+				i++;
+			if (line[i] == '\0')
+				return (printf("minishell: syntax error near unexpected token \
+`\"'\n"), QUOTE_FAILURE);
+			return (SUCCESS);
+		}
 	}
-	if (s_quote % 2 != 0)
-		ft_putstr_fd("minishell: syntax error near unexpected token `\''\n", 2);
-	if (d_quote % 2 != 0)
-		ft_putstr_fd("minishell: syntax error near unexpected token `\"'\n", 2);
-	if ((s_quote % 2 != 0) || (d_quote % 2 != 0))
-		return (QUOTE_FAILURE);
 	return (SUCCESS);
 }
