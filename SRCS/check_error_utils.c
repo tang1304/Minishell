@@ -12,6 +12,17 @@
 
 #include "../incs/minishell.h"
 
+int	is_word(char *s, int i, char c)
+{
+	while (s[i] == c)
+		i++;
+	while (s[i] == ' ')
+		i++;
+	if (ft_isprint(s[i]) == 1 && s[i] != '>' && s[i] != '<')
+		return (SUCCESS);
+	return (NOT_WORD);
+}
+
 int	count_quote(char *s, size_t *i, char c)
 {
 	int		count;
@@ -48,9 +59,9 @@ int	error_quotes(char *line)
 			s_quote += count_quote(line, &i, '\'');
 		else if (line[i] == '"' && i < ft_strlen(line))
 			d_quote += count_quote(line, &i, '"');
-		else if (line[i] == '|' && s_quote % 2 == 0 && d_quote % 2 == 0)
-			if (error_pipes(line, i) != SUCCESS)
-				return (PIPE_FAILURE);
+		// else if (line[i] == '|' && s_quote % 2 == 0 && d_quote % 2 == 0)
+		// 	if (error_pipes(line, i) != SUCCESS)
+		// 		return (PIPE_FAILURE);
 		i++;
 	}
 	if (s_quote % 2 != 0)
