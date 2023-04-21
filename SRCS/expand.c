@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:43:06 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/21 16:25:08 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 16:57:48 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,13 @@ static char	*expand_str(t_data *data, char *s) //func too long
 // if (bef != NULL)
 	// printf("\n\n\nbef = %s c = %d\n", bef, bef[ft_strlen(bef) - 1]);
 			while (s[j] != ' ' && s[j] != '\0' && s[j] != '\'')
-				j++;
+				j++;//ou fonc si 0 alors ++ sinon break et chercher aussi $
+				// if (s[j] == '$' && s[j - 1] && s[j - 1] != '$')
+				// 	break ;
+
+
+
+
 // printf("char stopped: %c\n", s[j]);
 			aft = ft_substr(s, j, ft_strlen(s));
 // printf("aft = %s c = %d\n", aft, aft[ft_strlen(aft) - 1]);
