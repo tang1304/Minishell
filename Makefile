@@ -36,13 +36,15 @@ LST_SRCS	=	main.c \
 				lexer.c \
 				lexer_utils.c \
 				expand.c \
+				expander_quotes.c \
+				expander_var.c \
 				check_error_input.c \
 				check_error_utils.c \
-				expander_quotes.c \
 				add_infile_outfile.c \
 				add_infile_outfile_utils.c \
 				remove_nodes.c \
-				heredoc.c
+				heredoc.c \
+				utils.c
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)
 
