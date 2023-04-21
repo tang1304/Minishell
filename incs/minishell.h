@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/19 18:48:09 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 16:23:12 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,12 @@ void	create_cmd_struct(t_data *data);
 // int		is_quote(char c);
 // int		quote_worder(t_data *data, char *str, int i);
 
-/*	expander_var.c	*/
+/*	expand.c	*/
 void	expand(t_data *data);
+
+/*	expander_var.c	*/
+char	*get_var(t_data *data, char *s);
+char	*join_all(char *s, char *b, char *e, char *a);
 
 /*	expander_quotes.c	*/
 char	*str_quotes_removal(char *str);
@@ -141,5 +145,8 @@ int		quotes_removal(t_lexer *lexer);
 /*	heredoc.c	*/
 void	check_heredoc(t_data *data);
 void	init_heredoc(t_data *data);
+
+/*	utils.c	*/
+char	*ft_strjoin_free(char *s1, char *s2);
 
 #endif

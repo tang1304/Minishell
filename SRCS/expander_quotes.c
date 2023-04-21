@@ -73,9 +73,7 @@ static int	quote_pairs(char *str)
 	return (j);
 }
 
-char	*str_quotes_removal(char *str)//attention, je crois que si on envoie
-//'l"s' la fonction retourne ls, a coupler avec quote_handing pour ne pas
-//suppr la " au milieu
+char	*str_quotes_removal(char *str)
 {
 	int	i;
 	int	j;
