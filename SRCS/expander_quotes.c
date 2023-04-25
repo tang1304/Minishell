@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:22 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/14 11:45:01 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 09:51:14 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,21 +99,21 @@ char	*str_quotes_removal(char *str)
 	return (str);
 }
 
-int	quotes_removal(t_lexer *lexer)
-{
-	t_lexer	*tmp;
+// int	quotes_removal(t_lexer *lexer)
+// {
+// 	t_lexer	*tmp;
 
-	tmp = lexer;
-	while (tmp != NULL)
-	{
-		if (tmp->word == NULL || ((ft_strchr(tmp->word, '\'') == NULL \
-			&& ft_strchr(tmp->word, '"') == NULL)))
-		{
-			tmp = tmp->next;
-			continue ;
-		}
-		tmp->word = str_quotes_removal(tmp->word);
-		tmp = tmp->next;
-	}
-	return (1);
-}
+// 	tmp = lexer;
+// 	while (tmp != NULL)
+// 	{
+// 		if (tmp->word == NULL || ((ft_strchr(tmp->word, '\'') == NULL
+// 			&& ft_strchr(tmp->word, '"') == NULL)))
+// 		{
+// 			tmp = tmp->next;
+// 			continue ;
+// 		}
+// 		tmp->word = str_quotes_removal(tmp->word);
+// 		tmp = tmp->next;
+// 	}
+// 	return (1);
+// }
