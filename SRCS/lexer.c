@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 13:45:15 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/12 11:55:06 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 09:52:24 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-
+// Si line = "ls <Makefile ", Si espace à la fin on a creation de 4 nodes
+//n1= "ls", n2= "<", n3= "Makefile" et n4 = " " A corriger
 static int	spaces_skip(char *str, int i)
 {
 	int	j;
@@ -60,10 +61,8 @@ static int	worder(t_data *data, char *str, int i)
 	j = 0;
 	while (str[i + j] && !is_pipe(str, i + j))
 	{
-		if (str[i + j] == '\'')
-			j = j + quote_handling(str, i + j, '\'');
-		if (str[i + j] == '"')
-			j = j + quote_handling(str, i + j, '"');
+		if (str[i + j] == '\'' || str[i + j] == '"')
+			j = j + quote_handling(str, i + j, str[i + j]);
 		j++;
 	}
 	new = ft_substr(str, i, j);
@@ -93,5 +92,6 @@ int	lexer_init(t_data *data)
 			return (0);
 		i = i + j;
 	}
+	add_index(data);
 	return (1);
 }
