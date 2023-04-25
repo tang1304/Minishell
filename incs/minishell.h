@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/25 09:41:04 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 16:16:26 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ typedef struct s_lexer
 // 	struct s_command	*prev;
 // }				t_command;ls        | "grep >out" <Makefile| wc -l >outer
 
+typedef struct s_env
+{
+	char	*var;
+	struct s_env *next;
+}				t_env;
+
 typedef struct s_data
 {
 	char				*str; // command typed by user
@@ -67,6 +73,7 @@ typedef struct s_data
 	int					fd[2];//pipe for here_doc
 	int					*pipe;//pipes for other cmds
 	pid_t				*pids;//pids of child processes
+	struct s_env		*env;
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
 }				t_data;
@@ -85,7 +92,7 @@ enum e_errors
 /*	data.c	*/
 void	data_initialize(t_data *data, char **envp);
 void	update_pwd(t_data *data, char *s);
-char	**get_envp(char **envp);
+char	**get_envp(t_data *data, char **envp);
 
 /*	loop.c	*/
 void	prompt_loop(t_data *data);
