@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/14 13:39:29 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/14 14:46:55 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static void	init_here_doc(t_data *data, char *filename)
 	filename = filename_quote_removal(filename);
 	data->LIMITER = filename;
 	data->here_doc = 1;
-	add_infile(data, NULL, 3);
+	add_infile(data, NULL, 3);// useless??
+	
 }
 
 void	files_redirection(t_data *data, int index, size_t i)
@@ -113,14 +114,15 @@ void	check_redirection(t_data *data)
 	// test
 	t_data	*tmp2;
 	tmp2 = data;
-	while (tmp2->lexer != NULL)
+	tmp = data->lexer;
+	while (tmp != NULL)
 	{
 		ft_printf("\n\n");
-ft_printf("word node: %s\n", tmp2->lexer->word);
-ft_printf("infile: %s\n", tmp2->lexer->infile);
-ft_printf("outfile: %s\n", tmp2->lexer->outfile);
+ft_printf("word node: %s\n", tmp->word);
+ft_printf("infile: %s\n", tmp->infile);
+ft_printf("outfile: %s\n", tmp->outfile);
 ft_printf("h_doc: %d\n", tmp2->here_doc);
-		tmp2->lexer = tmp2->lexer->next;
+		tmp = tmp->next;
 	}
 	// end test
 }
