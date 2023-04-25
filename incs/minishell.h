@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/21 16:23:12 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 09:41:04 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,16 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 	struct s_lexer	*prev;// a voir
 }				t_lexer;
+
+// typedef struct s_command
+// {
+// 	char				**cmd;//malloc a free
+// 	int					index;
+// 	char				*infile;
+// 	char				*outfile;
+// 	struct s_command	*next;
+// 	struct s_command	*prev;
+// }				t_command;ls        | "grep >out" <Makefile| wc -l >outer
 
 typedef struct s_data
 {
@@ -71,6 +81,7 @@ enum e_errors
 	NODE_FAILURE = 7,
 	NOT_WORD = 8
 };
+
 /*	data.c	*/
 void	data_initialize(t_data *data, char **envp);
 void	update_pwd(t_data *data, char *s);
