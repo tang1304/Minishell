@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/25 09:52:17 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 10:09:06 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@ int	ft_isspace(char c)
 	if (c == ' ' || (c >= 9 && c <= 13))
 		return (1);
 	return (0);
+}
+
+int	quote_handling(char *str, int i, char quote)
+{
+	int	j;
+
+	j = 1;
+	while (str[i + j] && str[i + j] != quote)
+		j++;
+	return (j);
 }
 
 static t_lexer	*new_lexer_node(char *str, int token)
