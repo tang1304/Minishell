@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/14 12:12:21 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 09:52:37 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,36 @@ void	prompt_loop(t_data *data)
 			add_history(data->str);
 		if (error_check(data->str) == SUCCESS)
 		{
-			lexer_init(data);// si 1 ou 0 exit?
-			check_redirection(data);
-			expand(data); // penser a : 'export a = "'" '
-			quotes_removal(data->lexer);
-			//create_cmd_struct(data); // ou a mettre a la fin de lexer_init?
+			lexer_init(data);
+			token_check(data);
+			expand(data);
+
+
+
+	t_data	*tmp2;
+	tmp2 = data;
+	while (tmp2->lexer != NULL)
+	{
+		ft_printf("\n\n");
+if (tmp2->lexer->word != NULL)
+	ft_printf("word node: %s\n", tmp2->lexer->word);
+else
+	ft_printf("token node: %s\n", tmp2->lexer->token);
+printf("index: %ld\n", tmp2->lexer->index);
+ft_printf("infile: %s\n", tmp2->lexer->infile);
+ft_printf("outfile: %s\n", tmp2->lexer->outfile);
+ft_printf("LIMITER: %s\n",tmp2->lexer->LIMITER);
+ft_printf("hdoc: %d\n",tmp2->heredoc);
+		tmp2->lexer = tmp2->lexer->next;
+	}
+
+
+
+
+
+
+
+
 			//penser a free(data)
 		}
 	//if (check_error(line) == SUCCESS)

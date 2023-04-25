@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_infile_outfile.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/14 13:39:29 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 09:42:21 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*filename_quote_removal(char *file)
 
 void	file_check_access(t_data *data, char *file, int i)
 {
-	if (i == 2)
+	if (i == 0) // infile >
 	{
 		data->fdin = open(file, O_RDONLY);
 		if (access(file, F_OK) != 0)
@@ -30,7 +30,7 @@ void	file_check_access(t_data *data, char *file, int i)
 		else if (access(file, R_OK) != 0)
 			ft_printf("minishell: %s: Permission denied\n", file);
 	}
-	else if (i == 1)
+	else if (i == 1) // outfile >
 	{
 		data->fdout = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (access(file, F_OK) != 0)
@@ -38,7 +38,7 @@ void	file_check_access(t_data *data, char *file, int i)
 		else if (access(file, W_OK) != 0)
 			ft_printf("minishell: %s: Permission denied\n", file);
 	}
-	else if (i == 0)
+	else if (i == 2) // outfile append >>
 	{
 		data->fdout = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (access(file, F_OK) != 0)
@@ -48,79 +48,101 @@ void	file_check_access(t_data *data, char *file, int i)
 	}
 }
 
-static void	init_here_doc(t_data *data, char *filename)
+void	check_redirection(t_data *data, char *token, char *filename)
 {
-	filename = filename_quote_removal(filename);
-	data->LIMITER = filename;
-	data->here_doc = 1;
-	add_infile(data, NULL, 3);
-}
-
-void	files_redirection(t_data *data, int index, size_t i)
-{
-	t_lexer	*tmp;
-	char	*filename;
-
-	tmp = data->lexer;
-	while (tmp->index != index)
-		tmp = tmp->next;
-	filename = get_filename(tmp->word, i);
-	if (tmp->word[i] == '>' && tmp->word[i + 1] == '>')
-		add_outfile(data, filename, 0);
-	else if (tmp->word[i] == '>' && tmp->word[i + 1] != '>')
-		add_outfile(data, filename, 1);
-	else if (tmp->word[i] == '<' && tmp->word[i + 1] != '<')
-		add_infile(data, filename, 2);
+	filename = str_quotes_removal(filename);
+	if (ft_strncmp(token, ">", 1) == 0 && ft_strlen(token) == 1) // outfile
+	{
+		file_check_access(data, filename, 1);
+		add_outfile(data, filename);
+	}
+	else if (ft_strncmp(token, ">>", 2) == 0 && ft_strlen(token) == 2) // out app
+	{
+		file_check_access(data, filename, 2);
+		add_outfile(data, filename);
+	}
+	else if (ft_strncmp(token, "<", 1) == 0 && ft_strlen(token) == 1) // inf
+	{
+		file_check_access(data, filename, 0);
+		add_infile(data, filename, 0);
+	}
 	else
-		init_here_doc(data, filename);
-ft_printf("node before: %s\n", tmp->word);
-	tmp->word = remove_file(tmp->word, i);
-ft_printf("node after: %s\n", tmp->word);
+		add_infile(data, filename, 1);
 }
 
-void	check_redirection(t_data *data)
+void	remove_nodes_redirection(t_data *data, size_t index)
+{
+	if (index == 0 || lstlen(data->lexer) == 2)
+		remove_front_nodes(data);
+	else if (index + 1 == lstlen(data->lexer) - 1 && lstlen(data->lexer) > 2)
+		remove_back_nodes(data);
+	else
+		remove_middle_nodes(data, index);
+}
+
+void	token_check(t_data *data)//segfault si: <Makefile. on arrive a tout supprimer pas fait correctement
 {
 	size_t	i;
 	t_lexer	*tmp;
 
+
+	// //test
+	// size_t len;
+	// len = 0;
+	// tmp = data->lexer;
+	// while (tmp != NULL)
+	// {
+	// 	len++;
+	// 	tmp = tmp->next;
+	// }
+	// printf("len: %ld\n", len);
+	// //endtest
+
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
-		i = 0;
-		while (tmp->word[i] != '\0')
+		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) != \
+		0)
 		{
-			if (tmp->word[i] == '\'' || tmp->word[i] == '"')
-				i += quote_handling(tmp->word, i, tmp->word[i]);
-			if (i < ft_strlen(tmp->word) && (tmp->word[i] == '>' || \
-			tmp->word[i] == '<'))
-			{
-				if (i == 0)
-					files_redirection(data, tmp->index, i);
-				else if (i > 0 && (tmp->word[i - 1] != '>' && \
-				tmp->word[i - 1] != '<'))
-					files_redirection(data, tmp->index, i);
-			}
-			else
-				i++;
+			check_redirection(data, tmp->token, tmp->next->word);
+			remove_nodes_redirection(data, tmp->index);
+			add_index(data);
+			tmp = data->lexer;
+			continue ;
 		}
 		tmp = tmp->next;
 	}
+	check_heredoc(data);
 
 
+// 	// test
+// 	if (lstlen(data->lexer) > 0)
+// 	{
+// 	len = 0;
+// 	tmp = data->lexer;
+// 	while (tmp != NULL)
+// 	{
+// 		len++;
+// 		tmp = tmp->next;
+// 	}
+// 	printf("len: %ld\n", len);
 
 
-
-	// test
-	t_data	*tmp2;
-	tmp2 = data;
-	while (tmp2->lexer != NULL)
-	{
-		ft_printf("\n\n");
-ft_printf("word node: %s\n", tmp2->lexer->word);
-ft_printf("infile: %s\n", tmp2->lexer->infile);
-ft_printf("outfile: %s\n", tmp2->lexer->outfile);
-ft_printf("h_doc: %d\n", tmp2->here_doc);
-		tmp2->lexer = tmp2->lexer->next;
-	}
-	// end test
+// 	t_data	*tmp2;
+// 	tmp2 = data;
+// 	while (tmp2->lexer != NULL)
+// 	{
+// 		ft_printf("\n\n");
+// if (tmp2->lexer->word != NULL)
+// 	ft_printf("word node: %s\n", tmp2->lexer->word);
+// else
+// 	ft_printf("token node: %s\n", tmp2->lexer->token);
+// printf("index: %ld\n", tmp2->lexer->index);
+// ft_printf("infile: %s\n", tmp2->lexer->infile);
+// ft_printf("outfile: %s\n", tmp2->lexer->outfile);
+// ft_printf("LIMITER: %s\n",tmp2->lexer->LIMITER);
+// ft_printf("hdoc: %d\n",tmp2->heredoc);
+// 		tmp2->lexer = tmp2->lexer->next;
+// 	}}
+	// end test ls <TODO -l|wc -l >out>>out2<Makefile
 }
