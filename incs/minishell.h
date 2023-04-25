@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/25 09:41:04 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 16:12:08 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,19 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
+// typedef struct s_tmp
+// {
+// 	char			*str;
+// 	char			c;
+// 	int				expand;
+// 	size_t			index;
+// 	struct s_tmp	next;
+// 	struct s_tmp	prev;
+// }				t_tmp;
+
 typedef struct s_lexer
 {
-	char			**cmd;//malloc a free
+	// char			**cmd;//malloc a free
 	char			*word;
 	char			*token;
 	char			*infile;//free if not NULL
@@ -146,6 +156,7 @@ void	expand(t_data *data);
 /*	expander_var.c	*/
 char	*get_var(t_data *data, char *s);
 char	*join_all(char *s, char *b, char *e, char *a);
+char	*expand_dollar(t_data *data, char *s, size_t *i);
 
 /*	expander_quotes.c	*/
 char	*str_quotes_removal(char *str);
