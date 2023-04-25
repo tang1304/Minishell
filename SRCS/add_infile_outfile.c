@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/25 09:42:21 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 10:07:35 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	remove_nodes_redirection(t_data *data, size_t index)
 
 void	token_check(t_data *data)//segfault si: <Makefile. on arrive a tout supprimer pas fait correctement
 {
-	size_t	i;
 	t_lexer	*tmp;
 
 
