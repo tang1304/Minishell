@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builting.c                                         :+:      :+:    :+:   */
+/*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/03 14:26:51 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/04 10:09:00 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,6 @@ int	builtins(t_data data, char **cmd)
 		ft_exit();
 }
 
-void	ft_echo(char **cmd)
-{
-	int	i;
-
-	i = 0;
-	if (cmd[1][0] == '-' && cmd[1][1] == 'n' && !cmd[1][2])
-	{
-		i++;
-		while (cmd[++i])
-			printf("%s", cmd[i]);
-	}
-	else
-	{
-		while (cmd[++i])
-			printf("%s", cmd[i]);
-		write(1, "\n", 1);
-	}
-}
-
 void	ft_cd(char **cmd)
 {
 	int	i;
@@ -60,20 +41,7 @@ void	ft_cd(char **cmd)
 	;
 }
 
-void	ft_export(t_data *data, char **cmd)
-{
-	int	i;
-
-	if (!cmd[1] || cmd[1][0] == '\0')
-		ft_env(data);
-	i = 0;
-	while (cmd[++i])
-	{
-		;
-	}
-}
-
-void	ft_pwd(t_data *data, char **cmd)
+void	ft_pwd(t_data *data)
 {
 	char	*line;
 
@@ -96,5 +64,7 @@ void	ft_env(t_data *data)
 void	ft_exit(char **str)
 {
 	printf("exit\n");
+	if (str[1])
+		printf("minishell: exit: %s: numeric argument required\n", str[1]);
 	exit(EXIT_SUCCESS);
 }
