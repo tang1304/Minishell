@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/14 10:14:14 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 09:41:04 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/incs/libft.h"
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/stat.h>
-# include <fcntl.h>
+#include "../libft/incs/libft.h"
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/wait.h>
 
 typedef struct s_lexer
 {
@@ -27,7 +28,8 @@ typedef struct s_lexer
 	char			*token;
 	char			*infile;//free if not NULL
 	char			*outfile;//free if not NULL
-	int				index;
+	char			*LIMITER;
+	size_t			index;
 	int				word_quote_pairs;
 	int				s_q;
 	int				d_q;
@@ -55,7 +57,7 @@ typedef struct s_data
 	char				**tokens_tab;
 	int					tokens; // number of tokens inside line
 	int					cmds; // number of cmds
-	int					here_doc; // if here_doc or not
+	int					heredoc; // if here_doc or not
 	char				*LIMITER;
 	char				*pwd;
 	char				*oldpwd;
@@ -90,52 +92,60 @@ void	prompt_loop(t_data *data);
 
 /*	check_error_input.c	*/
 int		error_check(char *line);
-int		error_pipes(char *line, int i);
+int		error_pipes(char *line, size_t i);
 int		error_last_token(char *line);
-int		error_great(char *line);
-int		error_less(char *line);
+int		error_great(char *line, size_t i);
+int		error_less(char *line, size_t i);
 
 /*	check_error_utils.c	*/
-int		error_quotes(char *line);
-int		count_quote(char *s, size_t *i, char c);
-char	*char_join_to_str(char *str, char c);
+int		is_word(char *s, int i, char c);
+int		error_quotes(char *line, size_t i);
+int		check_token(char *s, size_t i);
+// int		count_quote(char *s, size_t *i, char c);
 
 /*	parser.c	*/
-void	implement_redirections_cmds(t_data *data);
+// void	implement_redirections_cmds(t_data *data);
 
 /*	add_infile_outfile.c	*/
-void	files_redirection(t_data *data, int index, size_t i);
-void	check_redirection(t_data *data);
+void	remove_nodes_redirection(t_data *data, size_t index);
+void	token_check(t_data *data);
+void	check_redirection(t_data *data, char *token, char *filename);
 void	file_check_access(t_data *data, char *file, int i);
-char	*filename_quote_removal(char *file);
 
 /*	add_infile_outfile_utils.c	*/
-char	*get_filename(char *s, size_t i);
-char	*remove_file(char *s, size_t i);
-int		check_if_cmd(char *s);
-void	add_infile(t_data *data, char *file);
+void	add_infile(t_data *data, char *file, int i);
 void	add_outfile(t_data *data, char *file);
+size_t	lstlen(t_lexer *lexer);
+
+/*	remove_nodes.c	*/
+void	remove_front_nodes(t_data *data);
+void	remove_back_nodes(t_data *data);
+void	remove_middle_nodes(t_data *data, size_t index);
 
 /*	lexer.c	*/
 int		lexer_init(t_data *data);
 int		is_pipe(char *str, int i);
 
 /*	lexer_utils.c	*/
+void	add_index(t_data *data);
 int		ft_isspace(char c);
 int		quote_handling(char *str, int i, char quote);
 int		add_node(t_lexer **lexer, char *str, int token);
 
-
 /*	cmd_struct.c	*/
 void	create_cmd_struct(t_data *data);
 
-/*	lexer_quote_handle	*/
-int		quote_handling(char *str, int i, char quote);
-int		is_quote(char c);
-int		quote_worder(t_data *data, char *str, int i);
+// /*	lexer_quote_handle	*/
+// int		quote_handling(char *str, int i, char quote);
+// int		is_quote(char c);
+// int		quote_worder(t_data *data, char *str, int i);
+
+/*	expand.c	*/
+void	expand(t_data *data);
 
 /*	expander_var.c	*/
-int		expand(t_data *data);
+char	*get_var(t_data *data, char *s);
+char	*join_all(char *s, char *b, char *e, char *a);
 
 /*	expander_quotes.c	*/
 char	*str_quotes_removal(char *str);
@@ -143,5 +153,11 @@ int		quotes_removal(t_lexer *lexer);
 
 /*	builtins.c	*/
 
+/*	heredoc.c	*/
+void	check_heredoc(t_data *data);
+void	init_heredoc(t_data *data);
+
+/*	utils.c	*/
+char	*ft_strjoin_free(char *s1, char *s2);
 
 #endif
