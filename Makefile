@@ -42,7 +42,8 @@ LST_SRCS	=	main.c \
 				add_infile_outfile_utils.c \
 				cmd_struct.c \
 				expander_var.c \
-				expander_quotes.c
+				expander_quotes.c \
+				here_doc.c
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)
 
