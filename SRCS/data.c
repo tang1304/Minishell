@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/27 10:59:30 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 16:59:39 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static int	add_env_node(t_env **env, char *str)
 		return (0);
 	if (!*env)
 	{
-		printf("ICIIIII\n");
 		*env = new;
 		return (1);
 	}
@@ -101,6 +100,20 @@ char	**get_envp(t_data *data, char **envp)
 	i = -1;
 	while (envp[++i])
 	{
+		if (ft_strncmp(envp[i], "_=", 2) == 0)
+		{
+			new_envp[i] = ft_strdup("_=/usr/bin/env");
+			printf("%s\n", new_envp[i]);
+			i++;
+			continue ;
+		}
+		else if (ft_strncmp(envp[i], "SHLVL=", 6) == 0)
+		{
+			new_envp[i] = get_shlvl(envp[i]);
+			printf("%s\n", new_envp[i]);
+			i++;
+			continue ;
+		}
 		new_envp[i] = ft_strdup(envp[i]);
 		if (!new_envp || !add_env_node(&data->env, envp[i]))
 			return (NULL);
@@ -109,6 +122,5 @@ char	**get_envp(t_data *data, char **envp)
 	while (tmp->next != NULL)
 		tmp = tmp->next;
 	new_envp[i] = NULL;
-	ft_print_export(&data->env);
 	return (new_envp);
 }

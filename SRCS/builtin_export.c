@@ -6,14 +6,13 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/27 10:34:48 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 13:11:54 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
 // export name=value
-// '(' ou ')' dans cmd[1] : bash: syntax error near unexpected token `('
 // si name commence par un digit, ou contient un ':' ';' '?' '@'
 // si value contient un ';' '(' ou ')'
 //export name -> name n'est pas dans env, mais présent dans export
@@ -30,6 +29,12 @@ int	ft_print_export(t_env **env)
 	i = 0;
 	while (i < size)
 	{
+		if (tmp->var_name[0] == '_' && tmp->var_name[1] == '=')
+		{
+			tmp = tmp->next;
+			i++;
+			continue ;
+		}
 		printf("declare -x ");
 		printf("%s\"", tmp->var_name);
 		printf("%s\"\n", tmp->var_value);
@@ -59,8 +64,6 @@ void	ft_export(t_data *data, char **cmd)
 		printf("minishell: export: `%s' : not a valid identifier\n", cmd[1]);
 	while (cmd[1][++i] != '=' || cmd[1][++i])
 	{
-		if (cmd[1][i] == '(' || cmd[1][i] == ')')
-			printf("minishell: syntax error near unexpected token `%c'\n", cmd[1][i]);
 		if (cmd[1][i] != '_' || !ft_isalnum(cmd[1][i]))
 			printf("minishell: export: `%s' : not a valid identifier\n", cmd[1]);
 	}
