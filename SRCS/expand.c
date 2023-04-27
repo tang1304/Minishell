@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/27 11:18:05 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 12:45:41 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ printf("exp = %s c = %d\n\n\n", s->sub_m, s->sub_m[ft_strlen(s->sub_m) - 1]);
 	return (s->middle);
 }
 
-static char	*expand_quotes(t_data *data, t_substr *str, size_t *i, char c)//marche bien now
+static void	expand_quotes(t_data *data, t_substr *str, size_t *i, char c)//marche bien now
 {
 	size_t	j;
 
@@ -66,14 +66,13 @@ static char	*expand_quotes(t_data *data, t_substr *str, size_t *i, char c)//marc
 	str->middle = ft_substr(str->s, j, *i - j);
 	if (*i + 1 < ft_strlen(str->s))
 		str->after = ft_substr(str->s, *i + 1, ft_strlen(str->s));
-printf("\n\nstr_b = %s\nstr_m = %s\nstr_a = %s\n\n", str->before, str->middle, str->after);
+printf("\n\nb = %s\nm = %s\na = %s\n\n", str->before, str->middle, str->after);
 	if (c == '"')
 		str->middle = expand_str(data, str);
 	else
 		str->middle = str_quotes_removal(str->middle);
 	*i = ft_strlen(str->before) + ft_strlen(str->middle);
 	str->s = join_all(str->s, str->before, str->middle, str->after);
-	return (str->s);
 }
 
 static char	*check_char(t_data *data, char *s, size_t *i, int j)
@@ -87,20 +86,13 @@ static char	*check_char(t_data *data, char *s, size_t *i, int j)
 	str.sub_b = NULL;
 	str.sub_m = NULL;
 	str.sub_a = NULL;
-	if (j == 0) // $
-	{
-		// if (s[*i + 1] && (ft_isalpha(s[*i + 1]) == 1 || s[*i + 1] == '?'))
-		// 	s = expand_dollar(data, s, i);
-		return (s);
-	}
-	else if (j == 1) // '
-	{
-		s = expand_quotes(data, &str, i, '\'');
-	}
+	if (j == 0)
+		expand_dollar(data, &str, i);
+	else if (j == 1)
+		expand_quotes(data, &str, i, '\'');
 	else
-	{
-		s = expand_quotes(data, &str, i, '"');
-	}
+		expand_quotes(data, &str, i, '"');
+	//free all struct
 	return (str.s);
 }
 
@@ -117,21 +109,15 @@ void	expand(t_data *data) // func too long
 			tmp = tmp->next;
 		while (tmp->word[i] != '\0')
 		{
-			// if (tmp->word[i] == '$')
-			// {
-			// 	tmp->word = check_char(data, tmp->word, &i, 0);
-			// }
-			// else if (tmp->word[i] == '\'')
-			// {
-			// 	tmp->word = check_char(data, tmp->word, &i, 1);
-			// }
-			if (tmp->word[i] == '"')
-			{
+			if (tmp->word[i] == '$' && (ft_isalpha(tmp->word[i + 1]) == 1 || \
+			tmp->word[i + 1] == '?'))
+				tmp->word = check_char(data, tmp->word, &i, 0);
+			else if (tmp->word[i] == '\'')
+				tmp->word = check_char(data, tmp->word, &i, 1);
+			else if (tmp->word[i] == '"')
 				tmp->word = check_char(data, tmp->word, &i, 2);
-					// if ((int)i == -1)
-					// 	return ;//ou ft_error....
-			}
-			i++;
+			else
+				i++;
 		}
 		tmp = tmp->next;
 	}

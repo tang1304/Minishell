@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/27 10:14:12 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 12:15:04 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void	expand(t_data *data);
 /*	expander_var.c	*/
 char	*get_var(t_data *data, char *s);
 char	*join_all(char *s, char *b, char *e, char *a);
-char	*expand_dollar(t_data *data, char *s, size_t *i);
+void	expand_dollar(t_data *data, t_substr *s, size_t *i);
 
 /*	expander_quotes.c	*/
 char	*str_quotes_removal(char *str);

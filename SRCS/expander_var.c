@@ -6,49 +6,40 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/27 11:14:45 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 12:50:54 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-// char	*expand_dollar(t_data *data, char *s, size_t *i) //func too long
-// {
-// 	char	*bef;
-// 	char	*exp;
-// 	char	*aft;
+void	expand_dollar(t_data *data, t_substr *s, size_t *i) //func too long
+{
+	// size_t	j;
 
-// 	bef = NULL;
-// 	exp = NULL;
-// 	aft = NULL;
-// 	while (s[*i] != '\0')
-// 	{
-// 		if (*i > 0)
-// 			bef = ft_substr(s, 0, *i);
-// // if (bef != NULL)
-// 	// printf("\n\n\nbef = %s c = %d\n", bef, bef[ft_strlen(bef) - 1]);
-// 		while (ft_isalnum(s[*i] == 1))
-// 			*i = *i + 1;//ou fonc si 0 alors ++ sinon break et chercher aussi $
-// 				// if (s[j] == '$' && s[j - 1] && s[j - 1] != '$')
-// 				// 	break ;
+	// j =
+	*i = *i + 1;
+	if (s->s[*i] == '?')
+		return ; //add function with signals later
+	if (*i > 1)
+		s->sub_b = ft_substr(s->s, 0, *i - 1);
+	while (ft_isalnum(s->s[*i]) == 1)
+		*i = *i + 1;
 
-
-
-
-// // printf("char stopped: %c\n", s[j]);
-// 		aft = ft_substr(s, *i, ft_strlen(s));
-// // printf("aft = %s c = %d\n", aft, aft[ft_strlen(aft) - 1]);
-// 		exp = ft_substr(s, ft_strlen(bef) + 1, *i - ft_strlen(bef) - 1);
-// // printf("exp = %s c = %d\n\n\n", exp, exp[ft_strlen(exp) - 1]);
-// 			// s = get_var()
-// 		exp = get_var(data, exp);
-// 		*i = ft_strlen(bef) + ft_strlen(exp);
-// 	}
-// 	return (join_all(s, bef, exp, aft));
-// }
+if (s->sub_b != NULL)
+	printf("\n\n\nbef = %s c = %d\n", s->sub_b, s->sub_b[ft_strlen(s->sub_b) - 1]);
+// printf("%ld vs %ld\n", *i, ft_strlen(s->s));
+// printf("char stopped: %d=%c\n", s->middle[j], s->middle[j]);
+	s->sub_a = ft_substr(s->s, *i, ft_strlen(s->s) - *i);
+printf("aft = %s c = %c %d\n", s->sub_a, s->sub_a[ft_strlen(s->sub_a) - 1], s->sub_a[ft_strlen(s->sub_a) - 1]);
+	s->sub_m = ft_substr(s->s, ft_strlen(s->sub_b), *i - (ft_strlen(s->sub_b)));
+printf("exp = %s c = %c %d\n\n\n", s->sub_m, s->sub_m[ft_strlen(s->sub_m) - 1], s->sub_a[ft_strlen(s->sub_a) - 1]);
+	s->sub_m = get_var(data, s->sub_m);
+	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
+	s->s = join_all(s->s, s->sub_b, s->sub_m, s->sub_a);
+}
 
 char	*get_var(t_data *data, char *s)
-{printf("WORD PASSED: %s\n", s);//il faut remove le $
+{
 	char	*var;
 	size_t	i;
 	size_t	k;
