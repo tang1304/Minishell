@@ -6,11 +6,12 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:03:57 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/25 09:49:31 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 16:39:03 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+#include <stdio.h>
 
 char	*ft_strjoin_free(char *s1, char *s2)
 {
@@ -20,6 +21,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
+	printf("LAAAA");
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
 	ptr = (char *)malloc(sizeof(*ptr) * (ft_strlen(s1) + ft_strlen(s2) + 1));

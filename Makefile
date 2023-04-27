@@ -46,7 +46,8 @@ LST_SRCS	=	main.c \
 				heredoc.c \
 				utils.c \
 				builtin_export.c \
-				builtin_export_utils.c
+				builtin_export_utils.c \
+				envp_utils.c
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)
 
