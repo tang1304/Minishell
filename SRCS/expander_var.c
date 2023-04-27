@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/27 12:50:54 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 14:21:56 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	expand_dollar(t_data *data, t_substr *s, size_t *i) //func too long
 {
-	// size_t	j;
-
-	// j =
 	*i = *i + 1;
 	if (s->s[*i] == '?')
 		return ; //add function with signals later
@@ -46,16 +43,17 @@ char	*get_var(t_data *data, char *s)
 
 	k = 0;
 	s = ft_substr(s, 1, ft_strlen(s) - 1);
+printf("expand: %s\n", s);
 	var = ft_strdup("");
 	// if (var == NULL)
 	// 	return (NULL);
 	while (data->envp[k])
 	{
+printf("data->env[%ld] = %s\n", k, data->envp[k]);
 		i = 0;
 		while (data->envp[k][i] != '=')
 			i++;
-//
-		if (ft_strncmp(data->envp[k], s, i - 1) == 0 && ft_strlen(s) == i)
+		if (ft_strncmp(data->envp[k], s, ft_strlen(s)) == 0 && ft_strlen(s) == i)
 		{
 			free(var);
 			var = ft_substr(data->envp[k], i + 1, (ft_strlen(*data->envp)));
