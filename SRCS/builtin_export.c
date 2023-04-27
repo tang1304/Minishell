@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/25 15:39:28 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 10:34:48 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,25 @@
 // si value contient un ';' '(' ou ')'
 //export name -> name n'est pas dans env, mais présent dans export
 
-int	ft_print_export(t_data *data, char *cmd)
+int	ft_print_export(t_env **env)
 {
-	t_env	tmp;
+	t_env	*tmp;
 	int		i;
+	int		size;
 
-	
+	tmp = *env;
+	size = ft_list_size(tmp);
+	ft_list_sort(env, size);
+	i = 0;
+	while (i < size)
+	{
+		printf("declare -x ");
+		printf("%s\"", tmp->var_name);
+		printf("%s\"\n", tmp->var_value);
+		tmp = tmp->next;
+		i++;
+	}
+	return (1);
 }
 
 void	ft_export(t_data *data, char **cmd)
@@ -32,7 +45,7 @@ void	ft_export(t_data *data, char **cmd)
 
 	if (!cmd[1] || cmd[1][0] == '\0')
 	{
-		ft_print_export(data, cmd);//a modifier, doit afficher dans ordre alpha + declare -x
+		ft_print_export(&data->env);
 		return ;
 	}
 	i = 0;
@@ -48,15 +61,16 @@ void	ft_export(t_data *data, char **cmd)
 	{
 		if (cmd[1][i] == '(' || cmd[1][i] == ')')
 			printf("minishell: syntax error near unexpected token `%c'\n", cmd[1][i]);
-		if (cmd[1][i] != "_" || !ft_isalnum(cmd[1][i]))
+		if (cmd[1][i] != '_' || !ft_isalnum(cmd[1][i]))
 			printf("minishell: export: `%s' : not a valid identifier\n", cmd[1]);
 	}
 	if (cmd[1][i] == '\0')
 		return ;
-	while (cmd[1][++i])
-	{
-		if (cmd[1][i])
-		if (cmd[1][i] == ';' || cmd[1][i] == '(' || cmd[1][i] == ')')
-			;
-	}
+	// while (cmd[1][++i])
+	// {
+	// 	if (cmd[1][i])
+	// 		;
+	// 	if (cmd[1][i] == ';' || cmd[1][i] == '(' || cmd[1][i] == ')')
+	// 		;
+	// }
 }

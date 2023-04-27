@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/25 10:09:06 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/26 17:21:03 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	add_node(t_lexer **lexer, char *str, int token)
 		return (0);
 	if (!*lexer)
 	{
+		printf("LAAAAA\n");
 		*lexer = new;
 		return (1);
 	}

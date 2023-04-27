@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/25 16:58:30 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 10:59:30 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	data_initialize(t_data *data, char **envp)
 
 	data->cmd = NULL;
 	data->envp = get_envp(data, envp);
+	data->env = NULL;
 	data->lexer = NULL;
 	data->str = NULL;
 	data->prompt = NULL;
@@ -40,20 +41,42 @@ void	update_pwd(t_data *data, char *s)
 	prompt_loop(data);
 }
 
-int	add_env_node(t_env **env, char *str)
+static t_env	*new_env_node(char *str)
 {
 	t_env	*new;
-	t_env	*tmp;
+	char	*pos;
 
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
 		return (0);
 	new->next = NULL;
-	new->var = ft_strdup(str);
-	if (!new->var)
-		return (0);
-		if (!*env)
+	pos = ft_strchr(str, '=');
+	if (pos)
 	{
+		new->var_name = ft_strndup(str, (size_t)pos - (size_t)str);
+		new->var_value = ft_strdup(pos + 1);
+	}
+	else
+	{
+		new->var_name = ft_strdup(str);
+		new->var_value = ft_strdup("");
+	}
+	if (!new->var_name || !new->var_value)
+		return (0);
+	return (new);
+}
+
+static int	add_env_node(t_env **env, char *str)
+{
+	t_env	*tmp;
+	t_env	*new;
+
+	new = new_env_node(str);
+	if (!new)
+		return (0);
+	if (!*env)
+	{
+		printf("ICIIIII\n");
 		*env = new;
 		return (1);
 	}
@@ -67,21 +90,25 @@ int	add_env_node(t_env **env, char *str)
 char	**get_envp(t_data *data, char **envp)
 {
 	char	**new_envp;
+	t_env	*tmp;
 	int		i;
 
 	i = 0;
 	while (envp[i])
 		i++;
-	data->env = malloc(sizeof(t_env) * i);
+	data->env = NULL;
 	new_envp = (char **)malloc(sizeof(char *) * (i + 1));
 	i = -1;
 	while (envp[++i])
 	{
-		add_env_node(&data->env, envp[i]);
 		new_envp[i] = ft_strdup(envp[i]);
-		if (!new_envp)
+		if (!new_envp || !add_env_node(&data->env, envp[i]))
 			return (NULL);
 	}
+	tmp = data->env;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
 	new_envp[i] = NULL;
+	ft_print_export(&data->env);
 	return (new_envp);
 }

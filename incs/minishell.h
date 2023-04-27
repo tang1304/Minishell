@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/25 16:16:26 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 09:11:52 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ typedef struct s_lexer
 
 typedef struct s_env
 {
-	char	*var;
-	struct s_env *next;
+	char			*var_name;
+	char			*var_value;
+	struct s_env	*next;
 }				t_env;
 
 typedef struct s_data
@@ -159,6 +160,14 @@ char	*str_quotes_removal(char *str);
 int		quotes_removal(t_lexer *lexer);
 
 /*	builtins.c	*/
+
+/*	builtin_export.c	*/
+void	ft_export(t_data *data, char **cmd);
+int		ft_print_export(t_env **env);
+
+/*	builtin_export_utils.c	*/
+void	ft_list_sort(t_env **env, int size);
+int		ft_list_size(t_env *env);
 
 /*	heredoc.c	*/
 void	check_heredoc(t_data *data);
