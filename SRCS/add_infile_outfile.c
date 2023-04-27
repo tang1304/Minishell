@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/25 11:00:01 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 17:23:23 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	file_check_access(t_data *data, char *file, int i)
 
 void	check_redirection(t_data *data, char *token, char *filename)
 {
-	filename = str_quotes_removal(filename);
 	if (ft_strncmp(token, ">", 1) == 0 && ft_strlen(token) == 1) // outfile
 	{
 		file_check_access(data, filename, 1);
@@ -111,7 +110,7 @@ void	token_check(t_data *data)//segfault si: <Makefile. on arrive a tout supprim
 		}
 		tmp = tmp->next;
 	}
-	check_heredoc(data);
+	// check_heredoc(data);
 
 
 // 	// test

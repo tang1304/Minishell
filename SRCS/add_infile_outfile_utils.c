@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_infile_outfile_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/25 09:41:37 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 15:24:58 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

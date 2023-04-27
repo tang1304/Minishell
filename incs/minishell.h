@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/27 12:15:04 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 17:20:29 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_lexer
 	char			*token;
 	char			*infile;//free if not NULL
 	char			*outfile;//free if not NULL
-	char			*LIMITER;
+	char			*LIMITER;// a enlever
 	size_t			index;
 	int				word_quote_pairs;
 	int				s_q;
@@ -80,6 +80,7 @@ typedef struct s_data
 	int					cmds; // number of cmds
 	int					heredoc; // if here_doc or not
 	char				*LIMITER;
+	int					hd_as_inf;
 	char				*pwd;
 	char				*oldpwd;
 	int					fdin;//infile
