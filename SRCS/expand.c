@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/27 12:56:33 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 17:22:47 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,21 @@ static char	*check_char(t_data *data, char *s, size_t *i, int j)
 		expand_quotes(data, &str, i, '\'');
 	else
 		expand_quotes(data, &str, i, '"');
-	//free all struct
+	// free_struct_expand(&str);
 	return (str.s);
+}
+
+static t_lexer	*skip_token(t_lexer *tmp)
+{
+	 if (tmp->token != NULL && ft_strncmp(tmp->token, "<<", 2) == 0 \
+	 && ft_strlen(tmp->token) == 2)
+	 {
+		tmp = tmp->next;
+		tmp->word = str_quotes_removal(tmp->word);
+	 }
+	else if (tmp->token != NULL && ft_strncmp(tmp->token, "<<", 2) != 0)
+		return (tmp);
+	return (tmp);
 }
 
 void	expand(t_data *data)
@@ -91,20 +104,22 @@ void	expand(t_data *data)
 	while (tmp != NULL)
 	{
 		i = 0;
-		if (tmp->word == NULL)
-			tmp = tmp->next;
-		while (tmp->word[i] != '\0')
+		if (tmp->word != NULL)
 		{
-			if (tmp->word[i] == '$' && (ft_isalpha(tmp->word[i + 1]) == 1 || \
-			tmp->word[i + 1] == '?'))
-				tmp->word = check_char(data, tmp->word, &i, 0);
-			else if (tmp->word[i] == '\'')
-				tmp->word = check_char(data, tmp->word, &i, 1);
-			else if (tmp->word[i] == '"')
-				tmp->word = check_char(data, tmp->word, &i, 2);
-			else
-				i++;
+			while (tmp->word[i] != '\0')
+			{
+				if (tmp->word[i] == '$' && (ft_isalpha(tmp->word[i + 1]) == 1 || \
+				tmp->word[i + 1] == '?'))
+					tmp->word = check_char(data, tmp->word, &i, 0);
+				else if (tmp->word[i] == '\'')
+					tmp->word = check_char(data, tmp->word, &i, 1);
+				else if (tmp->word[i] == '"')
+					tmp->word = check_char(data, tmp->word, &i, 2);
+				else
+					i++;
+			}
 		}
+		tmp = skip_token(tmp);
 		tmp = tmp->next;
 	}
 
@@ -112,23 +127,22 @@ void	expand(t_data *data)
 
 
 
-
-		// test
-	t_data	*tmp2;
-	tmp2 = data;
-	while (tmp2->lexer != NULL)
-	{
-		ft_printf("\n\n");
-if (tmp2->lexer->word != NULL)
-	ft_printf("word node: %s\n", tmp2->lexer->word);
-else
-	ft_printf("token node: %s\n", tmp2->lexer->token);
-printf("index: %ld\n", tmp2->lexer->index);
-ft_printf("infile: %s\n", tmp2->lexer->infile);
-ft_printf("outfile: %s\n", tmp2->lexer->outfile);
-ft_printf("LIMITER: %s\n",tmp2->lexer->LIMITER);
-ft_printf("hdoc: %d\n",tmp2->heredoc);
-		tmp2->lexer = tmp2->lexer->next;
-	}
+// 		// test
+// 	t_data	*tmp2;
+// 	tmp2 = data;
+// 	while (tmp2->lexer != NULL)
+// 	{
+// 		ft_printf("\n\n");
+// if (tmp2->lexer->word != NULL)
+// 	ft_printf("word node: %s\n", tmp2->lexer->word);
+// else
+// 	ft_printf("token node: %s\n", tmp2->lexer->token);
+// printf("index: %ld\n", tmp2->lexer->index);
+// ft_printf("infile: %s\n", tmp2->lexer->infile);
+// ft_printf("outfile: %s\n", tmp2->lexer->outfile);
+// ft_printf("LIMITER: %s\n",tmp2->lexer->LIMITER);
+// ft_printf("hdoc: %d\n",tmp2->heredoc);
+// 		tmp2->lexer = tmp2->lexer->next;
+// 	}
 	// end test
 }

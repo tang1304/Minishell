@@ -60,6 +60,8 @@ void	check_heredoc(t_data *data)
 	if (i == 0)
 		init_heredoc(data);
 	waitpid(i, &status, 0);
+	// if (data->here_doc == 0)
+
 	// if (tmp->infile != NULL) A ajouter car si: ls <TODO <<eof <Makefile
 	// Makefile est le infile mais le heredoc est lancé également
 	// 	close_fds();
