@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/25 16:12:08 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 10:14:12 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,17 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 	struct s_lexer	*prev;// a voir
 }				t_lexer;
+
+typedef struct s_substr
+{
+	char	*s;
+	char	*before;
+	char	*middle;
+	char	*after;
+	char	*sub_b;
+	char	*sub_m;
+	char	*sub_a;
+}				t_substr;
 
 // typedef struct s_command
 // {

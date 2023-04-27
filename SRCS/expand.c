@@ -6,34 +6,31 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/25 16:45:51 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 11:18:05 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 //Attention si hdh"$USER"hdg -> 1 seul node donc quotes pas au début et à la fin
 //ls | "'$USER'" "user is $USER" "$USER $USER"     $USE'R'"$USER $USER"$USER
-static char	*expand_str(t_data *data, char *s) //func too long
+
+static char	*expand_str(t_data *data, t_substr *s) //func too long
 {
 	size_t	j;
-	char	*bef;
-	char	*exp;
-	char	*aft;
-s = str_quotes_removal(s);
-	bef = NULL;
-	exp = NULL;
-	aft = NULL;
+
+printf("string: %s\n", s->middle);
 	j = 0;
-	while (s[j] != '\0')
+	while (s->middle[j] != '\0')
 	{
-		if (s[j] == '$' && (ft_isalnum(s[j + 1]) == 1 || s[j + 1] == '?'))
+		if (s->middle[j] == '$' && (ft_isalpha(s->middle[j + 1]) == 1 || \
+		s->middle[j + 1] == '?'))
 		{
 			j++;
 			if (j > 0)
-				bef = ft_substr(s, 0, j);
-if (bef != NULL)
-	printf("\n\n\nbef = %s c = %d\n", bef, bef[ft_strlen(bef) - 1]);
-			while (ft_isalnum(s[j]) == 1 || s[j] == '?')//faire j = fonction et bien checker dans new func
+				s->sub_b = ft_substr(s->middle, 0, j - 1);
+if (s->sub_b != NULL)
+	printf("\n\n\nbef = %s c = %d\n", s->sub_b, s->sub_b[ft_strlen(s->sub_b) - 1]);
+			while (ft_isalnum(s->middle[j]) == 1)// faire 2 func e plus si j = ? ou j = alnum
 				j++;//ou fonc si 0 alors ++ sinon break et chercher aussi $
 				// if (s[j] == '$' && s[j - 1] && s[j - 1] != '$')
 				// 	break ;
@@ -41,50 +38,55 @@ if (bef != NULL)
 
 
 
-printf("j: %lu\n", j);
-			aft = ft_substr(s, j, ft_strlen(s));
-printf("aft = %s c = %d\n", aft, aft[ft_strlen(aft) - 1]);
-			exp = ft_substr(s, ft_strlen(bef), j - ft_strlen(bef));
-printf("exp = %s c = %d\n\n\n", exp, exp[ft_strlen(exp) - 1]);
-			// s = get_var()
-			exp = get_var(data, exp);
-			j = ft_strlen(bef) + ft_strlen(exp);
-			s = join_all(s, bef, exp, aft);
+printf("char stopped: %d=%c\n", s->middle[j], s->middle[j]);
+			s->sub_a = ft_substr(s->middle, j, ft_strlen(s->middle) - j);
+printf("aft = %s c = %d\n", s->sub_a, s->sub_a[ft_strlen(s->sub_a) - 1]);
+			s->sub_m = ft_substr(s->middle, ft_strlen(s->sub_b), j - (ft_strlen(s->sub_b)));
+printf("exp = %s c = %d\n\n\n", s->sub_m, s->sub_m[ft_strlen(s->sub_m) - 1]);
+			s->sub_m = get_var(data, s->sub_m);
+			j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
+			s->middle = join_all(s->middle, s->sub_b, s->sub_m, s->sub_a);
 		}
-		j++;
+		else
+			j++;
 	}
-	return (s);
+	return (s->middle);
 }
 
-static char	*expand_quotes(t_data *data, char *s, size_t *i, char c)
+static char	*expand_quotes(t_data *data, t_substr *str, size_t *i, char c)//marche bien now
 {
-	char	*str_b;
-	char	*str_m;
-	char	*str_a;
+	size_t	j;
 
-	str_b = NULL;
-	str_m = NULL;
-	str_a = NULL;
+	j = *i + 1; // point to first char after opening ' or "
 	if (*i > 0)
-		str_b = ft_substr(s, 0, *i);
+		str->before = ft_substr(str->s, 0, *i);
 	*i = *i + 1;
-	while (s[*i] != c)
-		*i = *i + 1;
-	str_m = ft_substr(s, ft_strlen(str_b) + 1, *i);
-	if (*i + 1 < ft_strlen(s))
-		str_a = ft_substr(s, *i + 1, ft_strlen(s));
-// printf("\n\nstr_b = %s\nstr_m = %s\nstr_a = %s\n\n", str_b, str_m, str_a);
+	while (str->s[*i] != c)
+		*i = *i + 1; // Here *i value point to closing ' or "
+	str->middle = ft_substr(str->s, j, *i - j);
+	if (*i + 1 < ft_strlen(str->s))
+		str->after = ft_substr(str->s, *i + 1, ft_strlen(str->s));
+printf("\n\nstr_b = %s\nstr_m = %s\nstr_a = %s\n\n", str->before, str->middle, str->after);
 	if (c == '"')
-		str_m = expand_str(data, str_m);
+		str->middle = expand_str(data, str);
 	else
-		str_m = str_quotes_removal(str_m);
-	*i = ft_strlen(str_b) + ft_strlen(str_m);
-// printf("OK\n");
-	return (join_all(s, str_b, str_m, str_a));
+		str->middle = str_quotes_removal(str->middle);
+	*i = ft_strlen(str->before) + ft_strlen(str->middle);
+	str->s = join_all(str->s, str->before, str->middle, str->after);
+	return (str->s);
 }
 
 static char	*check_char(t_data *data, char *s, size_t *i, int j)
 {
+	t_substr	str;
+
+	str.s = s;
+	str.before = NULL;
+	str.middle = NULL;
+	str.after = NULL;
+	str.sub_b = NULL;
+	str.sub_m = NULL;
+	str.sub_a = NULL;
 	if (j == 0) // $
 	{
 		// if (s[*i + 1] && (ft_isalpha(s[*i + 1]) == 1 || s[*i + 1] == '?'))
@@ -93,15 +95,13 @@ static char	*check_char(t_data *data, char *s, size_t *i, int j)
 	}
 	else if (j == 1) // '
 	{
-		s = expand_quotes(data, s, i, '\'');
-		return (s);
+		s = expand_quotes(data, &str, i, '\'');
 	}
 	else
 	{
-		s = expand_quotes(data, s, i, '"');
-		return (s);
+		s = expand_quotes(data, &str, i, '"');
 	}
-	return (s);
+	return (str.s);
 }
 
 void	expand(t_data *data) // func too long
