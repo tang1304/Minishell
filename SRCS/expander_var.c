@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/25 16:33:03 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 11:14:45 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,13 @@
 // }
 
 char	*get_var(t_data *data, char *s)
-{printf("WORD PASSED: %s\n", s);
+{printf("WORD PASSED: %s\n", s);//il faut remove le $
 	char	*var;
 	size_t	i;
 	size_t	k;
 
 	k = 0;
+	s = ft_substr(s, 1, ft_strlen(s) - 1);
 	var = ft_strdup("");
 	// if (var == NULL)
 	// 	return (NULL);
