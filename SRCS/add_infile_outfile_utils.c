@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/27 15:24:58 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 08:53:07 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ static void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
 		lexer->infile = ft_strdup(file);
 	else
 	{
-		if (lexer->LIMITER != NULL)
-			free(lexer->LIMITER);
-		lexer->LIMITER = ft_strdup(file);
-		data->heredoc = 1;
+		data->hd->LIMITER[data->hd->heredoc] = ft_strdup(file);
+		data->hd->heredoc++;
+		data->hd->hd_as_inf = 1;
 	}
 }
 
@@ -40,6 +39,7 @@ void	add_infile(t_data *data, char *file, int i)
 			{
 				free(tmp->infile);
 				tmp->infile = NULL;
+				data->hd->hd_as_inf = 0;
 			}
 			// if (tmp->LIMITER != NULL)
 			// {

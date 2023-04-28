@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/27 17:20:29 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 08:57:54 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,6 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
-// typedef struct s_tmp
-// {
-// 	char			*str;
-// 	char			c;
-// 	int				expand;
-// 	size_t			index;
-// 	struct s_tmp	next;
-// 	struct s_tmp	prev;
-// }				t_tmp;
-
 typedef struct s_lexer
 {
 	// char			**cmd;//malloc a free
@@ -38,13 +28,12 @@ typedef struct s_lexer
 	char			*token;
 	char			*infile;//free if not NULL
 	char			*outfile;//free if not NULL
-	char			*LIMITER;// a enlever
 	size_t			index;
 	int				word_quote_pairs;
 	int				s_q;
 	int				d_q;
 	struct s_lexer	*next;
-	struct s_lexer	*prev;// a voir
+	struct s_lexer	*prev;
 }				t_lexer;
 
 typedef struct s_substr
@@ -68,6 +57,15 @@ typedef struct s_substr
 // 	struct s_command	*prev;
 // }				t_command;ls        | "grep >out" <Makefile| wc -l >outer
 
+typedef struct s_heredoc
+{
+	size_t				hd_count; // number of heredocs
+	size_t				heredoc; // set to 0 at first
+	char				**LIMITER; // array of all LIMITERS
+	int					hd_as_inf; // if hdoc use as infile or not
+	int					fd[2];//pipe for here_doc
+}				t_heredoc;
+
 typedef struct s_data
 {
 	char				*str; // command typed by user
@@ -75,20 +73,17 @@ typedef struct s_data
 	char				*prompt_pwd;
 	char				**envp;
 	char				**paths;
-	char				**tokens_tab;
-	int					tokens; // number of tokens inside line
+	char				**tokens_tab; // Use?
+	int					tokens; // number of tokens inside line (useless)
 	int					cmds; // number of cmds
-	int					heredoc; // if here_doc or not
-	char				*LIMITER;
-	int					hd_as_inf;
 	char				*pwd;
 	char				*oldpwd;
 	int					fdin;//infile
 	int					fdout;//outfile
 	size_t				child;
-	int					fd[2];//pipe for here_doc
 	int					*pipe;//pipes for other cmds
 	pid_t				*pids;//pids of child processes
+	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
 }				t_data;
@@ -177,6 +172,7 @@ int		quotes_removal(t_lexer *lexer);
 /*	builtins.c	*/
 
 /*	heredoc.c	*/
+void	heredoc_count(t_data *data);
 void	check_heredoc(t_data *data);
 void	init_heredoc(t_data *data);
 
