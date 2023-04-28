@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/27 17:23:23 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 09:10:41 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ void	remove_nodes_redirection(t_data *data, size_t index)
 		remove_middle_nodes(data, index);
 }
 
-void	token_check(t_data *data)//segfault si: <Makefile. on arrive a tout supprimer pas fait correctement
+void	token_check(t_data *data)
 {
 	t_lexer	*tmp;
 
-
+	heredoc_count(data);
 	// //test
 	// size_t len;
 	// len = 0;

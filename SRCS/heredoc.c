@@ -12,6 +12,32 @@
 
 #include "../incs/minishell.h"
 
+void	heredoc_count(t_data *data)
+{
+	t_lexer	*tmp;
+
+	tmp = data->lexer;
+	data->hd->hd_count = 0;
+	while (tmp != NULL)
+	{
+		if (tmp->token != NULL)
+		{
+			if (ft_strncmp(tmp->token, "<<", 2) == 0 && \
+			ft_strlen(tmp->token) == 2)
+				data->hd->hd_count++;
+		}
+		tmp = tmp->next;
+	}
+	if (data->hd->hd_count > 0)
+	{
+		data->hd->LIMITER = (char **)malloc(sizeof(char *) * \
+		(data->hd->hd_count + 1));
+		// if (data->LIMITER == NULL)
+		// 	return error??;
+	}
+	data->hd->LIMITER[data->hd->hd_count] = 0;
+}
+
 void	init_heredoc(t_data *data)
 {
 	char	*line;
@@ -21,7 +47,7 @@ void	init_heredoc(t_data *data)
 	while (1)
 	{
 		line = readline("> ");
-		if (ft_strncmp(line, data->LIMITER, ft_strlen(data->LIMITER)) == 0 || \
+		if (ft_strncmp(line, data->LIMITER, ft_strlen(data->LIMITER)) == 0 || add slash
 		!line)
 			break ;
 		buffer = ft_strjoin_free(buffer, line);
