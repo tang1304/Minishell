@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/28 08:57:54 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 12:37:01 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,22 @@ typedef struct s_substr
 	char	*sub_a;
 }				t_substr;
 
-// typedef struct s_command
-// {
-// 	char				**cmd;//malloc a free
-// 	int					index;
-// 	char				*infile;
-// 	char				*outfile;
-// 	struct s_command	*next;
-// 	struct s_command	*prev;
-// }				t_command;ls        | "grep >out" <Makefile| wc -l >outer
+typedef struct s_command
+{
+	char				**cmd;//malloc a free
+	int					index;
+	char				*infile;
+	char				*outfile;
+	int					heredoc_file;
+	struct s_command	*next;
+	struct s_command	*prev;
+}				t_command;//ls        | "grep >out" <Makefile| wc -l >outer
 
 typedef struct s_heredoc
 {
 	size_t				hd_count; // number of heredocs
 	size_t				heredoc; // set to 0 at first
-	char				**LIMITER; // array of all LIMITERS
+	char				**LIMITER; // array of all LIMITERS  A FREE A LA FIIIN meme si 0 heredocs
 	int					hd_as_inf; // if hdoc use as infile or not
 	int					fd[2];//pipe for here_doc
 }				t_heredoc;
@@ -121,7 +122,7 @@ int		check_token(char *s, size_t i);
 // int		count_quote(char *s, size_t *i, char c);
 
 /*	parser.c	*/
-// void	implement_redirections_cmds(t_data *data);
+void	create_cmd_lst(t_data *data);
 
 /*	add_infile_outfile.c	*/
 void	remove_nodes_redirection(t_data *data, size_t index);
@@ -132,7 +133,6 @@ void	file_check_access(t_data *data, char *file, int i);
 /*	add_infile_outfile_utils.c	*/
 void	add_infile(t_data *data, char *file, int i);
 void	add_outfile(t_data *data, char *file);
-size_t	lstlen(t_lexer *lexer);
 
 /*	remove_nodes.c	*/
 void	remove_front_nodes(t_data *data);
@@ -178,5 +178,6 @@ void	init_heredoc(t_data *data);
 
 /*	utils.c	*/
 char	*ft_strjoin_free(char *s1, char *s2);
+size_t	lstlen(t_lexer *lexer);
 
 #endif

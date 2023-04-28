@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:03:57 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/25 09:49:31 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 11:26:25 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,21 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	}
 	ptr[i] = '\0';
 	return (free(s1), free(s2), ptr);
+}
+
+size_t	lstlen(t_lexer *lexer)
+{
+	size_t	len;
+	t_lexer	*tmp;
+
+	len = 0;
+	if (!lexer)
+		return (0);
+	tmp = lexer;
+	while (tmp != NULL)
+	{
+		len++;
+		tmp = tmp->next;
+	}printf("lstlen: %ld\n", len);
+	return (len);
 }
