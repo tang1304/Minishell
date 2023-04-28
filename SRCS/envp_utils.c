@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:08:20 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/27 16:55:14 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 08:21:37 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char	*get_shlvl(char *str)
 	pos = ft_strchr(str, '=');
 	lvl = ft_atoi(pos + 1);
 	itoa = ft_itoa(lvl + 1);
+	// if (!itoa)
+	// 	;
 	newlvl = ft_strjoin("SHLVL=", itoa);
 	free(itoa);
 	// if (!newlvl)

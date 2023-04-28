@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/27 16:59:39 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 09:01:28 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,20 +103,30 @@ char	**get_envp(t_data *data, char **envp)
 		if (ft_strncmp(envp[i], "_=", 2) == 0)
 		{
 			new_envp[i] = ft_strdup("_=/usr/bin/env");
-			printf("%s\n", new_envp[i]);
-			i++;
-			continue ;
+			add_env_node(&data->env, envp[i]);
 		}
 		else if (ft_strncmp(envp[i], "SHLVL=", 6) == 0)
 		{
 			new_envp[i] = get_shlvl(envp[i]);
-			printf("%s\n", new_envp[i]);
-			i++;
-			continue ;
+			add_env_node(&data->env, envp[i]);
 		}
-		new_envp[i] = ft_strdup(envp[i]);
-		if (!new_envp || !add_env_node(&data->env, envp[i]))
-			return (NULL);
+		else if (ft_strncmp(envp[i], "PWD=", 4) == 0)
+		{
+			new_envp[i] = ft_strjoin("PWD=", getcwd(NULL, 0));
+			add_env_node(&data->env, envp[i]);
+		}
+		else if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
+		{
+			new_envp[i] = ft_strjoin("OLDPWD=", getcwd(NULL, 0));
+			add_env_node(&data->env, envp[i]);
+		}
+		else
+		{
+			new_envp[i] = ft_strdup(envp[i]);
+			// printf("%s\n", new_envp[i]);
+			if (!new_envp || !add_env_node(&data->env, envp[i]))
+				return (NULL);
+		}
 	}
 	tmp = data->env;
 	while (tmp->next != NULL)
