@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/28 08:53:07 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 11:26:19 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,21 +74,4 @@ void	add_outfile(t_data *data, char *file)
 		}
 		tmp = tmp->prev; //<TODO >out ls | wc -l >>append marche
 	}
-}
-
-size_t	lstlen(t_lexer *lexer)
-{
-	size_t	len;
-	t_lexer	*tmp;
-
-	len = 0;
-	if (!lexer)
-		return (0);
-	tmp = lexer;
-	while (tmp != NULL)
-	{
-		len++;
-		tmp = tmp->next;
-	}printf("lstlen: %ld\n", len);
-	return (len);
 }

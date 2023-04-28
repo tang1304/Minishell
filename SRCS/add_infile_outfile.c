@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/28 09:22:27 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 12:32:02 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	remove_nodes_redirection(t_data *data, size_t index)
 		remove_middle_nodes(data, index);
 }
 
-void	token_check(t_data *data)
+void	token_check(t_data *data) // On a un segfault ici!
 {
 	t_lexer	*tmp;
 
@@ -99,8 +99,7 @@ void	token_check(t_data *data)
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
-		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) != \
-		0)
+		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) != 0)
 		{
 			check_redirection(data, tmp->token, tmp->next->word);
 			remove_nodes_redirection(data, tmp->index);

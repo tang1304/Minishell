@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/28 09:33:49 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 12:37:10 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,27 @@ void	prompt_loop(t_data *data)
 			create_cmd_lst(data);
 
 
+// TEST
 
-	t_data	*tmp2;
-	tmp2 = data;
-	while (tmp2->lexer != NULL)
-	{
-		ft_printf("\n\n");
-if (tmp2->lexer->word != NULL)
-	ft_printf("word node: %s\n", tmp2->lexer->word);
-else
-	ft_printf("token node: %s\n", tmp2->lexer->token);
-printf("index: %ld\n", tmp2->lexer->index);
-ft_printf("infile: %s\n", tmp2->lexer->infile);
-ft_printf("outfile: %s\n", tmp2->lexer->outfile);
-if (tmp2->hd->hd_count > 0)
-	ft_printf("LIMITER: %s\n",tmp2->hd->LIMITER[tmp2->hd->hd_count - 1]);
-ft_printf("hdoc as inf: %d\n",tmp2->hd->hd_as_inf);
-		tmp2->lexer = tmp2->lexer->next;
-	}
+// 	t_data	*tmp2;
+// 	tmp2 = data;
+// 	while (tmp2->lexer != NULL)
+// 	{
+// 		ft_printf("\n\n");
+// if (tmp2->lexer->word != NULL)
+// 	ft_printf("word node: %s\n", tmp2->lexer->word);
+// else
+// 	ft_printf("token node: %s\n", tmp2->lexer->token);
+// printf("index: %ld\n", tmp2->lexer->index);
+// ft_printf("infile: %s\n", tmp2->lexer->infile);
+// ft_printf("outfile: %s\n", tmp2->lexer->outfile);
+// if (tmp2->hd->hd_count > 0)
+// 	ft_printf("LIMITER: %s\n",tmp2->hd->LIMITER[tmp2->hd->hd_count - 1]);
+// ft_printf("hdoc as inf: %d\n",tmp2->hd->hd_as_inf);
+// 		tmp2->lexer = tmp2->lexer->next;
+// 	}
 
+// END TEST
 
 
 
