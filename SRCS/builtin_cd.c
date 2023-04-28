@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/28 11:09:58 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 11:57:39 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	builtins(t_data *data, char **cmd)
+char	*search_env(t_data *data, char *env, char *str)
 {
-	int	len;
+	t_env	*tmp;
+	size_t	size;
+	int		i;
 
-	len = ft_strlen(cmd[0]) - 1;
-	if ((ft_strncmp(cmd[0], "echo", 4) == 0) && len == 4)
-		ft_echo(cmd);
-	else if ((ft_strncmp(cmd[0], "cd", 2) == 0) && len == 2)
-		ft_cd(data, cmd);
-	else if ((ft_strncmp(cmd[0], "pwd", 3) == 0) && len == 3)
-		ft_pwd(data);
-	else if ((ft_strncmp(cmd[0], "export", 6) == 0) && len == 6)
-		ft_export(data, cmd);
-	else if ((ft_strncmp(cmd[0], "unset", 5) == 0) && len == 5)
-		ft_unset();
-	else if ((ft_strncmp(cmd[0], "env", 3) == 0) && len == 3)
-		ft_env(data);
-	else if ((ft_strncmp(cmd[0], "exit", 5) == 0) && len == 5)
-		ft_exit(cmd);
+	tmp = data->env;
+	size = ft_list_size(tmp);
+	i = 0;
+	while (i < size)
+	{
+		if (ft_strcmp(env, str))
+		tmp = tmp->next;
+		i++;
+	}
 }
 
 int	ft_cd(t_data *data, char **cmd)
@@ -65,32 +61,4 @@ int	ft_cd(t_data *data, char **cmd)
 		i = 0;
 		while (i <)
 	}
-}
-
-void	ft_pwd(t_data *data)
-{
-	char	*line;
-
-	line = getcwd(NULL, 0);
-	printf("%s\n", line);
-	free(line);
-}
-
-void	ft_env(t_data *data)
-{
-	int	i;
-
-	i = -1;
-	while (data->envp[++i])
-	{
-		printf("%s\n", data->envp[i]);
-	}
-}
-
-void	ft_exit(char **str)
-{
-	printf("exit\n");
-	if (str[1])
-		printf("minishell: exit: %s: numeric argument required\n", str[1]);
-	exit(EXIT_SUCCESS);
 }

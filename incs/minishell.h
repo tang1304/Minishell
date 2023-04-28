@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/27 15:39:30 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 11:23:33 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,5 +178,6 @@ void	init_heredoc(t_data *data);
 
 /*	utils.c	*/
 char	*ft_strjoin_free(char *s1, char *s2);
+char	*ft_change_str(char *s1, char *s2);
 
 #endif
