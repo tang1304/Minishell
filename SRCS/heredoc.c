@@ -47,17 +47,17 @@ void	init_heredoc(t_data *data)
 	while (1)
 	{
 		line = readline("> ");
-		if (ft_strncmp(line, data->LIMITER, ft_strlen(data->LIMITER)) == 0 || add slash
-		!line)
+		if (ft_strncmp(line, data->hd->LIMITER[data->hd->heredoc], \
+		ft_strlen(data->hd->LIMITER[data->hd->heredoc])) == 0 || !line)
 			break ;
 		buffer = ft_strjoin_free(buffer, line);
 	}
-	write(data->fd[1], buffer, ft_strlen(buffer));
+	write(data->hd->fd[1], buffer, ft_strlen(buffer));
 	free(buffer);
 	if (line)
 		free(line);
-	close(data->fd[0]);
-	close(data->fd[1]);
+	close(data->hd->fd[0]);
+	close(data->hd->fd[1]);
 	//free all!!! <Makefile ls |grep <<eof |wc >out
 	// test bible non réalisée
 }
@@ -66,29 +66,21 @@ void	check_heredoc(t_data *data)
 {
 	int		status;
 	pid_t	i;
-	t_lexer	*tmp;
 
-	tmp = data->lexer;
-	if (data->heredoc == 0)
+	data->hd->heredoc = 0;
+	if (pipe(data->hd->fd) < 0) //Si erreur ->error message?? return?
 		return ;
-	while (tmp != NULL)
+	while (data->hd->heredoc < data->hd->hd_count)
 	{
-		if (tmp->LIMITER != NULL)
+		i = fork();
+		if (i == 0)
 		{
-			data->LIMITER = tmp->LIMITER;
-			break ;
+			init_heredoc(data);
+			exit (SUCCESS); // faudra tout free
 		}
-		tmp = tmp->next;
+		waitpid(i, &status, 0);
+		data->hd->heredoc++;
 	}
-	if (pipe(data->fd) < 0) //Si erreur ->error message
-		return ;
-	i = fork();
-	if (i == 0)
-		init_heredoc(data);
-	waitpid(i, &status, 0);
-	// if (data->here_doc == 0)
-
-	// if (tmp->infile != NULL) A ajouter car si: ls <TODO <<eof <Makefile
-	// Makefile est le infile mais le heredoc est lancé également
-	// 	close_fds();
+	// if (data->hd->hd_as_inf == 0)
+		//close fd[0] et fd[1] + free LIMITER char **
 }
