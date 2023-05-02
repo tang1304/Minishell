@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/28 13:26:31 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 08:50:26 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,39 +25,52 @@ static t_command	*add_cmd_node(t_command *command, t_command *new)
 			tmp = tmp->next;
 		tmp->next = new;
 		new->prev = tmp;
-	}printf("OKIE DOKIE\n");
+	}
 	return (command);
 }
 
-static t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
+static t_command	*fillup(t_data *data, size_t i, size_t x, t_command *new)
 {
 	size_t		j;
 	t_lexer		*tmp;
-	t_command	new;
-printf("buffer = %ld index = %ld\n", i, x);
+
 	j = 0;
 	tmp = data->lexer;
 	while (tmp->index != i)
 		tmp = tmp->next;
-	new.cmd = (char **)malloc(sizeof(char *) * (x - i + 1));
-	if (new.cmd == NULL)
-		return (NULL);
 	while (i < x)
 	{
-		new.cmd[j] = ft_strdup(tmp->word);
+		new->cmd[j] = ft_strdup(tmp->word);
 		if (tmp->infile != NULL)
-			new.infile = ft_strdup(tmp->infile);
+			new->infile = ft_strdup(tmp->infile);
 		if (tmp->outfile != NULL)
-			new.outfile = ft_strdup(tmp->outfile);
-		new.heredoc_file = data->hd->hd_as_inf;
-		new.next = NULL;
-		new.prev = NULL;
+			new->outfile = ft_strdup(tmp->outfile);
+		new->heredoc_file = data->hd->hd_as_inf;
 		j++;
 		i++;
 		tmp = tmp->next;
 	}
-	new.cmd[j] = 0;
-	cmd = add_cmd_node(cmd, &new);
+	new->cmd[j] = 0;
+	return (new);
+}
+
+static t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
+{
+	t_command	*new;
+
+	new = (t_command *)malloc(sizeof(*new));
+	if (new == NULL)
+		return (NULL);
+	new->cmd = (char **)malloc(sizeof(char *) * (x - i + 1));
+	if (new->cmd == NULL)
+		return (NULL);
+	new->next = NULL;
+	new->prev = NULL;
+	new->infile = NULL;
+	new->outfile = NULL;
+	new->heredoc_file = 0;
+	new = fillup(data, i, x, new);
+	cmd = add_cmd_node(cmd, new);
 	return (cmd);
 }
 
@@ -82,24 +95,26 @@ void	create_cmd_lst(t_data *data)
 	command = cmd_node(data, buffer, tmp->index + 1, command);
 	//a la fin on peut free le lexer
 
-printf("Finished creating cmd nodes\n");
 
-	// TEST ls >out -l| wc
+	// TEST ls <TODO -l|wc >outfile -l <<eof segfaults
+	// ls <TODO -l|wc >outfile -l <eof
 
-	// int p;
+	int p;
 	t_command *t;
 	t = command;
-printf("cmd[%d] = %s\n", 0, t->cmd[0]);
-	// while (t != NULL)
-	// {printf("node\n");
-	// 	// p = 0;
-	// 	// while (t->cmd[p] != NULL)
-	// 	// {
-	// 		// printf("cmd[%d] = %s\n", 0, t->cmd[0]);
-	// 	// 	p++;
-	// 	// }
-	// // printf("infile = %s\n", t->infile);
-	// t=t->next;
-	// }
+printf("len cmdlst: %ld\n", lstlencmd(t));p = 0;
+	while (t != NULL)
+	{printf("node %d:\n", p);p = 0;
+
+		while (t->cmd[p] != NULL)
+		{
+			printf("cmd[%d] = %s\n", p, t->cmd[p]);
+			p++;
+		}
+	printf("infile = %s\n", t->infile);
+	printf("outfile = %s\n", t->outfile);
+	printf("heredoc? = %d\n", t->heredoc_file);
+	t=t->next;
+	}
 	// END TEST
 }

@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:03:57 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/28 11:26:25 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 07:52:32 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,23 @@ size_t	lstlen(t_lexer *lexer)
 	{
 		len++;
 		tmp = tmp->next;
-	}printf("lstlen: %ld\n", len);
+	}
+	return (len);
+}
+
+size_t	lstlencmd(t_command *cmd)
+{
+	size_t		len;
+	t_command	*tmp;
+
+	len = 0;
+	if (!cmd)
+		return (0);
+	tmp = cmd;
+	while (tmp != NULL)
+	{
+		len++;
+		tmp = tmp->next;
+	}
 	return (len);
 }

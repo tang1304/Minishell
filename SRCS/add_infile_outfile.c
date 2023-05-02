@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/28 12:32:02 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 10:54:49 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,29 @@ void	file_check_access(t_data *data, char *file, int i)
 			ft_printf("minishell: %s: Permission denied\n", file);
 	}
 }
-
-void	check_redirection(t_data *data, char *token, char *filename)
+// WARNING: if infile does not exist: program writing the good error code
+// BUT the program still adds the file as infile! Not good
+// cat <TODO |wc -l <Makefiles >out bash does not create out cuz Makefiles error
+// cat <TODO |wc -l >out <Makefiles bash creates out
+void	check_redirection(t_data *data, char *token, char *file, size_t index)
 {
 	if (ft_strncmp(token, ">", 1) == 0 && ft_strlen(token) == 1) // outfile
 	{
-		file_check_access(data, filename, 1);
-		add_outfile(data, filename);
+		file_check_access(data, file, 1);
+		add_outfile(data, file, index);
 	}
 	else if (ft_strncmp(token, ">>", 2) == 0 && ft_strlen(token) == 2) // out app
 	{
-		file_check_access(data, filename, 2);
-		add_outfile(data, filename);
+		file_check_access(data, file, 2);
+		add_outfile(data, file, index);
 	}
 	else if (ft_strncmp(token, "<", 1) == 0 && ft_strlen(token) == 1) // inf
 	{
-		file_check_access(data, filename, 0);
-		add_infile(data, filename, 0);
+		file_check_access(data, file, 0);
+		add_infile(data, file, index, 0);
 	}
 	else
-		add_infile(data, filename, 1);
+		add_infile(data, file, index, 1);
 }
 
 void	remove_nodes_redirection(t_data *data, size_t index)
@@ -101,7 +104,7 @@ void	token_check(t_data *data) // On a un segfault ici!
 	{
 		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) != 0)
 		{
-			check_redirection(data, tmp->token, tmp->next->word);
+			check_redirection(data, tmp->token, tmp->next->word, tmp->index);
 			remove_nodes_redirection(data, tmp->index);
 			add_index(data);
 			tmp = data->lexer;
