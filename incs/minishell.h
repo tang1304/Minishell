@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/02 14:44:44 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 15:20:53 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ int		check_token(char *s, size_t i);
 // int		count_quote(char *s, size_t *i, char c);
 
 /*	parser.c	*/
+void	check_hidden_nodes(t_data *data);
 void	create_cmd_lst(t_data *data);
 
 /*	add_infile_outfile.c	*/
