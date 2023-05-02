@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:03:57 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/02 07:52:32 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 14:44:25 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,40 @@ size_t	lstlencmd(t_command *cmd)
 		tmp = tmp->next;
 	}
 	return (len);
+}
+
+void	complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid)
+{
+	if (tmp->infile != NULL)
+	{
+		free(tmp->infile);
+		tmp->infile = NULL;
+		data->hd->hd_as_inf = 0;
+	}
+	if (valid == 0)
+	{
+		add_file_node(data, tmp, file, 0);//0 infile 1hd
+		return ;
+	}
+	else
+	{
+		tmp->inf_err = 1;
+		return ;
+	}
+}
+
+void	complete_out_data(t_lexer *tmp, char *file, int valid)
+{
+	if (tmp->outfile != NULL)
+		free(tmp->outfile);
+	if (valid == 0)
+	{
+		tmp->outfile = ft_strdup(file);
+		return ;
+	}
+	else
+	{
+		tmp->out_err = 1;
+		return ;
+	}
 }

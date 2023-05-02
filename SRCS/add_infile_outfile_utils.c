@@ -6,13 +6,13 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/02 11:07:07 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 14:44:38 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 //ls <TODO | wc <Makefile >outer | test >out working fiiiiiiine !!!!!
-static void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
+void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
 {
 	if (i == 0)
 		lexer->infile = ft_strdup(file);
@@ -24,7 +24,7 @@ static void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
 	}
 }
 
-static t_lexer	*find_start(t_lexer *tmp)
+t_lexer	*find_start(t_lexer *tmp)
 {
 	while (tmp->prev != NULL)
 	{
@@ -40,7 +40,7 @@ static t_lexer	*find_start(t_lexer *tmp)
 	return (tmp);
 }
 
-void	add_infile(t_data *data, char *file, size_t index, int i)
+void	add_infile(t_data *data, char *file, size_t index, int valid)
 {
 	t_lexer	*tmp;
 
@@ -55,21 +55,12 @@ void	add_infile(t_data *data, char *file, size_t index, int i)
 		if ((tmp->word != NULL && tmp->prev == NULL) || (tmp->word != NULL \
 		&& tmp->prev->word != NULL) || (tmp->word != NULL && \
 		ft_strncmp(tmp->prev->token, "|", 1) == 0))
-		{
-			if (tmp->infile != NULL)
-			{
-				free(tmp->infile);
-				tmp->infile = NULL;
-				data->hd->hd_as_inf = 0;
-			}
-			add_file_node(data, tmp, file, i);
-			return ;
-		}
+			complete_inf_data(data, tmp, file, valid);
 		tmp = tmp->next;
 	}
 }
 
-void	add_outfile(t_data *data, char *file, size_t index)
+void	add_outfile(t_data *data, char *file, size_t index, int valid)
 {
 	t_lexer	*tmp;
 
@@ -84,12 +75,30 @@ void	add_outfile(t_data *data, char *file, size_t index)
 		if ((tmp->word != NULL && tmp->prev == NULL) || (tmp->word != NULL \
 		&& tmp->prev->word != NULL) || (tmp->word != NULL && \
 		ft_strncmp(tmp->prev->token, "|", 1) == 0))
-		{
-			if (tmp->outfile != NULL)
-	 			free(tmp->outfile);
-	 		tmp->outfile = ft_strdup(file);
-			return ;
-		}
+			complete_out_data(tmp, file, valid);
 		tmp = tmp->next;
+	}
+}
+
+void	ft_error_file(int fd, char *file, int i)
+{
+	if (fd < 0)
+	{
+		printf("minishell: %s: Error opening file\n", file);
+		return ;
+	}
+	else if (i == 0)
+	{
+		if (access(file, F_OK) != 0)
+			printf("minishell: %s: No such file or directory\n", file);
+		else if (access(file, R_OK) != 0)
+			ft_printf("minishell: %s: Permission denied\n", file);
+	}
+	else
+	{
+		if (access(file, F_OK) != 0)
+			printf("minishell: %s: No such file or directory\n", file);
+		else if (access(file, W_OK) != 0)
+			ft_printf("minishell: %s: Permission denied\n", file);
 	}
 }
