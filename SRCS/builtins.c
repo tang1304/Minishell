@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/02 10:39:55 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 17:54:59 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	builtins(t_data *data, char **cmd)
 	else if ((ft_strncmp(cmd[0], "export", 6) == 0) && len == 6)
 		ft_export(data, cmd);
 	else if ((ft_strncmp(cmd[0], "unset", 5) == 0) && len == 5)
-		ft_unset();
+		ft_unset(data, cmd);
 	else if ((ft_strncmp(cmd[0], "env", 3) == 0) && len == 3)
 		ft_env(data);
 	else if ((ft_strncmp(cmd[0], "exit", 5) == 0) && len == 5)
@@ -48,9 +48,7 @@ void	ft_env(t_data *data)
 
 	i = -1;
 	while (data->envp[++i])
-	{
 		printf("%s\n", data->envp[i]);
-	}
 }
 
 void	ft_exit(char **str)
