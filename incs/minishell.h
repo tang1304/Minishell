@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/28 12:37:01 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 11:07:05 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,12 @@ void	create_cmd_lst(t_data *data);
 /*	add_infile_outfile.c	*/
 void	remove_nodes_redirection(t_data *data, size_t index);
 void	token_check(t_data *data);
-void	check_redirection(t_data *data, char *token, char *filename);
+void	check_redirection(t_data *data, char *token, char *file, size_t index);
 void	file_check_access(t_data *data, char *file, int i);
 
 /*	add_infile_outfile_utils.c	*/
-void	add_infile(t_data *data, char *file, int i);
-void	add_outfile(t_data *data, char *file);
+void	add_infile(t_data *data, char *file, size_t index, int i);
+void	add_outfile(t_data *data, char *file, size_t index);
 
 /*	remove_nodes.c	*/
 void	remove_front_nodes(t_data *data);
@@ -179,5 +179,6 @@ void	init_heredoc(t_data *data);
 /*	utils.c	*/
 char	*ft_strjoin_free(char *s1, char *s2);
 size_t	lstlen(t_lexer *lexer);
+size_t	lstlencmd(t_command *cmd);
 
 #endif
