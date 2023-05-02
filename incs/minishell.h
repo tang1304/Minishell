@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/02 11:07:05 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 14:44:44 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ typedef struct s_lexer
 	char			*word;
 	char			*token;
 	char			*infile;//free if not NULL
+	int				inf_err;
 	char			*outfile;//free if not NULL
+	int				out_err;
 	size_t			index;
 	int				word_quote_pairs;
 	int				s_q;
@@ -52,7 +54,9 @@ typedef struct s_command
 	char				**cmd;//malloc a free
 	int					index;
 	char				*infile;
+	int					inf_err;
 	char				*outfile;
+	int					out_err;
 	int					heredoc_file;
 	struct s_command	*next;
 	struct s_command	*prev;
@@ -97,7 +101,8 @@ enum e_errors
 	PIPE_FAILURE = 5,
 	TOKEN_FAILURE = 6,
 	NODE_FAILURE = 7,
-	NOT_WORD = 8
+	NOT_WORD = 8,
+	FILE_ERROR = 9
 };
 
 /*	data.c	*/
@@ -125,14 +130,18 @@ int		check_token(char *s, size_t i);
 void	create_cmd_lst(t_data *data);
 
 /*	add_infile_outfile.c	*/
+void	files_validity(t_data *data, t_lexer *tmp, int *valid);
 void	remove_nodes_redirection(t_data *data, size_t index);
 void	token_check(t_data *data);
-void	check_redirection(t_data *data, char *token, char *file, size_t index);
-void	file_check_access(t_data *data, char *file, int i);
+int		file_check_access(t_data *data, char *file, int i);
+int		check_redirection(t_data *data, char *token, char *file, size_t index);
 
 /*	add_infile_outfile_utils.c	*/
-void	add_infile(t_data *data, char *file, size_t index, int i);
-void	add_outfile(t_data *data, char *file, size_t index);
+t_lexer	*find_start(t_lexer *tmp);
+void	ft_error_file(int fd, char *file, int i);
+void	add_infile(t_data *data, char *file, size_t index, int valid);
+void	add_outfile(t_data *data, char *file, size_t index, int valid);
+void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i);
 
 /*	remove_nodes.c	*/
 void	remove_front_nodes(t_data *data);
@@ -175,8 +184,11 @@ int		quotes_removal(t_lexer *lexer);
 void	heredoc_count(t_data *data);
 void	check_heredoc(t_data *data);
 void	init_heredoc(t_data *data);
+void	add_heredoc(t_data *data, char * file, size_t index);
 
 /*	utils.c	*/
+void	complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);
+void	complete_out_data(t_lexer *tmp, char *file, int valid);
 char	*ft_strjoin_free(char *s1, char *s2);
 size_t	lstlen(t_lexer *lexer);
 size_t	lstlencmd(t_command *cmd);

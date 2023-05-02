@@ -6,70 +6,63 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/02 10:54:49 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 14:54:02 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-char	*filename_quote_removal(char *file)
-{
-	char	*filename;
-
-	filename = str_quotes_removal(file);
-	return (filename);
-}
-
-void	file_check_access(t_data *data, char *file, int i)
+int	file_check_access(t_data *data, char *file, int i)
 {
 	if (i == 0) // infile >
 	{
 		data->fdin = open(file, O_RDONLY);
-		if (access(file, F_OK) != 0)
-			printf("minishell: %s: No such file or directory\n", file);
-		else if (access(file, R_OK) != 0)
-			ft_printf("minishell: %s: Permission denied\n", file);
+		if (access(file, F_OK) != 0 || access(file, R_OK) != 0 || \
+		data->fdin < 0)
+		{
+			ft_error_file(data->fdin, file, 0);
+			return (FILE_ERROR);
+		}
+		return (SUCCESS);
 	}
 	else if (i == 1) // outfile >
-	{
 		data->fdout = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		if (access(file, F_OK) != 0)
-			printf("minishell: %s: No such file or directory\n", file);
-		else if (access(file, W_OK) != 0)
-			ft_printf("minishell: %s: Permission denied\n", file);
-	}
-	else if (i == 2) // outfile append >>
-	{
+	else //append
 		data->fdout = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
-		if (access(file, F_OK) != 0)
-			printf("minishell: %s: No such file or directory\n", file);
-		else if (access(file, W_OK) != 0)
-			ft_printf("minishell: %s: Permission denied\n", file);
+	if (access(file, F_OK) != 0 || access(file, W_OK) != 0 || data->fdout < 0)
+	{
+		ft_error_file(data->fdout, file, 1);
+		return (FILE_ERROR);
 	}
+	return (SUCCESS);
 }
 // WARNING: if infile does not exist: program writing the good error code
 // BUT the program still adds the file as infile! Not good
 // cat <TODO |wc -l <Makefiles >out bash does not create out cuz Makefiles error
 // cat <TODO |wc -l >out <Makefiles bash creates out
-void	check_redirection(t_data *data, char *token, char *file, size_t index)
+int	check_redirection(t_data *data, char *token, char *file, size_t index)
 {
+	int	valid;
+
+	valid = 0;
 	if (ft_strncmp(token, ">", 1) == 0 && ft_strlen(token) == 1) // outfile
 	{
-		file_check_access(data, file, 1);
-		add_outfile(data, file, index);
+		valid = file_check_access(data, file, 1);
+		add_outfile(data, file, index, valid);
 	}
 	else if (ft_strncmp(token, ">>", 2) == 0 && ft_strlen(token) == 2) // out app
 	{
-		file_check_access(data, file, 2);
-		add_outfile(data, file, index);
+		valid = file_check_access(data, file, 2);
+		add_outfile(data, file, index, valid);
 	}
 	else if (ft_strncmp(token, "<", 1) == 0 && ft_strlen(token) == 1) // inf
 	{
-		file_check_access(data, file, 0);
-		add_infile(data, file, index, 0);
+		valid = file_check_access(data, file, 0);
+		add_infile(data, file, index, valid);
 	}
 	else
-		add_infile(data, file, index, 1);
+		add_heredoc(data, file, index);
+	return (valid);
 }
 
 void	remove_nodes_redirection(t_data *data, size_t index)
@@ -82,34 +75,46 @@ void	remove_nodes_redirection(t_data *data, size_t index)
 		remove_middle_nodes(data, index);
 }
 
-void	token_check(t_data *data) // On a un segfault ici!
+void	files_validity(t_data *data, t_lexer *tmp, int *valid)
 {
+	if (*valid != SUCCESS)
+	{
+		if (ft_strncmp(tmp->token, "<", 1) != 0)
+			add_outfile(data, tmp->next->word, tmp->index, *valid);
+		remove_nodes_redirection(data, tmp->index);
+	}
+	else
+	{
+		*valid = check_redirection(data, tmp->token, tmp->next->word, \
+		tmp->index);
+		remove_nodes_redirection(data, tmp->index);
+	}
+	add_index(data);
+}
+
+void	token_check(t_data *data) // On a un segfault si: ls | >out viens de parser.c
+{
+	t_lexer	*buf;
 	t_lexer	*tmp;
+	int		valid;
 
 	heredoc_count(data);
-	// //test
-	// size_t len;
-	// len = 0;
-	// tmp = data->lexer;
-	// while (tmp != NULL)
-	// {
-	// 	len++;
-	// 	tmp = tmp->next;
-	// }
-	// printf("len: %ld\n", len);
-	// //endtest
-
+	valid = 0;
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
-		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) != 0)
-		{
-			check_redirection(data, tmp->token, tmp->next->word, tmp->index);
-			remove_nodes_redirection(data, tmp->index);
-			add_index(data);
-			tmp = data->lexer;
-			continue ;
+		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) == 0)
+			valid = 0;
+		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) != 0 )
+		{printf("\nvalid value: %d && token val = %s\n", valid, tmp->token);
+			buf = tmp->prev;
+			if (buf == NULL)
+				buf = data->lexer;
+			files_validity(data, tmp, &valid);
+			tmp = buf;
 		}
+		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) != 0)
+			continue ;
 		tmp = tmp->next;
 	}
 	check_heredoc(data);

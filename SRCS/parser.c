@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/02 08:50:26 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 13:16:55 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ static t_command	*fillup(t_data *data, size_t i, size_t x, t_command *new)
 		if (tmp->outfile != NULL)
 			new->outfile = ft_strdup(tmp->outfile);
 		new->heredoc_file = data->hd->hd_as_inf;
+		if (new->inf_err == 0)
+			new->inf_err = tmp->inf_err;
+		if (new->out_err == 0)
+			new->out_err = tmp->out_err;
 		j++;
 		i++;
 		tmp = tmp->next;
@@ -69,6 +73,8 @@ static t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
 	new->infile = NULL;
 	new->outfile = NULL;
 	new->heredoc_file = 0;
+	new->inf_err = 0;
+	new->out_err = 0;
 	new = fillup(data, i, x, new);
 	cmd = add_cmd_node(cmd, new);
 	return (cmd);
@@ -112,7 +118,9 @@ printf("len cmdlst: %ld\n", lstlencmd(t));p = 0;
 			p++;
 		}
 	printf("infile = %s\n", t->infile);
+	printf("inf_err= %d\n", t->inf_err);
 	printf("outfile = %s\n", t->outfile);
+	printf("out_err = %d\n", t->out_err);
 	printf("heredoc? = %d\n", t->heredoc_file);
 	t=t->next;
 	}

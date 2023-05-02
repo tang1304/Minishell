@@ -12,6 +12,35 @@
 
 #include "../incs/minishell.h"
 
+void	add_heredoc(t_data *data, char *file, size_t index)
+{
+	t_lexer	*tmp;
+
+	tmp = data->lexer;
+	while (tmp->index != index)
+		tmp = tmp->next;
+	tmp = find_start(tmp);
+	while (tmp != NULL)
+	{
+		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) == 0)
+			break ;
+		if ((tmp->word != NULL && tmp->prev == NULL) || (tmp->word != NULL \
+		&& tmp->prev->word != NULL) || (tmp->word != NULL && \
+		ft_strncmp(tmp->prev->token, "|", 1) == 0))
+		{
+			if (tmp->infile != NULL)
+			{
+				free(tmp->infile);
+				tmp->infile = NULL;
+				data->hd->hd_as_inf = 0;
+			}
+			add_file_node(data, tmp, file, 1);
+			return ;
+		}
+		tmp = tmp->next;
+	}
+}
+
 void	heredoc_count(t_data *data)
 {
 	t_lexer	*tmp;
