@@ -6,11 +6,19 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/02 13:16:55 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 16:25:02 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+// void	check_hidden_nodes(t_data *data)
+// {
+// 	t_lexer *tmp;
+
+// 	tmp = data->lexer;
+// 	while ()
+// }
 
 static t_command	*add_cmd_node(t_command *command, t_command *new)
 {
@@ -92,13 +100,21 @@ void	create_cmd_lst(t_data *data)
 	while (tmp->next != NULL)
 	{
 		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) == 0)
-		{
+		{printf("index: %ld len: %ld\n\n\n\n\n", tmp->index, lstlen(data->lexer) - 1);
+			if (tmp->index == lstlen(data->lexer))
+				break ;
 			command = cmd_node(data, buffer, tmp->index, command);
 			buffer = tmp->index + 1;
 		}
 		tmp = tmp->next;
 	}
-	command = cmd_node(data, buffer, tmp->index + 1, command);
+		command = cmd_node(data, buffer, tmp->index + 1, command);
+
+
+
+	// else
+		// command = cmd_node(data, buffer, tmp->index + 1, command);
+
 	//a la fin on peut free le lexer
 
 
