@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/27 13:11:54 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 15:09:45 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 // si value contient un ';' '(' ou ')'
 //export name -> name n'est pas dans env, mais présent dans export
 
-int	ft_print_export(t_env **env)
+static int	print_export(t_env **env)
 {
 	t_env	*tmp;
 	int		i;
@@ -44,36 +44,50 @@ int	ft_print_export(t_env **env)
 	return (1);
 }
 
-void	ft_export(t_data *data, char **cmd)
+int	name_check(char *str)
 {
 	int	i;
 
+	i = 0;
+	if (!ft_isalnum(str[0]) || ft_isdigit(str[0]))
+	{
+		printf("minishell: export: `%s' : not a valid identifier\n", str[1]);
+		return (0);
+	}
+	while (str[++i] != '=' || str[++i])
+	{
+		if (str[i] != '_' || !ft_isalnum(str[i]))
+		{
+			printf("minishell: export: `%s' : not a valid identifier\n", str);
+			return (0);
+		}
+	}
+	return (1);
+}
+
+void	ft_export(t_data *data, char **cmd)
+{
+	int	i;
+	int	j;
+
 	if (!cmd[1] || cmd[1][0] == '\0')
 	{
-		ft_print_export(&data->env);
+		print_export(&data->env);
 		return ;
 	}
-	i = 0;
-	if (cmd[2])
+	j = -1;
+	while (cmd[++j])
 	{
-		while (cmd[++i])
-			printf("minishell: export: `%s' : not a valid identifier\n", cmd[i]);
-		return ;
+		if (!name_check(cmd[j]))
+			continue ;
+		if (cmd[j][i] == '\0')
+			continue ;
+		while (cmd[1][++i])
+		{
+			if (cmd[1][i])
+				;
+			if (cmd[1][i] == ';')
+				;
+		}
 	}
-	if (!ft_isalnum(cmd[1][0]) || ft_isdigit(cmd[1][0]))
-		printf("minishell: export: `%s' : not a valid identifier\n", cmd[1]);
-	while (cmd[1][++i] != '=' || cmd[1][++i])
-	{
-		if (cmd[1][i] != '_' || !ft_isalnum(cmd[1][i]))
-			printf("minishell: export: `%s' : not a valid identifier\n", cmd[1]);
-	}
-	if (cmd[1][i] == '\0')
-		return ;
-	// while (cmd[1][++i])
-	// {
-	// 	if (cmd[1][i])
-	// 		;
-	// 	if (cmd[1][i] == ';' || cmd[1][i] == '(' || cmd[1][i] == ')')
-	// 		;
-	// }
 }

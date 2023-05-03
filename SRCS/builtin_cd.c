@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/02 16:10:30 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 14:01:51 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	ft_cd(t_data *data, char **cmd)
 	if (ft_strnstr(cmd[1], "..", 2) && ft_strlen(cmd[1]) == 2)
 	{
 		if (!ddot_handle(data))
-			return (, 0);
+			return (0);
 	}
 	else if (ft_strnstr(cmd[1], ".", 1) && ft_strlen(cmd[1]) == 1)
 		return (1);
