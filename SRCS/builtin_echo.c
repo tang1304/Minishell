@@ -6,13 +6,13 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:43:06 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/02 17:50:48 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 10:54:11 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	echo_n_check(char **cmd)
+static int	echo_n_check(char **cmd)
 {
 	int	i;
 
