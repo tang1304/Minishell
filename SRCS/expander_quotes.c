@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:22 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/25 11:15:00 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 10:19:00 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*str_quotes_removal(char *str)
 	int	q_pairs;
 
 	q_pairs = quote_pairs(str);
-	printf("q_pairs:%d\n", q_pairs);
+// printf("q_pairs:%d\n", q_pairs);
 	k = -1;
 	i = 0;
 	while (++k < q_pairs)
@@ -96,7 +96,7 @@ char	*str_quotes_removal(char *str)
 		// if (!new_word)
 		// 	;
 		i--;
-		printf("quotes-> word :%s\n", str);
+// printf("quotes-> word :%s\n", str);
 	}
 	return (str);
 }

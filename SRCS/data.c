@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/03 10:29:10 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 08:48:16 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static t_env	*new_env_node(char *str)
 	return (new);
 }
 
-static int	add_env_node(t_env **env, char *str)
+int	add_env_node(t_env **env, char *str)
 {
 	t_env	*tmp;
 	t_env	*new;

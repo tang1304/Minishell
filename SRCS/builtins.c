@@ -6,34 +6,13 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/02 17:54:59 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 10:59:42 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	builtins(t_data *data, char **cmd)
-{
-	int	len;
-
-	len = ft_strlen(cmd[0]) - 1;
-	if ((ft_strncmp(cmd[0], "echo", 4) == 0) && len == 4)
-		ft_echo(cmd);
-	else if ((ft_strncmp(cmd[0], "cd", 2) == 0) && len == 2)
-		ft_cd(data, cmd);
-	else if ((ft_strncmp(cmd[0], "pwd", 3) == 0) && len == 3)
-		ft_pwd(data);
-	else if ((ft_strncmp(cmd[0], "export", 6) == 0) && len == 6)
-		ft_export(data, cmd);
-	else if ((ft_strncmp(cmd[0], "unset", 5) == 0) && len == 5)
-		ft_unset(data, cmd);
-	else if ((ft_strncmp(cmd[0], "env", 3) == 0) && len == 3)
-		ft_env(data);
-	else if ((ft_strncmp(cmd[0], "exit", 5) == 0) && len == 5)
-		ft_exit(cmd);
-}
-
-void	ft_pwd(t_data *data)
+static void	ft_pwd(void)
 {
 	char	*line;
 
@@ -42,7 +21,7 @@ void	ft_pwd(t_data *data)
 	free(line);
 }
 
-void	ft_env(t_data *data)
+static void	ft_env(t_data *data)
 {
 	int	i;
 
@@ -51,10 +30,32 @@ void	ft_env(t_data *data)
 		printf("%s\n", data->envp[i]);
 }
 
-void	ft_exit(char **str)
+static void	ft_exit(char **str)
 {
 	printf("exit\n");
 	if (str[1])
 		printf("minishell: exit: %s: numeric argument required\n", str[1]);
 	exit(EXIT_SUCCESS);
+}
+
+void	builtins(t_data *data, char **cmd)
+{
+	int	len;
+
+	len = ft_strlen(cmd[0]);
+	if ((ft_strncmp(cmd[0], "echo", 4) == 0) && len == 4)
+		ft_echo(cmd);
+	else if ((ft_strncmp(cmd[0], "cd", 2) == 0) && len == 2)
+		ft_cd(data, cmd);
+	else if ((ft_strncmp(cmd[0], "pwd", 3) == 0) && len == 3)
+		ft_pwd();
+	else if ((ft_strncmp(cmd[0], "export", 6) == 0) && len == 6)
+		ft_export(data, cmd);
+	else if ((ft_strncmp(cmd[0], "unset", 5) == 0) && len == 5)
+		ft_unset(data, cmd);
+	else if ((ft_strncmp(cmd[0], "env", 3) == 0) && len == 3)
+		ft_env(data);
+	else if ((ft_strncmp(cmd[0], "exit", 5) == 0) && len == 5)
+		ft_exit(cmd);
+	// printf("ici\n");
 }

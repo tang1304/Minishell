@@ -45,6 +45,10 @@ LST_SRCS	=	main.c \
 				remove_nodes.c \
 				heredoc.c \
 				utils.c \
+				builtins.c \
+				builtin_cd.c \
+				builtin_echo.c \
+				builtin_unset.c \
 				builtin_export.c \
 				builtin_export_utils.c \
 				envp_utils.c

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/26 17:21:03 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 10:19:23 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ static t_lexer	*new_lexer_node(char *str, int token)
 		node->outfile = NULL;
 		node->token = NULL;
 		node->LIMITER = NULL;
-		printf("word: %s\n", node->word);
+		// printf("word: %s\n", node->word);
 	}
 	else
 	{
 		node->word = NULL;
 		node->token = ft_strdup(str);
-		printf("token: %s\n", node->token);
+		// printf("token: %s\n", node->token);
 	}
 	// else
 	// {
@@ -74,7 +74,6 @@ int	add_node(t_lexer **lexer, char *str, int token)
 		return (0);
 	if (!*lexer)
 	{
-		printf("LAAAAA\n");
 		*lexer = new;
 		return (1);
 	}
@@ -96,10 +95,6 @@ void	add_index(t_data *data)
 	while (tmp != NULL)
 	{
 		tmp->index = i;
-if (tmp->word != NULL)
-	printf("word: %s index: %ld\n", tmp->word, tmp->index);
-else
-	printf("token: %s index: %ld\n", tmp->token, tmp->index);
 		i++;
 		tmp = tmp->next;
 	}

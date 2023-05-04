@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/28 11:23:33 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 10:41:13 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_data
 	char				*str; // command typed by user
 	char				*prompt; // has to be free at the end
 	char				*prompt_pwd;
+	char				**ex;
 	char				**envp;
 	char				**paths;
 	char				**tokens_tab;
@@ -93,6 +94,7 @@ enum e_errors
 /*	data.c	*/
 void	data_initialize(t_data *data, char **envp);
 void	update_pwd(t_data *data, char *s);
+int		add_env_node(t_env **env, char *str);
 char	**get_envp(t_data *data, char **envp);
 
 /*	loop.c	*/
@@ -160,14 +162,25 @@ char	*str_quotes_removal(char *str);
 int		quotes_removal(t_lexer *lexer);
 
 /*	builtins.c	*/
+void	builtins(t_data *data, char **cmd);
+
+/*	builtin_cd.c	*/
+int		ft_cd(t_data *data, char **cmd);
+char	*search_env(t_data *data, char *env);
+int		replace_env(t_data *data, char *env, char *old_env);
+
+/*	builtin_echo.c	*/
+void	ft_echo(char **cmd);
 
 /*	builtin_export.c	*/
 void	ft_export(t_data *data, char **cmd);
-int		ft_print_export(t_env **env);
 
 /*	builtin_export_utils.c	*/
 void	ft_list_sort(t_env **env, int size);
 int		ft_list_size(t_env *env);
+
+/*	builtin_unset.c	*/
+int		ft_unset(t_data *data, char **cmd);
 
 /*	envp_utils.c	*/
 char	*get_shlvl(char *str);

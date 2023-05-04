@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/25 09:45:47 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 10:17:26 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,21 +138,21 @@ void	expand(t_data *data) // func too long
 
 
 		// test
-	t_data	*tmp2;
-	tmp2 = data;
-	while (tmp2->lexer != NULL)
-	{
-		ft_printf("\n\n");
-if (tmp2->lexer->word != NULL)
-	ft_printf("word node: %s\n", tmp2->lexer->word);
-else
-	ft_printf("token node: %s\n", tmp2->lexer->token);
-printf("index: %ld\n", tmp2->lexer->index);
-ft_printf("infile: %s\n", tmp2->lexer->infile);
-ft_printf("outfile: %s\n", tmp2->lexer->outfile);
-ft_printf("LIMITER: %s\n",tmp2->lexer->LIMITER);
-ft_printf("hdoc: %d\n",tmp2->heredoc);
-		tmp2->lexer = tmp2->lexer->next;
-	}
+// 	t_data	*tmp2;
+// 	tmp2 = data;
+// 	while (tmp2->lexer != NULL)
+// 	{
+// 		ft_printf("\n\n");
+// if (tmp2->lexer->word != NULL)
+// 	ft_printf("word node: %s\n", tmp2->lexer->word);
+// else
+// 	ft_printf("token node: %s\n", tmp2->lexer->token);
+// printf("index: %ld\n", tmp2->lexer->index);
+// ft_printf("infile: %s\n", tmp2->lexer->infile);
+// ft_printf("outfile: %s\n", tmp2->lexer->outfile);
+// ft_printf("LIMITER: %s\n",tmp2->lexer->LIMITER);
+// ft_printf("hdoc: %d\n",tmp2->heredoc);
+// 		tmp2->lexer = tmp2->lexer->next;
+// 	}
 	// end test
 }
