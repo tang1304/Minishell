@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/04 09:12:29 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 13:32:29 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ void	add_index(t_data *data)
 	while (tmp != NULL)
 	{
 		tmp->index = i;
-if (tmp->word != NULL)
-	printf("word: %s index: %ld\n", tmp->word, tmp->index);
-else
-	printf("token: %s index: %ld\n", tmp->token, tmp->index);
+// if (tmp->word != NULL)
+// 	// printf("word: %s index: %ld\n", tmp->word, tmp->index);
+// else
+	// printf("token: %s index: %ld\n", tmp->token, tmp->index);
 		i++;
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 11:22:36 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 15:41:48 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ typedef struct s_command
 	int					heredoc_file; //0 no hd 1 hd
 	int					heredoc_num; // which limiter it needs to use
 	int					fd[2];
+	int					pipe_b; // 0 pas de pipe, 1 = pipe = rediriger pipe vers stdin
+	int					pipe_a; // 0 pas de pipe, 1 = pipe = rediriger stdout vers pipe
 	struct s_command	*next;
 	struct s_command	*prev;
 }				t_command;//ls        | "grep >out" <Makefile| wc -l >outer
@@ -149,7 +151,7 @@ void	add_outfile(t_data *data, char *file, size_t index, int valid);
 void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i);
 
 /*	remove_nodes.c	*/
-void	remove_front_nodes(t_data *data);
+void	remove_front_nodes(t_data *data, size_t len);
 void	remove_back_nodes(t_data *data);
 void	remove_middle_nodes(t_data *data, size_t index);
 

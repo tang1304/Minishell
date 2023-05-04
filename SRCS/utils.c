@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:03:57 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 09:12:59 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 14:30:53 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,10 @@ void	complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid)
 void	complete_out_data(t_lexer *tmp, char *file, int valid)
 {
 	if (tmp->outfile != NULL)
+	{
 		free(tmp->outfile);
+		tmp->outfile = NULL;
+	}
 	if (valid == 0)
 	{
 		tmp->outfile = ft_strdup(file);

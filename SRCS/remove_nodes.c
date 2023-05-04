@@ -11,53 +11,92 @@
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+// A revoir pour ne pas segf dans le cas ou <TODO |>out
 
-void	remove_front_nodes(t_data *data)
+static void	free_content_node(t_lexer *tmp)
 {
+	if (tmp->word != NULL)
+		free(tmp->word);
+	tmp->word = NULL;
+	if (tmp->token != NULL)
+		free(tmp->token);
+	tmp->token = NULL;
+	tmp->prev = NULL;
+	tmp->next = NULL;
+	free(tmp);
+	tmp = NULL;
+}
+
+static void	free_lst(t_data *data, t_lexer *tmp)
+{
+	data->lexer = data->lexer->next;
+	free_content_node(tmp);
+	if (data->lexer->word != NULL)
+		free(data->lexer->word);
+	data->lexer->word = NULL;
+	if (data->lexer->token != NULL)
+		free(data->lexer->token);
+	data->lexer->token = NULL;
+	data->lexer->prev = NULL;
+	data->lexer->next = NULL;
+}
+
+void	remove_front_nodes(t_data *data, size_t len)
+{
+
 	t_lexer	*tmp;
 
 	tmp = data->lexer;
+	if (len == 2)
+	{
+		free_lst(data, tmp);
+		return ;
+	}
+	data->lexer = tmp->next;
+	free_content_node(tmp);
+	tmp = data->lexer;
 	data->lexer = tmp->next;
 	data->lexer->prev = NULL;
-	tmp->next = NULL;
-	tmp->token = NULL;
-	free(tmp);
-	tmp = data->lexer;
-	if (tmp->next != NULL)
-	{
-		data->lexer = tmp->next;
-		data->lexer->prev = NULL;
-		tmp->next = NULL;
-	}
-	else
-		data->lexer = NULL;
-	tmp->word = NULL;
-	free(tmp);
+	free_content_node(tmp);
 }
 
 void	remove_back_nodes(t_data *data)
 {
 	t_lexer	*tmp;
-	int		count;
+	int		times;
 
-	count = 2;
-	while (count > 0)
+	times = 2;
+	while (times > 0)
 	{
 		tmp = data->lexer;
 		while (tmp->next != NULL)
 			tmp = tmp->next;
-		if (tmp->next != NULL)
-			tmp->next = NULL;
 		tmp->prev->next = NULL;
-		if (tmp->prev != NULL)
-			tmp->prev = NULL;
-		if (tmp->word != NULL)
-			tmp->word = NULL;
-		if (tmp->token != NULL)
-			tmp->token = NULL;
-		free(tmp);
-		count--;
+		free_content_node(tmp);
+		times--;
 	}
+
+
+	// int		count;
+
+	// count = 2;
+	// while (count > 0)
+	// {
+	// 	tmp = data->lexer;
+	// 	while (tmp->next != NULL)
+	// 		tmp = tmp->next;
+	// 	if (tmp->next != NULL)
+	// 		tmp->next = NULL;
+	// 	tmp->prev->next = NULL;
+	// 	if (tmp->prev != NULL)
+	// 		tmp->prev = NULL;
+	// 	if (tmp->word != NULL)
+	// 		tmp->word = NULL;
+	// 	if (tmp->token != NULL)
+	// 		tmp->token = NULL;
+	// 	free(tmp);
+	// 	count--;
+	// }
 }
 
 void	remove_middle_nodes(t_data *data, size_t index)

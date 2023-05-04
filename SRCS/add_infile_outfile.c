@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 11:06:12 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 15:31:01 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	check_redirection(t_data *data, char *token, char *file, size_t index)
 void	remove_nodes_redirection(t_data *data, size_t index)
 {
 	if (index == 0 || lstlen(data->lexer) == 2)
-		remove_front_nodes(data);
+		remove_front_nodes(data, lstlen(data->lexer));
 	else if (index + 1 == lstlen(data->lexer) - 1 && lstlen(data->lexer) > 2)
 		remove_back_nodes(data);
 	else
@@ -92,9 +92,8 @@ void	files_validity(t_data *data, t_lexer *tmp, int *valid)
 	add_index(data);
 }
 
-void	token_check(t_data *data) // On a un segfault si: ls | >out viens de parser.c
+void	token_check(t_data *data)
 {
-	t_lexer	*buf;
 	t_lexer	*tmp;
 	int		valid;
 
@@ -105,13 +104,10 @@ void	token_check(t_data *data) // On a un segfault si: ls | >out viens de parser
 	{
 		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) == 0)
 			valid = 0;
-		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) != 0 )
-		{printf("\nvalid value: %d && token val = %s\n", valid, tmp->token);
-			buf = tmp->prev;
-			if (buf == NULL)
-				buf = data->lexer;
+		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) != 0)
+		{
 			files_validity(data, tmp, &valid);
-			tmp = buf;
+			tmp = data->lexer;
 		}
 		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) != 0)
 			continue ;
@@ -137,9 +133,9 @@ void	token_check(t_data *data) // On a un segfault si: ls | >out viens de parser
 // 	while (tmp2->lexer != NULL)
 // 	{
 // 		ft_printf("\n\n");
-// if (tmp2->lexer->word != NULL)
+// // if (tmp2->lexer->word != NULL)
 // 	ft_printf("word node: %s\n", tmp2->lexer->word);
-// else
+// // else
 // 	ft_printf("token node: %s\n", tmp2->lexer->token);
 // printf("index: %ld\n", tmp2->lexer->index);
 // ft_printf("infile: %s\n", tmp2->lexer->infile);

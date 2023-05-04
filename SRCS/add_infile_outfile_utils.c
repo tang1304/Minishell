@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 10:00:09 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 12:10:25 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	add_infile(t_data *data, char *file, size_t index, int valid)
 			return ;
 		}
 		tmp = tmp->next;
-	}
+	}//ajouter node avec derniere redir dans le cas ou ls |>out
 }
 
 void	add_outfile(t_data *data, char *file, size_t index, int valid)
