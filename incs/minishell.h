@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/02 15:20:53 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 11:22:36 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct s_lexer
 	int				inf_err;
 	char			*outfile;//free if not NULL
 	int				out_err;
+	int				hd_file;
+	int				hd_number;
 	size_t			index;
 	int				word_quote_pairs;
 	int				s_q;
@@ -57,18 +59,20 @@ typedef struct s_command
 	int					inf_err;
 	char				*outfile;
 	int					out_err;
-	int					heredoc_file;
+	int					heredoc_file; //0 no hd 1 hd
+	int					heredoc_num; // which limiter it needs to use
+	int					fd[2];
 	struct s_command	*next;
 	struct s_command	*prev;
 }				t_command;//ls        | "grep >out" <Makefile| wc -l >outer
 
 typedef struct s_heredoc
 {
-	size_t				hd_count; // number of heredocs
+	size_t				hd_count; // number of heredocs (total)
+	// size_t				hd_used; //number of hd actually used
 	size_t				heredoc; // set to 0 at first
 	char				**LIMITER; // array of all LIMITERS  A FREE A LA FIIIN meme si 0 heredocs
-	int					hd_as_inf; // if hdoc use as infile or not
-	int					fd[2];//pipe for here_doc
+	// int					fd[2];//pipe for here_doc
 }				t_heredoc;
 
 typedef struct s_data
@@ -184,7 +188,7 @@ int		quotes_removal(t_lexer *lexer);
 /*	heredoc.c	*/
 void	heredoc_count(t_data *data);
 void	check_heredoc(t_data *data);
-void	init_heredoc(t_data *data);
+void	init_heredoc(t_data *data, t_command *cmd);
 void	add_heredoc(t_data *data, char * file, size_t index);
 
 /*	utils.c	*/

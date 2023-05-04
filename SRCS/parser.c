@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/02 16:25:02 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 11:29:05 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,22 @@ static t_command	*fillup(t_data *data, size_t i, size_t x, t_command *new)
 	tmp = data->lexer;
 	while (tmp->index != i)
 		tmp = tmp->next;
-	while (i < x)
+	while (i++ < x)
 	{
 		new->cmd[j] = ft_strdup(tmp->word);
 		if (tmp->infile != NULL)
 			new->infile = ft_strdup(tmp->infile);
 		if (tmp->outfile != NULL)
 			new->outfile = ft_strdup(tmp->outfile);
-		new->heredoc_file = data->hd->hd_as_inf;
+		if (tmp->hd_file != 0)
+			new->heredoc_file = tmp->hd_file;
+		if (tmp->hd_number != -1)
+			new->heredoc_num = tmp->hd_number;
 		if (new->inf_err == 0)
 			new->inf_err = tmp->inf_err;
 		if (new->out_err == 0)
 			new->out_err = tmp->out_err;
 		j++;
-		i++;
 		tmp = tmp->next;
 	}
 	new->cmd[j] = 0;
@@ -81,6 +83,7 @@ static t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
 	new->infile = NULL;
 	new->outfile = NULL;
 	new->heredoc_file = 0;
+	new->heredoc_num = -1;
 	new->inf_err = 0;
 	new->out_err = 0;
 	new = fillup(data, i, x, new);
@@ -98,28 +101,46 @@ void	create_cmd_lst(t_data *data)
 	buffer = 0;
 	tmp = data->lexer;
 	while (tmp->next != NULL)
-	{
-		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) == 0)
-		{printf("index: %ld len: %ld\n\n\n\n\n", tmp->index, lstlen(data->lexer) - 1);
-			if (tmp->index == lstlen(data->lexer))
-				break ;
-			command = cmd_node(data, buffer, tmp->index, command);
-			buffer = tmp->index + 1;
-		}
 		tmp = tmp->next;
-	}
+	if (tmp->token == NULL)
+	{
+		tmp = data->lexer;
+		while (tmp->next != NULL)
+		{
+			if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) == 0)
+			{printf("index: %ld len: %ld\n\n\n\n\n", tmp->index, lstlen(data->lexer) - 1);
+				command = cmd_node(data, buffer, tmp->index, command);
+				buffer = tmp->index + 1;
+			}
+			tmp = tmp->next;
+		}
 		command = cmd_node(data, buffer, tmp->index + 1, command);
-
-
-
-	// else
-		// command = cmd_node(data, buffer, tmp->index + 1, command);
+	}
+	else
+	{
+		tmp = data->lexer;
+		while (tmp->next != NULL)
+		{
+			if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) == 0)
+			{printf("index: %ld len: %ld\n\n\n\n\n", tmp->index, lstlen(data->lexer) - 1);
+				if (tmp->index == lstlen(data->lexer) - 1)
+					break ;
+				command = cmd_node(data, buffer, tmp->index, command);
+				buffer = tmp->index + 1;
+			}
+			tmp = tmp->next;
+		}
+		command = cmd_node(data, buffer, tmp->index, command);
+	}
+	data->cmd = command; //free tmp
+	check_heredoc(data);
 
 	//a la fin on peut free le lexer
 
 
-	// TEST ls <TODO -l|wc >outfile -l <<eof segfaults
+	// TEST ls <TODO -l|wc >outfile -l <<eof
 	// ls <TODO -l|wc >outfile -l <eof
+	// ls <TODO -l <<eof|wc >outfile -l <<eof1 <<eof2 infile todo added instead of null
 
 	int p;
 	t_command *t;
@@ -138,6 +159,7 @@ printf("len cmdlst: %ld\n", lstlencmd(t));p = 0;
 	printf("outfile = %s\n", t->outfile);
 	printf("out_err = %d\n", t->out_err);
 	printf("heredoc? = %d\n", t->heredoc_file);
+	printf("heredoc numba = %d\n", t->heredoc_num);
 	t=t->next;
 	}
 	// END TEST

@@ -77,9 +77,11 @@ void	remove_middle_nodes(t_data *data, size_t index)
 	tmp2->prev = tmp1;
 	rm1->prev = NULL;
 	rm1->next = NULL;
+	free(rm1->token);
 	rm1->token = NULL;
 	rm2->prev = NULL;
 	rm2->next = NULL;
+	free(rm2->word);
 	rm2->word = NULL;
 	free(rm1);
 	free(rm2);
