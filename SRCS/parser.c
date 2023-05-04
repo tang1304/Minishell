@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 11:29:05 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 15:48:48 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static t_command	*fillup(t_data *data, size_t i, size_t x, t_command *new)
 {
 	size_t		j;
 	t_lexer		*tmp;
-
+// Ajouter fonction pour checker si pipe apres et mettre valeur de pipe a 1.
 	j = 0;
 	tmp = data->lexer;
 	while (tmp->index != i)
@@ -86,13 +86,15 @@ static t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
 	new->heredoc_num = -1;
 	new->inf_err = 0;
 	new->out_err = 0;
+	new->pipe_b = 0;
+	new->pipe_a = 0;
 	new = fillup(data, i, x, new);
 	cmd = add_cmd_node(cmd, new);
 	return (cmd);
 }
 
-void	create_cmd_lst(t_data *data)
-{
+void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a la fin
+{printf("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK???\n");
 	size_t		buffer;
 	t_lexer		*tmp;
 	t_command	*command;
@@ -102,6 +104,8 @@ void	create_cmd_lst(t_data *data)
 	tmp = data->lexer;
 	while (tmp->next != NULL)
 		tmp = tmp->next;
+	if (tmp->token == NULL && tmp->word == NULL && lstlen(tmp) == 1)
+		return ;// au cas ou on a <TODO par ex
 	if (tmp->token == NULL)
 	{
 		tmp = data->lexer;
