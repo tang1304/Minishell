@@ -29,11 +29,7 @@ void	add_heredoc(t_data *data, char *file, size_t index)
 		ft_strncmp(tmp->prev->token, "|", 1) == 0))
 		{
 			if (tmp->infile != NULL)
-			{
-				free(tmp->infile);
-				tmp->infile = NULL;
-				data->hd->hd_as_inf = 0;
-			}
+				tmp->hd_file = 0;
 			add_file_node(data, tmp, file, 1);
 			return ;
 		}
@@ -63,7 +59,7 @@ void	heredoc_count(t_data *data)
 	data->hd->LIMITER[data->hd->hd_count] = 0;
 }
 
-void	init_heredoc(t_data *data)
+void	init_heredoc(t_data *data, t_command *cmd)
 {
 	char	*line;
 	char	*buffer;
@@ -77,38 +73,70 @@ void	init_heredoc(t_data *data)
 			break ;
 		buffer = ft_strjoin_free(buffer, line);
 	}
-	write(data->hd->fd[1], buffer, ft_strlen(buffer));
+	write(cmd->fd[1], buffer, ft_strlen(buffer));
 	free(buffer);
 	if (line)
 		free(line);
-	close(data->hd->fd[0]);
-	close(data->hd->fd[1]);
+	close(cmd->fd[0]);
+	close(cmd->fd[1]);
 	//free all!!! <Makefile ls |grep <<eof |wc >out
 	// test bible non réalisée
 }
 
 void	check_heredoc(t_data *data)
 {
-	int		status;
-	pid_t	i;
-
+	int			status;
+	t_command	*tmp;
+	pid_t		i;
+// char	*s;
+// s=NULL;
+	tmp = data->cmd;
 	data->hd->heredoc = 0;
-	if (pipe(data->hd->fd) < 0) //Si erreur ->error message?? return?
-		return ;
-	// if (data->hd->hd_count > 0)
-	// {
-		while (data->hd->heredoc < data->hd->hd_count)
+	while (tmp != NULL)
+	{
+		if (tmp->heredoc_file == 1)
 		{
-			i = fork();
-			if (i == 0)
+			if (pipe(tmp->fd) < 0) //Si erreur ->error message?? return?
+				return ;
+			while ((int)data->hd->heredoc <= tmp->heredoc_num)
 			{
-				init_heredoc(data);
-				exit (SUCCESS); // faudra tout free
+				i = fork();
+				if (i == 0)
+				{
+					init_heredoc(data, tmp);
+					exit (SUCCESS);
+				}
+				waitpid(i, &status, 0);
+// read(tmp->fd[0], s, 5);
+// write(1, s, ft_strlen(s));
+				data->hd->heredoc++;
 			}
-			waitpid(i, &status, 0);
-			data->hd->heredoc++;
 		}
-		// if (data->hd->hd_as_inf == 0)
-			//close fd[0] et fd[1] + free LIMITER char **
-	// }
+		tmp = tmp->next;
+	}
+
+
+
+
+
+
+
+	// if (pipe(data->hd->fd) < 0) //Si erreur ->error message?? return?
+	// 	return ;
+	// // if (data->hd->hd_count > 0)
+	// // {
+	// 	while (data->hd->heredoc < data->hd->hd_count)
+	// 	{
+	// 		i = fork();
+	// 		if (i == 0)
+	// 		{
+	// 			init_heredoc(data);
+	// 			exit (SUCCESS); // faudra tout free
+	// 		}
+	// 		waitpid(i, &status, 0);
+	// 		data->hd->heredoc++;
+	// 	}
+	// 	// if (data->hd->hd_as_inf == 0)
+	// 		//close fd[0] et fd[1] + free LIMITER char **
+	// // }
 }

@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:03:57 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/02 14:44:25 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 09:12:59 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,9 @@ void	complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid)
 	{
 		free(tmp->infile);
 		tmp->infile = NULL;
-		data->hd->hd_as_inf = 0;
 	}
+	tmp->hd_file = 0;
+	tmp->hd_number = -1;
 	if (valid == 0)
 	{
 		add_file_node(data, tmp, file, 0);//0 infile 1hd

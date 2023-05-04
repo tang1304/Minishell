@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/02 14:44:38 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 10:00:09 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,15 @@ void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
 		lexer->infile = ft_strdup(file);
 	else
 	{
+		if (lexer->infile != NULL)
+		{
+			free(lexer->infile);
+			lexer->infile = NULL;
+		}
+		lexer->hd_file = 1;
 		data->hd->LIMITER[data->hd->heredoc] = ft_strdup(file);
+		lexer->hd_number = data->hd->heredoc;
 		data->hd->heredoc++;
-		data->hd->hd_as_inf = 1;
 	}
 }
 
@@ -55,7 +61,10 @@ void	add_infile(t_data *data, char *file, size_t index, int valid)
 		if ((tmp->word != NULL && tmp->prev == NULL) || (tmp->word != NULL \
 		&& tmp->prev->word != NULL) || (tmp->word != NULL && \
 		ft_strncmp(tmp->prev->token, "|", 1) == 0))
+		{
 			complete_inf_data(data, tmp, file, valid);
+			return ;
+		}
 		tmp = tmp->next;
 	}
 }
@@ -75,7 +84,10 @@ void	add_outfile(t_data *data, char *file, size_t index, int valid)
 		if ((tmp->word != NULL && tmp->prev == NULL) || (tmp->word != NULL \
 		&& tmp->prev->word != NULL) || (tmp->word != NULL && \
 		ft_strncmp(tmp->prev->token, "|", 1) == 0))
+		{
 			complete_out_data(tmp, file, valid);
+			return ;
+		}
 		tmp = tmp->next;
 	}
 }
