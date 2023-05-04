@@ -6,16 +6,13 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/03 15:09:45 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 10:12:13 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
 // export name=value
-// si name commence par un digit, ou contient un ':' ';' '?' '@'
-// si value contient un ';' '(' ou ')'
-//export name -> name n'est pas dans env, mais présent dans export
 
 static int	print_export(t_env **env)
 {
@@ -44,25 +41,49 @@ static int	print_export(t_env **env)
 	return (1);
 }
 
-int	name_check(char *str)
+static int	name_check(char *str)
 {
 	int	i;
 
 	i = 0;
 	if (!ft_isalnum(str[0]) || ft_isdigit(str[0]))
 	{
-		printf("minishell: export: `%s' : not a valid identifier\n", str[1]);
-		return (0);
+		printf("minishell: export: `%s' : not a valid identifier\n", str);
+		return (-1);
 	}
 	while (str[++i] != '=' || str[++i])
 	{
 		if (str[i] != '_' || !ft_isalnum(str[i]))
 		{
 			printf("minishell: export: `%s' : not a valid identifier\n", str);
-			return (0);
+			return (-1);
 		}
 	}
-	return (1);
+	return (i);
+}
+
+static char	**export_var(t_data *data, char *cmd)
+{
+	int		i;
+	int		n;
+	char	**new_envp;
+
+	add_env_node(&data->env, cmd);
+	i = -1;
+	n = 0;
+	while (data->envp[n])
+		n++;
+	new_envp = malloc(sizeof(char *) * (n + 1));
+	// if (!new_envp)
+	// 	;
+	ft_memcpy(new_envp, data->envp, sizeof(char *));
+	while (data->envp[i])
+		free(data->envp[i]);
+	free(data->envp);
+	new_envp[n] = ft_strdup(cmd);
+	// if (!new_envp[n])
+	// 	;
+	return (new_envp);
 }
 
 void	ft_export(t_data *data, char **cmd)
@@ -78,16 +99,19 @@ void	ft_export(t_data *data, char **cmd)
 	j = -1;
 	while (cmd[++j])
 	{
-		if (!name_check(cmd[j]))
+		i = name_check(cmd[j]);
+		if (i == -1)
 			continue ;
 		if (cmd[j][i] == '\0')
-			continue ;
-		while (cmd[1][++i])
 		{
-			if (cmd[1][i])
-				;
-			if (cmd[1][i] == ';')
-				;
+			add_env_node(&data->env, cmd[j]);
+			continue ;
+		}
+		else
+		{
+			data->envp = export_var(data, cmd[j]);
+			// if (!data->envp)
+			// 	;
 		}
 	}
 }

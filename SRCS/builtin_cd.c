@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/03 14:01:51 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 10:07:21 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*search_env(t_data *data, char *env)
 	t_env	*tmp;
 	size_t	size;
 	size_t	i;
-	char	*new;
 
 	tmp = data->env;
 	size = ft_list_size(tmp);
@@ -39,6 +38,7 @@ int	replace_env(t_data *data, char *env, char *old_env)
 	size_t	i;
 
 	i = 0;
+	tmp = data->env ;
 	size = ft_list_size(tmp);
 	while (i < size)
 	{
@@ -56,7 +56,7 @@ int	replace_env(t_data *data, char *env, char *old_env)
 	return (0);
 }
 
-char	*ddot_handle(t_data *data)
+static char	*ddot_handle(t_data *data)
 {
 	t_env	*tmp;
 	char	*new_path;
@@ -64,9 +64,9 @@ char	*ddot_handle(t_data *data)
 	size_t	len;
 	size_t	i;
 
+	tmp = data->env;
 	len = ft_list_size(tmp);
 	i = -1;
-	tmp = data->env;
 	while (++i < len)
 	{
 		if (ft_strncmp(tmp->var_name, "PWD=", 4) == 0)
@@ -85,12 +85,10 @@ char	*ddot_handle(t_data *data)
 int	ft_cd(t_data *data, char **cmd)
 {
 	char	*home;
-	t_env	*tmp;
 	char	*current;
 
 	if (cmd[2])
 		return (printf("minishell: cd: too many arguments"), 0);
-	tmp = data->env;
 	if (cmd[0] && (!cmd[1] || cmd[1][0] == '\0' || cmd[1][0] == '~'))
 	{
 		home = search_env(data, "HOME=");
