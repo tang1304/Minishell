@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:54:14 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/04 10:08:43 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 08:32:46 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static void	remove_node(t_env *lst)
 	tmp = lst->next;
 	free(lst->var_name);
 	free(lst->var_value);
+	lst->var_name = NULL;
+	lst->var_value = NULL;
 	lst = tmp;
 }
 

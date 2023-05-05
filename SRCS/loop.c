@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 13:12:30 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 08:31:02 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 void	prompt_loop(t_data *data)
 {
 	char	*prompt;
+	t_env	*tmp;
 
 	while (1)
 	{
@@ -30,11 +31,17 @@ void	prompt_loop(t_data *data)
 			lexer_init(data);
 			token_check(data);
 			expand(data);
+			tmp = data->env;
+			while (tmp)
+			{
+				printf("%s", tmp->var_name);
+				printf("%s\n", tmp->var_value);
+				tmp = tmp->next;
+			}
+			printf("ICI\n");
 			data->ex = malloc(sizeof(char *) * 2);
-			data->ex[0] = ft_strdup("echo");
-			data->ex[1] = ft_strdup("-nn");
-			data->ex[1] = ft_strdup("hello");
-			data->ex[2] = ft_strdup("you");
+			data->ex[0] = ft_strdup("pwd");
+			// data->ex[1] = ft_strdup("-nn");
 			data->ex[1] = 0;
 			builtins(data, data->ex);
 

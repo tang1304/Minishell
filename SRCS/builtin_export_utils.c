@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/27 10:59:43 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 14:23:27 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_list_size(t_env *env)
 {
-	int	len;
+	int		len;
 
 	len = 0;
 	while (env != NULL)
