@@ -33,6 +33,7 @@ LST_SRCS	=	main.c \
 				data.c \
 				loop.c \
 				parser.c \
+				parser_utils.c \
 				lexer.c \
 				lexer_utils.c \
 				expand.c \
@@ -42,6 +43,7 @@ LST_SRCS	=	main.c \
 				check_error_utils.c \
 				add_infile_outfile.c \
 				add_infile_outfile_utils.c \
+				add_pipes_lexer.c \
 				remove_nodes.c \
 				heredoc.c \
 				utils.c \
@@ -51,7 +53,8 @@ LST_SRCS	=	main.c \
 				builtin_unset.c \
 				builtin_export.c \
 				builtin_export_utils.c \
-				envp_utils.c
+				envp_utils.c \
+				free.c
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)
 

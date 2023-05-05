@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 15:34:33 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 14:10:40 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 void	prompt_loop(t_data *data)
 {
 	char	*prompt;
-	t_env	*tmp;
 
 	while (1)
 	{
@@ -31,7 +30,8 @@ void	prompt_loop(t_data *data)
 			lexer_init(data);
 			expand(data);
 			token_check(data);
-			create_cmd_lst(data);// create cmd lst and send to hd
+			if (data->lexer != NULL)
+				create_cmd_lst(data);// create cmd lst and send to hd
 			//penser a free(data)
 		}
 	//if (check_error(line) == SUCCESS)

@@ -6,14 +6,14 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/05 08:28:36 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 13:10:21 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
 void	data_initialize(t_data *data, char **envp)
-{
+{//bzero sur struct met tout a 0 A changer
 	char		*user;
 	t_heredoc	doc;
 

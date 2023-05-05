@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_infile_outfile.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 15:31:01 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 15:48:51 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	token_check(t_data *data)
 			continue ;
 		tmp = tmp->next;
 	}
-
+	add_pipes_redir(data);
 
 // 	// test
 // 	if (lstlen(data->lexer) > 0)
@@ -143,5 +143,5 @@ void	token_check(t_data *data)
 // ft_printf("hdoc: %d\n",tmp2->lexer->hd_file);
 // 		tmp2->lexer = tmp2->lexer->next;
 // 	}}
-	// end test ls <TODO -l|wc -l >out>>out2<Makefile
+// 	// end test ls <TODO -l|wc -l >out>>out2<Makefile
 }
