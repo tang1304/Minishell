@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:03:57 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/25 09:49:31 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 14:30:53 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,78 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	}
 	ptr[i] = '\0';
 	return (free(s1), free(s2), ptr);
+}
+
+size_t	lstlen(t_lexer *lexer)
+{
+	size_t	len;
+	t_lexer	*tmp;
+
+	len = 0;
+	if (!lexer)
+		return (0);
+	tmp = lexer;
+	while (tmp != NULL)
+	{
+		len++;
+		tmp = tmp->next;
+	}
+	return (len);
+}
+
+size_t	lstlencmd(t_command *cmd)
+{
+	size_t		len;
+	t_command	*tmp;
+
+	len = 0;
+	if (!cmd)
+		return (0);
+	tmp = cmd;
+	while (tmp != NULL)
+	{
+		len++;
+		tmp = tmp->next;
+	}
+	return (len);
+}
+
+void	complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid)
+{
+	if (tmp->infile != NULL)
+	{
+		free(tmp->infile);
+		tmp->infile = NULL;
+	}
+	tmp->hd_file = 0;
+	tmp->hd_number = -1;
+	if (valid == 0)
+	{
+		add_file_node(data, tmp, file, 0);//0 infile 1hd
+		return ;
+	}
+	else
+	{
+		tmp->inf_err = 1;
+		return ;
+	}
+}
+
+void	complete_out_data(t_lexer *tmp, char *file, int valid)
+{
+	if (tmp->outfile != NULL)
+	{
+		free(tmp->outfile);
+		tmp->outfile = NULL;
+	}
+	if (valid == 0)
+	{
+		tmp->outfile = ft_strdup(file);
+		return ;
+	}
+	else
+	{
+		tmp->out_err = 1;
+		return ;
+	}
 }

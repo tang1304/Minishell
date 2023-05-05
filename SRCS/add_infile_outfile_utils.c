@@ -6,89 +6,111 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/28 08:53:07 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 12:10:25 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-
-static void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
+//ls <TODO | wc <Makefile >outer | test >out working fiiiiiiine !!!!!
+void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
 {
 	if (i == 0)
 		lexer->infile = ft_strdup(file);
 	else
 	{
+		if (lexer->infile != NULL)
+		{
+			free(lexer->infile);
+			lexer->infile = NULL;
+		}
+		lexer->hd_file = 1;
 		data->hd->LIMITER[data->hd->heredoc] = ft_strdup(file);
+		lexer->hd_number = data->hd->heredoc;
 		data->hd->heredoc++;
-		data->hd->hd_as_inf = 1;
 	}
 }
 
-void	add_infile(t_data *data, char *file, int i)
+t_lexer	*find_start(t_lexer *tmp)
+{
+	while (tmp->prev != NULL)
+	{
+		if (tmp->word != NULL && tmp->prev != NULL)
+			tmp = tmp->prev;
+		else if (ft_strncmp(tmp->token, "|", 1) != 0 && tmp->token != NULL)
+			tmp = tmp->prev;
+		else
+			break ;
+	}
+	if (tmp->word == NULL)
+		tmp = tmp->next;
+	return (tmp);
+}
+
+void	add_infile(t_data *data, char *file, size_t index, int valid)
 {
 	t_lexer	*tmp;
 
 	tmp = data->lexer;
+	while (tmp->index != index)
+		tmp = tmp->next;
+	tmp = find_start(tmp);
 	while (tmp != NULL)
 	{
+		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) == 0)
+			break ;
 		if ((tmp->word != NULL && tmp->prev == NULL) || (tmp->word != NULL \
 		&& tmp->prev->word != NULL) || (tmp->word != NULL && \
 		ft_strncmp(tmp->prev->token, "|", 1) == 0))
 		{
-			if (tmp->infile != NULL)
-			{
-				free(tmp->infile);
-				tmp->infile = NULL;
-				data->hd->hd_as_inf = 0;
-			}
-			// if (tmp->LIMITER != NULL)
-			// {
-			// 	free(tmp->LIMITER);
-			// 	tmp->LIMITER = NULL;
-			// }
-			add_file_node(data, tmp, file, i);
+			complete_inf_data(data, tmp, file, valid);
 			return ;
 		}
 		tmp = tmp->next;
-	}
+	}//ajouter node avec derniere redir dans le cas ou ls |>out
 }
 
-void	add_outfile(t_data *data, char *file)
+void	add_outfile(t_data *data, char *file, size_t index, int valid)
 {
 	t_lexer	*tmp;
 
 	tmp = data->lexer;
-	while (tmp->next != NULL)
+	while (tmp->index != index)
 		tmp = tmp->next;
+	tmp = find_start(tmp);
 	while (tmp != NULL)
 	{
+		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) == 0)
+			break ;
 		if ((tmp->word != NULL && tmp->prev == NULL) || (tmp->word != NULL \
-		&& tmp->prev->word != NULL && tmp->prev != NULL) || \
-		(tmp->word != NULL && tmp->prev != NULL && \
+		&& tmp->prev->word != NULL) || (tmp->word != NULL && \
 		ft_strncmp(tmp->prev->token, "|", 1) == 0))
 		{
-			if (tmp->outfile != NULL)
-				free(tmp->outfile);
-			tmp->outfile = ft_strdup(file);
+			complete_out_data(tmp, file, valid);
 			return ;
 		}
-		tmp = tmp->prev; //<TODO >out ls | wc -l >>append marche
+		tmp = tmp->next;
 	}
 }
 
-size_t	lstlen(t_lexer *lexer)
+void	ft_error_file(int fd, char *file, int i)
 {
-	size_t	len;
-	t_lexer	*tmp;
-
-	len = 0;
-	if (!lexer)
-		return (0);
-	tmp = lexer;
-	while (tmp != NULL)
+	if (fd < 0)
 	{
-		len++;
-		tmp = tmp->next;
-	}printf("lstlen: %ld\n", len);
-	return (len);
+		printf("minishell: %s: Error opening file\n", file);
+		return ;
+	}
+	else if (i == 0)
+	{
+		if (access(file, F_OK) != 0)
+			printf("minishell: %s: No such file or directory\n", file);
+		else if (access(file, R_OK) != 0)
+			ft_printf("minishell: %s: Permission denied\n", file);
+	}
+	else
+	{
+		if (access(file, F_OK) != 0)
+			printf("minishell: %s: No such file or directory\n", file);
+		else if (access(file, W_OK) != 0)
+			ft_printf("minishell: %s: Permission denied\n", file);
+	}
 }
