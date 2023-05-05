@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 15:41:48 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 16:10:49 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ void	ft_echo(char **cmd);
 
 /*	builtin_export.c	*/
 void	ft_export(t_data *data, char **cmd);
+int		print_export(t_env **env);
 
 /*	builtin_export_utils.c	*/
 void	ft_list_sort(t_env **env, int size);
@@ -223,7 +224,7 @@ char	*get_shlvl(char *str);
 void	heredoc_count(t_data *data);
 void	check_heredoc(t_data *data);
 void	init_heredoc(t_data *data, t_command *cmd);
-void	add_heredoc(t_data *data, char * file, size_t index);
+void	add_heredoc(t_data *data, char *file, size_t index);
 
 /*	utils.c	*/
 void	complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);
