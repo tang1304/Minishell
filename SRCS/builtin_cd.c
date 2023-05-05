@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 10:07:21 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 13:33:20 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ char	*search_env(t_data *data, char *env)
 	size_t	i;
 
 	tmp = data->env;
+	// printf("%s\n", tmp->);
 	size = ft_list_size(tmp);
+	printf("la\n");
+	printf("%ld\n", size);
 	i = 0;
 	while (i < size)
 	{

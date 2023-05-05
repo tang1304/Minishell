@@ -6,18 +6,19 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 10:59:42 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 13:29:53 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-static void	ft_pwd(void)
+static void	ft_pwd(t_data *data)
 {
 	char	*line;
 
-	line = getcwd(NULL, 0);
+	line = search_env(data, "PWD");
 	printf("%s\n", line);
+	printf("ici\n");
 	free(line);
 }
 
@@ -48,7 +49,7 @@ void	builtins(t_data *data, char **cmd)
 	else if ((ft_strncmp(cmd[0], "cd", 2) == 0) && len == 2)
 		ft_cd(data, cmd);
 	else if ((ft_strncmp(cmd[0], "pwd", 3) == 0) && len == 3)
-		ft_pwd();
+		ft_pwd(data);
 	else if ((ft_strncmp(cmd[0], "export", 6) == 0) && len == 6)
 		ft_export(data, cmd);
 	else if ((ft_strncmp(cmd[0], "unset", 5) == 0) && len == 5)
