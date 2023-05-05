@@ -77,11 +77,19 @@ typedef struct s_heredoc
 	// int					fd[2];//pipe for here_doc
 }				t_heredoc;
 
+typedef struct s_env
+{
+	char			*var_name;
+	char			*var_value;
+	struct s_env	*next;
+}				t_env;
+
 typedef struct s_data
 {
 	char				*str; // command typed by user
 	char				*prompt; // has to be free at the end
 	char				*prompt_pwd;
+	char				**ex;
 	char				**envp;
 	char				**paths;
 	char				**tokens_tab; // Use?
@@ -94,6 +102,7 @@ typedef struct s_data
 	size_t				child;
 	int					*pipe;//pipes for other cmds
 	pid_t				*pids;//pids of child processes
+	struct s_env		*env;
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
@@ -114,7 +123,8 @@ enum e_errors
 /*	data.c	*/
 void	data_initialize(t_data *data, char **envp);
 void	update_pwd(t_data *data, char *s);
-char	**get_envp(char **envp);
+int		add_env_node(t_env **env, char *str);
+char	**get_envp(t_data *data, char **envp);
 
 /*	loop.c	*/
 void	prompt_loop(t_data *data);
@@ -186,6 +196,28 @@ char	*str_quotes_removal(char *str);
 int		quotes_removal(t_lexer *lexer);
 
 /*	builtins.c	*/
+void	builtins(t_data *data, char **cmd);
+
+/*	builtin_cd.c	*/
+int		ft_cd(t_data *data, char **cmd);
+char	*search_env(t_data *data, char *env);
+int		replace_env(t_data *data, char *env, char *old_env);
+
+/*	builtin_echo.c	*/
+void	ft_echo(char **cmd);
+
+/*	builtin_export.c	*/
+void	ft_export(t_data *data, char **cmd);
+
+/*	builtin_export_utils.c	*/
+void	ft_list_sort(t_env **env, int size);
+int		ft_list_size(t_env *env);
+
+/*	builtin_unset.c	*/
+int		ft_unset(t_data *data, char **cmd);
+
+/*	envp_utils.c	*/
+char	*get_shlvl(char *str);
 
 /*	heredoc.c	*/
 void	heredoc_count(t_data *data);
@@ -197,6 +229,7 @@ void	add_heredoc(t_data *data, char * file, size_t index);
 void	complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);
 void	complete_out_data(t_lexer *tmp, char *file, int valid);
 char	*ft_strjoin_free(char *s1, char *s2);
+char	*ft_change_str(char *s1, char *s2);
 size_t	lstlen(t_lexer *lexer);
 size_t	lstlencmd(t_command *cmd);
 

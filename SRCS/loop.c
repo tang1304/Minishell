@@ -17,6 +17,7 @@
 void	prompt_loop(t_data *data)
 {
 	char	*prompt;
+	t_env	*tmp;
 
 	while (1)
 	{
@@ -31,33 +32,6 @@ void	prompt_loop(t_data *data)
 			expand(data);
 			token_check(data);
 			create_cmd_lst(data);// create cmd lst and send to hd
-
-
-// TEST
-
-// 	t_data	*tmp2;
-// 	tmp2 = data;
-// 	while (tmp2->lexer != NULL)
-// 	{
-// 		ft_printf("\n\n");
-// 	ft_printf("word node: %s\n", tmp2->lexer->word);
-// 	ft_printf("token node: %s\n", tmp2->lexer->token);
-// printf("index: %ld\n", tmp2->lexer->index);
-// ft_printf("infile: %s\n", tmp2->lexer->infile);
-// ft_printf("outfile: %s\n", tmp2->lexer->outfile);
-// if (tmp2->hd->hd_count > 0)
-// 	ft_printf("LIMITER: %s\n",tmp2->hd->LIMITER[tmp2->hd->hd_count - 1]);
-// 		tmp2->lexer = tmp2->lexer->next;
-// 	}
-
-// END TEST
-
-
-
-
-
-
-
 			//penser a free(data)
 		}
 	//if (check_error(line) == SUCCESS)
