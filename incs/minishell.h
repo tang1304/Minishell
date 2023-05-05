@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/28 08:57:54 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 15:41:48 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ typedef struct s_lexer
 	char			*word;
 	char			*token;
 	char			*infile;//free if not NULL
+	int				inf_err;
 	char			*outfile;//free if not NULL
+	int				out_err;
+	int				hd_file;
+	int				hd_number;
 	size_t			index;
 	int				word_quote_pairs;
 	int				s_q;
@@ -47,23 +51,30 @@ typedef struct s_substr
 	char	*sub_a;
 }				t_substr;
 
-// typedef struct s_command
-// {
-// 	char				**cmd;//malloc a free
-// 	int					index;
-// 	char				*infile;
-// 	char				*outfile;
-// 	struct s_command	*next;
-// 	struct s_command	*prev;
-// }				t_command;ls        | "grep >out" <Makefile| wc -l >outer
+typedef struct s_command
+{
+	char				**cmd;//malloc a free
+	int					index;
+	char				*infile;
+	int					inf_err;
+	char				*outfile;
+	int					out_err;
+	int					heredoc_file; //0 no hd 1 hd
+	int					heredoc_num; // which limiter it needs to use
+	int					fd[2];
+	int					pipe_b; // 0 pas de pipe, 1 = pipe = rediriger pipe vers stdin
+	int					pipe_a; // 0 pas de pipe, 1 = pipe = rediriger stdout vers pipe
+	struct s_command	*next;
+	struct s_command	*prev;
+}				t_command;//ls        | "grep >out" <Makefile| wc -l >outer
 
 typedef struct s_heredoc
 {
-	size_t				hd_count; // number of heredocs
+	size_t				hd_count; // number of heredocs (total)
+	// size_t				hd_used; //number of hd actually used
 	size_t				heredoc; // set to 0 at first
-	char				**LIMITER; // array of all LIMITERS
-	int					hd_as_inf; // if hdoc use as infile or not
-	int					fd[2];//pipe for here_doc
+	char				**LIMITER; // array of all LIMITERS  A FREE A LA FIIIN meme si 0 heredocs
+	// int					fd[2];//pipe for here_doc
 }				t_heredoc;
 
 typedef struct s_data
@@ -96,7 +107,8 @@ enum e_errors
 	PIPE_FAILURE = 5,
 	TOKEN_FAILURE = 6,
 	NODE_FAILURE = 7,
-	NOT_WORD = 8
+	NOT_WORD = 8,
+	FILE_ERROR = 9
 };
 
 /*	data.c	*/
@@ -121,21 +133,25 @@ int		check_token(char *s, size_t i);
 // int		count_quote(char *s, size_t *i, char c);
 
 /*	parser.c	*/
-// void	implement_redirections_cmds(t_data *data);
+void	check_hidden_nodes(t_data *data);
+void	create_cmd_lst(t_data *data);
 
 /*	add_infile_outfile.c	*/
+void	files_validity(t_data *data, t_lexer *tmp, int *valid);
 void	remove_nodes_redirection(t_data *data, size_t index);
 void	token_check(t_data *data);
-void	check_redirection(t_data *data, char *token, char *filename);
-void	file_check_access(t_data *data, char *file, int i);
+int		file_check_access(t_data *data, char *file, int i);
+int		check_redirection(t_data *data, char *token, char *file, size_t index);
 
 /*	add_infile_outfile_utils.c	*/
-void	add_infile(t_data *data, char *file, int i);
-void	add_outfile(t_data *data, char *file);
-size_t	lstlen(t_lexer *lexer);
+t_lexer	*find_start(t_lexer *tmp);
+void	ft_error_file(int fd, char *file, int i);
+void	add_infile(t_data *data, char *file, size_t index, int valid);
+void	add_outfile(t_data *data, char *file, size_t index, int valid);
+void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i);
 
 /*	remove_nodes.c	*/
-void	remove_front_nodes(t_data *data);
+void	remove_front_nodes(t_data *data, size_t len);
 void	remove_back_nodes(t_data *data);
 void	remove_middle_nodes(t_data *data, size_t index);
 
@@ -174,9 +190,14 @@ int		quotes_removal(t_lexer *lexer);
 /*	heredoc.c	*/
 void	heredoc_count(t_data *data);
 void	check_heredoc(t_data *data);
-void	init_heredoc(t_data *data);
+void	init_heredoc(t_data *data, t_command *cmd);
+void	add_heredoc(t_data *data, char * file, size_t index);
 
 /*	utils.c	*/
+void	complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);
+void	complete_out_data(t_lexer *tmp, char *file, int valid);
 char	*ft_strjoin_free(char *s1, char *s2);
+size_t	lstlen(t_lexer *lexer);
+size_t	lstlencmd(t_command *cmd);
 
 #endif
