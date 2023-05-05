@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/27 17:22:47 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 10:17:26 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,7 @@ void	expand(t_data *data)
 
 
 
-
-// 		// test
+		// test
 // 	t_data	*tmp2;
 // 	tmp2 = data;
 // 	while (tmp2->lexer != NULL)

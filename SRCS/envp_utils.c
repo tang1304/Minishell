@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   envp_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 09:37:30 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 13:38:32 by tgellon          ###   ########lyon.fr   */
+/*   Created: 2023/04/27 14:08:20 by tgellon           #+#    #+#             */
+/*   Updated: 2023/04/28 08:21:37 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/libft.h"
+#include "../incs/minishell.h"
 
-int	ft_lstsize(t_list *lst)
+char	*get_shlvl(char *str)
 {
-	int	len;
+	char	*newlvl;
+	char	*pos;
+	char	*itoa;
+	int		lvl;
+	int		i;
 
-	len = 0;
-	while (lst != NULL)
-	{
-		len++;
-		lst = lst->next;
-	}
-	return (len);
+	i = 0;
+	while (str[i] != '=')
+		i++;
+	pos = ft_strchr(str, '=');
+	lvl = ft_atoi(pos + 1);
+	itoa = ft_itoa(lvl + 1);
+	// if (!itoa)
+	// 	;
+	newlvl = ft_strjoin("SHLVL=", itoa);
+	free(itoa);
+	// if (!newlvl)
+	// 	;
+	return (newlvl);
 }

@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 09:37:30 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 13:38:32 by tgellon          ###   ########lyon.fr   */
+/*   Created: 2022/11/10 09:07:35 by rrebois           #+#    #+#             */
+/*   Updated: 2023/04/26 14:05:27 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/libft.h"
 
-int	ft_lstsize(t_list *lst)
+char	*ft_strndup(const char *s1, size_t n)
 {
-	int	len;
+	char	*ptr;
+	size_t	i;
 
-	len = 0;
-	while (lst != NULL)
+	i = 0;
+	ptr = (char *)malloc(sizeof(*ptr) * (n + 2));
+	if (ptr == NULL)
+		return (NULL);
+	while (i <= n && s1[i])
 	{
-		len++;
-		lst = lst->next;
+		ptr[i] = s1[i];
+		i++;
 	}
-	return (len);
+	ptr[i] = '\0';
+	return (ptr);
 }

@@ -44,7 +44,14 @@ LST_SRCS	=	main.c \
 				add_infile_outfile_utils.c \
 				remove_nodes.c \
 				heredoc.c \
-				utils.c
+				utils.c \
+				builtins.c \
+				builtin_cd.c \
+				builtin_echo.c \
+				builtin_unset.c \
+				builtin_export.c \
+				builtin_export_utils.c \
+				envp_utils.c
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)
 

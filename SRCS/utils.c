@@ -40,6 +40,24 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	return (free(s1), free(s2), ptr);
 }
 
+char	*ft_change_str(char *s1, char *s2)
+{
+	char	*new;
+	int		i;
+
+	free(s1);
+	new = malloc(sizeof(char) * (ft_strlen(s2) + 1));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (s2[i])
+	{
+		new[i] = s2[i];
+		i++;
+	}
+	return (new);
+}  
+ 
 size_t	lstlen(t_lexer *lexer)
 {
 	size_t	len;
