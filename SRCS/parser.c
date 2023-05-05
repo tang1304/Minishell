@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/05 15:52:24 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 16:09:23 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
 // cette func = 25 lignes et en haut on gagne de la place.
 	t_command	*new;
 
+	if (i == x) // cancelles creation of empty node at the beginning if <Makefile |ls
+		return (NULL);
 	new = (t_command *)malloc(sizeof(*new));
 	if (new == NULL)
 		return (NULL);
