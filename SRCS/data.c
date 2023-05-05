@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
 /*   Updated: 2023/05/05 08:28:36 by tgellon          ###   ########lyon.fr   */
@@ -14,7 +14,8 @@
 
 void	data_initialize(t_data *data, char **envp)
 {
-	char	*user;
+	char		*user;
+	t_heredoc	doc;
 
 	data->cmd = NULL;
 	data->envp = get_envp(data, envp);
@@ -22,8 +23,10 @@ void	data_initialize(t_data *data, char **envp)
 	data->lexer = NULL;
 	data->str = NULL;
 	data->prompt = NULL;
-	data->LIMITER = NULL;
-	data->heredoc = 0;
+	doc.LIMITER = NULL;
+	doc.heredoc = 0;
+	doc.hd_count = 0;
+	data->hd = &doc;
 	user = getenv("USER");
 	if (user != NULL)
 		data->prompt = ft_strjoin(user, "@minishell:");
