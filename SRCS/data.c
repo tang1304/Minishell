@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/05 08:28:36 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 16:28:22 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	data_initialize(t_data *data, char **envp)
 	t_heredoc	doc;
 
 	data->cmd = NULL;
-	data->envp = get_envp(data, envp);
 	data->env = NULL;
+	data->envp = get_envp(data, envp);
 	data->lexer = NULL;
 	data->str = NULL;
 	data->prompt = NULL;
@@ -58,14 +58,16 @@ static t_env	*new_env_node(char *str)
 	{
 		new->var_name = ft_strndup(str, (size_t)pos - (size_t)str);
 		new->var_value = ft_strdup(pos + 1);
+		if (!new->var_name || !new->var_value)
+			return (0);
 	}
 	else
 	{
 		new->var_name = ft_strdup(str);
-		new->var_value = ft_strdup("");
+		new->var_value = NULL;
+		if (!new->var_name)
+			return (0);
 	}
-	if (!new->var_name || !new->var_value)
-		return (0);
 	return (new);
 }
 
@@ -92,36 +94,36 @@ int	add_env_node(t_env **env, char *str)
 char	**get_envp(t_data *data, char **envp)
 {
 	char	**new_envp;
-	// t_env	*tmp;
 	int		i;
 
 	i = 0;
 	while (envp[i])
 		i++;
-	data->env = NULL;
 	new_envp = (char **)malloc(sizeof(char *) * (i + 1));
+	// if (!new_envp)
+	// 	;
 	i = -1;
 	while (envp[++i])
 	{
 		if (ft_strncmp(envp[i], "_=", 2) == 0)
 		{
 			new_envp[i] = ft_strdup("_=/usr/bin/env");
-			// add_env_node(&data->env, new_envp[i]);
+			add_env_node(&data->env, new_envp[i]);
 		}
 		else if (ft_strncmp(envp[i], "SHLVL=", 6) == 0)
 		{
 			new_envp[i] = get_shlvl(envp[i]);
-			// add_env_node(&data->env, new_envp[i]);
+			add_env_node(&data->env, new_envp[i]);
 		}
 		else if (ft_strncmp(envp[i], "PWD=", 4) == 0)
 		{
 			new_envp[i] = ft_strjoin("PWD=", getcwd(NULL, 0));
-			// add_env_node(&data->env, new_envp[i]);
+			add_env_node(&data->env, new_envp[i]);
 		}
 		else if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
 		{
 			new_envp[i] = ft_strjoin("OLDPWD=", getcwd(NULL, 0));
-			// add_env_node(&data->env, new_envp[i]);
+			add_env_node(&data->env, new_envp[i]);
 		}
 		else
 		{
@@ -130,13 +132,6 @@ char	**get_envp(t_data *data, char **envp)
 				return (NULL);
 		}
 	}
-	// tmp = data->env;
-	// while (tmp != NULL)
-	// {
-	// 	printf("%s", tmp->var_name);
-	// 	printf("%s\n", tmp->var_value);
-	// 	tmp = tmp->next;
-	// }
 	new_envp[i] = NULL;
 	return (new_envp);
 }
