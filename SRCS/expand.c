@@ -3,102 +3,100 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/25 09:45:47 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 17:22:47 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 //Attention si hdh"$USER"hdg -> 1 seul node donc quotes pas au début et à la fin
-//ls | "'$USER'" "user is $USER" "$USER $USER"
-static char	*expand_str(t_data *data, char *s) //func too long
+
+static char	*expand_str(t_data *data, t_substr *s)
 {
 	size_t	j;
-	char	*bef;
-	char	*exp;
-	char	*aft;
 
-	bef = NULL;
-	exp = NULL;
-	aft = NULL;
 	j = 0;
-	while (s[j] != '\0')
+	while (s->middle[j] != '\0')
 	{
-		if (s[j] == '$' && s[j + 1] != ' ' && ft_isprint(s[j + 1]) == 1 && \
-		s[j + 1] != '\0')
+		if (s->middle[j] == '$' && (ft_isalpha(s->middle[j + 1]) == 1 || \
+		s->middle[j + 1] == '?'))
 		{
+			j++;
 			if (j > 0)
-				bef = ft_substr(s, 0, j);
-// if (bef != NULL)
-	// printf("\n\n\nbef = %s c = %d\n", bef, bef[ft_strlen(bef) - 1]);
-			while (s[j] != ' ' && s[j] != '\0' && s[j] != '\'')
-				j++;//ou fonc si 0 alors ++ sinon break et chercher aussi $
-				// if (s[j] == '$' && s[j - 1] && s[j - 1] != '$')
-				// 	break ;
-
-
-
-
-// printf("char stopped: %c\n", s[j]);
-			aft = ft_substr(s, j, ft_strlen(s));
-// printf("aft = %s c = %d\n", aft, aft[ft_strlen(aft) - 1]);
-			exp = ft_substr(s, ft_strlen(bef) + 1, j - ft_strlen(bef) - 1);
-// printf("exp = %s c = %d\n\n\n", exp, exp[ft_strlen(exp) - 1]);
-			// s = get_var()
-			exp = get_var(data, exp);
-			j = ft_strlen(bef) + ft_strlen(exp);
-			s = join_all(s, bef, exp, aft);
+				s->sub_b = ft_substr(s->middle, 0, j - 1);
+			while (ft_isalnum(s->middle[j]) == 1)// faire 2 func e plus si j = ? ou j = alnum
+				j++;
+			s->sub_a = ft_substr(s->middle, j, ft_strlen(s->middle) - j);
+			s->sub_m = ft_substr(s->middle, ft_strlen(s->sub_b), j - (ft_strlen(s->sub_b)));
+			s->sub_m = get_var(data, s->sub_m);
+			j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
+			s->middle = join_all(s->middle, s->sub_b, s->sub_m, s->sub_a);
 		}
-		j++;
+		else
+			j++;
 	}
-	return (s);
+	return (s->middle);
 }
 
-static char	*expand_d_quotes(t_data *data, char *s, size_t *i)
+static void	expand_quotes(t_data *data, t_substr *str, size_t *i, char c)
 {
-	char	*str_b;
-	char	*str_m;
-	char	*str_a;
 	size_t	j;
 
-	str_b = NULL;
-	str_m = NULL;
-	str_a = NULL;
-	if (*i > 0)
-		str_b = ft_substr(s, 0, *i);
 	j = *i + 1;
-	while (s[j] != '"')
-		j++;
-	str_m = ft_substr(s, *i + 1, j - *i - 1);
-	if (j + 1 < ft_strlen(s))
-		str_a = ft_substr(s, j + 1, ft_strlen(s));
-// printf("\n\nstr_b = %s\nstr_m = %s\nstr_a = %s\n\n", str_b, str_m, str_a);
-	str_m = expand_str(data, str_m);
-	*i = ft_strlen(str_b) + ft_strlen(str_m);
-	s = join_all(s, str_b, str_m, str_a);
-// printf("OK\n");
-	return (s);
+	if (*i > 0)
+		str->before = ft_substr(str->s, 0, *i);
+	*i = *i + 1;
+	while (str->s[*i] != c)
+		*i = *i + 1;
+	str->middle = ft_substr(str->s, j, *i - j);
+	if (*i + 1 < ft_strlen(str->s))
+		str->after = ft_substr(str->s, *i + 1, ft_strlen(str->s));
+	if (c == '"')
+		str->middle = expand_str(data, str);
+	else
+		str->middle = str_quotes_removal(str->middle);
+	*i = ft_strlen(str->before) + ft_strlen(str->middle);
+	str->s = join_all(str->s, str->before, str->middle, str->after);
 }
 
-static size_t	check_dollar_sign(char *s, size_t start)
+static char	*check_char(t_data *data, char *s, size_t *i, int j)
 {
-	size_t	count;
+	t_substr	str;
 
-	count = 0;
-	while (s[start] != '"')
-	{
-		if (s[start] == '$')
-			count++;
-		start++;
-	}
-	return (count);
+	str.s = s;
+	str.before = NULL;
+	str.middle = NULL;
+	str.after = NULL;
+	str.sub_b = NULL;
+	str.sub_m = NULL;
+	str.sub_a = NULL;
+	if (j == 0)
+		expand_dollar(data, &str, i);
+	else if (j == 1)
+		expand_quotes(data, &str, i, '\'');
+	else
+		expand_quotes(data, &str, i, '"');
+	// free_struct_expand(&str);
+	return (str.s);
 }
 
-void	expand(t_data *data) // func too long
+static t_lexer	*skip_token(t_lexer *tmp)
 {
-	int		expand;
+	 if (tmp->token != NULL && ft_strncmp(tmp->token, "<<", 2) == 0 \
+	 && ft_strlen(tmp->token) == 2)
+	 {
+		tmp = tmp->next;
+		tmp->word = str_quotes_removal(tmp->word);
+	 }
+	else if (tmp->token != NULL && ft_strncmp(tmp->token, "<<", 2) != 0)
+		return (tmp);
+	return (tmp);
+}
+
+void	expand(t_data *data)
+{
 	size_t	i;
 	t_lexer	*tmp;
 
@@ -106,29 +104,22 @@ void	expand(t_data *data) // func too long
 	while (tmp != NULL)
 	{
 		i = 0;
-		expand = 0;
-		if (tmp->word == NULL)
-			tmp = tmp->next;
-		while (tmp->word[i] != '\0')
+		if (tmp->word != NULL)
 		{
-			if (tmp->word[i] == '\'')
-				i += quote_handling(tmp->word, i, tmp->word[i]) + 1;
-			if (tmp->word[i] == '"')
+			while (tmp->word[i] != '\0')
 			{
-				if (check_dollar_sign(tmp->word, i + 1) != 0)
-				{
-					expand = 1;
-					tmp->word = expand_d_quotes(data, tmp->word, &i);
-					// if ((int)i == -1)
-					// 	return ;//ou ft_error....
-				}
+				if (tmp->word[i] == '$' && (ft_isalpha(tmp->word[i + 1]) == 1 || \
+				tmp->word[i + 1] == '?'))
+					tmp->word = check_char(data, tmp->word, &i, 0);
+				else if (tmp->word[i] == '\'')
+					tmp->word = check_char(data, tmp->word, &i, 1);
+				else if (tmp->word[i] == '"')
+					tmp->word = check_char(data, tmp->word, &i, 2);
 				else
-					i += quote_handling(tmp->word, i, tmp->word[i]) + 1;
+					i++;
 			}
-			i++;
 		}
-		if (expand == 0)
-			tmp->word = str_quotes_removal(tmp->word);
+		tmp = skip_token(tmp);
 		tmp = tmp->next;
 	}
 
@@ -136,23 +127,22 @@ void	expand(t_data *data) // func too long
 
 
 
-
-		// test
-	t_data	*tmp2;
-	tmp2 = data;
-	while (tmp2->lexer != NULL)
-	{
-		ft_printf("\n\n");
-if (tmp2->lexer->word != NULL)
-	ft_printf("word node: %s\n", tmp2->lexer->word);
-else
-	ft_printf("token node: %s\n", tmp2->lexer->token);
-printf("index: %ld\n", tmp2->lexer->index);
-ft_printf("infile: %s\n", tmp2->lexer->infile);
-ft_printf("outfile: %s\n", tmp2->lexer->outfile);
-ft_printf("LIMITER: %s\n",tmp2->lexer->LIMITER);
-ft_printf("hdoc: %d\n",tmp2->heredoc);
-		tmp2->lexer = tmp2->lexer->next;
-	}
+// 		// test
+// 	t_data	*tmp2;
+// 	tmp2 = data;
+// 	while (tmp2->lexer != NULL)
+// 	{
+// 		ft_printf("\n\n");
+// if (tmp2->lexer->word != NULL)
+// 	ft_printf("word node: %s\n", tmp2->lexer->word);
+// else
+// 	ft_printf("token node: %s\n", tmp2->lexer->token);
+// printf("index: %ld\n", tmp2->lexer->index);
+// ft_printf("infile: %s\n", tmp2->lexer->infile);
+// ft_printf("outfile: %s\n", tmp2->lexer->outfile);
+// ft_printf("LIMITER: %s\n",tmp2->lexer->LIMITER);
+// ft_printf("hdoc: %d\n",tmp2->heredoc);
+// 		tmp2->lexer = tmp2->lexer->next;
+// 	}
 	// end test
 }

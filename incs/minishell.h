@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/25 09:41:04 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 15:41:48 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,59 @@
 
 typedef struct s_lexer
 {
-	char			**cmd;//malloc a free
+	// char			**cmd;//malloc a free
 	char			*word;
 	char			*token;
 	char			*infile;//free if not NULL
+	int				inf_err;
 	char			*outfile;//free if not NULL
-	char			*LIMITER;
+	int				out_err;
+	int				hd_file;
+	int				hd_number;
 	size_t			index;
 	int				word_quote_pairs;
 	int				s_q;
 	int				d_q;
 	struct s_lexer	*next;
-	struct s_lexer	*prev;// a voir
+	struct s_lexer	*prev;
 }				t_lexer;
 
-// typedef struct s_command
-// {
-// 	char				**cmd;//malloc a free
-// 	int					index;
-// 	char				*infile;
-// 	char				*outfile;
-// 	struct s_command	*next;
-// 	struct s_command	*prev;
-// }				t_command;ls        | "grep >out" <Makefile| wc -l >outer
+typedef struct s_substr
+{
+	char	*s;
+	char	*before;
+	char	*middle;
+	char	*after;
+	char	*sub_b;
+	char	*sub_m;
+	char	*sub_a;
+}				t_substr;
+
+typedef struct s_command
+{
+	char				**cmd;//malloc a free
+	int					index;
+	char				*infile;
+	int					inf_err;
+	char				*outfile;
+	int					out_err;
+	int					heredoc_file; //0 no hd 1 hd
+	int					heredoc_num; // which limiter it needs to use
+	int					fd[2];
+	int					pipe_b; // 0 pas de pipe, 1 = pipe = rediriger pipe vers stdin
+	int					pipe_a; // 0 pas de pipe, 1 = pipe = rediriger stdout vers pipe
+	struct s_command	*next;
+	struct s_command	*prev;
+}				t_command;//ls        | "grep >out" <Makefile| wc -l >outer
+
+typedef struct s_heredoc
+{
+	size_t				hd_count; // number of heredocs (total)
+	// size_t				hd_used; //number of hd actually used
+	size_t				heredoc; // set to 0 at first
+	char				**LIMITER; // array of all LIMITERS  A FREE A LA FIIIN meme si 0 heredocs
+	// int					fd[2];//pipe for here_doc
+}				t_heredoc;
 
 typedef struct s_data
 {
@@ -54,19 +84,17 @@ typedef struct s_data
 	char				*prompt_pwd;
 	char				**envp;
 	char				**paths;
-	char				**tokens_tab;
-	int					tokens; // number of tokens inside line
+	char				**tokens_tab; // Use?
+	int					tokens; // number of tokens inside line (useless)
 	int					cmds; // number of cmds
-	int					heredoc; // if here_doc or not
-	char				*LIMITER;
 	char				*pwd;
 	char				*oldpwd;
 	int					fdin;//infile
 	int					fdout;//outfile
 	size_t				child;
-	int					fd[2];//pipe for here_doc
 	int					*pipe;//pipes for other cmds
 	pid_t				*pids;//pids of child processes
+	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
 }				t_data;
@@ -79,7 +107,8 @@ enum e_errors
 	PIPE_FAILURE = 5,
 	TOKEN_FAILURE = 6,
 	NODE_FAILURE = 7,
-	NOT_WORD = 8
+	NOT_WORD = 8,
+	FILE_ERROR = 9
 };
 
 /*	data.c	*/
@@ -104,21 +133,25 @@ int		check_token(char *s, size_t i);
 // int		count_quote(char *s, size_t *i, char c);
 
 /*	parser.c	*/
-// void	implement_redirections_cmds(t_data *data);
+void	check_hidden_nodes(t_data *data);
+void	create_cmd_lst(t_data *data);
 
 /*	add_infile_outfile.c	*/
+void	files_validity(t_data *data, t_lexer *tmp, int *valid);
 void	remove_nodes_redirection(t_data *data, size_t index);
 void	token_check(t_data *data);
-void	check_redirection(t_data *data, char *token, char *filename);
-void	file_check_access(t_data *data, char *file, int i);
+int		file_check_access(t_data *data, char *file, int i);
+int		check_redirection(t_data *data, char *token, char *file, size_t index);
 
 /*	add_infile_outfile_utils.c	*/
-void	add_infile(t_data *data, char *file, int i);
-void	add_outfile(t_data *data, char *file);
-size_t	lstlen(t_lexer *lexer);
+t_lexer	*find_start(t_lexer *tmp);
+void	ft_error_file(int fd, char *file, int i);
+void	add_infile(t_data *data, char *file, size_t index, int valid);
+void	add_outfile(t_data *data, char *file, size_t index, int valid);
+void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i);
 
 /*	remove_nodes.c	*/
-void	remove_front_nodes(t_data *data);
+void	remove_front_nodes(t_data *data, size_t len);
 void	remove_back_nodes(t_data *data);
 void	remove_middle_nodes(t_data *data, size_t index);
 
@@ -146,6 +179,7 @@ void	expand(t_data *data);
 /*	expander_var.c	*/
 char	*get_var(t_data *data, char *s);
 char	*join_all(char *s, char *b, char *e, char *a);
+void	expand_dollar(t_data *data, t_substr *s, size_t *i);
 
 /*	expander_quotes.c	*/
 char	*str_quotes_removal(char *str);
@@ -154,10 +188,16 @@ int		quotes_removal(t_lexer *lexer);
 /*	builtins.c	*/
 
 /*	heredoc.c	*/
+void	heredoc_count(t_data *data);
 void	check_heredoc(t_data *data);
-void	init_heredoc(t_data *data);
+void	init_heredoc(t_data *data, t_command *cmd);
+void	add_heredoc(t_data *data, char * file, size_t index);
 
 /*	utils.c	*/
+void	complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);
+void	complete_out_data(t_lexer *tmp, char *file, int valid);
 char	*ft_strjoin_free(char *s1, char *s2);
+size_t	lstlen(t_lexer *lexer);
+size_t	lstlencmd(t_command *cmd);
 
 #endif
