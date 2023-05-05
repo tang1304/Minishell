@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 12:10:25 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 14:52:06 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	ft_error_file(int fd, char *file, int i)
 {
 	if (fd < 0)
 	{
-		printf("minishell: %s: Error opening file\n", file);
+		printf("minishell: %s: No such file or directory\n", file);
 		return ;
 	}
 	else if (i == 0)

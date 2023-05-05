@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 15:48:48 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 15:52:24 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static t_command	*fillup(t_data *data, size_t i, size_t x, t_command *new)
 	tmp = data->lexer;
 	while (tmp->index != i)
 		tmp = tmp->next;
-	while (i++ < x)
+	while (i < x)
 	{
 		new->cmd[j] = ft_strdup(tmp->word);
 		if (tmp->infile != NULL)
@@ -59,17 +59,24 @@ static t_command	*fillup(t_data *data, size_t i, size_t x, t_command *new)
 			new->heredoc_num = tmp->hd_number;
 		if (new->inf_err == 0)
 			new->inf_err = tmp->inf_err;
-		if (new->out_err == 0)
-			new->out_err = tmp->out_err;
+		if (new->pipe_b == 0)
+			new->pipe_b = tmp->pipe_b;
+		if (new->pipe_a == 0)
+			new->pipe_a = tmp->pipe_a;
+		// if (new->out_err == 0)//inutile car a priori on cree le fichier donc...
+		// 	new->out_err = tmp->out_err;
 		j++;
+		i++;
 		tmp = tmp->next;
 	}
 	new->cmd[j] = 0;
 	return (new);
 }
 
-static t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
-{
+t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
+{//bzero sur struct met tout a 0 A changer.. bzero segf.? add ici tmp tmp =data->lex
+// puis tmp = tmp->next till index == tmp->index puis envoyer a fillup data, tmp, x, new
+// cette func = 25 lignes et en haut on gagne de la place.
 	t_command	*new;
 
 	new = (t_command *)malloc(sizeof(*new));
@@ -85,7 +92,7 @@ static t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
 	new->heredoc_file = 0;
 	new->heredoc_num = -1;
 	new->inf_err = 0;
-	new->out_err = 0;
+	new->out_err = 0;//pe useless
 	new->pipe_b = 0;
 	new->pipe_a = 0;
 	new = fillup(data, i, x, new);
@@ -94,49 +101,28 @@ static t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
 }
 
 void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a la fin
-{printf("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK???\n");
-	size_t		buffer;
+{
 	t_lexer		*tmp;
 	t_command	*command;
 
 	command = NULL;
-	buffer = 0;
 	tmp = data->lexer;
 	while (tmp->next != NULL)
 		tmp = tmp->next;
-	if (tmp->token == NULL && tmp->word == NULL && lstlen(tmp) == 1)
+	if ((tmp->token == NULL && tmp->word == NULL && lstlen(tmp) == 1))
 		return ;// au cas ou on a <TODO par ex
 	if (tmp->token == NULL)
 	{
 		tmp = data->lexer;
-		while (tmp->next != NULL)
-		{
-			if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) == 0)
-			{printf("index: %ld len: %ld\n\n\n\n\n", tmp->index, lstlen(data->lexer) - 1);
-				command = cmd_node(data, buffer, tmp->index, command);
-				buffer = tmp->index + 1;
-			}
-			tmp = tmp->next;
-		}
-		command = cmd_node(data, buffer, tmp->index + 1, command);
+		command = cmd_lst_end_node(data, command, tmp);
 	}
 	else
 	{
 		tmp = data->lexer;
-		while (tmp->next != NULL)
-		{
-			if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) == 0)
-			{printf("index: %ld len: %ld\n\n\n\n\n", tmp->index, lstlen(data->lexer) - 1);
-				if (tmp->index == lstlen(data->lexer) - 1)
-					break ;
-				command = cmd_node(data, buffer, tmp->index, command);
-				buffer = tmp->index + 1;
-			}
-			tmp = tmp->next;
-		}
-		command = cmd_node(data, buffer, tmp->index, command);
+		command = cmd_lst(data, command, tmp);
 	}
-	data->cmd = command; //free tmp
+	data->cmd = command;
+	free_data(data, &free_lexer_strct);
 	check_heredoc(data);
 
 	//a la fin on peut free le lexer
@@ -149,7 +135,7 @@ void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a l
 	int p;
 	t_command *t;
 	t = command;
-printf("len cmdlst: %ld\n", lstlencmd(t));p = 0;
+printf("len cmdlst = %ld\n", lstlencmd(t));p = 0;
 	while (t != NULL)
 	{printf("node %d:\n", p);p = 0;
 
@@ -164,6 +150,8 @@ printf("len cmdlst: %ld\n", lstlencmd(t));p = 0;
 	printf("out_err = %d\n", t->out_err);
 	printf("heredoc? = %d\n", t->heredoc_file);
 	printf("heredoc numba = %d\n", t->heredoc_num);
+	printf("pipe before = %d\n", t->pipe_b);
+	printf("pipe after = %d\n", t->pipe_a);
 	t=t->next;
 	}
 	// END TEST
