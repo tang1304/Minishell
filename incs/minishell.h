@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/05 16:10:49 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/09 08:40:12 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_env
 {
 	char			*var_name;
 	char			*var_value;
+	struct s_env	*prev;
 	struct s_env	*next;
 }				t_env;
 

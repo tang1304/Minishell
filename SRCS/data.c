@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/05 16:28:22 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/09 08:45:57 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static t_env	*new_env_node(char *str)
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
 		return (0);
+	new->prev = NULL;
 	new->next = NULL;
 	pos = ft_strchr(str, '=');
 	if (pos)
@@ -88,6 +89,7 @@ int	add_env_node(t_env **env, char *str)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
+	new->prev = tmp;
 	return (1);
 }
 

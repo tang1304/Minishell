@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:54:14 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/05 08:32:46 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/09 11:20:18 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,31 @@ static void	unset_var(t_data *data, char *str)
 	}
 }
 
-static void	remove_node(t_env *lst)
+static t_env	*remove_node(t_env **envp)
 {
 	t_env	*tmp;
 
-	tmp = lst->next;
-	free(lst->var_name);
-	free(lst->var_value);
-	lst->var_name = NULL;
-	lst->var_value = NULL;
-	lst = tmp;
+	tmp = *envp;
+	if (tmp->next == NULL && tmp->prev == NULL)
+		*envp = NULL;
+	else if (tmp->prev == NULL)
+	{
+		*envp = tmp->next;
+		tmp->next->prev = NULL;
+	}
+	else if (tmp->next == NULL)
+		tmp->prev->next = NULL;
+	else
+	{
+		tmp->prev->next = tmp->next;
+		tmp->next->prev = tmp->prev;
+	}
+	if (tmp->var_name)
+		free(tmp->var_name);
+	if (tmp->var_value)
+		free(tmp->var_value);
+	free(tmp);
+	return (*envp);
 }
 
 int	ft_unset(t_data *data, char **cmd)
@@ -66,8 +81,8 @@ int	ft_unset(t_data *data, char **cmd)
 			if (ft_strncmp(cmd[i], lst->var_name, \
 				ft_strlen(lst->var_name) - 1) == 0)
 			{
-				unset_var(data, lst->var_name);
-				remove_node(lst);
+				unset_var(data, lst->var_name);//OK
+				lst = remove_node(&lst);
 			}
 			lst = lst->next;
 		}

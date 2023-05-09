@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/05 17:15:38 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/08 10:28:32 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int	print_export(t_env **env)
 	i = -1;
 	while (++i < size)
 	{
-		// if (tmp->var_name[0] == '_' && tmp->var_name[1] == '=')
-		// {
-		// 	tmp = tmp->next;
-		// 	continue ;
-		// }
+		if (tmp->var_name[0] == '_' && tmp->var_name[1] == '=')
+		{
+			tmp = tmp->next;
+			continue ;
+		}
 		printf("declare -x ");
 		printf("%s", tmp->var_name);
 		if (tmp->var_value)
@@ -52,13 +52,12 @@ static int	name_check(char *str)
 		printf("minishell: export: `%s' : not a valid identifier\n", str);
 		return (-1);
 	}
-	while (str[++i] != '=' && str[++i])
+	while (str[++i] && str[++i] != '=')
 	{
 		if (ft_isalnum(str[i]) || str[i] == '_')
 			continue ;
 		else
 		{
-			printf("LOO\n");
 			printf("minishell: export: `%s' : not a valid identifier\n", str);
 			return (-1);
 		}
@@ -84,7 +83,6 @@ static char	**export_var(t_data *data, char *cmd)
 	while (data->envp[++i])
 		free(data->envp[i]);
 	free(data->envp);
-	printf("LA\n");
 	new_envp[n] = ft_strdup(cmd);
 	// if (!new_envp[n])
 	// 	;
@@ -114,7 +112,6 @@ void	ft_export(t_data *data, char **cmd)
 		}
 		else
 		{
-		printf("ICI\n");
 			data->envp = export_var(data, cmd[j]);
 			// if (!data->envp)
 			// 	;
