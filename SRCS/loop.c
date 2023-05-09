@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/05 16:11:22 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/09 11:23:53 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,15 @@ void	prompt_loop(t_data *data)
 			expand(data);
 			token_check(data);
 			create_cmd_lst(data);// create cmd lst and send to hd
+			// print_export(&data->env);
 			builtins(data, data->cmd->cmd);
-			print_export(&data->env);
+			// while (data->env)
+			// {
+			// 	printf("%s", data->env->var_name);
+			// 	printf("%s\n", data->env->var_value);
+			// 	data->env = data->env->next;
+			// }
+			// print_export(&data->env);
 			//penser a free(data)
 		}
 	//if (check_error(line) == SUCCESS)
