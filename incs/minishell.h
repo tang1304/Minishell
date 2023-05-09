@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/09 08:40:12 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/09 14:08:29 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,8 +201,6 @@ void	builtins(t_data *data, char **cmd);
 
 /*	builtin_cd.c	*/
 int		ft_cd(t_data *data, char **cmd);
-char	*search_env(t_data *data, char *env);
-int		replace_env(t_data *data, char *env, char *old_env);
 
 /*	builtin_echo.c	*/
 void	ft_echo(char **cmd);
@@ -220,6 +218,8 @@ int		ft_unset(t_data *data, char **cmd);
 
 /*	envp_utils.c	*/
 char	*get_shlvl(char *str);
+char	*search_env(t_data *data, char *env);
+int		replace_env(t_data *data, char *env, char *old_env);
 
 /*	heredoc.c	*/
 void	heredoc_count(t_data *data);
