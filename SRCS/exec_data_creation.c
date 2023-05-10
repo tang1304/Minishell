@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_data_creation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 13:15:46 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 16:01:30 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	child_cretion(t_data *data)
 			// ft_error(data);
 		if (data->pids[i] == 0)
 		{printf("Child N%ld\n", i + 1);
-			valid_cmd(i, data);
+			// valid_cmd(i, data);
 			exit(CHILD_SUCCESS);
 		}
 		else
