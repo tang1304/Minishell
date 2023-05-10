@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:08:20 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/09 13:38:35 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 09:31:08 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,53 @@ int	replace_env(t_data *data, char *env, char *old_env)
 		i++;
 	}
 	return (0);
+}
+
+static t_env	*new_env_node(char *str)
+{
+	t_env	*new;
+	char	*pos;
+
+	new = (t_env *)malloc(sizeof(t_env));
+	if (!new)
+		return (0);
+	new->prev = NULL;
+	new->next = NULL;
+	pos = ft_strchr(str, '=');
+	if (pos)
+	{
+		new->var_name = ft_strndup(str, (size_t)pos - (size_t)str);
+		new->var_value = ft_strdup(pos + 1);
+		if (!new->var_name || !new->var_value)
+			return (0);
+	}
+	else
+	{
+		new->var_name = ft_strdup(str);
+		new->var_value = NULL;
+		if (!new->var_name)
+			return (0);
+	}
+	return (new);
+}
+
+int	add_env_node(t_env **env, char *str)
+{
+	t_env	*tmp;
+	t_env	*new;
+
+	new = new_env_node(str);
+	if (!new)
+		return (0);
+	if (!*env)
+	{
+		*env = new;
+		return (1);
+	}
+	tmp = *env;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+	new->prev = tmp;
+	return (1);
 }

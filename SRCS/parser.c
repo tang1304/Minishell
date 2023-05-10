@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/05 15:42:08 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 09:01:53 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,11 @@ static t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
 	new = (t_command *)malloc(sizeof(*new));
 	if (new == NULL)
 		return (NULL);
+	ft_bzero(new, sizeof(t_command));
 	new->cmd = (char **)malloc(sizeof(char *) * (x - i + 1));
 	if (new->cmd == NULL)
 		return (NULL);
-	new->next = NULL;
-	new->prev = NULL;
-	new->infile = NULL;
-	new->outfile = NULL;
-	new->heredoc_file = 0;
 	new->heredoc_num = -1;
-	new->inf_err = 0;
-	new->out_err = 0;
-	new->pipe_b = 0;
-	new->pipe_a = 0;
 	new = fillup(data, i, x, new);
 	cmd = add_cmd_node(cmd, new);
 	return (cmd);
