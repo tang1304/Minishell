@@ -6,19 +6,11 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/05 16:09:23 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 09:26:49 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-
-// void	check_hidden_nodes(t_data *data)
-// {
-// 	t_lexer *tmp;
-
-// 	tmp = data->lexer;
-// 	while ()
-// }
 
 static t_command	*add_cmd_node(t_command *command, t_command *new)
 {
@@ -41,7 +33,7 @@ static t_command	*fillup(t_data *data, size_t i, size_t x, t_command *new)
 {
 	size_t		j;
 	t_lexer		*tmp;
-// Ajouter fonction pour checker si pipe apres et mettre valeur de pipe a 1.
+
 	j = 0;
 	tmp = data->lexer;
 	while (tmp->index != i)
@@ -63,6 +55,10 @@ static t_command	*fillup(t_data *data, size_t i, size_t x, t_command *new)
 			new->pipe_b = tmp->pipe_b;
 		if (new->pipe_a == 0)
 			new->pipe_a = tmp->pipe_a;
+		if (new->fdin == 0)
+			new->fdin = tmp->fdin;
+		if (new->fdout == 0)
+			new->fdout = tmp->fdout;
 		// if (new->out_err == 0)//inutile car a priori on cree le fichier donc...
 		// 	new->out_err = tmp->out_err;
 		j++;
@@ -74,9 +70,7 @@ static t_command	*fillup(t_data *data, size_t i, size_t x, t_command *new)
 }
 
 t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
-{//bzero sur struct met tout a 0 A changer.. bzero segf.? add ici tmp tmp =data->lex
-// puis tmp = tmp->next till index == tmp->index puis envoyer a fillup data, tmp, x, new
-// cette func = 25 lignes et en haut on gagne de la place.
+{
 	t_command	*new;
 
 	if (i == x) // cancelles creation of empty node at the beginning if <Makefile |ls
@@ -84,19 +78,20 @@ t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
 	new = (t_command *)malloc(sizeof(*new));
 	if (new == NULL)
 		return (NULL);
+	ft_bzero(new, sizeof(t_command));
 	new->cmd = (char **)malloc(sizeof(char *) * (x - i + 1));
 	if (new->cmd == NULL)
 		return (NULL);
-	new->next = NULL;
-	new->prev = NULL;
-	new->infile = NULL;
-	new->outfile = NULL;
-	new->heredoc_file = 0;
+	// new->next = NULL;
+	// new->prev = NULL;
+	// new->infile = NULL;
+	// new->outfile = NULL;
+	// new->heredoc_file = 0;
 	new->heredoc_num = -1;
-	new->inf_err = 0;
-	new->out_err = 0;//pe useless
-	new->pipe_b = 0;
-	new->pipe_a = 0;
+	// new->inf_err = 0;
+	// new->out_err = 0;//pe useless
+	// new->pipe_b = 0;
+	// new->pipe_a = 0;
 	new = fillup(data, i, x, new);
 	cmd = add_cmd_node(cmd, new);
 	return (cmd);
@@ -137,6 +132,7 @@ void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a l
 	int p;
 	t_command *t;
 	t = command;
+	printf("\n\n\n");
 printf("len cmdlst = %ld\n", lstlencmd(t));p = 0;
 	while (t != NULL)
 	{printf("node %d:\n", p);p = 0;
@@ -154,7 +150,11 @@ printf("len cmdlst = %ld\n", lstlencmd(t));p = 0;
 	printf("heredoc numba = %d\n", t->heredoc_num);
 	printf("pipe before = %d\n", t->pipe_b);
 	printf("pipe after = %d\n", t->pipe_a);
+	printf("fdin = %d\n", t->fdin);
+	printf("fdout = %d\n", t->fdout);
 	t=t->next;
 	}
+	printf("data fdin = %d\n", data->fdin);
+	printf("data fdout = %d\n", data->fdout);
 	// END TEST
 }

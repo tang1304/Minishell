@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/05 13:10:21 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 11:13:41 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	data_initialize(t_data *data, char **envp)
 	doc.heredoc = 0;
 	doc.hd_count = 0;
 	data->hd = &doc;
+	data->fdin = 0;
+	data->fdout = 0;
 	user = getenv("USER");
 	if (user != NULL)
 		data->prompt = ft_strjoin(user, "@minishell:");

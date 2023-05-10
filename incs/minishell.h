@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/05 15:47:23 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 14:59:17 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct s_lexer
 	int				inf_err;
 	char			*outfile;//free if not NULL
 	int				out_err;
+	int				fdin;//infile
+	int				fdout;//outfile
 	int				hd_file;
 	int				hd_number;
 	size_t			index;
@@ -63,7 +65,9 @@ typedef struct s_command
 	int					out_err;
 	int					heredoc_file; //0 no hd 1 hd
 	int					heredoc_num; // which limiter it needs to use
-	int					fd[2];
+	int					fd[2]; //utile??
+	int					fdin;//infile
+	int					fdout;//outfile
 	int					pipe_b; // 0 pas de pipe, 1 = pipe = rediriger pipe vers stdin
 	int					pipe_a; // 0 pas de pipe, 1 = pipe = rediriger stdout vers pipe
 	struct s_command	*next;
@@ -99,11 +103,11 @@ typedef struct s_data
 	int					cmds; // number of cmds
 	char				*pwd;
 	char				*oldpwd;
+	size_t				child;
 	int					fdin;//infile
 	int					fdout;//outfile
-	size_t				child;
-	int					*pipe;//pipes for other cmds
-	pid_t				*pids;//pids of child processes
+	int					**pipes;//pipes for other cmds NEEDS FREE
+	pid_t				*pids;//pids of child processes NEEDS FREE
 	struct s_env		*env;
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
@@ -119,7 +123,8 @@ enum e_errors
 	TOKEN_FAILURE = 6,
 	NODE_FAILURE = 7,
 	NOT_WORD = 8,
-	FILE_ERROR = 9
+	FILE_ERROR = 9,
+	CHILD_SUCCESS = 10
 };
 
 /*	data.c	*/
@@ -234,7 +239,7 @@ void		add_heredoc(t_data *data, char * file, size_t index);
 
 /*	utils.c	*/
 void		complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);
-void		complete_out_data(t_lexer *tmp, char *file, int valid);
+void		complete_out_data(t_data *data, t_lexer *tmp, char *file, int valid);
 char		*ft_strjoin_free(char *s1, char *s2);
 char		*ft_change_str(char *s1, char *s2);
 size_t		lstlen(t_lexer *lexer);
@@ -243,4 +248,22 @@ size_t		lstlencmd(t_command *cmd);
 /*	free.c	*/
 void		free_data(t_data *data, void(*f)());
 void		free_lexer_strct(t_data *data);
+void		free_cmd_strct(t_data *data);
+
+/*	free_utils.c	*/
+void		ft_free_pp(char **ptr);
+void		free_content_cmd_node(t_command *tmp);
+
+/*	exec_data_creation.c	*/
+void		child_cretion(t_data *data);
+void		pipe_creation(t_data *data);
+void		pids_creation(t_data *data);
+void		extract_paths(t_data *data);
+
+/*	cmd.c	*/
+void		check_cmd_path(char *cmd, char *path, t_data *data);
+void		valid_cmd(size_t i, t_data *data);
+
+/*	wait.c	*/
+void		wait_child(t_data *data);
 #endif

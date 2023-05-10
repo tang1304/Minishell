@@ -44,7 +44,7 @@ LST_SRCS	=	main.c \
 				add_infile_outfile.c \
 				add_infile_outfile_utils.c \
 				add_pipes_lexer.c \
-				remove_nodes.c \
+				remove_lexer_nodes.c \
 				heredoc.c \
 				utils.c \
 				builtins.c \
@@ -54,7 +54,11 @@ LST_SRCS	=	main.c \
 				builtin_export.c \
 				builtin_export_utils.c \
 				envp_utils.c \
-				free.c
+				free.c \
+				free_utils.c \
+				exec_data_creation.c \
+				exec_cmd.c \
+				wait.c
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)
 
