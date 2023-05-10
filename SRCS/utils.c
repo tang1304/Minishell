@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:03:57 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 14:30:53 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 09:19:36 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ char	*ft_change_str(char *s1, char *s2)
 		i++;
 	}
 	return (new);
-}  
- 
+}
+
 size_t	lstlen(t_lexer *lexer)
 {
 	size_t	len;
@@ -99,6 +99,8 @@ void	complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid)
 		free(tmp->infile);
 		tmp->infile = NULL;
 	}
+	tmp->fdin = data->fdin;
+	// data->fdin = 0;
 	tmp->hd_file = 0;
 	tmp->hd_number = -1;
 	if (valid == 0)
@@ -113,13 +115,15 @@ void	complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid)
 	}
 }
 
-void	complete_out_data(t_lexer *tmp, char *file, int valid)
+void	complete_out_data(t_data *data, t_lexer *tmp, char *file, int valid)
 {
 	if (tmp->outfile != NULL)
 	{
 		free(tmp->outfile);
 		tmp->outfile = NULL;
 	}
+	tmp->fdout = data->fdout;
+	// data->fdout = 0;
 	if (valid == 0)
 	{
 		tmp->outfile = ft_strdup(file);

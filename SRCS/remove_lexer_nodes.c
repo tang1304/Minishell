@@ -13,13 +13,13 @@
 #include "../incs/minishell.h"
 // A revoir pour ne pas segf dans le cas ou <TODO |>out
 
-static void	free_content_node(t_lexer *tmp)
+void	free_content_lexer_node(t_lexer *tmp)
 {
 	if (tmp->word != NULL)
 		free(tmp->word);
-	tmp->word = NULL;
 	if (tmp->token != NULL)
 		free(tmp->token);
+	tmp->word = NULL;
 	tmp->token = NULL;
 	tmp->prev = NULL;
 	tmp->next = NULL;
@@ -27,10 +27,10 @@ static void	free_content_node(t_lexer *tmp)
 	tmp = NULL;
 }
 
-static void	free_lst(t_data *data, t_lexer *tmp)
+void	free_lst(t_data *data, t_lexer *tmp)
 {
 	data->lexer = data->lexer->next;
-	free_content_node(tmp);
+	free_content_lexer_node(tmp);
 	if (data->lexer->word != NULL)
 		free(data->lexer->word);
 	data->lexer->word = NULL;
@@ -53,11 +53,11 @@ void	remove_front_nodes(t_data *data, size_t len)
 		return ;
 	}
 	data->lexer = tmp->next;
-	free_content_node(tmp);
+	free_content_lexer_node(tmp);
 	tmp = data->lexer;
 	data->lexer = tmp->next;
 	data->lexer->prev = NULL;
-	free_content_node(tmp);
+	free_content_lexer_node(tmp);
 }
 
 void	remove_back_nodes(t_data *data)
@@ -72,7 +72,7 @@ void	remove_back_nodes(t_data *data)
 		while (tmp->next != NULL)
 			tmp = tmp->next;
 		tmp->prev->next = NULL;
-		free_content_node(tmp);
+		free_content_lexer_node(tmp);
 		times--;
 	}
 

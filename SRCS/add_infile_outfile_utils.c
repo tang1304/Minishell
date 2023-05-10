@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 12:10:25 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 09:18:57 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	add_infile(t_data *data, char *file, size_t index, int valid)
 
 void	add_outfile(t_data *data, char *file, size_t index, int valid)
 {
-	t_lexer	*tmp;
+	t_lexer	*tmp; // si multiples inf or
 
 	tmp = data->lexer;
 	while (tmp->index != index)
@@ -85,7 +85,7 @@ void	add_outfile(t_data *data, char *file, size_t index, int valid)
 		&& tmp->prev->word != NULL) || (tmp->word != NULL && \
 		ft_strncmp(tmp->prev->token, "|", 1) == 0))
 		{
-			complete_out_data(tmp, file, valid);
+			complete_out_data(data, tmp, file, valid);
 			return ;
 		}
 		tmp = tmp->next;
@@ -96,7 +96,7 @@ void	ft_error_file(int fd, char *file, int i)
 {
 	if (fd < 0)
 	{
-		printf("minishell: %s: Error opening file\n", file);
+		printf("minishell: %s: No such file or directory\n", file);
 		return ;
 	}
 	else if (i == 0)
