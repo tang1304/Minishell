@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 15:34:33 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 08:19:11 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 void	prompt_loop(t_data *data)
 {
 	char	*prompt;
-	t_env	*tmp;
 
 	while (1)
 	{
@@ -32,6 +31,7 @@ void	prompt_loop(t_data *data)
 			expand(data);
 			token_check(data);
 			create_cmd_lst(data);// create cmd lst and send to hd
+			builtins(data, data->cmd->cmd);
 			//penser a free(data)
 		}
 	//if (check_error(line) == SUCCESS)
