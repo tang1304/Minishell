@@ -6,7 +6,7 @@
 
 NAME		=	minishell
 
-CC			=	cc
+CC			=	cc -g3
 
 RM			=	rm -rf
 

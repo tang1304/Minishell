@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
 /*   Updated: 2023/05/10 14:59:17 by rrebois          ###   ########lyon.fr   */
@@ -87,6 +87,7 @@ typedef struct s_env
 {
 	char			*var_name;
 	char			*var_value;
+	struct s_env	*prev;
 	struct s_env	*next;
 }				t_env;
 
