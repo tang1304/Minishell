@@ -6,14 +6,14 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/09 08:45:57 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 11:13:41 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
 void	data_initialize(t_data *data, char **envp)
-{
+{//bzero sur struct met tout a 0 A changer
 	char		*user;
 	t_heredoc	doc;
 
@@ -27,6 +27,8 @@ void	data_initialize(t_data *data, char **envp)
 	doc.heredoc = 0;
 	doc.hd_count = 0;
 	data->hd = &doc;
+	data->fdin = 0;
+	data->fdout = 0;
 	user = getenv("USER");
 	if (user != NULL)
 		data->prompt = ft_strjoin(user, "@minishell:");
