@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 15:41:48 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/09 14:08:29 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_env
 {
 	char			*var_name;
 	char			*var_value;
+	struct s_env	*prev;
 	struct s_env	*next;
 }				t_env;
 
@@ -200,14 +201,13 @@ void	builtins(t_data *data, char **cmd);
 
 /*	builtin_cd.c	*/
 int		ft_cd(t_data *data, char **cmd);
-char	*search_env(t_data *data, char *env);
-int		replace_env(t_data *data, char *env, char *old_env);
 
 /*	builtin_echo.c	*/
 void	ft_echo(char **cmd);
 
 /*	builtin_export.c	*/
 void	ft_export(t_data *data, char **cmd);
+int		print_export(t_env **env);
 
 /*	builtin_export_utils.c	*/
 void	ft_list_sort(t_env **env, int size);
@@ -218,12 +218,14 @@ int		ft_unset(t_data *data, char **cmd);
 
 /*	envp_utils.c	*/
 char	*get_shlvl(char *str);
+char	*search_env(t_data *data, char *env);
+int		replace_env(t_data *data, char *env, char *old_env);
 
 /*	heredoc.c	*/
 void	heredoc_count(t_data *data);
 void	check_heredoc(t_data *data);
 void	init_heredoc(t_data *data, t_command *cmd);
-void	add_heredoc(t_data *data, char * file, size_t index);
+void	add_heredoc(t_data *data, char *file, size_t index);
 
 /*	utils.c	*/
 void	complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);

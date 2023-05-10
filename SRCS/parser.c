@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 15:48:48 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 15:42:08 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
 }
 
 void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a la fin
-{printf("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK???\n");
+{
 	size_t		buffer;
 	t_lexer		*tmp;
 	t_command	*command;
@@ -112,7 +112,7 @@ void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a l
 		while (tmp->next != NULL)
 		{
 			if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) == 0)
-			{printf("index: %ld len: %ld\n\n\n\n\n", tmp->index, lstlen(data->lexer) - 1);
+			{
 				command = cmd_node(data, buffer, tmp->index, command);
 				buffer = tmp->index + 1;
 			}
@@ -126,7 +126,7 @@ void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a l
 		while (tmp->next != NULL)
 		{
 			if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) == 0)
-			{printf("index: %ld len: %ld\n\n\n\n\n", tmp->index, lstlen(data->lexer) - 1);
+			{
 				if (tmp->index == lstlen(data->lexer) - 1)
 					break ;
 				command = cmd_node(data, buffer, tmp->index, command);
@@ -146,25 +146,25 @@ void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a l
 	// ls <TODO -l|wc >outfile -l <eof
 	// ls <TODO -l <<eof|wc >outfile -l <<eof1 <<eof2 infile todo added instead of null
 
-	int p;
-	t_command *t;
-	t = command;
-printf("len cmdlst: %ld\n", lstlencmd(t));p = 0;
-	while (t != NULL)
-	{printf("node %d:\n", p);p = 0;
-
-		while (t->cmd[p] != NULL)
-		{
-			printf("cmd[%d] = %s\n", p, t->cmd[p]);
-			p++;
-		}
-	printf("infile = %s\n", t->infile);
-	printf("inf_err= %d\n", t->inf_err);
-	printf("outfile = %s\n", t->outfile);
-	printf("out_err = %d\n", t->out_err);
-	printf("heredoc? = %d\n", t->heredoc_file);
-	printf("heredoc numba = %d\n", t->heredoc_num);
-	t=t->next;
-	}
-	// END TEST
+// 	int p;
+// 	t_command *t;
+// 	t = command;
+// // printf("len cmdlst: %ld\n", lstlencmd(t));p = 0;
+// 	while (t != NULL)
+// 	{//printf("node %d:\n", p);p = 0;
+// 		p = 0;
+// 		while (t->cmd[p] != NULL)
+// 		{
+// 			printf("cmd[%d] = %s\n", p, t->cmd[p]);
+// 			p++;
+// 		}
+// // 	printf("infile = %s\n", t->infile);
+// // 	printf("inf_err= %d\n", t->inf_err);
+// // 	printf("outfile = %s\n", t->outfile);
+// // 	printf("out_err = %d\n", t->out_err);
+// // 	printf("heredoc? = %d\n", t->heredoc_file);
+// // 	printf("heredoc numba = %d\n", t->heredoc_num);
+// 	t=t->next;
+// 	}
+// 	// END TEST
 }

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 13:29:53 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 08:19:49 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	ft_pwd(t_data *data)
 
 	line = search_env(data, "PWD");
 	printf("%s\n", line);
-	printf("ici\n");
 	free(line);
 }
 
@@ -54,9 +53,8 @@ void	builtins(t_data *data, char **cmd)
 		ft_export(data, cmd);
 	else if ((ft_strncmp(cmd[0], "unset", 5) == 0) && len == 5)
 		ft_unset(data, cmd);
-	else if ((ft_strncmp(cmd[0], "env", 3) == 0) && len == 3)
+	else if ((ft_strncmp(cmd[0], "env", 3) == 0) && len == 3)// a tester apres un export/unset
 		ft_env(data);
-	else if ((ft_strncmp(cmd[0], "exit", 5) == 0) && len == 5)
+	else if ((ft_strncmp(cmd[0], "exit", 4) == 0) && len == 4)
 		ft_exit(cmd);
-	// printf("ici\n");
 }
