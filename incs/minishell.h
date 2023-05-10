@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/09 14:08:29 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 08:32:43 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,8 @@ typedef struct s_data
 	char				*str; // command typed by user
 	char				*prompt; // has to be free at the end
 	char				*prompt_pwd;
-	char				**ex;
 	char				**envp;
 	char				**paths;
-	char				**tokens_tab; // Use?
-	int					tokens; // number of tokens inside line (useless)
-	int					cmds; // number of cmds
 	char				*pwd;
 	char				*oldpwd;
 	int					fdin;//infile
