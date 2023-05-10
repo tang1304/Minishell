@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:43:06 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/04 13:11:05 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 14:39:55 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	echo_n_check(char **cmd)
 	return (0);
 }
 
-void	ft_echo(char **cmd)
+int	ft_echo(char **cmd)
 {
 	int	i;
 	int	n_check;
@@ -61,4 +61,5 @@ void	ft_echo(char **cmd)
 		}
 		printf("\n");
 	}
+	return (1);
 }
