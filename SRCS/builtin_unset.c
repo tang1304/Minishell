@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:54:14 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/09 11:20:18 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 08:20:45 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	ft_unset(t_data *data, char **cmd)
 		if (!ft_isalnum(cmd[i][0]) || ft_isdigit(cmd[i][0]))
 		{
 			printf("minishell: unset: `%s': not a valid identifier\n", cmd[i]);
-			continue ; // mettre i++ ?
+			continue ;
 		}
 		lst = data->env;
 		while (lst)
@@ -81,7 +81,7 @@ int	ft_unset(t_data *data, char **cmd)
 			if (ft_strncmp(cmd[i], lst->var_name, \
 				ft_strlen(lst->var_name) - 1) == 0)
 			{
-				unset_var(data, lst->var_name);//OK
+				unset_var(data, lst->var_name);
 				lst = remove_node(&lst);
 			}
 			lst = lst->next;
