@@ -20,8 +20,9 @@ void	prompt_loop(t_data *data)
 
 	while (1)
 	{
+		update_pwd(data);
 		prompt = ft_strjoin(data->prompt, data->prompt_pwd);
-		prompt = ft_strjoin(prompt, "$ ");
+		prompt = ft_strjoin_gnl(prompt, "$ ");
 		data->str = ft_strdup(readline(prompt));
 		if (ft_strlen(data->str) > 0)
 			add_history(data->str);
