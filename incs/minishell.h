@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 09:31:36 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 15:39:20 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_data
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
+	struct s_garbage	*garbage;
 }				t_data;
 
 enum e_errors
@@ -194,16 +195,16 @@ char	*str_quotes_removal(char *str);
 int		quotes_removal(t_lexer *lexer);
 
 /*	builtins.c	*/
-void	builtins(t_data *data, char **cmd);
+int		builtins(t_data *data, char **cmd);
 
 /*	builtin_cd.c	*/
 int		ft_cd(t_data *data, char **cmd);
 
 /*	builtin_echo.c	*/
-void	ft_echo(char **cmd);
+int		ft_echo(char **cmd);
 
 /*	builtin_export.c	*/
-void	ft_export(t_data *data, char **cmd);
+int		ft_export(t_data *data, char **cmd);
 int		print_export(t_env **env);
 
 /*	builtin_export_utils.c	*/

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/10 08:20:25 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 15:06:03 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,34 +69,30 @@ static char	**export_var(t_data *data, char *cmd)
 	int		n;
 	char	**new_envp;
 
-	add_env_node(&data->env, cmd);
 	i = -1;
 	n = 0;
 	while (data->envp[n])
 		n++;
 	new_envp = malloc(sizeof(char *) * (n + 1));
-	// if (!new_envp)
-	// 	;
+	if (!new_envp || !add_env_node(&data->env, cmd))
+		return (NULL);
 	ft_memcpy(new_envp, data->envp, sizeof(char *));
 	while (data->envp[++i])
 		free(data->envp[i]);
 	free(data->envp);
 	new_envp[n] = ft_strdup(cmd);
-	// if (!new_envp[n])
-	// 	;
+	if (!new_envp[n])
+		return (NULL);
 	return (new_envp);
 }
 
-void	ft_export(t_data *data, char **cmd)
+int	ft_export(t_data *data, char **cmd)
 {
 	int	i;
 	int	j;
 
 	if (!cmd[1] || cmd[1][0] == '\0')
-	{
-		print_export(&data->env);
-		return ;
-	}
+		return (print_export(&data->env), 1);
 	j = 0;
 	while (cmd[++j])
 	{
@@ -105,14 +101,16 @@ void	ft_export(t_data *data, char **cmd)
 			continue ;
 		if (cmd[j][i] == '\0')
 		{
-			add_env_node(&data->env, cmd[j]);
+			if (!add_env_node(&data->env, cmd[j]))
+				return (-1);
 			continue ;
 		}
 		else
 		{
 			data->envp = export_var(data, cmd[j]);
-			// if (!data->envp)
-			// 	;
+			if (!data->envp)
+				return (-1);
 		}
 	}
+	return (1);
 }
