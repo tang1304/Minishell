@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:08:20 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/10 09:31:08 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 15:14:28 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int	replace_env(t_data *data, char *env, char *old_env)
 		{
 			free(tmp->var_value);
 			tmp->var_value = ft_strdup(old_env);
-			// if (!tmp->var_value)
-			// 	;
+			if (!tmp->var_value)
+				return (-1);
 			return (1);
 		}
 		tmp = tmp->next;

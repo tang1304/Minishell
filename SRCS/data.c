@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 11:20:54 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 15:40:03 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,5 @@ void	data_initialize(t_data *data, char **envp)
 		data->prompt = ft_strjoin(user, "@minishell:");
 	else
 		data->prompt = ft_strjoin("root", "@minishell:");
-//surement leaks de ft_strjoin, faire un ft_strjoin avec double free a la fin
-	// update_pwd(data);
 	prompt_loop(data);
 }
