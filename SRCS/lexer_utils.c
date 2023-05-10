@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/05 14:54:01 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 09:13:17 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,26 @@ static t_lexer	*new_lexer_node(char *str, int token)
 	node = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!node)
 		return (NULL);
+	ft_bzero(node, sizeof(t_lexer));
 	if (token == 0)
 	{
 		node->word = ft_strdup(str);
-		node->infile = NULL;
-		node->outfile = NULL;
-		node->token = NULL;
-		node->inf_err = 0;
-		node->out_err = 0;
-		node->hd_file = 0;
+		// node->infile = NULL;
+		// node->outfile = NULL;
+		// node->token = NULL;
+		// node->inf_err = 0;
+		// node->out_err = 0;
+		// node->hd_file = 0;
+		// node->fdin = 0;
+		// node->fdout = 0;
 		node->hd_number = -1;
-		node->pipe_b = 0;
-		node->pipe_a = 0;
+		// node->pipe_b = 0;
+		// node->pipe_a = 0;
 		printf("word: %s\n", node->word);
 	}
 	else
 	{
-		node->word = NULL;
+		// node->word = NULL;
 		node->token = ft_strdup(str);
 		// printf("token: %s\n", node->token);
 	}
