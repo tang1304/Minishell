@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/09 14:08:29 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 09:31:36 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,8 @@ typedef struct s_data
 	char				*str; // command typed by user
 	char				*prompt; // has to be free at the end
 	char				*prompt_pwd;
-	char				**ex;
 	char				**envp;
 	char				**paths;
-	char				**tokens_tab; // Use?
 	int					tokens; // number of tokens inside line (useless)
 	int					cmds; // number of cmds
 	char				*pwd;
@@ -123,8 +121,7 @@ enum e_errors
 
 /*	data.c	*/
 void	data_initialize(t_data *data, char **envp);
-void	update_pwd(t_data *data, char *s);
-int		add_env_node(t_env **env, char *str);
+void	update_pwd(t_data *data);
 char	**get_envp(t_data *data, char **envp);
 
 /*	loop.c	*/
@@ -220,6 +217,7 @@ int		ft_unset(t_data *data, char **cmd);
 char	*get_shlvl(char *str);
 char	*search_env(t_data *data, char *env);
 int		replace_env(t_data *data, char *env, char *old_env);
+int		add_env_node(t_env **env, char *str);
 
 /*	heredoc.c	*/
 void	heredoc_count(t_data *data);
