@@ -12,7 +12,6 @@
 
 #include "../incs/minishell.h"
 
-
 void	update_pwd(t_data *data)
 {
 	data->oldpwd = search_env(data, "OLDPWD=");
