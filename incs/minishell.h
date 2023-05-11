@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/11 09:27:02 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/11 13:10:07 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 typedef struct s_lexer
 {
@@ -58,14 +59,14 @@ typedef struct s_substr
 typedef struct s_command
 {
 	char				**cmd;//malloc a free
-	int					index;
+	size_t				index;
 	char				*infile;
 	int					inf_err;
 	char				*outfile;
 	int					out_err;
 	int					heredoc_file; //0 no hd 1 hd
 	int					heredoc_num; // which limiter it needs to use
-	// int					fd[2];
+	int					fd[2];
 	int					fdin;//infile
 	int					fdout;//outfile
 	int					pipe_b; // 0 pas de pipe, 1 = pipe = rediriger pipe vers stdin
@@ -104,7 +105,7 @@ typedef struct s_data
 	int					fdin;//infile
 	int					fdout;//outfile
 	int					pipe[2];//pipes for other cmds NEEDS FREE
-	pid_t				*pids;//pids of child processes NEEDS FREE
+	// pid_t				*pids;//pids of child processes NEEDS FREE
 	struct s_env		*env;
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
@@ -122,7 +123,8 @@ enum e_errors
 	NODE_FAILURE = 7,
 	NOT_WORD = 8,
 	FILE_ERROR = 9,
-	CHILD_SUCCESS = 10
+	CHILD_SUCCESS = 10,
+	NOT_BUILTIN = 11
 };
 
 /*	data.c	*/
@@ -154,6 +156,7 @@ t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd);
 /*	parser_utils.c	*/
 t_command	*cmd_lst_end_node(t_data *data, t_command *command, t_lexer *tmp);
 t_command	*cmd_lst(t_data *data, t_command *command, t_lexer *tmp);
+void		add_cmd_index(t_data *data);
 
 /*	add_infile_outfile.c	*/
 void		files_validity(t_data *data, t_lexer *tmp, int *valid);
@@ -206,6 +209,7 @@ int			quotes_removal(t_lexer *lexer);
 
 /*	builtins.c	*/
 int		builtins(t_data *data, char **cmd);
+int		check_builtins(char **cmd);
 
 /*	builtin_cd.c	*/
 int			ft_cd(t_data *data, char **cmd);
@@ -256,10 +260,8 @@ void		ft_free_pp(char **ptr);
 void		free_content_cmd_node(t_command *tmp);
 
 /*	exec_data_creation.c	*/
-void		child_cretion(t_data *data);
-void		pipe_creation(t_data *data);
-void		pids_creation(t_data *data);
-void		extract_paths(t_data *data);
+void	extract_paths(t_data *data);
+void	exec_cmd_lst(t_data *data);
 
 /*	cmd.c	*/
 void		check_cmd_path(char *cmd, char *path, t_data *data);

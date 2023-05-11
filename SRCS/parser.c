@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 09:01:53 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/11 09:54:47 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a l
 	}
 	data->cmd = command;
 	free_data(data, &free_lexer_strct);
+	add_cmd_index(data);
 	check_heredoc(data);
 
 	//a la fin on peut free le lexer

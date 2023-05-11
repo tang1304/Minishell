@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 16:40:18 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/11 09:37:47 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	prompt_loop(t_data *data)
 			{
 				create_cmd_lst(data); // create cmd lst and send to hd + free lexer
 				extract_paths(data); // Then iterates through the mcmd lst can be moved to parser.c
+				exec_cmd_lst(data);
 				// builtins(data, data->cmd->cmd);
 				// pipe_creation(data);
 				free_data(data, &free_cmd_strct); //at the end free cmd list
