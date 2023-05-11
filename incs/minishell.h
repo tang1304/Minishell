@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 15:44:40 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/11 09:27:02 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_command
 	int					out_err;
 	int					heredoc_file; //0 no hd 1 hd
 	int					heredoc_num; // which limiter it needs to use
-	int					fd[2]; //utile??
+	// int					fd[2];
 	int					fdin;//infile
 	int					fdout;//outfile
 	int					pipe_b; // 0 pas de pipe, 1 = pipe = rediriger pipe vers stdin
@@ -103,7 +103,7 @@ typedef struct s_data
 	size_t				child;
 	int					fdin;//infile
 	int					fdout;//outfile
-	int					**pipes;//pipes for other cmds NEEDS FREE
+	int					pipe[2];//pipes for other cmds NEEDS FREE
 	pid_t				*pids;//pids of child processes NEEDS FREE
 	struct s_env		*env;
 	struct s_heredoc	*hd;
@@ -127,7 +127,7 @@ enum e_errors
 
 /*	data.c	*/
 void		data_initialize(t_data *data, char **envp);
-void		update_pwd(t_data *data, char *s);
+void		update_pwd(t_data *data);
 char		**get_envp(t_data *data, char **envp);
 
 /*	loop.c	*/
