@@ -71,6 +71,7 @@ void	init_heredoc(t_data *data, t_command *cmd)
 		if (ft_strncmp(line, data->hd->LIMITER[data->hd->heredoc], \
 		ft_strlen(data->hd->LIMITER[data->hd->heredoc])) == 0 || !line)
 			break ;
+		// line = split the expand func to have 1 func with only the string (+ i)? so it can be reused here
 		buffer = ft_strjoin_free(buffer, line);
 	}
 	write(cmd->fd[1], buffer, ft_strlen(buffer));
@@ -84,12 +85,11 @@ void	init_heredoc(t_data *data, t_command *cmd)
 }
 
 void	check_heredoc(t_data *data)
-{
+{//traduire les saisies commençant par $
 	int			status;
 	t_command	*tmp;
 	pid_t		i;
-// char	*s;
-// s=NULL;
+
 	tmp = data->cmd;
 	data->hd->heredoc = 0;
 	while (tmp != NULL)
@@ -104,11 +104,9 @@ void	check_heredoc(t_data *data)
 				if (i == 0)
 				{
 					init_heredoc(data, tmp);
-					exit (SUCCESS);
+					exit (SUCCESS); // Child needs to free all
 				}
 				waitpid(i, &status, 0);
-// read(tmp->fd[0], s, 5);
-// write(1, s, ft_strlen(s));
 				data->hd->heredoc++;
 			}
 		}

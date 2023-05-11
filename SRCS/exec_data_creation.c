@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/11 07:51:50 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/11 11:52:12 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,27 @@ void	extract_paths(t_data *data)
 
 void	exec_cmd_lst(t_data *data)
 {
+	int			status;
 	t_command	*tmp;
+	pid_t		i;
 
 	tmp = data->cmd;
 	while (tmp != NULL)
 	{
-		if (builtins(data, tmp->cmd) == SUCCESS)
-			tmp = tmp->next;
+		if (lstlencmd(data->cmd) == 1 && check_builtins(tmp->cmd) == SUCCESS)
+			builtins(data, tmp->cmd);
 		else
 		{
-
+			i = fork();
+			if (i == 0)
+			{
+				if (check_builtins(tmp->cmd) == SUCCESS)
+					builtins(data, tmp->cmd);
+				//else
+				exit(SUCCESS); // Child needs to free all
+			}
+			waitpid(i, &status, 0);
 		}
+		tmp = tmp->next;
 	}
 }
