@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/04 10:17:26 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/11 09:22:06 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ void	expand(t_data *data)
 		{
 			while (tmp->word[i] != '\0')
 			{
-				if (tmp->word[i] == '$' && (ft_isalpha(tmp->word[i + 1]) == 1 || \
-				tmp->word[i + 1] == '?'))
+				if (tmp->word[i] == '$' && tmp->word[i + 1] && \
+				tmp->word[i + 1] != ' ')
 					tmp->word = check_char(data, tmp->word, &i, 0);
 				else if (tmp->word[i] == '\'')
 					tmp->word = check_char(data, tmp->word, &i, 1);
