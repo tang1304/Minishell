@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/11 09:37:47 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/12 16:34:30 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,19 @@ void	prompt_loop(t_data *data)
 		if (error_check(data->str) == SUCCESS)
 		{
 			lexer_init(data); //Creation du lexer
-			expand(data); // quotes dealing
-			token_check(data); // redirections
-			if (data->lexer != NULL)
-			{
-				create_cmd_lst(data); // create cmd lst and send to hd + free lexer
-				extract_paths(data); // Then iterates through the mcmd lst can be moved to parser.c
-				exec_cmd_lst(data);
-				// builtins(data, data->cmd->cmd);
-				// pipe_creation(data);
-				free_data(data, &free_cmd_strct); //at the end free cmd list
-			}
+			heredoc_redir(data);
+			// expand(data);// quotes dealing
+			// token_check(data); // redirections
+			// create_cmd_lst(data);
+			// if (data->lexer != NULL)
+			// {
+			// 	create_cmd_lst(data); // create cmd lst and send to hd + free lexer
+			// 	extract_paths(data); // Then iterates through the mcmd lst can be moved to parser.c
+			// 	// exec_cmd_lst(data);
+			// 	// builtins(data, data->cmd->cmd);
+			// 	// pipe_creation(data);
+			// 	free_data(data, &free_cmd_strct); //at the end free cmd list ET hdoc struct
+			// }
 			//penser a free(data)
 		}
 	//if (check_error(line) == SUCCESS)
