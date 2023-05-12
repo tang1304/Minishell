@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:53:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/04/25 09:47:02 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/12 12:53:27 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ int	error_check(char *line)
 	size_t	i;
 
 	i = 0;
+	if (ft_strlen(line) == 0)
+		return (NO_INPUT);
 	while (line[i] != '\0')
 	{
 		if (line[i] == '\'' || line[i] == '"')

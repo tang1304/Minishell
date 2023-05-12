@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/11 13:10:07 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/12 15:37:43 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_heredoc
 	// size_t				hd_used; //number of hd actually used
 	size_t				heredoc; // set to 0 at first
 	char				**LIMITER; // array of all LIMITERS  A FREE A LA FIIIN meme si 0 heredocs
-	// int					fd[2];//pipe for here_doc
+	int					**fd;//pipe for here_doc
 }				t_heredoc;
 
 typedef struct s_env
@@ -105,7 +105,6 @@ typedef struct s_data
 	int					fdin;//infile
 	int					fdout;//outfile
 	int					pipe[2];//pipes for other cmds NEEDS FREE
-	// pid_t				*pids;//pids of child processes NEEDS FREE
 	struct s_env		*env;
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
@@ -124,7 +123,8 @@ enum e_errors
 	NOT_WORD = 8,
 	FILE_ERROR = 9,
 	CHILD_SUCCESS = 10,
-	NOT_BUILTIN = 11
+	NOT_BUILTIN = 11,
+	NO_INPUT = 12
 };
 
 /*	data.c	*/
@@ -238,9 +238,12 @@ int		add_env_node(t_env **env, char *str);
 
 /*	heredoc.c	*/
 void		heredoc_count(t_data *data);
-void		check_heredoc(t_data *data);
-void		init_heredoc(t_data *data, t_command *cmd);
-void		add_heredoc(t_data *data, char * file, size_t index);
+void		init_heredoc_data(t_data *data);
+void		heredoc_pipe(t_data *data, t_command *cmd);
+
+/*	heredoc_redir.c	*/
+void	heredoc_redir(t_data *data);
+void	add_heredoc(t_data *data, char *file, size_t index);
 
 /*	utils.c	*/
 void		complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);
