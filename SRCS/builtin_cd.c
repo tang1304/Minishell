@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 15:38:01 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 16:20:22 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static int	cd_home(t_data *data)
 		check_2 = replace_env(data, "PWD=", current);
 		if (check_1 == -1 || check_2 == -1)
 			return (-1);
-		print_export(&data->env);
 		return (1);
 	}
 	return (perror("getcwd: "), -1);

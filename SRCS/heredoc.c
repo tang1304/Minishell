@@ -107,8 +107,6 @@ void	check_heredoc(t_data *data)
 					exit (SUCCESS);
 				}
 				waitpid(i, &status, 0);
-// read(tmp->fd[0], s, 5);
-// write(1, s, ft_strlen(s));
 				data->hd->heredoc++;
 			}
 		}
