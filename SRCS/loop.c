@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 15:45:09 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/12 14:48:37 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	prompt_loop(t_data *data)
 			if (data->lexer != NULL)
 			{
 				create_cmd_lst(data);// create cmd lst and send to hd
-				builtins(data, data->cmd->cmd);
-				pipe_creation(data);
+				extract_paths(data);
+				exec_cmd_lst(data);
 				free_data(data, &free_cmd_strct);
 			}
 			//penser a free(data)

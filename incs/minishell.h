@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 15:44:40 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/12 09:03:16 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,13 @@ typedef struct s_command
 	int					out_err;
 	int					heredoc_file; //0 no hd 1 hd
 	int					heredoc_num; // which limiter it needs to use
-	int					fd[2]; //utile??
+	int					fd[2];
 	int					fdin;//infile
 	int					fdout;//outfile
 	int					pipe_b; // 0 pas de pipe, 1 = pipe = rediriger pipe vers stdin
 	int					pipe_a; // 0 pas de pipe, 1 = pipe = rediriger stdout vers pipe
+	pid_t				pid;
+	int					child;
 	struct s_command	*next;
 	struct s_command	*prev;
 }				t_command;//ls        | "grep >out" <Makefile| wc -l >outer
@@ -79,7 +81,7 @@ typedef struct s_heredoc
 	size_t				hd_count; // number of heredocs (total)
 	// size_t				hd_used; //number of hd actually used
 	size_t				heredoc; // set to 0 at first
-	char				**LIMITER; // array of all LIMITERS  A FREE A LA FIIIN meme si 0 heredocs
+	char				**LIMITER; // array of all LIMITERS A FREE A LA FIIIN meme si 0 heredocs
 	// int					fd[2];//pipe for here_doc
 }				t_heredoc;
 
@@ -97,19 +99,18 @@ typedef struct s_data
 	char				*prompt; // has to be free at the end
 	char				*prompt_pwd;
 	char				**envp;
+	char				*path;
 	char				**paths;
 	char				*pwd;
 	char				*oldpwd;
-	size_t				child;
 	int					fdin;//infile
 	int					fdout;//outfile
-	int					**pipes;//pipes for other cmds NEEDS FREE
-	pid_t				*pids;//pids of child processes NEEDS FREE
+	int					*pipe[2];//pipes for other cmds NEEDS FREE
+	pid_t				*pids;
 	struct s_env		*env;
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
-	struct s_garbage	*garbage;
 }				t_data;
 
 enum e_errors
@@ -122,12 +123,13 @@ enum e_errors
 	NODE_FAILURE = 7,
 	NOT_WORD = 8,
 	FILE_ERROR = 9,
-	CHILD_SUCCESS = 10
+	CHILD_SUCCESS = 10,
+	NOT_BUILTIN = 11
 };
 
 /*	data.c	*/
 void		data_initialize(t_data *data, char **envp);
-void		update_pwd(t_data *data, char *s);
+void		update_pwd(t_data *data);
 char		**get_envp(t_data *data, char **envp);
 
 /*	loop.c	*/
@@ -206,6 +208,8 @@ int			quotes_removal(t_lexer *lexer);
 
 /*	builtins.c	*/
 int		builtins(t_data *data, char **cmd);
+int		check_builtins(char **cmd);
+
 
 /*	builtin_cd.c	*/
 int			ft_cd(t_data *data, char **cmd);
@@ -256,10 +260,11 @@ void		ft_free_pp(char **ptr);
 void		free_content_cmd_node(t_command *tmp);
 
 /*	exec_data_creation.c	*/
-void		child_cretion(t_data *data);
-void		pipe_creation(t_data *data);
-void		pids_creation(t_data *data);
 void		extract_paths(t_data *data);
+void		exec_cmd_lst(t_data *data);
+
+/*	exec.c	*/
+void		exec(t_data *data, char **cmd);
 
 /*	cmd.c	*/
 void		check_cmd_path(char *cmd, char *path, t_data *data);
@@ -267,4 +272,5 @@ void		valid_cmd(size_t i, t_data *data);
 
 /*	wait.c	*/
 void		wait_child(t_data *data);
+
 #endif

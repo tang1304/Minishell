@@ -57,7 +57,7 @@ LST_SRCS	=	main.c \
 				free.c \
 				free_utils.c \
 				exec_data_creation.c \
-				exec_cmd.c \
+				exec.c \
 				wait.c
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)
