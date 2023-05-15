@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/12 09:03:16 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/15 10:36:13 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ typedef struct s_data
 	char				*oldpwd;
 	int					fdin;//infile
 	int					fdout;//outfile
-	int					*pipe[2];//pipes for other cmds NEEDS FREE
+	int					pipe[2];//pipes for other cmds NEEDS FREE
 	pid_t				*pids;
 	struct s_env		*env;
 	struct s_heredoc	*hd;
@@ -162,7 +162,8 @@ void		files_validity(t_data *data, t_lexer *tmp, int *valid);
 void		remove_nodes_redirection(t_data *data, size_t index);
 void		token_check(t_data *data);
 int			file_check_access(t_data *data, char *file, int i);
-int			check_redirection(t_data *data, char *token, char *file, size_t index);
+int			check_redirection(t_data *data, char *token, char *file, \
+								size_t index);
 
 /*	add_infile_outfile_utils.c	*/
 t_lexer		*find_start(t_lexer *tmp);
@@ -266,9 +267,9 @@ void		exec_cmd_lst(t_data *data);
 /*	exec.c	*/
 void		exec(t_data *data, char **cmd);
 
-/*	cmd.c	*/
-void		check_cmd_path(char *cmd, char *path, t_data *data);
-void		valid_cmd(size_t i, t_data *data);
+/*	exec_dup.c	*/
+int			heredoc_check(t_command *cmd);
+void		both_dup2(t_data *data, int in, int out);
 
 /*	wait.c	*/
 void		wait_child(t_data *data);

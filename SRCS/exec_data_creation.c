@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/12 16:06:45 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/15 11:43:58 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,23 +100,9 @@ void	extract_paths(t_data *data)
 	}
 }
 
-static void	heredoc_check(t_command *cmd)
+static void	command_init(t_data *data, t_command *cmd)
 {
-	if (cmd->heredoc_file)
-	{
-		printf("\nheredoc\n");
-		if (!cmd->cmd[0] || !cmd->cmd)
-			return ;
-		if (dup2(cmd->fd[0], STDIN_FILENO) == -1)
-			return (perror("Error in heredoc dup2"));
-		if (close(cmd->fd[0]) == -1)
-			return (perror("Error in heredoc close"));
-	}
-}
-
-static void	command_init(t_command *cmd)
-{
-	printf("ici\n");
+	close(data->pipe[0]);
 	if (!cmd->cmd[0])
 		return ;
 	if (cmd->fdin > 0 && !cmd->heredoc_file)
@@ -134,19 +120,13 @@ static void	command_init(t_command *cmd)
 	else if (cmd->fdout == 0 && cmd->pipe_a)
 	{
 		printf("\nNo fdout, Pipe after\n");
-		if (dup2(cmd->fd[1], STDOUT_FILENO) == -1)
+		if (dup2(data->pipe[1], STDOUT_FILENO) == -1)
 			return (perror("Error with stdout dup2"));
-		if (close(cmd->fd[1]) == -1)
-		return (perror("Error in child close"));
+		if (close(data->pipe[1]) == -1)
+			return (perror("Error in child close"));
 	}
-	// if (cmd->pipe_b)
-	// {
-		// printf("\nPipe before\n");
-	// 	dup2(cmd->fd[0], STDIN_FILENO);
-	// 	if (close(cmd->fd[0] == -1))
-	// 		return (perror("Error in child close"));
-	// }
 }
+
 void	exec_cmd_lst(t_data *data)
 {
 	int			status;
@@ -161,7 +141,7 @@ void	exec_cmd_lst(t_data *data)
 			builtins(data, tmp->cmd);
 		else
 		{
-			if (pipe(tmp->fd) == -1)	
+			if (pipe(data->pipe) == -1)
 				perror("Pipe error");
 			i = fork();
 			if (i == 0)
@@ -170,14 +150,19 @@ void	exec_cmd_lst(t_data *data)
 					builtins(data, tmp->cmd);
 				else
 				{
-					command_init(tmp);
+					command_init(data, tmp);
 					exec(data, tmp->cmd);
 				}
 				exit(SUCCESS); // Child needs to free all
 			}
-			printf("parent\n");
-			if (dup2(tmp->fd[0], STDIN_FILENO) == -1)
-				return (perror("Error with parent dup2"));
+			else
+			{
+				if (tmp->pipe_a == 1)
+					close(data->pipe[1]);
+				if (dup2(data->pipe[0], STDIN_FILENO) == -1)
+					return (perror("Error with parent dup2"));
+				close(data->pipe[0]);
+			}
 			waitpid(i, &status, 0);
 		}
 		tmp = tmp->next;
