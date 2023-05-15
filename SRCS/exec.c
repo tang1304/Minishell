@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:47:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/12 09:05:49 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/15 11:12:44 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ static void	loop_on_path(t_data *data, char **cmd_args)
 			if (execve(data->path, cmd_args, data->envp) == -1)
 				// execve_error(data, cmd_args);
 				exit(SUCCESS);
-
 		}
 		free(data->path);
 	}
