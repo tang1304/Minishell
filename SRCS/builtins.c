@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/11 14:56:41 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 10:13:46 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,12 @@ static int	ft_env(t_data *data)
 	return (1);
 }
 
-static void	ft_exit(char **str)
+static void	ft_exit(t_data *data, char **str)
 {
 	printf("exit\n");
 	if (str[1])
 		printf("minishell: exit: %s: numeric argument required\n", str[1]);
+	free_all(data);
 	exit(EXIT_SUCCESS);
 }
 
@@ -59,7 +60,7 @@ int	builtins(t_data *data, char **cmd)
 	else if ((ft_strncmp(cmd[0], "env", 3) == 0) && len == 3)// a tester apres un export/unset
 		check = ft_env(data);
 	else if ((ft_strncmp(cmd[0], "exit", 4) == 0) && len == 4)
-		ft_exit(cmd);
+		ft_exit(data, cmd);
 	return (check);
 }
 

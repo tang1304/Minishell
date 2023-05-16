@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/15 11:45:59 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 09:11:52 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	prompt_loop(t_data *data)
 		prompt = ft_strjoin(data->prompt, data->prompt_pwd);
 		prompt = ft_strjoin_gnl(prompt, "$ ");
 		data->str = ft_strdup(readline(prompt));
+		free(prompt);
 		if (ft_strlen(data->str) > 0)
 			add_history(data->str);
 		if (error_check(data->str) == SUCCESS)
