@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/15 10:36:13 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 10:17:35 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ typedef struct s_data
 	int					fdout;//outfile
 	int					pipe[2];//pipes for other cmds NEEDS FREE
 	pid_t				*pids;
+	int					stdin_save;
+	int					stdout_save;
 	struct s_env		*env;
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
@@ -208,8 +210,8 @@ char		*str_quotes_removal(char *str);
 int			quotes_removal(t_lexer *lexer);
 
 /*	builtins.c	*/
-int		builtins(t_data *data, char **cmd);
-int		check_builtins(char **cmd);
+int			builtins(t_data *data, char **cmd);
+int			check_builtins(char **cmd);
 
 
 /*	builtin_cd.c	*/
@@ -254,11 +256,15 @@ size_t		lstlencmd(t_command *cmd);
 /*	free.c	*/
 void		free_data(t_data *data, void(*f)());
 void		free_lexer_strct(t_data *data);
+void		free_env_strct(t_data *data);
 void		free_cmd_strct(t_data *data);
+void		free_data_strct(t_data *data);
+void		free_all(t_data *data);
 
 /*	free_utils.c	*/
 void		ft_free_pp(char **ptr);
 void		free_content_cmd_node(t_command *tmp);
+void		free_content_env_node(t_env *tmp);
 
 /*	exec_data_creation.c	*/
 void		extract_paths(t_data *data);

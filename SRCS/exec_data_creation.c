@@ -6,77 +6,21 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/15 11:43:58 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 10:35:02 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-// void	child_cretion(t_data *data)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while (i < lstlencmd(data->cmd))
-// 	{
-// 		data->pids[i] = fork();
-// 		if (data->pids[i] == -1)
-// 			return ;
-// 			// ft_error(data);
-// 		if (data->pids[i] == 0)
-// 		{printf("Child N%ld\n", i + 1);
-// 			// valid_cmd(i, data);
-// 			exit(CHILD_SUCCESS);
-// 		}
-// 		else
-// 			wait_child(data);
-// 		i++;
-// 	}
-// }
-
-// void	pipe_creation(t_data *data)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	data->pipes = (int **)malloc(sizeof(int *) * (lstlencmd(data->cmd) - 1));
-// 	if (data->pipes == NULL)
-// 		exit(1); //or not exit? if y with diff err code
-// 	while (i < lstlencmd(data->cmd))
-// 	{
-// 		data->pipes[i] = (int *)malloc(sizeof(int) * 2);
-// 		if (data->pipes[i] == NULL)
-// 		{
-// 			// free_all_pipes(data, i); TODO
-// 			exit(2); // or not exit?? if y with diff err code
-// 		}
-// 		i++;
-// 	}
-// 	pids_creation(data);
-// }
-
-// void	pids_creation(t_data *data)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	data->pids = malloc(sizeof(int) * lstlencmd(data->cmd)); // split here into 2 funcs
-// 	if (data->pids == NULL)
-// 	{
-// 		// free_all_pipes(data, data->pipe_n);
-// 		exit(3); // or not exit?? if y with diff err code
-// 	}
-// 	while (i < lstlencmd(data->cmd))
-// 	{
-// 		if (pipe(data->pipes[i]) == -1)
-// 			exit(4);
-// 			// free_everything(&data);
-// 		i++;
-// 	}
-// 	extract_paths(data);
-// 	child_cretion(data);
-// }
-
+static void	restore_stds(t_data *data)
+{
+	if (dup2(data->stdin_save, STDIN_FILENO) == -1 \
+	|| dup2(data->stdout_save, STDOUT_FILENO) == -1)
+		return (perror("Error with restoring STDIN/STDOUT dup2"));
+	// if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
+	// 	return (perror("Error with closing STDIN/STDOUT saves"));
+	// close a la fin du programme, ou initialiser a chaque boucle
+}
 
 void	extract_paths(t_data *data)
 {
@@ -100,6 +44,9 @@ void	extract_paths(t_data *data)
 	}
 }
 
+/* Si multiples infiles/heredocs, prendre le dernier. Mais si une erreur d'open/nom
+etc, ne prends aucuns in et saute la commande
+Si pipe et outfile, envoi cmd dans outfile*/
 static void	command_init(t_data *data, t_command *cmd)
 {
 	close(data->pipe[0]);
@@ -127,6 +74,29 @@ static void	command_init(t_data *data, t_command *cmd)
 	}
 }
 
+static void	forking(t_data *data, t_command *cmd, int i)
+{
+	if (i == 0)
+	{
+		if (check_builtins(cmd->cmd) == SUCCESS && cmd->next == NULL)
+			builtins(data, cmd->cmd);
+		else
+		{
+			command_init(data, cmd);
+			exec(data, cmd->cmd);
+		}
+		exit(SUCCESS); // Child needs to free all
+	}
+	else
+	{
+		if (cmd->pipe_a == 1)
+			close(data->pipe[1]);
+		if (dup2(data->pipe[0], STDIN_FILENO) == -1)
+			return (perror("Error with parent dup2"));
+		close(data->pipe[0]);
+	}
+}
+
 void	exec_cmd_lst(t_data *data)
 {
 	int			status;
@@ -138,33 +108,19 @@ void	exec_cmd_lst(t_data *data)
 	{
 		heredoc_check(tmp);
 		if (lstlencmd(data->cmd) == 1 && check_builtins(tmp->cmd) == SUCCESS)
+		{
 			builtins(data, tmp->cmd);
+			return ;
+		}
 		else
 		{
 			if (pipe(data->pipe) == -1)
 				perror("Pipe error");
 			i = fork();
-			if (i == 0)
-			{
-				if (check_builtins(tmp->cmd) == SUCCESS && tmp->next == NULL)
-					builtins(data, tmp->cmd);
-				else
-				{
-					command_init(data, tmp);
-					exec(data, tmp->cmd);
-				}
-				exit(SUCCESS); // Child needs to free all
-			}
-			else
-			{
-				if (tmp->pipe_a == 1)
-					close(data->pipe[1]);
-				if (dup2(data->pipe[0], STDIN_FILENO) == -1)
-					return (perror("Error with parent dup2"));
-				close(data->pipe[0]);
-			}
+			forking(data, tmp, i);
 			waitpid(i, &status, 0);
 		}
 		tmp = tmp->next;
 	}
+	restore_stds(data);
 }
