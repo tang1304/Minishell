@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:48:58 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 15:18:02 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	command_init(t_data *data, t_command *cmd)
 		return ;
 	if (cmd->fdin > 0 && !cmd->heredoc_file)
 	{
-		printf("\nfdin\n");
+		printf("\nfdin, no hd: %d\n", cmd->fdin);
 		if (dup2(cmd->fdin, STDIN_FILENO) == -1)
 			return (perror("Error with infile dup2"));
 	}
@@ -78,22 +78,28 @@ static void	forking(t_data *data, t_command *cmd, int i)
 {
 	if (i == 0)
 	{
-		if (check_builtins(cmd->cmd) == SUCCESS && cmd->next == NULL)
-			builtins(data, cmd->cmd);
-		else
+		heredoc_check(data, cmd);
+		command_init(data, cmd);
+		if (cmd->inf_err || cmd->out_err)
+			exit(EXIT_SUCCESS);
+		if (check_builtins(cmd->cmd) == SUCCESS)
 		{
-			command_init(data, cmd);
-			exec(data, cmd->cmd);
+			builtins(data, cmd->cmd);
+			exit(EXIT_SUCCESS);
 		}
-		exit(SUCCESS); // Child needs to free all
+		else
+			exec(data, cmd->cmd);
 	}
 	else
 	{
 		if (cmd->pipe_a == 1)
 			close(data->pipe[1]);
-		if (dup2(data->pipe[0], STDIN_FILENO) == -1)
-			return (perror("Error with parent dup2"));
-		close(data->pipe[0]);
+		if (!cmd->heredoc_file)
+		{
+			if (dup2(data->pipe[0], STDIN_FILENO) == -1)
+				return (perror("Error with parent dup2"));
+			close(data->pipe[0]);
+		}
 	}
 }
 
@@ -106,7 +112,7 @@ void	exec_cmd_lst(t_data *data)
 	tmp = data->cmd;
 	while (tmp)
 	{
-		heredoc_check(tmp);
+		// heredoc_check(data, tmp);
 		if (lstlencmd(data->cmd) == 1 && check_builtins(tmp->cmd) == SUCCESS)
 		{
 			builtins(data, tmp->cmd);
@@ -123,31 +129,4 @@ void	exec_cmd_lst(t_data *data)
 		tmp = tmp->next;
 	}
 	restore_stds(data);
-}
-
-void	exec_cmd_lst(t_data *data)
-{
-	int			status;
-	t_command	*tmp;
-	pid_t		i;
-
-	tmp = data->cmd;
-	while (tmp != NULL)
-	{
-		if (lstlencmd(data->cmd) == 1 && check_builtins(tmp->cmd) == SUCCESS)
-			builtins(data, tmp->cmd);
-		else
-		{
-			i = fork();
-			if (i == 0)
-			{
-				if (check_builtins(tmp->cmd) == SUCCESS)
-					builtins(data, tmp->cmd);
-				//else
-				exit(SUCCESS); // Child needs to free all
-			}
-			waitpid(i, &status, 0);
-		}
-		tmp = tmp->next;
-	}
 }

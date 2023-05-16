@@ -6,27 +6,27 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:19:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/15 11:35:50 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 15:30:49 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	heredoc_check(t_command *cmd)
+int	heredoc_check(t_data *data, t_command *cmd)
 {
 	if (cmd->heredoc_file)
 	{
 		printf("\nheredoc\n");
 		if (!cmd->cmd[0] || !cmd->cmd)
 			return (0);
-		if (dup2(cmd->fd[0], STDIN_FILENO) == -1)
+		if (dup2(data->hd->fd[cmd->heredoc_num][0], STDIN_FILENO) == -1)
 			return (perror("Error in heredoc dup2"), 0);
-		if (cmd->fdout > 0)
-		{
-			if (dup2(cmd->fdout, STDOUT_FILENO) == -1)
-				return (perror("Error with outfile dup2"), 0);
-		}
-		if (close(cmd->fd[0]) == -1)
+		// if (cmd->fdout > 0)
+		// {
+		// 	if (dup2(cmd->fdout, STDOUT_FILENO) == -1)
+		// 		return (perror("Error with outfile dup2"), 0);
+		// }
+		if (close(data->hd->fd[cmd->heredoc_num][0]) == -1)
 			return (perror("Error in heredoc close"), 0);
 		return (1);
 	}

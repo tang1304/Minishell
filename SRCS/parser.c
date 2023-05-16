@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:50:34 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 15:34:23 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,32 +123,32 @@ void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a l
 	// ls <TODO -l|wc >outfile -l <eof
 	// ls <TODO -l <<eof|wc >outfile -l <<eof1 <<eof2 infile todo added instead of null
 
-// 	int p;
-// 	t_command *t;
-// 	t = command;
-// 	printf("\n\n\n");
-// printf("len cmdlst = %ld\n", lstlencmd(t));p = 0;
-// 	while (t != NULL)
-// 	{printf("node %d:\n", p);p = 0;
+	int p;
+	t_command *t;
+	t = command;
+	printf("\n\n\n");
+printf("len cmdlst = %ld\n", lstlencmd(t));p = 0;
+	while (t != NULL)
+	{printf("\nnode %d:\n", p);p = 0;
 
-// 		while (t->cmd[p] != NULL)
-// 		{
-// 			printf("cmd[%d] = %s\n", p, t->cmd[p]);
-// 			p++;
-// 		}
-// 	printf("infile = %s\n", t->infile);
-// 	printf("inf_err= %d\n", t->inf_err);
-// 	printf("outfile = %s\n", t->outfile);
-// 	printf("out_err = %d\n", t->out_err);
-// 	printf("heredoc? = %d\n", t->heredoc_file);
-// 	printf("heredoc numba = %d\n", t->heredoc_num);
-// 	printf("pipe before = %d\n", t->pipe_b);
-// 	printf("pipe after = %d\n", t->pipe_a);
-// 	printf("fdin = %d\n", t->fdin);
-// 	printf("fdout = %d\n", t->fdout);
-// 	t=t->next;
-// 	}
-// 	printf("data fdin = %d\n", data->fdin);
-// 	printf("data fdout = %d\n", data->fdout);
+		while (t->cmd[p] != NULL)
+		{
+			printf("cmd[%d] = %s\n", p, t->cmd[p]);
+			p++;
+		}
+	printf("infile = %s\n", t->infile);
+	printf("inf_err= %d\n", t->inf_err);
+	printf("outfile = %s\n", t->outfile);
+	printf("out_err = %d\n", t->out_err);
+	printf("heredoc? = %d\n", t->heredoc_file);
+	printf("heredoc numba = %d\n", t->heredoc_num);
+	printf("pipe before = %d\n", t->pipe_b);
+	printf("pipe after = %d\n", t->pipe_a);
+	printf("fdin = %d\n", t->fdin);
+	printf("fdout = %d\n", t->fdout);
+	t=t->next;
+	}
+	printf("data fdin = %d\n", data->fdin);
+	printf("data fdout = %d\n", data->fdout);
 // 	// END TEST
 }

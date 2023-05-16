@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:50:15 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 11:23:58 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ printf("cmd len =%ld\n", lstlencmd(data->cmd));
 				exec_cmd_lst(data);
 				free_data(data, &free_lexer_strct);
 			}
-			free_data(data, &free_hd_struct);
+			free_data(data, &free_hd_strct);
 		}
 
 	//if (check_error(line) == SUCCESS)

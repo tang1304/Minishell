@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:45:15 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 11:46:49 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,8 +265,8 @@ void		free_lexer_strct(t_data *data);
 void		free_env_strct(t_data *data);
 void		free_cmd_strct(t_data *data);
 void		free_data_strct(t_data *data);
+void		free_hd_strct(t_data *data);
 void		free_all(t_data *data);
-void		free_hd_struct(t_data *data);
 
 /*	free_utils.c	*/
 void		ft_free_pp(char **ptr);
@@ -281,7 +281,7 @@ void		exec_cmd_lst(t_data *data);
 void		exec(t_data *data, char **cmd);
 
 /*	exec_dup.c	*/
-int			heredoc_check(t_command *cmd);
+int			heredoc_check(t_data *data, t_command *cmd);
 void		both_dup2(t_data *data, int in, int out);
 
 /*	wait.c	*/
