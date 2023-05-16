@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:47:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/15 11:12:44 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 14:15:12 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,6 @@ static void	pre_check_on_cmd(t_data *data, char **cmd)
 {
 	(void)data;
 
-	if (cmd[0][0] == '\0')
-	{
-		write(2, "Command '' not found\n", 21);
-		// pre_check_cmd_error(data);
-		exit(SUCCESS);
-	}
 	if (cmd[0][0] == '.' && !cmd[0][1])
 	{
 		write(2, ".: filename argument required\n", 30);
