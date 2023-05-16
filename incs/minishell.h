@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/12 15:37:43 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 08:01:57 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,7 @@ int		add_env_node(t_env **env, char *str);
 /*	heredoc.c	*/
 void		heredoc_count(t_data *data);
 void		init_heredoc_data(t_data *data);
-void		heredoc_pipe(t_data *data, t_command *cmd);
+void		heredoc_pipe(t_data *data);
 
 /*	heredoc_redir.c	*/
 void	heredoc_redir(t_data *data);

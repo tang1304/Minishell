@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/12 16:34:30 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 08:12:14 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	prompt_loop(t_data *data)
 		{
 			lexer_init(data); //Creation du lexer
 			heredoc_redir(data);
-			// expand(data);// quotes dealing
-			// token_check(data); // redirections
-			// create_cmd_lst(data);
+			expand(data);// quotes dealing
+			token_check(data); // redirections
+			create_cmd_lst(data);
 			// if (data->lexer != NULL)
 			// {
 			// 	create_cmd_lst(data); // create cmd lst and send to hd + free lexer

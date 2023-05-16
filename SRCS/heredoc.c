@@ -34,7 +34,7 @@ void	heredoc_count(t_data *data)
 	data->hd->LIMITER[data->hd->hd_count] = 0;
 }
 
-void	heredoc_pipe(t_data *data, t_command *cmd)
+void	heredoc_pipe(t_data *data)
 {
 	char	*line;
 	char	*buffer;
@@ -48,12 +48,12 @@ void	heredoc_pipe(t_data *data, t_command *cmd)
 			break ;
 		buffer = ft_strjoin_free(buffer, line);
 	}
-	write(cmd->fd[1], buffer, ft_strlen(buffer));
+	write(data->hd->fd[data->hd->heredoc][1], buffer, ft_strlen(buffer));
 	free(buffer);
 	if (line)
 		free(line);
-	close(cmd->fd[0]);
-	close(cmd->fd[1]);
+	close(data->hd->fd[data->hd->heredoc][0]);
+	close(data->hd->fd[data->hd->heredoc][1]);
 	//free all!!! <Makefile ls |grep <<eof |wc >out
 	// test bible non réalisée
 }
@@ -78,7 +78,7 @@ void	init_heredoc_data(t_data *data) // PB when only <Makefile or <<eof
 		i = fork();
 		if (i == 0)
 		{printf("Hredoc N%ld\n", data->hd->hd_count);
-			// heredoc_pipe(data, tmp);
+			heredoc_pipe(data);
 			exit (SUCCESS);
 		}
 		waitpid(i, &status, 0);
