@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 09:40:20 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 13:36:53 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void	prompt_loop(t_data *data)
 
 	while (1)
 	{
+
+		signal_m(SIGQUIT);
+
 		update_pwd(data);
 		prompt = ft_strjoin(data->prompt, data->prompt_pwd);
 		prompt = ft_strjoin_gnl(prompt, "$ ");

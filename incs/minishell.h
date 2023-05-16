@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 09:41:08 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 15:39:30 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,8 @@ enum e_errors
 	NOT_BUILTIN = 11,
 	NO_INPUT = 12
 };
+
+int	g_var;
 
 /*	data.c	*/
 void		data_initialize(t_data *data, char **envp);
@@ -273,4 +275,11 @@ void		valid_cmd(size_t i, t_data *data);
 
 /*	wait.c	*/
 void		wait_child(t_data *data);
+
+/*	signals.c	*/
+void	signal_handler_sigquit();
+void	signal_handler_sigint();
+void	signal_m(int signal);
+void	signal_heredoc(t_data *data);
+
 #endif
