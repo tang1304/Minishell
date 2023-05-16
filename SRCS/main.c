@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 07:28:41 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 11:04:15 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/12 15:11:06 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	t_data	data;
 
+	ft_bzero(&data, sizeof(t_data));
 	if (ac != 1)
 	{
 		ft_putstr_fd("Error: Bad arguments\nRun ./minishell\n", 2);

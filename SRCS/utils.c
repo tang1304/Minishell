@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:03:57 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 09:19:36 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/12 12:08:53 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ size_t	lstlen(t_lexer *lexer)
 	if (!lexer)
 		return (0);
 	tmp = lexer;
+	// if (tmp->word == NULL && tmp->token == NULL)
+	// 	return (0);
 	while (tmp != NULL)
 	{
 		len++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 15:40:03 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/12 15:10:46 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,7 @@ void	data_initialize(t_data *data, char **envp)
 	char		*user;
 	t_heredoc	doc;
 
-	data->cmd = NULL;
-	data->env = NULL;
-	data->lexer = NULL;
-	data->str = NULL;
-	data->prompt = NULL;
-	doc.LIMITER = NULL;
-	doc.heredoc = 0;
-	doc.hd_count = 0;
+	ft_bzero(&doc, sizeof(t_heredoc));
 	if (!envp[0])
 		data->envp = env_i_handle(data);
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 09:01:53 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 08:27:52 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,23 +95,26 @@ void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a l
 
 	command = NULL;
 	tmp = data->lexer;
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	if ((tmp->token == NULL && tmp->word == NULL && lstlen(tmp) == 1))
-		return ;// au cas ou on a <TODO par ex
-	if (tmp->token == NULL)
+	if (tmp != NULL)
 	{
-		tmp = data->lexer;
-		command = cmd_lst_end_node(data, command, tmp);
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		if ((tmp->token == NULL && tmp->word == NULL && lstlen(tmp) == 1))
+			return ;// au cas ou on a <TODO par ex
+		if (tmp->token == NULL)
+		{
+			tmp = data->lexer;
+			command = cmd_lst_end_node(data, command, tmp);
+		}
+		else
+		{
+			tmp = data->lexer;
+			command = cmd_lst(data, command, tmp);
+		}
+		data->cmd = command;
+		free_data(data, &free_lexer_strct);
+		add_cmd_index(data);
 	}
-	else
-	{
-		tmp = data->lexer;
-		command = cmd_lst(data, command, tmp);
-	}
-	data->cmd = command;
-	free_data(data, &free_lexer_strct);
-	check_heredoc(data);
 
 	//a la fin on peut free le lexer
 
@@ -120,32 +123,32 @@ void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a l
 	// ls <TODO -l|wc >outfile -l <eof
 	// ls <TODO -l <<eof|wc >outfile -l <<eof1 <<eof2 infile todo added instead of null
 
-	int p;
-	t_command *t;
-	t = command;
-	printf("\n\n\n");
-printf("len cmdlst = %ld\n", lstlencmd(t));p = 0;
-	while (t != NULL)
-	{printf("node %d:\n", p);p = 0;
+// 	int p;
+// 	t_command *t;
+// 	t = command;
+// 	printf("\n\n\n");
+// printf("len cmdlst = %ld\n", lstlencmd(t));p = 0;
+// 	while (t != NULL)
+// 	{printf("node %d:\n", p);p = 0;
 
-		while (t->cmd[p] != NULL)
-		{
-			printf("cmd[%d] = %s\n", p, t->cmd[p]);
-			p++;
-		}
-	printf("infile = %s\n", t->infile);
-	printf("inf_err= %d\n", t->inf_err);
-	printf("outfile = %s\n", t->outfile);
-	printf("out_err = %d\n", t->out_err);
-	printf("heredoc? = %d\n", t->heredoc_file);
-	printf("heredoc numba = %d\n", t->heredoc_num);
-	printf("pipe before = %d\n", t->pipe_b);
-	printf("pipe after = %d\n", t->pipe_a);
-	printf("fdin = %d\n", t->fdin);
-	printf("fdout = %d\n", t->fdout);
-	t=t->next;
-	}
-	printf("data fdin = %d\n", data->fdin);
-	printf("data fdout = %d\n", data->fdout);
-	// END TEST
+// 		while (t->cmd[p] != NULL)
+// 		{
+// 			printf("cmd[%d] = %s\n", p, t->cmd[p]);
+// 			p++;
+// 		}
+// 	printf("infile = %s\n", t->infile);
+// 	printf("inf_err= %d\n", t->inf_err);
+// 	printf("outfile = %s\n", t->outfile);
+// 	printf("out_err = %d\n", t->out_err);
+// 	printf("heredoc? = %d\n", t->heredoc_file);
+// 	printf("heredoc numba = %d\n", t->heredoc_num);
+// 	printf("pipe before = %d\n", t->pipe_b);
+// 	printf("pipe after = %d\n", t->pipe_a);
+// 	printf("fdin = %d\n", t->fdin);
+// 	printf("fdout = %d\n", t->fdout);
+// 	t=t->next;
+// 	}
+// 	printf("data fdin = %d\n", data->fdin);
+// 	printf("data fdout = %d\n", data->fdout);
+// 	// END TEST
 }
