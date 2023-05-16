@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:48:58 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 10:53:50 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,31 +123,4 @@ void	exec_cmd_lst(t_data *data)
 		tmp = tmp->next;
 	}
 	restore_stds(data);
-}
-
-void	exec_cmd_lst(t_data *data)
-{
-	int			status;
-	t_command	*tmp;
-	pid_t		i;
-
-	tmp = data->cmd;
-	while (tmp != NULL)
-	{
-		if (lstlencmd(data->cmd) == 1 && check_builtins(tmp->cmd) == SUCCESS)
-			builtins(data, tmp->cmd);
-		else
-		{
-			i = fork();
-			if (i == 0)
-			{
-				if (check_builtins(tmp->cmd) == SUCCESS)
-					builtins(data, tmp->cmd);
-				//else
-				exit(SUCCESS); // Child needs to free all
-			}
-			waitpid(i, &status, 0);
-		}
-		tmp = tmp->next;
-	}
 }
