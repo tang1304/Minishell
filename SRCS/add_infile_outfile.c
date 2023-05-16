@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_infile_outfile.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/12 16:37:46 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 10:46:31 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	token_check(t_data *data)
 		tmp = tmp->next;
 	}
 	add_pipes_redir(data);
+	// check_heredoc(data);
 
 // 	// test
 // 	if (lstlen(data->lexer) > 0)
@@ -126,7 +127,6 @@ void	token_check(t_data *data)
 // 		tmp = tmp->next;
 // 	}
 // 	printf("len: %ld\n", len);
-
 
 // 	t_data	*tmp2;
 // 	tmp2 = data;
