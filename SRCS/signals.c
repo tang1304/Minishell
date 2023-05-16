@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:14:33 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 15:42:21 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 15:46:16 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	signal_heredoc(t_data *data)
 	ft_bzero(&sa, sizeof(sa));
 	if (SIGQUIT == signal)
 	{
-		free
 		sa.sa_handler = &signal_handler_sigquit;
 		sigaction(SIGQUIT, &sa, NULL);
 	}
