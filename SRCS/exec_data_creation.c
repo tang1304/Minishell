@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec_data_creation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
 /*   Updated: 2023/05/11 11:52:12 by rrebois          ###   ########lyon.fr   */
