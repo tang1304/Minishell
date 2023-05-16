@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:13:34 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 10:49:18 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,18 @@ void	free_all(t_data *data)
 	free_data(data, &free_lexer_strct);
 	free_data(data, &free_env_strct);
 	free_data_strct(data);
+void	free_hd_struct(t_data *data)
+{
+	size_t	i;
+
+	i = 0;
+	ft_free_pp(data->hd->LIMITER);
+	while (i++ < data->hd->hd_count)
+		free(data->hd->fd[i]);
+	free(data->hd->fd);
+	data->hd->fd = NULL;
+	data->hd->hd_count = 0;
+	data->hd->heredoc = 0;
 }
 
 void	free_data(t_data *data, void(*f)())
