@@ -12,31 +12,6 @@
 
 #include "../incs/minishell.h"
 
-void	add_heredoc(t_data *data, char *file, size_t index)
-{
-	t_lexer	*tmp;
-
-	tmp = data->lexer;
-	while (tmp->index != index)
-		tmp = tmp->next;
-	tmp = find_start(tmp);
-	while (tmp != NULL)
-	{
-		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) == 0)
-			break ;
-		if ((tmp->word != NULL && tmp->prev == NULL) || (tmp->word != NULL \
-		&& tmp->prev->word != NULL) || (tmp->word != NULL && \
-		ft_strncmp(tmp->prev->token, "|", 1) == 0))
-		{
-			if (tmp->infile != NULL)
-				tmp->hd_file = 0;
-			add_file_node(data, tmp, file, 1);
-			return ;
-		}
-		tmp = tmp->next;
-	}
-}
-
 void	heredoc_count(t_data *data)
 {
 	t_lexer	*tmp;
@@ -53,13 +28,13 @@ void	heredoc_count(t_data *data)
 		tmp = tmp->next;
 	}
 	data->hd->LIMITER = (char **)malloc(sizeof(char *) * \
-	(data->hd->hd_count + 1));
+	(data->hd->hd_count));
 		// if (data->LIMITER == NULL)
 		// 	return error??;
-	data->hd->LIMITER[data->hd->hd_count] = 0;
+	// data->hd->LIMITER[data->hd->hd_count] = 0;
 }
 
-void	init_heredoc(t_data *data, t_command *cmd)
+void	heredoc_pipe(t_data *data)
 {
 	char	*line;
 	char	*buffer;
@@ -68,49 +43,51 @@ void	init_heredoc(t_data *data, t_command *cmd)
 	while (1)
 	{
 		line = readline("> ");
-		if (ft_strncmp(line, data->hd->LIMITER[data->hd->heredoc], \
-		ft_strlen(data->hd->LIMITER[data->hd->heredoc])) == 0 || !line)
+		if ((ft_strncmp(line, data->hd->LIMITER[data->hd->heredoc], ft_strlen\
+		(line)) == 0 && ft_strlen(data->hd->LIMITER[data->hd->heredoc]) == \
+		ft_strlen(line)) \
+		|| !line)
 			break ;
 		buffer = ft_strjoin_free(buffer, line);
 	}
-	write(cmd->fd[1], buffer, ft_strlen(buffer));
+	write(data->hd->fd[data->hd->heredoc][1], buffer, ft_strlen(buffer));
 	free(buffer);
 	if (line)
 		free(line);
-	close(cmd->fd[0]);
-	close(cmd->fd[1]);
+	close(data->hd->fd[data->hd->heredoc][0]);
+	close(data->hd->fd[data->hd->heredoc][1]);
 	//free all!!! <Makefile ls |grep <<eof |wc >out
 	// test bible non réalisée
 }
 
-void	check_heredoc(t_data *data)
+void	init_heredoc_data(t_data *data) // PB when only <Makefile or <<eof
 {
 	int			status;
-	t_command	*tmp;
 	pid_t		i;
-// char	*s;
-// s=NULL;
-	tmp = data->cmd;
+
+	data->hd->fd = (int **)malloc(sizeof(int *) * data->hd->hd_count);
+	if (data->hd->fd == NULL)
+		return ;//grbage val??
 	data->hd->heredoc = 0;
-	while (tmp != NULL)
+printf("LIMITER = %s\n", data->hd->LIMITER[data->hd->heredoc]);
+printf("heredoc val = %ld\n", data->hd->heredoc);
+	while (data->hd->heredoc < data->hd->hd_count)
 	{
-		if (tmp->heredoc_file == 1)
-		{
-			if (pipe(tmp->fd) < 0) //Si erreur ->error message?? return?
-				return ;
-			while ((int)data->hd->heredoc <= tmp->heredoc_num)
-			{
-				i = fork();
-				if (i == 0)
-				{
-					init_heredoc(data, tmp);
-					exit (SUCCESS);
-				}
-				waitpid(i, &status, 0);
-				data->hd->heredoc++;
-			}
+		data->hd->fd[data->hd->heredoc] = (int *)malloc(sizeof(int) * 2);
+		if (data->hd->fd[data->hd->heredoc] == NULL)
+			return ;//grbage val??
+		if (pipe(data->hd->fd[data->hd->heredoc]) < 0)
+			return ; //garbage val//Si erreur ->error message?? return?
+		i = fork();
+		if (i == 0)
+		{printf("Hredoc N%ld\n", data->hd->hd_count);
+			heredoc_pipe(data);
+			exit (SUCCESS);
 		}
-		tmp = tmp->next;
+		waitpid(i, &status, 0);
+// read(tmp->fd[0], s, 5);
+// write(1, s, ft_strlen(s));
+		data->hd->heredoc++;
 	}
 
 

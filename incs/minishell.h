@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:17:35 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 10:45:15 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 typedef struct s_lexer
 {
@@ -58,7 +59,7 @@ typedef struct s_substr
 typedef struct s_command
 {
 	char				**cmd;//malloc a free
-	int					index;
+	size_t				index;
 	char				*infile;
 	int					inf_err;
 	char				*outfile;
@@ -81,8 +82,8 @@ typedef struct s_heredoc
 	size_t				hd_count; // number of heredocs (total)
 	// size_t				hd_used; //number of hd actually used
 	size_t				heredoc; // set to 0 at first
-	char				**LIMITER; // array of all LIMITERS A FREE A LA FIIIN meme si 0 heredocs
-	// int					fd[2];//pipe for here_doc
+	char				**LIMITER; // array of all LIMITERS  A FREE A LA FIIIN meme si 0 heredocs
+	int					**fd;//pipe for here_doc
 }				t_heredoc;
 
 typedef struct s_env
@@ -126,7 +127,8 @@ enum e_errors
 	NOT_WORD = 8,
 	FILE_ERROR = 9,
 	CHILD_SUCCESS = 10,
-	NOT_BUILTIN = 11
+	NOT_BUILTIN = 11,
+	NO_INPUT = 12
 };
 
 /*	data.c	*/
@@ -158,6 +160,7 @@ t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd);
 /*	parser_utils.c	*/
 t_command	*cmd_lst_end_node(t_data *data, t_command *command, t_lexer *tmp);
 t_command	*cmd_lst(t_data *data, t_command *command, t_lexer *tmp);
+void		add_cmd_index(t_data *data);
 
 /*	add_infile_outfile.c	*/
 void		files_validity(t_data *data, t_lexer *tmp, int *valid);
@@ -241,9 +244,12 @@ int		add_env_node(t_env **env, char *str);
 
 /*	heredoc.c	*/
 void		heredoc_count(t_data *data);
-void		check_heredoc(t_data *data);
-void		init_heredoc(t_data *data, t_command *cmd);
-void		add_heredoc(t_data *data, char * file, size_t index);
+void		init_heredoc_data(t_data *data);
+void		heredoc_pipe(t_data *data);
+
+/*	heredoc_redir.c	*/
+void	heredoc_redir(t_data *data);
+void	add_heredoc(t_data *data, char *file, size_t index);
 
 /*	utils.c	*/
 void		complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);
@@ -260,6 +266,7 @@ void		free_env_strct(t_data *data);
 void		free_cmd_strct(t_data *data);
 void		free_data_strct(t_data *data);
 void		free_all(t_data *data);
+void		free_hd_struct(t_data *data);
 
 /*	free_utils.c	*/
 void		ft_free_pp(char **ptr);

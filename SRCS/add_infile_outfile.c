@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/12 13:19:44 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 10:46:31 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	check_redirection(t_data *data, char *token, char *file, size_t index)
 		valid = file_check_access(data, file, 0);
 		add_infile(data, file, index, valid);
 	}
-	else
-		add_heredoc(data, file, index);
+	// else
+	// 	add_heredoc(data, file, index);
 	return (valid);
 }
 
@@ -97,7 +97,7 @@ void	token_check(t_data *data)
 	t_lexer	*tmp;
 	int		valid;
 
-	heredoc_count(data);
+	// heredoc_count(data);
 	valid = 0;
 	tmp = data->lexer;
 	while (tmp != NULL)
@@ -141,6 +141,7 @@ void	token_check(t_data *data)
 // ft_printf("infile: %s\n", tmp2->lexer->infile);
 // ft_printf("outfile: %s\n", tmp2->lexer->outfile);
 // ft_printf("hdoc: %d\n",tmp2->lexer->hd_file);
+// ft_printf("hdoc count: %d\n",tmp2->hd->hd_count);
 // 		tmp2->lexer = tmp2->lexer->next;
 // 	}}
 // 	// end test ls <TODO -l|wc -l >out>>out2<Makefile

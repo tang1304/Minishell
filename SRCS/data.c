@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 09:44:14 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 10:48:17 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,9 @@ void	data_initialize(t_data *data, char **envp)
 	char		*user;
 	t_heredoc	doc;
 
-	data->cmd = NULL;
-	data->env = NULL;
-	data->lexer = NULL;
-	data->str = NULL;
-	data->prompt = NULL;
-	doc.LIMITER = NULL;
-	doc.heredoc = 0;
-	doc.hd_count = 0;
 	data->stdin_save = dup(STDIN_FILENO);
 	data->stdout_save = dup(STDOUT_FILENO);
+	ft_bzero(&doc, sizeof(t_heredoc));
 	if (!envp[0])
 		data->envp = env_i_handle(data);
 	else

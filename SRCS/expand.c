@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/04 10:17:26 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/12 15:09:45 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,18 @@ static char	*check_char(t_data *data, char *s, size_t *i, int j)
 	return (str.s);
 }
 
-static t_lexer	*skip_token(t_lexer *tmp)
-{
-	 if (tmp->token != NULL && ft_strncmp(tmp->token, "<<", 2) == 0 \
-	 && ft_strlen(tmp->token) == 2)
-	 {
-		tmp = tmp->next;
-		tmp->word = str_quotes_removal(tmp->word);
-	 }
-	else if (tmp->token != NULL && ft_strncmp(tmp->token, "<<", 2) != 0)
-		return (tmp);
-	return (tmp);
-}
+// static t_lexer	*skip_token(t_lexer *tmp)
+// {
+// 	 if (tmp->token != NULL && ft_strncmp(tmp->token, "<<", 2) == 0 add slash
+// 	 && ft_strlen(tmp->token) == 2)
+// 	 {
+// 		tmp = tmp->next;
+// 		tmp->word = str_quotes_removal(tmp->word);
+// 	 }
+// 	else if (tmp->token != NULL && ft_strncmp(tmp->token, "<<", 2) != 0)
+// 		return (tmp);
+// 	return (tmp);
+// }
 
 void	expand(t_data *data)
 {
@@ -108,8 +108,8 @@ void	expand(t_data *data)
 		{
 			while (tmp->word[i] != '\0')
 			{
-				if (tmp->word[i] == '$' && (ft_isalpha(tmp->word[i + 1]) == 1 || \
-				tmp->word[i + 1] == '?'))
+				if (tmp->word[i] == '$' && tmp->word[i + 1] && \
+				tmp->word[i + 1] != ' ')
 					tmp->word = check_char(data, tmp->word, &i, 0);
 				else if (tmp->word[i] == '\'')
 					tmp->word = check_char(data, tmp->word, &i, 1);
@@ -119,7 +119,7 @@ void	expand(t_data *data)
 					i++;
 			}
 		}
-		tmp = skip_token(tmp);
+		// tmp = skip_token(tmp);
 		tmp = tmp->next;
 	}
 

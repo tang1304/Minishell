@@ -6,17 +6,17 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 09:18:57 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 10:02:31 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 //ls <TODO | wc <Makefile >outer | test >out working fiiiiiiine !!!!!
 void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
-{
+{printf("file heredoc = %s\n", file);
 	if (i == 0)
 		lexer->infile = ft_strdup(file);
-	else
+	else if (i == 1)
 	{
 		if (lexer->infile != NULL)
 		{
@@ -26,6 +26,11 @@ void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
 		lexer->hd_file = 1;
 		data->hd->LIMITER[data->hd->heredoc] = ft_strdup(file);
 		lexer->hd_number = data->hd->heredoc;
+		data->hd->heredoc++;
+	}
+	else
+	{
+		data->hd->LIMITER[data->hd->heredoc] = ft_strdup(file);
 		data->hd->heredoc++;
 	}
 }
