@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 15:59:09 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 09:41:08 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 typedef struct s_lexer
 {
@@ -58,14 +59,14 @@ typedef struct s_substr
 typedef struct s_command
 {
 	char				**cmd;//malloc a free
-	int					index;
+	size_t				index;
 	char				*infile;
 	int					inf_err;
 	char				*outfile;
 	int					out_err;
 	int					heredoc_file; //0 no hd 1 hd
 	int					heredoc_num; // which limiter it needs to use
-	int					fd[2]; //utile??
+	int					fd[2];
 	int					fdin;//infile
 	int					fdout;//outfile
 	int					pipe_b; // 0 pas de pipe, 1 = pipe = rediriger pipe vers stdin
@@ -80,7 +81,7 @@ typedef struct s_heredoc
 	// size_t				hd_used; //number of hd actually used
 	size_t				heredoc; // set to 0 at first
 	char				**LIMITER; // array of all LIMITERS  A FREE A LA FIIIN meme si 0 heredocs
-	// int					fd[2];//pipe for here_doc
+	int					**fd;//pipe for here_doc
 }				t_heredoc;
 
 typedef struct s_env
@@ -103,8 +104,7 @@ typedef struct s_data
 	size_t				child;
 	int					fdin;//infile
 	int					fdout;//outfile
-	int					**pipes;//pipes for other cmds NEEDS FREE
-	pid_t				*pids;//pids of child processes NEEDS FREE
+	int					pipe[2];//pipes for other cmds NEEDS FREE
 	struct s_env		*env;
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
@@ -122,7 +122,9 @@ enum e_errors
 	NODE_FAILURE = 7,
 	NOT_WORD = 8,
 	FILE_ERROR = 9,
-	CHILD_SUCCESS = 10
+	CHILD_SUCCESS = 10,
+	NOT_BUILTIN = 11,
+	NO_INPUT = 12
 };
 
 /*	data.c	*/
@@ -154,6 +156,7 @@ t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd);
 /*	parser_utils.c	*/
 t_command	*cmd_lst_end_node(t_data *data, t_command *command, t_lexer *tmp);
 t_command	*cmd_lst(t_data *data, t_command *command, t_lexer *tmp);
+void		add_cmd_index(t_data *data);
 
 /*	add_infile_outfile.c	*/
 void		files_validity(t_data *data, t_lexer *tmp, int *valid);
@@ -206,6 +209,7 @@ int			quotes_removal(t_lexer *lexer);
 
 /*	builtins.c	*/
 int		builtins(t_data *data, char **cmd);
+int		check_builtins(char **cmd);
 
 /*	builtin_cd.c	*/
 int			ft_cd(t_data *data, char **cmd);
@@ -234,9 +238,12 @@ int		add_env_node(t_env **env, char *str);
 
 /*	heredoc.c	*/
 void		heredoc_count(t_data *data);
-void		check_heredoc(t_data *data);
-void		init_heredoc(t_data *data, t_command *cmd);
-void		add_heredoc(t_data *data, char * file, size_t index);
+void		init_heredoc_data(t_data *data);
+void		heredoc_pipe(t_data *data);
+
+/*	heredoc_redir.c	*/
+void	heredoc_redir(t_data *data);
+void	add_heredoc(t_data *data, char *file, size_t index);
 
 /*	utils.c	*/
 void		complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);
@@ -250,16 +257,15 @@ size_t		lstlencmd(t_command *cmd);
 void		free_data(t_data *data, void(*f)());
 void		free_lexer_strct(t_data *data);
 void		free_cmd_strct(t_data *data);
+void		free_hd_struct(t_data *data);
 
 /*	free_utils.c	*/
 void		ft_free_pp(char **ptr);
 void		free_content_cmd_node(t_command *tmp);
 
 /*	exec_data_creation.c	*/
-void		child_cretion(t_data *data);
-void		pipe_creation(t_data *data);
-void		pids_creation(t_data *data);
-void		extract_paths(t_data *data);
+void	extract_paths(t_data *data);
+void	exec_cmd_lst(t_data *data);
 
 /*	cmd.c	*/
 void		check_cmd_path(char *cmd, char *path, t_data *data);

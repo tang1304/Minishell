@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/27 17:21:40 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/11 09:22:05 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char	*join_all(char *s, char *b, char *e, char *a)
 		s = ft_strjoin_free(s, a);
 	return (s);
 }
+
 
 // void	free_struct_expand(t_substr *str) appara;ent useless
 // {

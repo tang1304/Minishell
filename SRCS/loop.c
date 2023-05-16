@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/10 15:45:09 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 09:40:20 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,26 @@ void	prompt_loop(t_data *data)
 		prompt = ft_strjoin(data->prompt, data->prompt_pwd);
 		prompt = ft_strjoin_gnl(prompt, "$ ");
 		data->str = ft_strdup(readline(prompt));
+		free(prompt);
 		if (ft_strlen(data->str) > 0)
 			add_history(data->str);
 		if (error_check(data->str) == SUCCESS)
 		{
-			lexer_init(data);
-			expand(data);
-			token_check(data);
-			if (data->lexer != NULL)
+			lexer_init(data); //Creation du lexer
+			heredoc_redir(data);
+			expand(data);// quotes dealing
+			token_check(data); // redirections
+			create_cmd_lst(data);
+printf("cmd len =%ld\n", lstlencmd(data->cmd));
+			if (lstlencmd(data->cmd) > 0)
 			{
-				create_cmd_lst(data);// create cmd lst and send to hd
-				builtins(data, data->cmd->cmd);
-				pipe_creation(data);
-				free_data(data, &free_cmd_strct);
+				extract_paths(data);
+				exec_cmd_lst(data);
+				free_data(data, &free_lexer_strct);
 			}
-			//penser a free(data)
+			free_data(data, &free_hd_struct);
 		}
+
 	//if (check_error(line) == SUCCESS)
 		// if (error_quotes(line) != 0)
 		// 	ft_putstr_fd("Error: Invalid syntax\n", 2);// Send the line into the lexer to check for errors and create the array of cmd/pipes/etc..
