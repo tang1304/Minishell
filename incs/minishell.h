@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 09:41:08 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 10:45:15 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ typedef struct s_command
 	int					fdout;//outfile
 	int					pipe_b; // 0 pas de pipe, 1 = pipe = rediriger pipe vers stdin
 	int					pipe_a; // 0 pas de pipe, 1 = pipe = rediriger stdout vers pipe
+	pid_t				pid;
+	int					child;
 	struct s_command	*next;
 	struct s_command	*prev;
 }				t_command;//ls        | "grep >out" <Makefile| wc -l >outer
@@ -98,18 +100,20 @@ typedef struct s_data
 	char				*prompt; // has to be free at the end
 	char				*prompt_pwd;
 	char				**envp;
+	char				*path;
 	char				**paths;
 	char				*pwd;
 	char				*oldpwd;
-	size_t				child;
 	int					fdin;//infile
 	int					fdout;//outfile
 	int					pipe[2];//pipes for other cmds NEEDS FREE
+	pid_t				*pids;
+	int					stdin_save;
+	int					stdout_save;
 	struct s_env		*env;
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
-	struct s_garbage	*garbage;
 }				t_data;
 
 enum e_errors
@@ -163,7 +167,8 @@ void		files_validity(t_data *data, t_lexer *tmp, int *valid);
 void		remove_nodes_redirection(t_data *data, size_t index);
 void		token_check(t_data *data);
 int			file_check_access(t_data *data, char *file, int i);
-int			check_redirection(t_data *data, char *token, char *file, size_t index);
+int			check_redirection(t_data *data, char *token, char *file, \
+								size_t index);
 
 /*	add_infile_outfile_utils.c	*/
 t_lexer		*find_start(t_lexer *tmp);
@@ -208,8 +213,9 @@ char		*str_quotes_removal(char *str);
 int			quotes_removal(t_lexer *lexer);
 
 /*	builtins.c	*/
-int		builtins(t_data *data, char **cmd);
-int		check_builtins(char **cmd);
+int			builtins(t_data *data, char **cmd);
+int			check_builtins(char **cmd);
+
 
 /*	builtin_cd.c	*/
 int			ft_cd(t_data *data, char **cmd);
@@ -256,21 +262,29 @@ size_t		lstlencmd(t_command *cmd);
 /*	free.c	*/
 void		free_data(t_data *data, void(*f)());
 void		free_lexer_strct(t_data *data);
+void		free_env_strct(t_data *data);
 void		free_cmd_strct(t_data *data);
+void		free_data_strct(t_data *data);
+void		free_all(t_data *data);
 void		free_hd_struct(t_data *data);
 
 /*	free_utils.c	*/
 void		ft_free_pp(char **ptr);
 void		free_content_cmd_node(t_command *tmp);
+void		free_content_env_node(t_env *tmp);
 
 /*	exec_data_creation.c	*/
-void	extract_paths(t_data *data);
-void	exec_cmd_lst(t_data *data);
+void		extract_paths(t_data *data);
+void		exec_cmd_lst(t_data *data);
 
-/*	cmd.c	*/
-void		check_cmd_path(char *cmd, char *path, t_data *data);
-void		valid_cmd(size_t i, t_data *data);
+/*	exec.c	*/
+void		exec(t_data *data, char **cmd);
+
+/*	exec_dup.c	*/
+int			heredoc_check(t_command *cmd);
+void		both_dup2(t_data *data, int in, int out);
 
 /*	wait.c	*/
 void		wait_child(t_data *data);
+
 #endif

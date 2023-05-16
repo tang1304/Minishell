@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:10:51 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 10:49:18 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,41 @@ void	free_cmd_strct(t_data *data)
 	// data->cmd = NULL;
 }
 
+void	free_env_strct(t_data *data)
+{
+	t_env	*tmp;
+
+	tmp = data->env;
+	while (data->env != NULL)
+	{
+		data->env = data->env->next;
+		free_content_env_node(tmp);
+		tmp = data->env;
+	}
+	// free_content_cmd_node(data->cmd);
+	// data->cmd = NULL;
+}
+
+void	free_data_strct(t_data *data)
+{
+	if (data->str)
+		free(data->str);
+	if (data->prompt)
+		free(data->prompt);
+	if (data->path)
+		free(data->path);
+	if (data->envp)
+		ft_free_pp(data->envp);
+	if (data->paths)
+		ft_free_pp(data->paths);
+}
+
+void	free_all(t_data *data)
+{
+	free_data(data, &free_cmd_strct);
+	free_data(data, &free_lexer_strct);
+	free_data(data, &free_env_strct);
+	free_data_strct(data);
 void	free_hd_struct(t_data *data)
 {
 	size_t	i;
