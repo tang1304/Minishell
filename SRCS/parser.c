@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/12 15:09:27 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 08:27:52 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,5 +150,5 @@ void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a l
 // 	}
 // 	printf("data fdin = %d\n", data->fdin);
 // 	printf("data fdout = %d\n", data->fdout);
-	// END TEST
+// 	// END TEST
 }
