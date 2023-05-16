@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:37:02 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/12 16:38:19 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 10:00:23 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	heredoc_redir(t_data *data)
 	t_lexer	*tmp;
 
 	heredoc_count(data);
+printf("IN THIS LINE WE HAVE %ld HREDOCS\n", data->hd->hd_count);
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
@@ -92,4 +93,5 @@ void	add_heredoc(t_data *data, char *file, size_t index)
 		}
 		tmp = tmp->next;
 	}
+	add_file_node(data, tmp, file, 2);
 }

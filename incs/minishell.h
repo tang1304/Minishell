@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 08:01:57 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 09:41:08 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,6 +257,7 @@ size_t		lstlencmd(t_command *cmd);
 void		free_data(t_data *data, void(*f)());
 void		free_lexer_strct(t_data *data);
 void		free_cmd_strct(t_data *data);
+void		free_hd_struct(t_data *data);
 
 /*	free_utils.c	*/
 void		ft_free_pp(char **ptr);
