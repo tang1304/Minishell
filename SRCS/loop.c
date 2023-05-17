@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/17 13:59:32 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 16:04:42 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,22 @@ void	prompt_loop(t_data *data)
 			add_history(data->str);
 		if (error_check(data->str) == SUCCESS)
 		{
-			lexer_init(data);
+			lexer_init(data); //OK ls<<a<<b<<c|wc<<d<<e|cat<<f et <<a<<b<<c<<d<<e<<f ok
 			heredoc_redir(data);
 			expand(data);
 			token_check(data);
 			create_cmd_lst(data);
 
-
-
-
-			int	i = 0;
-			while (i < data->hd->hd_count)
+printf("cmd len =%ld\n", lstlencmd(data->cmd));
+			if (lstlencmd(data->cmd) > 0)
 			{
-				printf("limitor = %s\n", data->hd->LIMITER[i]);
-				i++;
+				extract_paths(data);
+				// exec_cmd_lst(data);
+				free_data(data, &free_cmd_strct);
 			}
-// printf("cmd len =%ld\n", lstlencmd(data->cmd));
-			// if (lstlencmd(data->cmd) > 0)
-			// {
-			// 	extract_paths(data);
-			// 	// exec_cmd_lst(data);
-			// 	free_data(data, &free_lexer_strct);
-			// }
-			// if (data->hd->hd_count > 0)
-			free_data(data, &free_hd_struct); //here a segf.
+			free_data(data, &free_hd_struct); //marche super till extrac paths
 		}
-
+printf("end ok\n");
 	//if (check_error(line) == SUCCESS)
 		// if (error_quotes(line) != 0)
 		// 	ft_putstr_fd("Error: Invalid syntax\n", 2);// Send the line into the lexer to check for errors and create the array of cmd/pipes/etc..

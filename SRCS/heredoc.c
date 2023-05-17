@@ -31,7 +31,7 @@ void	heredoc_count(t_data *data)
 	(data->hd->hd_count));
 		// if (data->LIMITER == NULL)
 		// 	return error??;
-	// data->hd->LIMITER[data->hd->hd_count] = 0;
+	data->hd->LIMITER[data->hd->hd_count] = '\0';
 }
 
 void	heredoc_pipe(t_data *data)
@@ -56,7 +56,8 @@ void	heredoc_pipe(t_data *data)
 		free(line);
 	close(data->hd->fd[data->hd->heredoc][0]);
 	close(data->hd->fd[data->hd->heredoc][1]);
-	free_all(data);
+	// free_data(data, &free_hd_struct);
+	// free_data(data, &free_lexer_strct);
 	//free all!!! <Makefile ls |grep <<eof |wc >out
 	// test bible non réalisée
 }
@@ -85,8 +86,6 @@ printf("heredoc val = %d\n", data->hd->heredoc);
 			exit (SUCCESS);
 		}
 		waitpid(i, &status, 0);
-// read(tmp->fd[0], s, 5);
-// write(1, s, ft_strlen(s));
 		data->hd->heredoc++;
 	}
 	data->hd->heredoc = 0;
