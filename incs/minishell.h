@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/17 13:49:23 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 14:54:55 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,5 +294,6 @@ void	signal_set(void);
 
 /*	close.c	*/
 void	close_heredoc_pipes(t_data *data);
+void	close_pipes_no_cmd(t_data *data);
 
 #endif

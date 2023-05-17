@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/17 12:03:00 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 16:03:05 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,13 @@ t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
 	return (cmd);
 }
 
+static void	update_data_structs(t_data *data)
+{
+	free_data(data, &free_lexer_strct);
+	add_cmd_index(data);
+	// close_heredoc_pipes(data);
+}
+
 void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a la fin
 {
 	t_lexer		*tmp;
@@ -112,10 +119,9 @@ void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a l
 			command = cmd_lst(data, command, tmp);
 		}
 		data->cmd = command;
-		free_data(data, &free_lexer_strct);
-		add_cmd_index(data);
+		update_data_structs(data); // a metrte dehors et voir si len cmd > 0
 	}
-	close_heredoc_pipes(data);
+	// ;arche pas i que des pipes
 	//a la fin on peut free le lexer
 
 
@@ -146,6 +152,7 @@ printf("len cmdlst = %ld\n", lstlencmd(t));p = 0;
 	printf("pipe after = %d\n", t->pipe_a);
 	printf("fdin = %d\n", t->fdin);
 	printf("fdout = %d\n", t->fdout);
+	printf("\n");
 	t=t->next;
 	}
 	printf("data fdin = %d\n", data->fdin);
