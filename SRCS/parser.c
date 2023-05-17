@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/17 16:03:05 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 16:10:32 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,12 @@ t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
 
 static void	update_data_structs(t_data *data)
 {
-	free_data(data, &free_lexer_strct);
-	add_cmd_index(data);
-	// close_heredoc_pipes(data);
+	if (data->cmd != NULL)
+	{
+		free_data(data, &free_lexer_strct);
+		add_cmd_index(data);
+
+	close_heredoc_pipes(data);}
 }
 
 void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a la fin
@@ -119,8 +122,9 @@ void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a l
 			command = cmd_lst(data, command, tmp);
 		}
 		data->cmd = command;
-		update_data_structs(data); // a metrte dehors et voir si len cmd > 0
+
 	}
+	update_data_structs(data);
 	// ;arche pas i que des pipes
 	//a la fin on peut free le lexer
 

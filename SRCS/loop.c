@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/17 16:04:42 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 16:16:58 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	prompt_loop(t_data *data)
 			token_check(data);
 			create_cmd_lst(data);
 
-printf("cmd len =%ld\n", lstlencmd(data->cmd));
+printf("cmd len =%ld\n", lstlencmd(data->cmd));//<Makefile<<a sgf somewhere
 			if (lstlencmd(data->cmd) > 0)
 			{
 				extract_paths(data);
