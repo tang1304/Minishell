@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 16:14:33 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/17 10:46:02 by rrebois          ###   ########lyon.fr   */
+/*   Created: 2023/05/17 09:19:14 by rrebois           #+#    #+#             */
+/*   Updated: 2023/05/17 09:48:28 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-
-
-void	signal_set(void)
+void	close_heredoc_pipes(t_data *data) //ls<<a<<b<<c|wc<<d<<e segfaults
 {
-	struct sigaction	sa;
+	t_command	*tmp;
+	int			i;
 
-	ft_bzero(&sa, sizeof(sa));
-	sa.flags = SA_RESTART;
-	sa.sa_handler = &handler_sigquit;
-	sigaction(SIGQUIT, &sa, NULL);
+	i = 0;
+	tmp = data->cmd;
+	while (tmp != NULL)
+	{
+		if (tmp->heredoc_num > -1)
+		{
+			while (i < tmp->heredoc_num)
+			{
+				close(data->hd->fd[i][0]);
+				close(data->hd->fd[i][1]);
+				i++;
+			}
+			i++;
+		}
+		tmp = tmp->next;
+	}
 }

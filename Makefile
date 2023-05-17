@@ -60,7 +60,9 @@ LST_SRCS	=	main.c \
 				exec_data_creation.c \
 				exec.c \
 				exec_dup.c \
-				wait.c
+				signals.c \
+				wait.c \
+				close.c
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)
 

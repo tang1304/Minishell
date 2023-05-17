@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:45:15 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 10:35:02 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_command
 	int					inf_err;
 	char				*outfile;
 	int					out_err;
-	int					heredoc_file; //0 no hd 1 hd
+	int					heredoc_file; //0 no hd 1 hd useless I think
 	int					heredoc_num; // which limiter it needs to use
 	int					fd[2];
 	int					fdin;//infile
@@ -79,9 +79,9 @@ typedef struct s_command
 
 typedef struct s_heredoc
 {
-	size_t				hd_count; // number of heredocs (total)
+	int					hd_count; // number of heredocs (total)
 	// size_t				hd_used; //number of hd actually used
-	size_t				heredoc; // set to 0 at first
+	int					heredoc; // set to 0 at first
 	char				**LIMITER; // array of all LIMITERS  A FREE A LA FIIIN meme si 0 heredocs
 	int					**fd;//pipe for here_doc
 }				t_heredoc;
@@ -115,6 +115,8 @@ typedef struct s_data
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
 }				t_data;
+
+int	g_var;
 
 enum e_errors
 {
@@ -286,5 +288,11 @@ void		both_dup2(t_data *data, int in, int out);
 
 /*	wait.c	*/
 void		wait_child(t_data *data);
+
+/*	signals.c	*/
+void	signal_set(void);
+
+/*	close.c	*/
+void	close_heredoc_pipes(t_data *data);
 
 #endif
