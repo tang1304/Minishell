@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_infile_outfile.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:46:31 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 13:35:53 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	check_redirection(t_data *data, char *token, char *file, size_t index)
 		valid = file_check_access(data, file, 0);
 		add_infile(data, file, index, valid);
 	}
-	// else
-	// 	add_heredoc(data, file, index);
+	else
+		add_heredoc(data, file, index);
 	return (valid);
 }
 
