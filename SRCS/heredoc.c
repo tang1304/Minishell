@@ -56,6 +56,7 @@ void	heredoc_pipe(t_data *data)
 		free(line);
 	close(data->hd->fd[data->hd->heredoc][0]);
 	close(data->hd->fd[data->hd->heredoc][1]);
+	free_all(data);
 	//free all!!! <Makefile ls |grep <<eof |wc >out
 	// test bible non réalisée
 }
@@ -70,7 +71,7 @@ void	init_heredoc_data(t_data *data) // PB when only <Makefile or <<eof
 		return ;//grbage val??
 	data->hd->heredoc = 0;
 printf("LIMITER = %s\n", data->hd->LIMITER[data->hd->heredoc]);
-printf("heredoc val = %ld\n", data->hd->heredoc);
+printf("heredoc val = %d\n", data->hd->heredoc);
 	while (data->hd->heredoc < data->hd->hd_count)
 	{
 		data->hd->fd[data->hd->heredoc] = (int *)malloc(sizeof(int) * 2);
@@ -80,7 +81,7 @@ printf("heredoc val = %ld\n", data->hd->heredoc);
 			return ; //garbage val//Si erreur ->error message?? return?
 		i = fork();
 		if (i == 0)
-		{printf("Hredoc N%ld\n", data->hd->hd_count);
+		{printf("Hredoc N%d\n", data->hd->hd_count);
 			heredoc_pipe(data);
 			exit (SUCCESS);
 		}

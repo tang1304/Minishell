@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:50:15 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 10:30:42 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,16 @@ void	prompt_loop(t_data *data)
 		prompt = ft_strjoin_gnl(prompt, "$ ");
 		data->str = ft_strdup(readline(prompt));
 		free(prompt);
+		signal_set();
 		if (ft_strlen(data->str) > 0)
 			add_history(data->str);
 		if (error_check(data->str) == SUCCESS)
 		{
-			lexer_init(data); //Creation du lexer
+			lexer_init(data);
 			heredoc_redir(data);
-			expand(data);// quotes dealing
-			token_check(data); // redirections
-			create_cmd_lst(data);
+			expand(data);
+			token_check(data);
+			create_cmd_lst(data); // add a func to close all unnecessary heredoc pipes
 printf("cmd len =%ld\n", lstlencmd(data->cmd));
 			if (lstlencmd(data->cmd) > 0)
 			{

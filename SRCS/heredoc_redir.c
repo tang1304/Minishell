@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:37:02 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:00:23 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 09:32:07 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	heredoc_redir(t_data *data)
 	t_lexer	*tmp;
 
 	heredoc_count(data);
-printf("IN THIS LINE WE HAVE %ld HREDOCS\n", data->hd->hd_count);
+printf("IN THIS LINE WE HAVE %d HREDOCS\n", data->hd->hd_count);
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
