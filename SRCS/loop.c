@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/17 10:30:42 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 13:59:32 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,26 @@ void	prompt_loop(t_data *data)
 			heredoc_redir(data);
 			expand(data);
 			token_check(data);
-			create_cmd_lst(data); // add a func to close all unnecessary heredoc pipes
-printf("cmd len =%ld\n", lstlencmd(data->cmd));
-			if (lstlencmd(data->cmd) > 0)
+			create_cmd_lst(data);
+
+
+
+
+			int	i = 0;
+			while (i < data->hd->hd_count)
 			{
-				extract_paths(data);
-				exec_cmd_lst(data);
-				free_data(data, &free_lexer_strct);
+				printf("limitor = %s\n", data->hd->LIMITER[i]);
+				i++;
 			}
-			free_data(data, &free_hd_struct);
+// printf("cmd len =%ld\n", lstlencmd(data->cmd));
+			// if (lstlencmd(data->cmd) > 0)
+			// {
+			// 	extract_paths(data);
+			// 	// exec_cmd_lst(data);
+			// 	free_data(data, &free_lexer_strct);
+			// }
+			// if (data->hd->hd_count > 0)
+			free_data(data, &free_hd_struct); //here a segf.
 		}
 
 	//if (check_error(line) == SUCCESS)

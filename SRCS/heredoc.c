@@ -69,7 +69,6 @@ void	init_heredoc_data(t_data *data) // PB when only <Makefile or <<eof
 	data->hd->fd = (int **)malloc(sizeof(int *) * data->hd->hd_count);
 	if (data->hd->fd == NULL)
 		return ;//grbage val??
-	data->hd->heredoc = 0;
 printf("LIMITER = %s\n", data->hd->LIMITER[data->hd->heredoc]);
 printf("heredoc val = %d\n", data->hd->heredoc);
 	while (data->hd->heredoc < data->hd->hd_count)
@@ -90,7 +89,7 @@ printf("heredoc val = %d\n", data->hd->heredoc);
 // write(1, s, ft_strlen(s));
 		data->hd->heredoc++;
 	}
-
+	data->hd->heredoc = 0;
 
 
 

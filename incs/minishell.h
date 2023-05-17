@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/17 10:35:02 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 13:49:23 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct s_heredoc
 	int					hd_count; // number of heredocs (total)
 	// size_t				hd_used; //number of hd actually used
 	int					heredoc; // set to 0 at first
-	char				**LIMITER; // array of all LIMITERS  A FREE A LA FIIIN meme si 0 heredocs
+	char				**LIMITER; // a<<rray of all LIMITERS  A FREE A LA FIIIN meme si 0 heredocs
 	int					**fd;//pipe for here_doc
 }				t_heredoc;
 
