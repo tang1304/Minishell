@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 11:46:49 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/19 15:24:26 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,7 @@ int		print_export(t_env **env);
 /*	builtin_export_utils.c	*/
 void		ft_list_sort(t_env **env, int size);
 int			ft_list_size(t_env *env);
+int			existing_var(t_data *data, char *cmd, int i);
 
 /*	builtin_unset.c	*/
 int			ft_unset(t_data *data, char **cmd);
@@ -246,6 +247,7 @@ int		add_env_node(t_env **env, char *str);
 void		heredoc_count(t_data *data);
 void		init_heredoc_data(t_data *data);
 void		heredoc_pipe(t_data *data);
+void		close_heredoc_pipes(t_data *data);
 
 /*	heredoc_redir.c	*/
 void	heredoc_redir(t_data *data);

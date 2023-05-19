@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 15:34:23 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 11:13:32 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a l
 		free_data(data, &free_lexer_strct);
 		add_cmd_index(data);
 	}
+	close_heredoc_pipes(data);
 
 	//a la fin on peut free le lexer
 

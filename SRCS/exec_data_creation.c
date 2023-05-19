@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 15:18:02 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/18 11:16:01 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	extract_paths(t_data *data)
 	s = NULL;
 	while (tmp)
 	{
-		s = search_env(data, "PATH=");
+		s = search_env(data, "PATH");
 		if (s != NULL)
 			break ;
 		tmp = tmp->next;
@@ -50,6 +50,7 @@ Si pipe et outfile, envoi cmd dans outfile*/
 static void	command_init(t_data *data, t_command *cmd)
 {
 	close(data->pipe[0]);
+	// heredoc_check(data, cmd);
 	if (!cmd->cmd[0])
 		return ;
 	if (cmd->fdin > 0 && !cmd->heredoc_file)
@@ -78,7 +79,7 @@ static void	forking(t_data *data, t_command *cmd, int i)
 {
 	if (i == 0)
 	{
-		heredoc_check(data, cmd);
+		printf("\nChild\n");
 		command_init(data, cmd);
 		if (cmd->inf_err || cmd->out_err)
 			exit(EXIT_SUCCESS);
@@ -92,14 +93,18 @@ static void	forking(t_data *data, t_command *cmd, int i)
 	}
 	else
 	{
+		printf("\nParent\n");
 		if (cmd->pipe_a == 1)
 			close(data->pipe[1]);
-		if (!cmd->heredoc_file)
-		{
+		// if (!cmd->heredoc_file)
+		// {
+		// 	printf("\nNo heredoc\n");
 			if (dup2(data->pipe[0], STDIN_FILENO) == -1)
 				return (perror("Error with parent dup2"));
 			close(data->pipe[0]);
-		}
+		// }
+		// else
+		// 	heredoc_check(data, cmd); 
 	}
 }
 
@@ -112,7 +117,6 @@ void	exec_cmd_lst(t_data *data)
 	tmp = data->cmd;
 	while (tmp)
 	{
-		// heredoc_check(data, tmp);
 		if (lstlencmd(data->cmd) == 1 && check_builtins(tmp->cmd) == SUCCESS)
 		{
 			builtins(data, tmp->cmd);
@@ -120,6 +124,7 @@ void	exec_cmd_lst(t_data *data)
 		}
 		else
 		{
+			heredoc_check(data, tmp);
 			if (pipe(data->pipe) == -1)
 				perror("Pipe error");
 			i = fork();

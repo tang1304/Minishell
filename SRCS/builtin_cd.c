@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:46:41 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/19 13:47:33 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ static int	cd_home(t_data *data)
 	int		check_1;
 	int		check_2;
 
-	home = search_env(data, "HOME=");
+	home = search_env(data, "HOME");
 	if (home == NULL)
 		return (0);
 	chdir(home);
 	current = getcwd(NULL, 0);
 	if (current != NULL)
 	{
-		check_1 = replace_env(data, "OLDPWD=", search_env(data, "PWD="));
-		check_2 = replace_env(data, "PWD=", current);
+		check_1 = replace_env(data, "OLDPWD", search_env(data, "PWD"));
+		check_2 = replace_env(data, "PWD", current);
 		if (check_1 == -1 || check_2 == -1)
 			return (-1);
 		return (1);
@@ -35,7 +35,7 @@ static int	cd_home(t_data *data)
 	return (perror("getcwd: "), -1);
 }
 
-int	ft_cd(t_data *data, char **cmd)
+int	ft_cd(t_data *data, char **cmd)//Ne remplace PAS dans data->env, a fix
 {
 	char	*current;
 	int		home_check;
@@ -57,10 +57,11 @@ int	ft_cd(t_data *data, char **cmd)
 	else if (chdir(cmd[1]) == -1)
 		return (perror("chdir: "), -1);
 	current = getcwd(NULL, 0);
+	printf("current: %s\n", current);
 	if (current != NULL)
 	{
-		check_1 = replace_env(data, "OLDPWD=", search_env(data, "PWD="));
-		check_2 = replace_env(data, "PWD=", current);
+		check_1 = replace_env(data, "OLDPWD", search_env(data, "PWD"));
+		check_2 = replace_env(data, "PWD", current);
 		if (check_1 == -1 || check_2 == -1)
 			return (-1);
 		return (1);
