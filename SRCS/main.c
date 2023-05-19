@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 07:28:41 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/17 09:25:44 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/18 12:39:02 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 //https://github.com/maiadegraaf/minishell
 int	main(int ac, char **av, char **envp)
 {
-	g_var = 0;
 	(void)av;
 	t_data	data;
 

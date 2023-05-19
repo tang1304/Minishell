@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/17 15:55:08 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/19 15:03:48 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,35 +117,35 @@ void	token_check(t_data *data)
 	add_pipes_redir(data);
 
 // 	// test
-// 	size_t len = 0;
-// 	if (lstlen(data->lexer) > 0)
-// 	{
+	size_t len = 0;
+	if (lstlen(data->lexer) > 0)
+	{
 
-// 	tmp = data->lexer;
-// 	while (tmp != NULL)
-// 	{
-// 		len++;
-// 		tmp = tmp->next;
-// 	}
-// 	printf("len lexer: %ld\n", len);
+	tmp = data->lexer;
+	while (tmp != NULL)
+	{
+		len++;
+		tmp = tmp->next;
+	}
+	printf("len lexer: %ld\n", len);
 
-// 	t_data	*tmp2;
-// 	tmp2 = data;
-// 	while (tmp2->lexer != NULL)
-// 	{
-// 		ft_printf("\n\n");
-// // if (tmp2->lexer->word != NULL)
-// 	ft_printf("word node: %s\n", tmp2->lexer->word);
-// // else
-// 	ft_printf("token node: %s\n", tmp2->lexer->token);
-// printf("index: %ld\n", tmp2->lexer->index);
-// ft_printf("infile: %s\n", tmp2->lexer->infile);
-// ft_printf("outfile: %s\n", tmp2->lexer->outfile);
-// ft_printf("hdoc: %d\n",tmp2->lexer->hd_file);
-// ft_printf("hdoc count: %d\n",tmp2->hd->hd_count);
-// 		tmp2->lexer = tmp2->lexer->next;
-// 	}}
-// 	else
-// 		printf("len lexer: %ld\n", len);
+	t_data	*tmp2;
+	tmp2 = data;
+	while (tmp2->lexer != NULL)
+	{
+		ft_printf("\n\n");
+// if (tmp2->lexer->word != NULL)
+	ft_printf("word node: %s\n", tmp2->lexer->word);
+// else
+	ft_printf("token node: %s\n", tmp2->lexer->token);
+printf("index: %ld\n", tmp2->lexer->index);
+ft_printf("infile: %s\n", tmp2->lexer->infile);
+ft_printf("outfile: %s\n", tmp2->lexer->outfile);
+ft_printf("hdoc: %d\n",tmp2->lexer->hd_file);
+ft_printf("hdoc count: %d\n",tmp2->hd->hd_count);
+		tmp2->lexer = tmp2->lexer->next;
+	}}
+	else
+		printf("len lexer: %ld\n", len);
 // 	// end test ls <TODO -l|wc -l >out>>out2<Makefile
 }
