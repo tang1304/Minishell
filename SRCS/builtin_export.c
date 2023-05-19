@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/10 15:06:03 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/19 15:13:34 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	print_export(t_env **env)
 		}
 		printf("declare -x ");
 		printf("%s", tmp->var_name);
-		if (tmp->var_value)
+		if (tmp->var_value && ft_strchr(tmp->var_name, '='))
 			printf("\"%s\"\n", tmp->var_value);
 		else
 			printf("\n");
@@ -50,7 +50,7 @@ static int	name_check(char *str)
 		printf("minishell: export: `%s' : not a valid identifier\n", str);
 		return (-1);
 	}
-	while (str[++i] && str[++i] != '=')
+	while (str[++i] && str[i] != '=')
 	{
 		if (ft_isalnum(str[i]) || str[i] == '_')
 			continue ;
@@ -65,22 +65,24 @@ static int	name_check(char *str)
 
 static char	**export_var(t_data *data, char *cmd)
 {
-	int		i;
+	int		j;
 	int		n;
 	char	**new_envp;
 
-	i = -1;
 	n = 0;
+	j = -1;
 	while (data->envp[n])
 		n++;
-	new_envp = malloc(sizeof(char *) * (n + 1));
+	new_envp = malloc(sizeof(char *) * (n + 2));
 	if (!new_envp || !add_env_node(&data->env, cmd))
 		return (NULL);
-	ft_memcpy(new_envp, data->envp, sizeof(char *));
-	while (data->envp[++i])
-		free(data->envp[i]);
-	free(data->envp);
+	while (data->envp[++j])
+	{
+		new_envp[j] = ft_strdup(data->envp[j]);
+		free(data->envp[j]);
+	}
 	new_envp[n] = ft_strdup(cmd);
+	new_envp[n + 1] = '\0';
 	if (!new_envp[n])
 		return (NULL);
 	return (new_envp);
@@ -99,18 +101,17 @@ int	ft_export(t_data *data, char **cmd)
 		i = name_check(cmd[j]);
 		if (i == -1)
 			continue ;
+		if (existing_var(data, cmd[j], i))
+			return (1);
 		if (cmd[j][i] == '\0')
 		{
 			if (!add_env_node(&data->env, cmd[j]))
 				return (-1);
 			continue ;
 		}
-		else
-		{
-			data->envp = export_var(data, cmd[j]);
-			if (!data->envp)
-				return (-1);
-		}
+		data->envp = export_var(data, cmd[j]);
+		if (!data->envp)
+			return (-1);
 	}
 	return (1);
 }

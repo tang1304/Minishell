@@ -61,6 +61,29 @@ void	heredoc_pipe(t_data *data)
 	// test bible non réalisée
 }
 
+void	close_heredoc_pipes(t_data *data) //ls<<a<<b<<c|wc<<d<<e segfaults
+{
+	t_command	*tmp;
+	int			i;
+
+	i = 0;
+	tmp = data->cmd;
+	while (tmp != NULL)
+	{
+		if (tmp->heredoc_num > -1)
+		{
+			while (i < tmp->heredoc_num)
+			{
+				close(data->hd->fd[i][0]);
+				close(data->hd->fd[i][1]);
+				i++;
+			}
+			i++;
+		}
+		tmp = tmp->next;
+	}
+}
+
 void	init_heredoc_data(t_data *data) // PB when only <Makefile or <<eof
 {
 	int			status;

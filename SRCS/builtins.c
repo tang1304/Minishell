@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:46:49 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/18 12:41:12 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,18 @@ static int	ft_pwd(t_data *data)
 
 static int	ft_env(t_data *data)
 {
-	int	i;
+	t_env	*tmp;
 
-	i = -1;
-	while (data->envp[++i])
-		printf("%s\n", data->envp[i]);
+	tmp = data->env;
+	while (tmp)
+	{
+		if (tmp->var_value && ft_strchr(tmp->var_name, '='))
+		{
+			printf("%s", tmp->var_name);
+			printf("%s\n", tmp->var_value);
+		}
+		tmp = tmp->next;
+	}
 	return (1);
 }
 
