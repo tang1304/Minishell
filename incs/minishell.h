@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/17 14:54:55 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/19 18:43:42 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_lexer
 	int				fdout;//outfile
 	int				hd_file;
 	int				hd_number;
-	size_t			index;
+	size_t			index; //casté 1fois en int, mettre protection si trop index >2147483647
 	int				word_quote_pairs;
 	int				s_q;
 	int				d_q;
@@ -104,6 +104,7 @@ typedef struct s_data
 	char				**paths;
 	char				*pwd;
 	char				*oldpwd;
+	size_t				svd_index;
 	int					fdin;//infile
 	int					fdout;//outfile
 	int					pipe[2];//pipes for other cmds NEEDS FREE
@@ -115,8 +116,6 @@ typedef struct s_data
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
 }				t_data;
-
-int	g_var;
 
 enum e_errors
 {
@@ -208,11 +207,16 @@ void		expand(t_data *data);
 /*	expander_var.c	*/
 char		*get_var(t_data *data, char *s);
 char		*join_all(char *s, char *b, char *e, char *a);
-void		expand_dollar(t_data *data, t_substr *s, size_t *i);
+void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index);
 
 /*	expander_quotes.c	*/
 char		*str_quotes_removal(char *str);
 int			quotes_removal(t_lexer *lexer);
+
+/*	expand_utils.c	*/
+void		modify_lxr_nds(t_data *data, t_substr *s, size_t index);
+int			check_space_expand(t_data *data, t_substr *s, int index);
+t_lexer		*update_tmp_index(t_data *data, size_t *i);
 
 /*	builtins.c	*/
 int			builtins(t_data *data, char **cmd);
@@ -256,10 +260,12 @@ void	add_heredoc(t_data *data, char *file, size_t index);
 /*	utils.c	*/
 void		complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);
 void		complete_out_data(t_data *data, t_lexer *tmp, char *file, int valid);
+char		*ft_strjoin_expand(char *s1, char *s2);
 char		*ft_strjoin_free(char *s1, char *s2);
 char		*ft_change_str(char *s1, char *s2);
 size_t		lstlen(t_lexer *lexer);
 size_t		lstlencmd(t_command *cmd);
+size_t	ft_strlen_pp(char **s);
 
 /*	free.c	*/
 void		free_data(t_data *data, void(*f)());

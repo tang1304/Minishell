@@ -27,11 +27,14 @@ void	heredoc_count(t_data *data)
 		}
 		tmp = tmp->next;
 	}
+	// if (data->hd->hd_count > 0)
+	// {
 	data->hd->LIMITER = (char **)malloc(sizeof(char *) * \
 	(data->hd->hd_count));
 		// if (data->LIMITER == NULL)
 		// 	return error??;
 	data->hd->LIMITER[data->hd->hd_count] = '\0';
+	// }
 }
 
 void	heredoc_pipe(t_data *data)
