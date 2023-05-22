@@ -50,10 +50,10 @@ static void	add_buf_lxr_tail(t_data *data, t_lexer *buf)
 
 void	modify_lxr_nds(t_data *data, t_substr *s, size_t index)//here segf
 {
-	size_t	j;
+	size_t	j;(void)j;(void)s;
 	t_lexer	*tmp;
 	t_lexer *buf;
-	char	**ptr;
+	char	**ptr;(void)ptr;
 
 	j = 1;
 	buf = NULL;
@@ -65,8 +65,7 @@ void	modify_lxr_nds(t_data *data, t_substr *s, size_t index)//here segf
 		buf = tmp->next;
 		buf->prev = NULL;
 	}
-	free(tmp->word);
-	tmp->next = NULL;
+	remove_lxr_node(data, index);
 	ptr = ft_split(s->sub_m, ' ');
 	add_node(&data->lexer, ft_strjoin_expand(s->sub_b, ptr[0]), 0); //faut supprimer noeud d'avant
 	while (ptr[j] != 0)

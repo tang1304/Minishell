@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/19 18:58:37 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/22 12:28:54 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	expand(t_data *data)
 	size_t	i;
 	t_lexer	*tmp;
 
+	data->svd_index = 0;
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
