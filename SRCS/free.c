@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/17 16:15:26 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/22 16:41:40 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,17 @@ void	free_all(t_data *data)
 
 void	free_hd_struct(t_data *data)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
 	if (data->hd->LIMITER != NULL)
 		ft_free_pp(data->hd->LIMITER);
-	while (i++ < data->hd->hd_count)
-		free(data->hd->fd[i]);
-	free(data->hd->fd);
+	// if (data->hd->fd != NULL) //pose problème, sans ça ça roule
+	// {
+	// 	while (i++ < data->hd->hd_count)
+	// 		free(data->hd->fd[i]);
+	// 	free(data->hd->fd);
+	// }
 	data->hd->fd = NULL;
 	data->hd->hd_count = 0;
 	data->hd->heredoc = 0;
