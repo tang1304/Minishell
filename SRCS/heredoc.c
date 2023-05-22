@@ -23,17 +23,17 @@ void	heredoc_count(t_data *data)
 		{
 			if (ft_strncmp(tmp->token, "<<", 2) == 0 && \
 			ft_strlen(tmp->token) == 2)
-				++data->hd->hd_count;
+				data->hd->hd_count++;
 		}
 		tmp = tmp->next;
 	}
 	// if (data->hd->hd_count > 0)
 	// {
 	data->hd->LIMITER = (char **)malloc(sizeof(char *) * \
-	(data->hd->hd_count));
+	(data->hd->hd_count) + 1);
 		// if (data->LIMITER == NULL)
 		// 	return error??;
-	data->hd->LIMITER[data->hd->hd_count] = '\0';
+	data->hd->LIMITER[data->hd->hd_count] = 0;
 	// }
 }
 
@@ -73,8 +73,21 @@ void	init_heredoc_data(t_data *data) // PB when only <Makefile or <<eof
 	data->hd->fd = (int **)malloc(sizeof(int *) * data->hd->hd_count);
 	if (data->hd->fd == NULL)
 		return ;//grbage val??
-printf("LIMITER = %s\n", data->hd->LIMITER[data->hd->heredoc]);
-printf("heredoc val = %d\n", data->hd->heredoc);
+
+//test
+printf("\n\nLEN LIMITER = %ld\n", ft_strlen_pp(data->hd->LIMITER));
+size_t x = 0;
+while (x<ft_strlen_pp(data->hd->LIMITER))
+{
+printf("LIMITER = %s\n", data->hd->LIMITER[x]);
+printf("heredoc val = %ld\n", x);
+x++;
+}
+printf("HD_count = %d\n", data->hd->hd_count);
+printf("heredoc = %d\n", data->hd->heredoc);
+
+//end test
+
 	while (data->hd->heredoc < data->hd->hd_count)
 	{
 		data->hd->fd[data->hd->heredoc] = (int *)malloc(sizeof(int) * 2);
@@ -90,6 +103,7 @@ printf("heredoc val = %d\n", data->hd->heredoc);
 		}
 		waitpid(i, &status, 0);
 		data->hd->heredoc++;
+printf("\nHEREDOC COMPLETED\n\n");
 	}
 	data->hd->heredoc = 0;
 

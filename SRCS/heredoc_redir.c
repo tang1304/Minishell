@@ -6,10 +6,11 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:37:02 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/18 13:21:29 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/22 16:12:33 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+// si on spam <<a<<b<<c<<d au bout d'un moment ./minishell se ferme
 #include "../incs/minishell.h"
 
 void	heredoc_redir(t_data *data)
