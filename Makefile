@@ -46,6 +46,7 @@ LST_SRCS	=	main.c \
 				add_infile_outfile_utils.c \
 				add_pipes_lexer.c \
 				remove_lexer_nodes.c \
+				remove_lexer_nodes_utils.c \
 				heredoc.c \
 				heredoc_redir.c \
 				utils.c \

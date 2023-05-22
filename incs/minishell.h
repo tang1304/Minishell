@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/19 18:43:42 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/22 11:06:43 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_lexer
 	int				fdout;//outfile
 	int				hd_file;
 	int				hd_number;
-	size_t			index; //casté 1fois en int, mettre protection si trop index >2147483647
+	size_t			index;
 	int				word_quote_pairs;
 	int				s_q;
 	int				d_q;
@@ -181,12 +181,15 @@ void		add_file_node(t_data *data, t_lexer *lexer, char *file, int i);
 /*	add_pipes_lexer	*/
 void		add_pipes_redir(t_data *data);
 
-/*	remove_nodes.c	*/
+/*	remove_lexer_nodes.c	*/
 void		free_content_lexer_node(t_lexer *tmp);
 void		free_lst(t_data *data, t_lexer *tmp);
 void		remove_front_nodes(t_data *data, size_t len);
 void		remove_back_nodes(t_data *data);
 void		remove_middle_nodes(t_data *data, size_t index);
+
+/*	remove_lexer_nodes_utils.c	*/
+void	remove_lxr_node(t_data *data, size_t index);
 
 /*	lexer.c	*/
 int			lexer_init(t_data *data);

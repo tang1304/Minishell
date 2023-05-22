@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/19 15:03:39 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/22 12:29:09 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,18 @@ void	prompt_loop(t_data *data)
 		if (error_check(data->str) == SUCCESS)
 		{
 			lexer_init(data); //OK ls<<a<<b<<c|wc<<d<<e|cat<<f et <<a<<b<<c<<d<<e<<f ok
-			heredoc_redir(data);//a checker expand ou non puis a enlever quotes
+			heredoc_redir(data);printf("middle ok\n");//a checker expand ou non puis a enlever quotes
 			expand(data);
 			token_check(data);
-			// create_cmd_lst(data);// puis a bien checker si on a des espaces ou non dans l'expand
+			create_cmd_lst(data);
 
 // printf("cmd len =%ld\n", lstlencmd(data->cmd));//<Makefile<<a sgf somewhere
-// 			if (lstlencmd(data->cmd) > 0)
-// 			{
-// 				extract_paths(data);
-// 				// exec_cmd_lst(data);
-// 				free_data(data, &free_cmd_strct);
-// 			}
+			if (lstlencmd(data->cmd) > 0)
+			{
+				extract_paths(data);
+				// exec_cmd_lst(data);
+				free_data(data, &free_cmd_strct);
+			}
 // 			// free_data(data, &free_hd_struct); //marche super till extrac paths
 		}
 printf("end ok\n");
