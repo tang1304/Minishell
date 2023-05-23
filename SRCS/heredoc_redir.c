@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:37:02 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/22 16:12:33 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/22 17:33:55 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ printf("IN THIS LINE WE HAVE %d HREDOCS\n", data->hd->hd_count);
 		tmp = tmp->next;
 	}
 	data->hd->heredoc = 0;
+	// expand_limiter
 	init_heredoc_data(data);
 
 
