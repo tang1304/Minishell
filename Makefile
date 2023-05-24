@@ -40,6 +40,7 @@ LST_SRCS	=	main.c \
 				expander_quotes.c \
 				expander_var.c \
 				expand_utils.c \
+				expand_heredoc.c \
 				check_error_input.c \
 				check_error_utils.c \
 				add_infile_outfile.c \

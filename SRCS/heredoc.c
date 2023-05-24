@@ -34,8 +34,17 @@ void	heredoc_count(t_data *data)
 		// if (data->LIMITER == NULL)
 		// 	return error??;
 	data->hd->LIMITER[data->hd->hd_count] = 0;
-	// }
+	// }// enlever quotes des limiter -> func
 }
+
+
+//test a verifier
+// > hello $USER
+// > hello $'USER'
+// > hello $USER""
+// > hello $U'SER'
+// > hello '$USER'
+// > hello$USER
 
 void	heredoc_pipe(t_data *data)
 {
@@ -51,6 +60,7 @@ void	heredoc_pipe(t_data *data)
 		ft_strlen(line)) \
 		|| !line)
 			break ;
+		line = expand_line(line);
 		buffer = ft_strjoin_free(buffer, line);
 	}
 	write(data->hd->fd[data->hd->heredoc][1], buffer, ft_strlen(buffer));
