@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:08:20 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/19 14:32:12 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 14:14:12 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*search_env(t_data *data, char *env)
 	{
 		if (ft_strncmp(tmp->var_name, env, ft_strlen(env)) == 0)
 			return (tmp->var_value);
-		tmp = tmp->next; 
+		tmp = tmp->next;
 		i++;
 	}
 	return (NULL);

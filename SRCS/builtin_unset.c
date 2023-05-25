@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:54:14 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/10 08:20:45 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 11:33:40 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	unset_var(t_data *data, char *str)
 	int	i;
 	int	j;
 
+	j = 0;
 	i = -1;
 	while (data->envp[j])
 		j++;
@@ -30,6 +31,7 @@ static void	unset_var(t_data *data, char *str)
 				data->envp[i] = data->envp[i + 1];
 				i++;
 			}
+			data->envp[i] = NULL;
 			break ;
 		}
 	}
