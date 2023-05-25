@@ -71,14 +71,6 @@ void	free_data_strct(t_data *data)
 		ft_free_pp(data->paths);
 }
 
-void	free_all(t_data *data)
-{
-	free_data(data, &free_cmd_strct);
-	free_data(data, &free_lexer_strct);
-	free_data(data, &free_env_strct);
-	free_data_strct(data);
-}
-
 void	free_hd_struct(t_data *data)
 {
 	// int	i;
@@ -95,6 +87,15 @@ void	free_hd_struct(t_data *data)
 	data->hd->fd = NULL;
 	data->hd->hd_count = 0;
 	data->hd->heredoc = 0;
+}
+
+void	free_all(t_data *data)
+{
+	free_data(data, &free_cmd_strct);
+	free_data(data, &free_lexer_strct);
+	free_data(data, &free_hd_strct);
+	free_data(data, &free_env_strct);
+	free_data_strct(data);
 }
 
 void	free_data(t_data *data, void(*f)())
