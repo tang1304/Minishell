@@ -39,6 +39,8 @@ void	free_lst(t_data *data, t_lexer *tmp)
 	data->lexer->token = NULL;
 	data->lexer->prev = NULL;
 	data->lexer->next = NULL;
+	free(data->lexer);
+	data->lexer = NULL;
 }
 
 void	remove_front_nodes(t_data *data, size_t len)

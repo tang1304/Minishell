@@ -23,16 +23,28 @@ void	heredoc_count(t_data *data)
 		{
 			if (ft_strncmp(tmp->token, "<<", 2) == 0 && \
 			ft_strlen(tmp->token) == 2)
-				++data->hd->hd_count;
+				data->hd->hd_count++;
 		}
 		tmp = tmp->next;
 	}
+	// if (data->hd->hd_count > 0)
+	// {
 	data->hd->LIMITER = (char **)malloc(sizeof(char *) * \
-	(data->hd->hd_count));
+	(data->hd->hd_count) + 1);
 		// if (data->LIMITER == NULL)
 		// 	return error??;
-	// data->hd->LIMITER[data->hd->hd_count] = 0;
+	data->hd->LIMITER[data->hd->hd_count] = 0;
+	// }// enlever quotes des limiter -> func
 }
+
+
+//test a verifier
+// > hello $USER
+// > hello $'USER'
+// > hello $USER""
+// > hello $U'SER'
+// > hello '$USER'
+// > hello$USER
 
 void	heredoc_pipe(t_data *data)
 {
@@ -48,6 +60,7 @@ void	heredoc_pipe(t_data *data)
 		ft_strlen(line)) \
 		|| !line)
 			break ;
+		line = expand_line(line);
 		buffer = ft_strjoin_free(buffer, line);
 	}
 	write(data->hd->fd[data->hd->heredoc][1], buffer, ft_strlen(buffer));
@@ -56,6 +69,8 @@ void	heredoc_pipe(t_data *data)
 		free(line);
 	close(data->hd->fd[data->hd->heredoc][0]);
 	close(data->hd->fd[data->hd->heredoc][1]);
+	// free_data(data, &free_hd_struct);
+	// free_data(data, &free_lexer_strct);
 	//free all!!! <Makefile ls |grep <<eof |wc >out
 	// test bible non réalisée
 }
@@ -68,9 +83,21 @@ void	init_heredoc_data(t_data *data) // PB when only <Makefile or <<eof
 	data->hd->fd = (int **)malloc(sizeof(int *) * data->hd->hd_count);
 	if (data->hd->fd == NULL)
 		return ;//grbage val??
-	data->hd->heredoc = 0;
-printf("LIMITER = %s\n", data->hd->LIMITER[data->hd->heredoc]);
-printf("heredoc val = %ld\n", data->hd->heredoc);
+
+//test
+printf("\n\nLEN LIMITER = %ld\n", ft_strlen_pp(data->hd->LIMITER));
+size_t x = 0;
+while (x<ft_strlen_pp(data->hd->LIMITER))
+{
+printf("LIMITER = %s\n", data->hd->LIMITER[x]);
+printf("heredoc val = %ld\n", x);
+x++;
+}
+printf("HD_count = %d\n", data->hd->hd_count);
+printf("heredoc = %d\n", data->hd->heredoc);
+
+//end test
+
 	while (data->hd->heredoc < data->hd->hd_count)
 	{
 		data->hd->fd[data->hd->heredoc] = (int *)malloc(sizeof(int) * 2);
@@ -80,16 +107,15 @@ printf("heredoc val = %ld\n", data->hd->heredoc);
 			return ; //garbage val//Si erreur ->error message?? return?
 		i = fork();
 		if (i == 0)
-		{printf("Hredoc N%ld\n", data->hd->hd_count);
+		{printf("Hredoc N%d\n", data->hd->hd_count);
 			heredoc_pipe(data);
 			exit (SUCCESS);
 		}
 		waitpid(i, &status, 0);
-// read(tmp->fd[0], s, 5);
-// write(1, s, ft_strlen(s));
 		data->hd->heredoc++;
+printf("\nHEREDOC COMPLETED\n\n");
 	}
-
+	data->hd->heredoc = 0;
 
 
 

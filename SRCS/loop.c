@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:50:15 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/22 16:14:40 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,27 @@ void	prompt_loop(t_data *data)
 		prompt = ft_strjoin_gnl(prompt, "$ ");
 		data->str = ft_strdup(readline(prompt));
 		free(prompt);
+		// signal_set();
 		if (ft_strlen(data->str) > 0)
 			add_history(data->str);
 		if (error_check(data->str) == SUCCESS)
 		{
-			lexer_init(data); //Creation du lexer
+			lexer_init(data); //OK ls<<a<<b<<c|wc<<d<<e|cat<<f et <<a<<b<<c<<d<<e<<f ok
 			heredoc_redir(data);
-			expand(data);// quotes dealing
-			token_check(data); // redirections
+			expand(data);
+			token_check(data);
 			create_cmd_lst(data);
-printf("cmd len =%ld\n", lstlencmd(data->cmd));
-			if (lstlencmd(data->cmd) > 0)
-			{
-				extract_paths(data);
-				exec_cmd_lst(data);
-				free_data(data, &free_lexer_strct);
-			}
-			free_data(data, &free_hd_struct);
-		}
 
+printf("cmd len =%ld\n", lstlencmd(data->cmd));//<Makefile<<a sgf somewhere
+			// if (lstlencmd(data->cmd) > 0)
+			// {
+			// 	extract_paths(data);
+			// 	// exec_cmd_lst(data);
+			// 	free_data(data, &free_cmd_strct);
+			// }
+			free_data(data, &free_hd_struct); //marche super till extrac paths
+		}
+printf("end ok\n");
 	//if (check_error(line) == SUCCESS)
 		// if (error_quotes(line) != 0)
 		// 	ft_putstr_fd("Error: Invalid syntax\n", 2);// Send the line into the lexer to check for errors and create the array of cmd/pipes/etc..
