@@ -19,6 +19,10 @@ void	free_content_lexer_node(t_lexer *tmp)
 		free(tmp->word);
 	if (tmp->token != NULL)
 		free(tmp->token);
+	if (tmp->infile != NULL)
+		free(tmp->infile);
+	if (tmp->outfile != NULL)
+		free(tmp->outfile);
 	tmp->word = NULL;
 	tmp->token = NULL;
 	tmp->prev = NULL;
