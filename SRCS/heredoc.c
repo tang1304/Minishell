@@ -30,7 +30,7 @@ void	heredoc_count(t_data *data)
 	// if (data->hd->hd_count > 0)
 	// {
 	data->hd->LIMITER = (char **)malloc(sizeof(char *) * \
-	(data->hd->hd_count) + 1)
+	(data->hd->hd_count) + 1);
 		// if (data->LIMITER == NULL)
 		// 	return error??;
 	data->hd->LIMITER[data->hd->hd_count] = 0;
@@ -73,29 +73,6 @@ void	heredoc_pipe(t_data *data)
 	// free_data(data, &free_lexer_strct);
 	//free all!!! <Makefile ls |grep <<eof |wc >out
 	// test bible non réalisée
-}
-
-void	close_heredoc_pipes(t_data *data) //ls<<a<<b<<c|wc<<d<<e segfaults
-{
-	t_command	*tmp;
-	int			i;
-
-	i = 0;
-	tmp = data->cmd;
-	while (tmp != NULL)
-	{
-		if (tmp->heredoc_num > -1)
-		{
-			while (i < tmp->heredoc_num)
-			{
-				close(data->hd->fd[i][0]);
-				close(data->hd->fd[i][1]);
-				i++;
-			}
-			i++;
-		}
-		tmp = tmp->next;
-	}
 }
 
 void	init_heredoc_data(t_data *data) // PB when only <Makefile or <<eof
