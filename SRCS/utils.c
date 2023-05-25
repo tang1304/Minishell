@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:03:57 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/19 19:05:48 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 10:54:24 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ size_t	ft_strlen_pp(char **s)
 	i = 0;
 	if (s == NULL)
 		return (0);
-	while (s[i] != NULL)
+	while (s[i] != 0)
 		i++;
 	return (i);
 }

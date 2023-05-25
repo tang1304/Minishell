@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/22 12:28:54 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 10:30:44 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,8 @@ static char	*check_char(t_data *data, char *s, size_t *i, size_t index)
 {
 	t_substr	str;
 
+	ft_bzero(&str, sizeof(t_substr));
 	str.s = s;
-	str.before = NULL;
-	str.middle = NULL;
-	str.after = NULL;
-	str.sub_b = NULL;
-	str.sub_m = NULL;
-	str.sub_a = NULL;
 	if (s[*i] == '$')
 		expand_dollar(data, &str, i, index);
 	else if (s[*i] == '\'')

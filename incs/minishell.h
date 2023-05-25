@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/25 09:34:52 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 11:25:16 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_heredoc
 	// size_t				hd_used; //number of hd actually used
 	int					heredoc; // set to 0 at first
 	char				**LIMITER; // a<<rray of all LIMITERS  A FREE A LA FIIIN meme si 0
-	// int					*xpd; //0 no expand, 1 expand
+	int					*xpd; //0 no expand, 1 expand
 	int					**fd;//pipe for here_doc
 }				t_heredoc;
 
@@ -216,7 +216,10 @@ char		*str_quotes_removal(char *str);
 int			quotes_removal(t_lexer *lexer);
 
 /*	expand_heredoc.c	*/
-char	*expand_line(char *str);
+char	*expand_line(t_data *data, char *str);
+void	prepare_expand_hd(t_data *data);
+void	expand_dollar_hd(t_data *data, t_substr *s, size_t *i);
+void	remove_limiter_quotes(t_data *data);
 
 /*	expand_utils.c	*/
 void		modify_lxr_nds(t_data *data, t_substr *s, size_t index);
