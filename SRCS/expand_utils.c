@@ -65,9 +65,9 @@ void	modify_lxr_nds(t_data *data, t_substr *s, size_t index)//here segf
 		buf = tmp->next;
 		buf->prev = NULL;
 	}
-	remove_lxr_node(data, index);
 	ptr = ft_split(s->sub_m, ' ');
-	add_node(&data->lexer, ft_strjoin_expand(s->sub_b, ptr[0]), 0); //faut supprimer noeud d'avant
+	free(tmp->word);
+	tmp->word = ft_strdup(ft_strjoin_expand(s->sub_b, ptr[0])); //faut supprimer noeud d'avant
 	while (ptr[j] != 0)
 	{
 		add_node(&data->lexer, ptr[j], 0);
