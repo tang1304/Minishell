@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/19 15:24:26 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 11:41:26 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_command
 	int					inf_err;
 	char				*outfile;
 	int					out_err;
-	int					heredoc_file; //0 no hd 1 hd
+	int					heredoc_file; //0 no hd 1 hd useless I think
 	int					heredoc_num; // which limiter it needs to use
 	int					fd[2];
 	int					fdin;//infile
@@ -79,10 +79,11 @@ typedef struct s_command
 
 typedef struct s_heredoc
 {
-	size_t				hd_count; // number of heredocs (total)
+	int					hd_count; // number of heredocs (total)
 	// size_t				hd_used; //number of hd actually used
-	size_t				heredoc; // set to 0 at first
-	char				**LIMITER; // array of all LIMITERS  A FREE A LA FIIIN meme si 0 heredocs
+	int					heredoc; // set to 0 at first
+	char				**LIMITER; // a<<rray of all LIMITERS  A FREE A LA FIIIN meme si 0
+	int					*xpd; //0 no expand, 1 expand
 	int					**fd;//pipe for here_doc
 }				t_heredoc;
 
@@ -104,6 +105,7 @@ typedef struct s_data
 	char				**paths;
 	char				*pwd;
 	char				*oldpwd;
+	size_t				svd_index;
 	int					fdin;//infile
 	int					fdout;//outfile
 	int					pipe[2];//pipes for other cmds NEEDS FREE
@@ -180,12 +182,15 @@ void		add_file_node(t_data *data, t_lexer *lexer, char *file, int i);
 /*	add_pipes_lexer	*/
 void		add_pipes_redir(t_data *data);
 
-/*	remove_nodes.c	*/
+/*	remove_lexer_nodes.c	*/
 void		free_content_lexer_node(t_lexer *tmp);
 void		free_lst(t_data *data, t_lexer *tmp);
 void		remove_front_nodes(t_data *data, size_t len);
 void		remove_back_nodes(t_data *data);
 void		remove_middle_nodes(t_data *data, size_t index);
+
+/*	remove_lexer_nodes_utils.c	*/
+void	remove_lxr_node(t_data *data, size_t index);
 
 /*	lexer.c	*/
 int			lexer_init(t_data *data);
@@ -206,11 +211,19 @@ void		expand(t_data *data);
 /*	expander_var.c	*/
 char		*get_var(t_data *data, char *s);
 char		*join_all(char *s, char *b, char *e, char *a);
-void		expand_dollar(t_data *data, t_substr *s, size_t *i);
+void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index);
 
 /*	expander_quotes.c	*/
 char		*str_quotes_removal(char *str);
 int			quotes_removal(t_lexer *lexer);
+
+/*	expand_heredoc.c	*/
+char	*expand_line(char *str);
+
+/*	expand_utils.c	*/
+void		modify_lxr_nds(t_data *data, t_substr *s, size_t index);
+int			check_space_expand(t_data *data, t_substr *s, int index);
+t_lexer		*update_tmp_index(t_data *data, size_t *i);
 
 /*	builtins.c	*/
 int			builtins(t_data *data, char **cmd);
@@ -256,10 +269,12 @@ void	add_heredoc(t_data *data, char *file, size_t index);
 /*	utils.c	*/
 void		complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);
 void		complete_out_data(t_data *data, t_lexer *tmp, char *file, int valid);
+char		*ft_strjoin_expand(char *s1, char *s2);
 char		*ft_strjoin_free(char *s1, char *s2);
 char		*ft_change_str(char *s1, char *s2);
 size_t		lstlen(t_lexer *lexer);
 size_t		lstlencmd(t_command *cmd);
+size_t	ft_strlen_pp(char **s);
 
 /*	free.c	*/
 void		free_data(t_data *data, void(*f)());
@@ -288,5 +303,12 @@ void		both_dup2(t_data *data, int in, int out);
 
 /*	wait.c	*/
 void		wait_child(t_data *data);
+
+/*	signals.c	*/
+void	signal_set(void);
+
+/*	close.c	*/
+void	close_heredoc_pipes(t_data *data);
+void	close_pipes_no_cmd(t_data *data);
 
 #endif

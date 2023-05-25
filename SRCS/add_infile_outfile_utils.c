@@ -6,14 +6,14 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:02:31 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 12:31:41 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 //ls <TODO | wc <Makefile >outer | test >out working fiiiiiiine !!!!!
 void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
-{printf("file heredoc = %s\n", file);
+{
 	if (i == 0)
 		lexer->infile = ft_strdup(file);
 	else if (i == 1)

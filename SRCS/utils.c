@@ -6,11 +6,27 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:03:57 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/12 12:08:53 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/19 19:05:48 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+char	*ft_strjoin_expand(char *s1, char *s2)
+{
+	char	*ptr;
+
+	if ((s1 == NULL || ft_strlen(s1) == 0) && s2 != NULL)
+		return (s2);
+	else if ((s2 == NULL || ft_strlen(s2) == 0) && s1 != NULL)
+		return (s1);
+	else if ((s2 == NULL && s1 == NULL) || \
+	(ft_strlen(s1) == 0 || ft_strlen(s1) == 0))
+		return (NULL);
+	else
+		ptr = ft_strjoin_free(s1, s2);
+	return (ptr);
+}
 
 char	*ft_strjoin_free(char *s1, char *s2)
 {
@@ -136,4 +152,16 @@ void	complete_out_data(t_data *data, t_lexer *tmp, char *file, int valid)
 		tmp->out_err = 1;
 		return ;
 	}
+}
+
+size_t	ft_strlen_pp(char **s)
+{
+	size_t	i;
+
+	i = 0;
+	if (s == NULL)
+		return (0);
+	while (s[i] != NULL)
+		i++;
+	return (i);
 }
