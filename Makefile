@@ -39,12 +39,15 @@ LST_SRCS	=	main.c \
 				expand.c \
 				expander_quotes.c \
 				expander_var.c \
+				expand_utils.c \
+				expand_heredoc.c \
 				check_error_input.c \
 				check_error_utils.c \
 				add_infile_outfile.c \
 				add_infile_outfile_utils.c \
 				add_pipes_lexer.c \
 				remove_lexer_nodes.c \
+				remove_lexer_nodes_utils.c \
 				heredoc.c \
 				heredoc_redir.c \
 				utils.c \
@@ -60,7 +63,9 @@ LST_SRCS	=	main.c \
 				exec_data_creation.c \
 				exec.c \
 				exec_dup.c \
-				wait.c
+				signals.c \
+				wait.c \
+				close.c
 
 LST_OBJS	=	$(LST_SRCS:.c=.o)
 

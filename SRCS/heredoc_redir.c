@@ -6,10 +6,11 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:37:02 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:00:23 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 10:50:39 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+// si on spam <<a<<b<<c<<d au bout d'un moment ./minishell se ferme
 #include "../incs/minishell.h"
 
 void	heredoc_redir(t_data *data)
@@ -17,21 +18,19 @@ void	heredoc_redir(t_data *data)
 	t_lexer	*tmp;
 
 	heredoc_count(data);
-printf("IN THIS LINE WE HAVE %ld HREDOCS\n", data->hd->hd_count);
+printf("IN THIS LINE WE HAVE %d HREDOCS\n", data->hd->hd_count);
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
 		if (tmp->token != NULL && ft_strncmp(tmp->token, "<<", 2) == 0 \
 		&& ft_strlen(tmp->token) == 2)
 		{
-			add_heredoc(data, tmp->next->word, tmp->index);
-			remove_nodes_redirection(data, tmp->index);
-			add_index(data);
-			tmp = data->lexer;
-			continue;
+			data->hd->LIMITER[data->hd->heredoc] = ft_strdup(tmp->next->word);
+			data->hd->heredoc++;
 		}
 		tmp = tmp->next;
 	}
+	data->hd->heredoc = 0;
 	init_heredoc_data(data);
 
 
