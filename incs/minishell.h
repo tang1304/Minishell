@@ -245,6 +245,7 @@ int		print_export(t_env **env);
 /*	builtin_export_utils.c	*/
 void		ft_list_sort(t_env **env, int size);
 int			ft_list_size(t_env *env);
+int			existing_var(t_data *data, char *cmd, int i);
 
 /*	builtin_unset.c	*/
 int			ft_unset(t_data *data, char **cmd);
@@ -259,6 +260,7 @@ int		add_env_node(t_env **env, char *str);
 void		heredoc_count(t_data *data);
 void		init_heredoc_data(t_data *data);
 void		heredoc_pipe(t_data *data);
+void		close_heredoc_pipes(t_data *data);
 
 /*	heredoc_redir.c	*/
 void	heredoc_redir(t_data *data);
@@ -280,8 +282,8 @@ void		free_lexer_strct(t_data *data);
 void		free_env_strct(t_data *data);
 void		free_cmd_strct(t_data *data);
 void		free_data_strct(t_data *data);
+void		free_hd_strct(t_data *data);
 void		free_all(t_data *data);
-void		free_hd_struct(t_data *data);
 
 /*	free_utils.c	*/
 void		ft_free_pp(char **ptr);
@@ -296,7 +298,7 @@ void		exec_cmd_lst(t_data *data);
 void		exec(t_data *data, char **cmd);
 
 /*	exec_dup.c	*/
-int			heredoc_check(t_command *cmd);
+int			heredoc_check(t_data *data, t_command *cmd);
 void		both_dup2(t_data *data, int in, int out);
 
 /*	wait.c	*/

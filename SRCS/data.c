@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/16 10:48:17 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/18 11:10:35 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	update_pwd(t_data *data)
 {
-	data->oldpwd = search_env(data, "OLDPWD=");
-	data->pwd = search_env(data, "PWD=");
+	data->oldpwd = search_env(data, "OLDPWD");
+	data->pwd = search_env(data, "PWD");
 	data->prompt_pwd = data->pwd;
 }
 

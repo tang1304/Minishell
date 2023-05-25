@@ -35,6 +35,15 @@ void	prompt_loop(t_data *data)
 			expand(data);
 			token_check(data);
 			create_cmd_lst(data);
+printf("cmd len =%ld\n", lstlencmd(data->cmd));
+			if (lstlencmd(data->cmd) > 0)
+			{
+				extract_paths(data);
+				exec_cmd_lst(data);
+				free_data(data, &free_lexer_strct);
+			}
+			free_data(data, &free_hd_strct);
+		}
 
 printf("cmd len =%ld\n", lstlencmd(data->cmd));//<Makefile<<a sgf somewhere
 			// if (lstlencmd(data->cmd) > 0)
