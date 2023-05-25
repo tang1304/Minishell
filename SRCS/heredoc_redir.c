@@ -6,11 +6,10 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:37:02 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/25 09:32:29 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 11:22:49 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-// si on spam <<a<<b<<c<<d au bout d'un moment ./minishell se ferme
 #include "../incs/minishell.h"
 
 int	heredoc_redir(t_data *data)
@@ -25,8 +24,7 @@ printf("IN THIS LINE WE HAVE %d HREDOCS\n", data->hd->hd_count);
 		if (tmp->token != NULL && ft_strncmp(tmp->token, "<<", 2) == 0 \
 		&& ft_strlen(tmp->token) == 2)
 		{
-			data->hd->LIMITER[data->hd->heredoc] = \
-			ft_strdup(str_quotes_removal(tmp->next->word));
+			data->hd->LIMITER[data->hd->heredoc] = ft_strdup(tmp->next->word);
 			data->hd->heredoc++;
 		}
 		tmp = tmp->next;
@@ -36,6 +34,7 @@ printf("IN THIS LINE WE HAVE %d HREDOCS\n", data->hd->hd_count);
 		return (ft_putstr_fd("minishell: Too many pipes, try with fewer \
 		pipes\n", STDOUT_FILENO), free_data(data, free_lexer_strct), \
 		HD_ERROR_NUMBER);
+	prepare_expand_hd(data);
 	init_heredoc_data(data);
 	return (SUCCESS);
 
