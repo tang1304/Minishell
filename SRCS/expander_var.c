@@ -6,13 +6,13 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/11 09:22:05 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/19 18:43:56 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-
-void	expand_dollar(t_data *data, t_substr *s, size_t *i)
+//$USER"$USER '$USER'"'USER' ok
+void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index)
 {
 	*i = *i + 1;
 	if (s->s[*i] == '?')
@@ -24,6 +24,8 @@ void	expand_dollar(t_data *data, t_substr *s, size_t *i)
 	s->sub_a = ft_substr(s->s, *i, ft_strlen(s->s) - *i);
 	s->sub_m = ft_substr(s->s, ft_strlen(s->sub_b), *i - (ft_strlen(s->sub_b)));
 	s->sub_m = get_var(data, s->sub_m);
+	if (check_space_expand(data, s, index) == 1)
+		return ;
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
 	s->s = join_all(s->s, s->sub_b, s->sub_m, s->sub_a);
 }
