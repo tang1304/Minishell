@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/18 11:10:35 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 14:53:33 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static char	*envp_handle(char *str)
 	else if (ft_strncmp(str, "SHLVL=", 6) == 0)
 		new_envp = get_shlvl(str);
 	else if (ft_strncmp(str, "PWD=", 4) == 0)
-		new_envp = ft_strjoin("PWD=", getcwd(NULL, 0));
+		new_envp = ft_strjoin_free_s2("PWD=", getcwd(NULL, 0));
 	else if (ft_strncmp(str, "OLDPWD=", 7) == 0)
-		new_envp = ft_strjoin("OLDPWD=", getcwd(NULL, 0));
+		new_envp = ft_strjoin_free_s2("OLDPWD=", getcwd(NULL, 0));
 	else
 		new_envp = ft_strdup(str);
 	return (new_envp);
@@ -48,13 +48,13 @@ char	**env_i_handle(t_data *data)
 	while (++i < 4)
 	{
 		if (i == 0)
-			envp[i] = ft_strjoin("PWD=", getcwd(NULL, 0));
+			envp[i] = ft_strjoin_free_s2("PWD=", getcwd(NULL, 0));
 		else if (i == 1)
 			envp[1] = ft_strdup("SHLVL=1");
 		else if (i == 2)
 			envp[2] = ft_strdup("_=/usr/bin/env");
 		else if (i == 3)
-			envp[3] = ft_strjoin("OLDPWD=", getcwd(NULL, 0));
+			envp[3] = ft_strjoin_free_s2("OLDPWD=", getcwd(NULL, 0));
 		if (!envp[i] || !add_env_node(&data->env, envp[i]))
 			return (NULL);
 	}

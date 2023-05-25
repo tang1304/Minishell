@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/25 11:40:04 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 13:05:29 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	env_struct_replacement(t_env *var, char *cmd, int i)
 	return (0);
 }
 
-static int	envp_replacement(char **var, char *cmd)
+int	envp_replacement(char **var, char *cmd)
 {
 	free(*var);
 	*var = ft_strdup(cmd);
@@ -104,7 +104,7 @@ int	existing_var(t_data *data, char *cmd, int i)
 				envp_replacement(&data->envp[j], cmd);
 			else
 				remove_from_env(data, cmd);
-			return (1) ;
+			return (1);
 		}
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/25 11:33:52 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 14:52:54 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,15 +236,16 @@ char		*search_env(t_data *data, char *env);
 int			replace_env(t_data *data, char *env, char *old_env);
 
 /*	builtin_echo.c	*/
-int		ft_echo(char **cmd);
+int			ft_echo(char **cmd);
 
 /*	builtin_export.c	*/
-int		ft_export(t_data *data, char **cmd);
-int		print_export(t_env **env);
+void		ft_list_sort(t_env **env, int size);
+int			ft_export(t_data *data, char **cmd);
+int			print_export(t_env **env);
 
 /*	builtin_export_utils.c	*/
-void		ft_list_sort(t_env **env, int size);
 int			ft_list_size(t_env *env);
+int			envp_replacement(char **var, char *cmd);
 int			existing_var(t_data *data, char *cmd, int i);
 
 /*	builtin_unset.c	*/
@@ -270,6 +271,7 @@ void		complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);
 void		complete_out_data(t_data *data, t_lexer *tmp, char *file, int valid);
 char		*ft_strjoin_expand(char *s1, char *s2);
 char		*ft_strjoin_free(char *s1, char *s2);
+char		*ft_strjoin_free_s2(char *s1, char *s2);
 char		*ft_change_str(char *s1, char *s2);
 size_t		lstlen(t_lexer *lexer);
 size_t		lstlencmd(t_command *cmd);
