@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/24 11:41:26 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 09:34:52 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_heredoc
 	// size_t				hd_used; //number of hd actually used
 	int					heredoc; // set to 0 at first
 	char				**LIMITER; // a<<rray of all LIMITERS  A FREE A LA FIIIN meme si 0
-	int					*xpd; //0 no expand, 1 expand
+	// int					*xpd; //0 no expand, 1 expand
 	int					**fd;//pipe for here_doc
 }				t_heredoc;
 
@@ -130,7 +130,8 @@ enum e_errors
 	FILE_ERROR = 9,
 	CHILD_SUCCESS = 10,
 	NOT_BUILTIN = 11,
-	NO_INPUT = 12
+	NO_INPUT = 12,
+	HD_ERROR_NUMBER = 13
 };
 
 /*	data.c	*/
@@ -188,9 +189,6 @@ void		free_lst(t_data *data, t_lexer *tmp);
 void		remove_front_nodes(t_data *data, size_t len);
 void		remove_back_nodes(t_data *data);
 void		remove_middle_nodes(t_data *data, size_t index);
-
-/*	remove_lexer_nodes_utils.c	*/
-void	remove_lxr_node(t_data *data, size_t index);
 
 /*	lexer.c	*/
 int			lexer_init(t_data *data);
@@ -263,7 +261,7 @@ void		heredoc_pipe(t_data *data);
 void		close_heredoc_pipes(t_data *data);
 
 /*	heredoc_redir.c	*/
-void	heredoc_redir(t_data *data);
+int		heredoc_redir(t_data *data);
 void	add_heredoc(t_data *data, char *file, size_t index);
 
 /*	utils.c	*/
