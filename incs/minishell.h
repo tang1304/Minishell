@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/25 14:52:54 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 14:25:34 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,8 @@ enum e_errors
 	FILE_ERROR = 9,
 	CHILD_SUCCESS = 10,
 	NOT_BUILTIN = 11,
-	NO_INPUT = 12
+	NO_INPUT = 12,
+	HD_ERROR_NUMBER = 13
 };
 
 /*	data.c	*/
@@ -189,9 +190,6 @@ void		remove_front_nodes(t_data *data, size_t len);
 void		remove_back_nodes(t_data *data);
 void		remove_middle_nodes(t_data *data, size_t index);
 
-/*	remove_lexer_nodes_utils.c	*/
-void	remove_lxr_node(t_data *data, size_t index);
-
 /*	lexer.c	*/
 int			lexer_init(t_data *data);
 int			is_pipe(char *str, int i);
@@ -218,7 +216,10 @@ char		*str_quotes_removal(char *str);
 int			quotes_removal(t_lexer *lexer);
 
 /*	expand_heredoc.c	*/
-char	*expand_line(char *str);
+char	*expand_line(t_data *data, char *str);
+void	prepare_expand_hd(t_data *data);
+void	expand_dollar_hd(t_data *data, t_substr *s, size_t *i);
+void	remove_limiter_quotes(t_data *data);
 
 /*	expand_utils.c	*/
 void		modify_lxr_nds(t_data *data, t_substr *s, size_t index);
@@ -261,9 +262,10 @@ int		add_env_node(t_env **env, char *str);
 void		heredoc_count(t_data *data);
 void		init_heredoc_data(t_data *data);
 void		heredoc_pipe(t_data *data);
+void		create_pipes_hd(t_data *data);
 
 /*	heredoc_redir.c	*/
-void	heredoc_redir(t_data *data);
+int		heredoc_redir(t_data *data);
 void	add_heredoc(t_data *data, char *file, size_t index);
 
 /*	utils.c	*/
@@ -310,6 +312,7 @@ void	signal_set(void);
 
 /*	close.c	*/
 void	close_heredoc_pipes(t_data *data);
-void	close_pipes_no_cmd(t_data *data);
+void	close_all(t_data *data);
+// void	close_pipes_no_cmd(t_data *data);
 
 #endif

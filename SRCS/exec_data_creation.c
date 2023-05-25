@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_data_creation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/18 11:16:01 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 12:59:29 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ static void	forking(t_data *data, t_command *cmd, int i)
 		}
 		else
 			exec(data, cmd->cmd);
+		printf("\nCHILD BUG\n");
 	}
 	else
 	{
@@ -104,7 +105,7 @@ static void	forking(t_data *data, t_command *cmd, int i)
 			close(data->pipe[0]);
 		// }
 		// else
-		// 	heredoc_check(data, cmd); 
+		// 	heredoc_check(data, cmd);
 	}
 }
 

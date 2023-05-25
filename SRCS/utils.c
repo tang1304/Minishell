@@ -189,7 +189,7 @@ size_t	ft_strlen_pp(char **s)
 	i = 0;
 	if (s == NULL)
 		return (0);
-	while (s[i] != NULL)
+	while (s[i] != 0)
 		i++;
 	return (i);
 }

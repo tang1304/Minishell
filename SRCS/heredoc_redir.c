@@ -6,14 +6,13 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:37:02 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/24 10:50:39 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 11:22:49 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-// si on spam <<a<<b<<c<<d au bout d'un moment ./minishell se ferme
 #include "../incs/minishell.h"
 
-void	heredoc_redir(t_data *data)
+int	heredoc_redir(t_data *data)
 {
 	t_lexer	*tmp;
 
@@ -31,7 +30,13 @@ printf("IN THIS LINE WE HAVE %d HREDOCS\n", data->hd->hd_count);
 		tmp = tmp->next;
 	}
 	data->hd->heredoc = 0;
+	if (data->hd->hd_count > 1024)
+		return (ft_putstr_fd("minishell: Too many pipes, try with fewer \
+		pipes\n", STDOUT_FILENO), free_data(data, free_lexer_strct), \
+		HD_ERROR_NUMBER);
+	prepare_expand_hd(data);
 	init_heredoc_data(data);
+	return (SUCCESS);
 
 
 
