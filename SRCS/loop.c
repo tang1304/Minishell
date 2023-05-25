@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
 /*   Updated: 2023/05/25 14:15:05 by rrebois          ###   ########lyon.fr   */
@@ -47,14 +47,13 @@ void	prompt_loop(t_data *data)
 			}
 		}
 
-printf("cmd len =%ld\n", lstlencmd(data->cmd));//<Makefile<<a sgf somewhere
+// printf("cmd len =%ld\n", lstlencmd(data->cmd));//<Makefile<<a sgf somewhere
 			// if (lstlencmd(data->cmd) > 0)
 			// {
 			// 	extract_paths(data);
 			// 	// exec_cmd_lst(data);
 			// 	free_data(data, &free_cmd_strct);
 			// }
-printf("end ok\n");
 	//if (check_error(line) == SUCCESS)
 		// if (error_quotes(line) != 0)
 		// 	ft_putstr_fd("Error: Invalid syntax\n", 2);// Send the line into the lexer to check for errors and create the array of cmd/pipes/etc..
