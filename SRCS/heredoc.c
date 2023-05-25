@@ -60,7 +60,7 @@ void	heredoc_pipe(t_data *data)
 		ft_strlen(line)) \
 		|| !line)
 			break ;
-		line = expand_line(line);
+		line = expand_line(data, line);
 		buffer = ft_strjoin_free(buffer, line);
 	}
 	write(data->hd->fd[data->hd->heredoc][1], buffer, ft_strlen(buffer));
