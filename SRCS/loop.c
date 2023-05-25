@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/22 16:14:40 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 08:50:34 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ printf("cmd len =%ld\n", lstlencmd(data->cmd));//<Makefile<<a sgf somewhere
 			// 	// exec_cmd_lst(data);
 			// 	free_data(data, &free_cmd_strct);
 			// }
-			free_data(data, &free_hd_struct); //marche super till extrac paths
-		}
 printf("end ok\n");
 	//if (check_error(line) == SUCCESS)
 		// if (error_quotes(line) != 0)
