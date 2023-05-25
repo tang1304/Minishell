@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/25 08:55:51 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 14:49:53 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,19 @@ void	free_data_strct(t_data *data)
 
 void	free_hd_strct(t_data *data)
 {
-	// int	i;
-
-	// i = 0;
+	data->hd->heredoc = 0;
 	if (data->hd->LIMITER != NULL)
 		ft_free_pp(data->hd->LIMITER);
-	// if (data->hd->fd != NULL) //pose problème, sans ça ça roule
-	// {
-	// 	while (i++ < data->hd->hd_count)
-	// 		free(data->hd->fd[i]);
-	// 	free(data->hd->fd);
-	// }
+	if (data->hd->fd != NULL) //pose problème, sans ça ça roule
+	{
+		while (data->hd->heredoc < data->hd->hd_count)
+		{
+			free(data->hd->fd[data->hd->heredoc]);
+			data->hd->heredoc++;
+		}
+		free(data->hd->fd);
+		free(data->hd->xpd);
+	}
 	data->hd->fd = NULL;
 	data->hd->hd_count = 0;
 	data->hd->heredoc = 0;

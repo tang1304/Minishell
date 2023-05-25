@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/18 15:12:57 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 13:15:56 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void	update_data_structs(t_data *data)
 		free_data(data, &free_lexer_strct);
 		add_cmd_index(data);
 	}
-	// close_heredoc_pipes(data);
+	close_heredoc_pipes(data);
 }
 
 void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a la fin
