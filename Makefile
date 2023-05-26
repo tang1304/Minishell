@@ -62,10 +62,12 @@ LST_SRCS_L		=	lexer.c \
 					remove_lexer_nodes.c
 
 LST_SRCS_FR		=	free.c \
+					free_2.c \
 					free_utils.c
 
 LST_SRCS_ERR	=	check_error_input.c \
-					check_error_utils.c
+					check_error_utils.c \
+					errors.c
 
 LST_SRCS_P		=	parser.c \
 					parser_utils.c
