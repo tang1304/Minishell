@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 14:36:18 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/26 14:42:23 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,18 +89,4 @@ void	free_hd_strct(t_data *data)
 	data->hd->fd = NULL;
 	data->hd->hd_count = 0;
 	data->hd->heredoc = 0;
-}
-
-void	free_all(t_data *data)
-{
-	free_data(data, &free_cmd_strct);
-	free_data(data, &free_lexer_strct);
-	free_data(data, &free_hd_strct);
-	free_data(data, &free_env_strct);
-	free_data_strct(data);
-}
-
-void	free_data(t_data *data, void(*f)())
-{
-	(*f)(data);
 }

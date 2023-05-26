@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 08:45:19 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/26 15:02:48 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ static void	forking(t_data *data, t_command *cmd, int i)
 			close(data->pipe[1]);
 		// if (!cmd->heredoc_file)
 		// {
-		// 	printf("\nNo heredoc\n");
 			if (dup2(data->pipe[0], STDIN_FILENO) == -1)
 				return (perror("Error with parent dup2"));
 			close(data->pipe[0]);
@@ -121,6 +120,11 @@ void	exec_cmd_lst(t_data *data)
 		if (lstlencmd(data->cmd) == 1 && check_builtins(tmp->cmd) == SUCCESS)
 		{
 			builtins(data, tmp->cmd);
+			if (data->stdin_save > 0 && data->stdout_save > 0)
+			{
+				if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
+					return (perror("Error with closing STDIN/STDOUT saves"));
+			}
 			return ;
 		}
 		else
@@ -131,6 +135,7 @@ void	exec_cmd_lst(t_data *data)
 			i = fork();
 			forking(data, tmp, i);
 			waitpid(i, &status, 0);
+			g_status = WEXITSTATUS(status);
 		}
 		tmp = tmp->next;
 	}
