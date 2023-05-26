@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/25 15:51:26 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/26 14:56:49 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ enum e_errors
 	HD_ERROR_NUMBER = 13
 };
 
+int	g_status;
+
 /*	data.c	*/
 void		data_initialize(t_data *data, char **envp);
 void		update_pwd(t_data *data);
@@ -154,6 +156,9 @@ int			is_word(char *s, int i, char c);
 int			error_quotes(char *line, size_t i);
 int			check_token(char *s, size_t i);
 // int		count_quote(char *s, size_t *i, char c);
+
+/*	errors.c	*/
+void		exit_error(t_data *data);
 
 /*	parser.c	*/
 void		check_hidden_nodes(t_data *data);
@@ -280,18 +285,21 @@ size_t		lstlencmd(t_command *cmd);
 size_t	ft_strlen_pp(char **s);
 
 /*	free.c	*/
-void		free_data(t_data *data, void(*f)());
 void		free_lexer_strct(t_data *data);
 void		free_env_strct(t_data *data);
 void		free_cmd_strct(t_data *data);
 void		free_data_strct(t_data *data);
 void		free_hd_strct(t_data *data);
+
+/*	free_2.c	*/
+void		free_content_cmd_node(t_command *tmp);
+void		free_content_env_node(t_env *tmp);
+void		free_data(t_data *data, void(*f)());
 void		free_all(t_data *data);
+void		free_loop(t_data *data);
 
 /*	free_utils.c	*/
 void		ft_free_pp(char **ptr);
-void		free_content_cmd_node(t_command *tmp);
-void		free_content_env_node(t_env *tmp);
 
 /*	exec_data_creation.c	*/
 void		restore_stds(t_data *data);
