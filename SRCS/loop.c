@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/25 14:15:05 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 16:14:52 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	prompt_loop(t_data *data)
 		// signal_set();
 		if (ft_strlen(data->str) > 0)
 			add_history(data->str);
+		data->stdin_save = dup(STDIN_FILENO);
+		data->stdout_save = dup(STDOUT_FILENO);
 		if (error_check(data->str) == SUCCESS)
 		{
 			lexer_init(data); //OK ls<<a<<b<<c|wc<<d<<e|cat<<f et <<a<<b<<c<<d<<e<<f ok
