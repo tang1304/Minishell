@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/25 14:25:34 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 15:51:26 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,6 +294,7 @@ void		free_content_cmd_node(t_command *tmp);
 void		free_content_env_node(t_env *tmp);
 
 /*	exec_data_creation.c	*/
+void		restore_stds(t_data *data);
 void		extract_paths(t_data *data);
 void		exec_cmd_lst(t_data *data);
 
