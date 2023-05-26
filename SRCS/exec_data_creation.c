@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exec_data_creation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/25 12:59:29 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 15:57:07 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-static void	restore_stds(t_data *data)
+void	restore_stds(t_data *data)
 {
 	if (dup2(data->stdin_save, STDIN_FILENO) == -1 \
 	|| dup2(data->stdout_save, STDOUT_FILENO) == -1)
 		return (perror("Error with restoring STDIN/STDOUT dup2"));
-	// if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
-	// 	return (perror("Error with closing STDIN/STDOUT saves"));
+	if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
+		return (perror("Error with closing STDIN/STDOUT saves"));
 	// close a la fin du programme, ou initialiser a chaque boucle
 }
 

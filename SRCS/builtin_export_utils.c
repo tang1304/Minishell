@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/19 16:00:36 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 13:05:29 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,35 +23,6 @@ int	ft_list_size(t_env *env)
 		env = env->next;
 	}
 	return (len);
-}
-
-void	ft_list_sort(t_env **env, int size)
-{
-	void	*tmp_name;
-	void	*tmp_value;
-	t_env	*current;
-	int		i;
-	int		j;
-
-	i = -1;
-	while (++i < size - 1)
-	{
-		j = -1;
-		current = *env;
-		while (++j < size - 1 - i)
-		{
-			if (ft_strcmp(current->var_name, current->next->var_name) > 0)
-			{
-				tmp_name = current->var_name;
-				tmp_value = current->var_value;
-				current->var_name = current->next->var_name;
-				current->var_value = current->next->var_value;
-				current->next->var_name = tmp_name;
-				current->next->var_value = tmp_value;
-			}
-			current = current->next;
-		}
-	}
 }
 
 static int	env_struct_replacement(t_env *var, char *cmd, int i)
@@ -77,40 +48,64 @@ static int	env_struct_replacement(t_env *var, char *cmd, int i)
 	return (0);
 }
 
-// static int	envp_replacement(char **var, char *cmd)
-// {
-// 	free(*var);
-// 	*var = ft_strdup(cmd);
-// 	if (!*var)
-// 		return (0);
-// 	return (1);
-// }
+int	envp_replacement(char **var, char *cmd)
+{
+	free(*var);
+	*var = ft_strdup(cmd);
+	if (!*var)
+		return (0);
+	return (1);
+}
+
+static void	remove_from_env(t_data *data, char *str)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = -1;
+	while (data->envp[j])
+		j++;
+	while (data->envp[++i])
+	{
+		if (ft_strncmp(data->envp[i], str, ft_strlen(str)) == 0)
+		{
+			free(data->envp[i]);
+			while (i < j - 1)
+			{
+				data->envp[i] = data->envp[i + 1];
+				i++;
+			}
+			data->envp[i] = NULL;
+			break ;
+		}
+	}
+}
 
 int	existing_var(t_data *data, char *cmd, int i)
 {
 	t_env	*tmp;
-	// int		j;
+	int		j;
 
 	tmp = data->env;
 	while (tmp)
 	{
 		if (env_struct_replacement(tmp, cmd, i) == 1)
-		{
-			return (1);
-			// break ;
-		}
+			break ;
 		else
 			tmp = tmp->next;
 	}
-	// j = -1;
-	// while (data->envp[++j])
-	// {
-	// 	if (ft_strncmp(data->envp[j], cmd, i) == 0)
-	// 	{
-	// 		envp_replacement(&data->envp[j], cmd);
-	// 		printf("Envp replaced\n");
-	// 		return (1) ;
-	// 	}
-	// }
+	j = -1;
+	while (data->envp[++j])
+	{
+		if (ft_strncmp(data->envp[j], cmd, i) == 0)
+		{
+			if (ft_strchr(cmd, '='))
+				envp_replacement(&data->envp[j], cmd);
+			else
+				remove_from_env(data, cmd);
+			return (1);
+		}
+	}
 	return (0);
 }

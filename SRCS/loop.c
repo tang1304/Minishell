@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
 /*   Updated: 2023/05/26 08:03:41 by rrebois          ###   ########lyon.fr   */
@@ -28,6 +28,8 @@ void	prompt_loop(t_data *data)
 		// signal_set();
 		if (ft_strlen(data->str) > 0)
 			add_history(data->str);
+		data->stdin_save = dup(STDIN_FILENO);
+		data->stdout_save = dup(STDOUT_FILENO);
 		if (error_check(data->str) == SUCCESS)
 		{
 			lexer_init(data); //OK ls<<a<<b<<c|wc<<d<<e|cat<<f et <<a<<b<<c<<d<<e<<f ok
@@ -47,14 +49,13 @@ void	prompt_loop(t_data *data)
 			}
 		}
 
-printf("cmd len =%ld\n", lstlencmd(data->cmd));//<Makefile<<a sgf somewhere
+// printf("cmd len =%ld\n", lstlencmd(data->cmd));//<Makefile<<a sgf somewhere
 			// if (lstlencmd(data->cmd) > 0)
 			// {
 			// 	extract_paths(data);
 			// 	// exec_cmd_lst(data);
 			// 	free_data(data, &free_cmd_strct);
 			// }
-printf("end ok\n");
 	//if (check_error(line) == SUCCESS)
 		// if (error_quotes(line) != 0)
 		// 	ft_putstr_fd("Error: Invalid syntax\n", 2);// Send the line into the lexer to check for errors and create the array of cmd/pipes/etc..
