@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/18 12:41:12 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 16:51:11 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,11 @@ static int	ft_pwd(t_data *data)
 
 static int	ft_env(t_data *data)
 {
-	t_env	*tmp;
+	int	i;
 
-	tmp = data->env;
-	while (tmp)
-	{
-		if (tmp->var_value && ft_strchr(tmp->var_name, '='))
-		{
-			printf("%s", tmp->var_name);
-			printf("%s\n", tmp->var_value);
-		}
-		tmp = tmp->next;
-	}
+	i = -1;
+	while (data->envp[++i])
+		printf("%s\n", data->envp[i]);
 	return (1);
 }
 
@@ -44,6 +37,12 @@ static void	ft_exit(t_data *data, char **str)
 	if (str[1])
 		printf("minishell: exit: %s: numeric argument required\n", str[1]);
 	free_all(data);
+	// restore_stds(data);
+	if (data->stdin_save > 0 && data->stdout_save > 0)
+	{
+		if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
+			return (perror("Error with closing STDIN/STDOUT saves"));
+	}
 	exit(EXIT_SUCCESS);
 }
 
