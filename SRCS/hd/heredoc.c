@@ -46,7 +46,7 @@ void	heredoc_count(t_data *data)
 // > hello '$USER'
 // > hello$USER
 
-void	heredoc_pipe(t_data *data)
+void	heredoc_pipe(t_data *data) //doble free dans hd <<a<<b puis ls puis <<a<<b double free
 {
 	char	*line;
 	char	*buffer;
