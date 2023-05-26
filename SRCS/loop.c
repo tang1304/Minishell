@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 08:52:43 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/26 15:12:01 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	prompt_loop(t_data *data)
 {
 	char	*prompt;
 
+	signal_set();
 	while (1)
 	{
 		update_pwd(data);
@@ -25,7 +26,6 @@ void	prompt_loop(t_data *data)
 		prompt = ft_strjoin_gnl(prompt, "$ ");
 		data->str = ft_strdup(readline(prompt));
 		free(prompt);
-		// signal_set();
 		if (ft_strlen(data->str) > 0)
 			add_history(data->str);
 		data->stdin_save = dup(STDIN_FILENO);
@@ -33,7 +33,7 @@ void	prompt_loop(t_data *data)
 		if (error_check(data->str) == SUCCESS)
 		{
 			lexer_init(data); //OK ls<<a<<b<<c|wc<<d<<e|cat<<f et <<a<<b<<c<<d<<e<<f ok
-			if (heredoc_redir(data) == SUCCESS)
+			if (heredoc_redir(data) == SUCCESS && data->max_index <= INT_MAX)
 			{
 				expand(data);
 				token_check(data);
@@ -43,11 +43,9 @@ void	prompt_loop(t_data *data)
 				{
 					extract_paths(data);
 					exec_cmd_lst(data);
-					free_data(data, &free_cmd_strct);
-					ft_free_pp(data->paths);
 				}
-				free_data(data, &free_hd_strct);
 			}
+			free_structures(data);
 		}
 
 // printf("cmd len =%ld\n", lstlencmd(data->cmd));//<Makefile<<a sgf somewhere

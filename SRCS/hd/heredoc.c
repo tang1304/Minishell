@@ -52,6 +52,7 @@ void	heredoc_pipe(t_data *data)
 	char	*buffer;
 
 	buffer = calloc(sizeof(*buffer), 1);
+	signal_hd_set();
 	while (1)
 	{
 		line = readline("> ");
