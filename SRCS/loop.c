@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 08:52:43 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/26 15:13:16 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	prompt_loop(t_data *data)
 		update_pwd(data);
 		prompt = ft_strjoin(data->prompt, data->prompt_pwd);
 		prompt = ft_strjoin_gnl(prompt, "$ ");
-		data->str = ft_strdup(readline(prompt));
+		data->str = ft_strtrim_free(ft_strdup(readline(prompt)), " ");
 		free(prompt);
 		// signal_set();
 		if (ft_strlen(data->str) > 0)
@@ -38,18 +38,14 @@ void	prompt_loop(t_data *data)
 				expand(data);
 				token_check(data);
 				create_cmd_lst(data);
-	printf("cmd len =%ld\n", lstlencmd(data->cmd));
+	// printf("cmd len =%ld\n", lstlencmd(data->cmd));
 				if (lstlencmd(data->cmd) > 0)
 				{
 					extract_paths(data);
 					exec_cmd_lst(data);
-					free_data(data, &free_cmd_strct);
-					ft_free_pp(data->paths);
 				}
-				free_data(data, &free_hd_strct);
 			}
 		}
-
 // printf("cmd len =%ld\n", lstlencmd(data->cmd));//<Makefile<<a sgf somewhere
 			// if (lstlencmd(data->cmd) > 0)
 			// {
@@ -61,6 +57,6 @@ void	prompt_loop(t_data *data)
 		// if (error_quotes(line) != 0)
 		// 	ft_putstr_fd("Error: Invalid syntax\n", 2);// Send the line into the lexer to check for errors and create the array of cmd/pipes/etc..
 		// ft_printf("%s\n", line);//juste a test line. Gotta be removed at the end
-		free(data->str);
+		free_loop(data);
 	}
 }

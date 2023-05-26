@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 07:28:41 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/18 12:39:02 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/26 10:39:44 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-//https://github.com/maiadegraaf/minishell
+
 int	main(int ac, char **av, char **envp)
 {
 	(void)av;
@@ -23,7 +23,6 @@ int	main(int ac, char **av, char **envp)
 		ft_putstr_fd("Error: Bad arguments\nRun ./minishell\n", 2);
 		exit(0);
 	}
-	// Create a loop to have the display prompt until exit
 	data_initialize(&data, envp);
 	return (0);
 }
