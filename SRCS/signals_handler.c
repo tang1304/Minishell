@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   signals_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 16:14:33 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 13:04:30 by rrebois          ###   ########lyon.fr   */
+/*   Created: 2023/05/26 09:11:24 by rrebois           #+#    #+#             */
+/*   Updated: 2023/05/26 13:06:50 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void	signal_set(void)
+void	handler_sigint(int	signal)
 {
-	struct sigaction	sa;
-
-	ft_bzero(&sa, sizeof(sa));
-	// sa.sa_flags = SA_RESTART;
-	sa.sa_handler = &handler_sigint;
-	sigaction(SIGINT, &sa, NULL);
-	sa.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa, NULL);
+	if (signal != SIGINT)
+		return ;
+	if (signal == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
-void	signal_hd_set(void)
+void	handler_hd_sigint(int signal)
 {
-	struct sigaction	sa;
-
-	ft_bzero(&sa, sizeof(sa));
-	// sa.sa_flags = SA_RESTART;
-	sa.sa_handler = &handler_hd_sigint;
-	sigaction(SIGINT, &sa, NULL);
-
+	if (signal != SIGINT)
+		return ;
+	if (signal == SIGINT)
+		exit (0); //penser a free tout dans le child
 }
