@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/11 08:49:35 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/26 15:11:52 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,7 @@ void	add_index(t_data *data)
 		i++;
 		tmp = tmp->next;
 	}
+	data->max_index = i;
+	if (i > INT_MAX)
+		ft_putstr_fd("minishell: Command too long.\n", 0);
 }

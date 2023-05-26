@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 13:45:15 by tgellon           #+#    #+#             */
-/*   Updated: 2023/04/25 10:06:53 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/26 14:39:57 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	worder(t_data *data, char *str, int i)
 
 int	lexer_init(t_data *data)
 {
-	int		i;
+	size_t	i;
 	int		j;
 
 	i = 0;
@@ -82,9 +82,9 @@ int	lexer_init(t_data *data)
 	{
 		j = 0;
 		i = i + spaces_skip(data->str, i);
-		if (is_token(data->str, i))
+		if (is_token(data->str, i) && i < ft_strlen(data->str))
 			j = tokenizer(data, data->str, i);
-		else
+		else if (!is_token(data->str, i) && i < ft_strlen(data->str))
 			j = worder(data, data->str, i);
 		if (j == -1)
 			return (0);
