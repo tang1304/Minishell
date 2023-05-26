@@ -22,57 +22,111 @@ LIBFT		=	libft.a
 D_HEADER	=	incs/
 
 D_SRCS		=	SRCS/
+D_SRCS_P	=	SRCS/parser/
+D_SRCS_E	=	SRCS/expand/
+D_SRCS_B	=	SRCS/builtin/
+D_SRCS_H	=	SRCS/hd/
+D_SRCS_X	=	SRCS/exec/
+D_SRCS_F	=	SRCS/files/
+D_SRCS_L	=	SRCS/lexer/
+D_SRCS_FR	=	SRCS/free/
+D_SRCS_ERR	=	SRCS/error/
 
 D_OBJS		=	objs/
+D_OBJS_P	=	objs/parser/
+D_OBJS_E	=	objs/expand/
+D_OBJS_B	=	objs/builtins/
+D_OBJS_H	=	objs/hd/
+D_OBJS_X	=	objs/exec/
+D_OBJS_F	=	objs/files/
+D_OBJS_L	=	objs/lexer/
+D_OBJS_FR	=	objs/free/
+D_OBJS_ERR	=	objs/error/
 
 D_LIBFT		=	libft/
 
 
 # FILES MINISHELL
-LST_SRCS	=	main.c \
-				data.c \
-				loop.c \
-				parser.c \
-				parser_utils.c \
-				lexer.c \
-				lexer_utils.c \
-				expand.c \
-				expander_quotes.c \
-				expander_var.c \
-				expand_utils.c \
-				expand_heredoc.c \
-				check_error_input.c \
-				check_error_utils.c \
-				add_infile_outfile.c \
-				add_infile_outfile_utils.c \
-				add_pipes_lexer.c \
-				remove_lexer_nodes.c \
-				heredoc.c \
-				heredoc_redir.c \
-				utils.c \
-				builtins.c \
-				builtin_cd.c \
-				builtin_echo.c \
-				builtin_unset.c \
-				builtin_export.c \
-				builtin_export_utils.c \
-				envp_utils.c \
-				free.c \
-				free_utils.c \
-				exec_data_creation.c \
-				exec.c \
-				exec_dup.c \
-				signals.c \
-				wait.c \
-				close.c
+LST_SRCS		=	main.c \
+					data.c \
+					loop.c \
+					utils.c \
+					envp_utils.c \
+					signals.c \
+					wait.c \
+					close.c
 
-LST_OBJS	=	$(LST_SRCS:.c=.o)
+LST_SRCS_L		=	lexer.c \
+					lexer_utils.c \
+					remove_lexer_nodes.c
+
+LST_SRCS_FR		=	free.c \
+					free_utils.c
+
+LST_SRCS_ERR	=	check_error_input.c \
+					check_error_utils.c
+
+LST_SRCS_P		=	parser.c \
+					parser_utils.c
+
+LST_SRCS_E		=	expand.c \
+					expander_quotes.c \
+					expander_var.c \
+					expand_utils.c \
+					expand_heredoc.c
+
+LST_SRCS_B		=	builtins.c \
+					builtin_cd.c \
+					builtin_echo.c \
+					builtin_unset.c \
+					builtin_export.c \
+					builtin_export_utils.c
+
+LST_SRCS_H		=	heredoc.c \
+					heredoc_redir.c
+
+LST_SRCS_X		=	exec_data_creation.c \
+					exec.c \
+					exec_dup.c
+
+LST_SRCS_F		=	add_infile_outfile.c \
+					add_infile_outfile_utils.c \
+					add_pipes_lexer.c
+
+LST_OBJS		=	$(LST_SRCS:.c=.o)
+LST_OBJS_P		=	$(LST_SRCS_P:.c=.o)
+LST_OBJS_E		=	$(LST_SRCS_E:.c=.o)
+LST_OBJS_B		=	$(LST_SRCS_B:.c=.o)
+LST_OBJS_H		=	$(LST_SRCS_H:.c=.o)
+LST_OBJS_X		=	$(LST_SRCS_X:.c=.o)
+LST_OBJS_F		=	$(LST_SRCS_F:.c=.o)
+LST_OBJS_L		=	$(LST_SRCS_L:.c=.o)
+LST_OBJS_FR		=	$(LST_SRCS_FR:.c=.o)
+LST_OBJS_ERR	=	$(LST_SRCS_ERR:.c=.o)
 
 SRCS		=	$(addprefix $(D_SRCS), $(LST_SRCS))
+SRCS_P		=	$(addprefix $(D_SRCS_P), $(LST_SRCS_P))
+SRCS_E		=	$(addprefix $(D_SRCS_E), $(LST_SRCS_E))
+SRCS_B		=	$(addprefix $(D_SRCS_B), $(LST_SRCS_B))
+SRCS_H		=	$(addprefix $(D_SRCS_H), $(LST_SRCS_H))
+SRCS_X		=	$(addprefix $(D_SRCS_X), $(LST_SRCS_X))
+SRCS_F		=	$(addprefix $(D_SRCS_F), $(LST_SRCS_F))
+SRCS_L		=	$(addprefix $(D_SRCS_L), $(LST_SRCS_L))
+SRCS_FR		=	$(addprefix $(D_SRCS_FR), $(LST_SRCS_FR))
+SRCS_ERR	=	$(addprefix $(D_SRCS_ERR), $(LST_SRCS_ERR))
 
 INCS		=	$(addprefix $(D_HEADER), $(HEADER))
 
 OBJS		=	$(addprefix $(D_OBJS), $(LST_OBJS))
+OBJS_P		=	$(addprefix $(D_OBJS_P), $(LST_OBJS_P))
+OBJS_E		=	$(addprefix $(D_OBJS_E), $(LST_OBJS_E))
+OBJS_B		=	$(addprefix $(D_OBJS_B), $(LST_OBJS_B))
+OBJS_H		=	$(addprefix $(D_OBJS_H), $(LST_OBJS_H))
+OBJS_X		=	$(addprefix $(D_OBJS_X), $(LST_OBJS_X))
+OBJS_F		=	$(addprefix $(D_OBJS_F), $(LST_OBJS_F))
+OBJS_L		=	$(addprefix $(D_OBJS_L), $(LST_OBJS_L))
+OBJS_FR		=	$(addprefix $(D_OBJS_FR), $(LST_OBJS_FR))
+OBJS_ERR	=	$(addprefix $(D_OBJS_ERR), $(LST_OBJS_ERR))
 
 LIBFTLIB	=	$(addprefix $(D_LIBFT), $(LIBFT))
 
@@ -89,13 +143,49 @@ all		:	lib $(NAME)
 lib :
 		$(MAKE) -C $(D_LIBFT)
 
-$(NAME)	:	$(OBJS)
-			$(CC) $(OBJS) -lreadline $(LIBFTLIB) -o $(NAME)
+$(NAME)	:	$(OBJS) $(OBJS_P) $(OBJS_E) $(OBJS_B) $(OBJS_H) $(OBJS_X) $(OBJS_F) $(OBJS_L) $(OBJS_FR) $(OBJS_ERR)
+			$(CC) $(OBJS) $(OBJS_P) $(OBJS_E) $(OBJS_B) $(OBJS_H) $(OBJS_X) $(OBJS_F) $(OBJS_L) $(OBJS_FR) $(OBJS_ERR) -lreadline $(LIBFTLIB) -o $(NAME)
 			@echo "${_GREEN}### ${NAME} created ###${_NOC}\n"
 
-$(D_OBJS)%.o	:	$(D_SRCS)%.c $(INCS) Makefile $(LIBFTLIB)
-					mkdir -p $(D_OBJS)
-					$(CC) $(FLAGS) -I $(D_HEADER) -c $< -o $@
+$(D_OBJS)%.o		:	$(D_SRCS)%.c $(INCS) Makefile $(LIBFTLIB)
+						mkdir -p $(D_OBJS)
+						$(CC) $(FLAGS) -I $(D_HEADER) -c $< -o $@
+
+$(D_OBJS_P)%.o		:	$(D_SRCS_P)%.c $(INCS) Makefile $(LIBFTLIB)
+						mkdir -p $(D_OBJS_P)
+						$(CC) $(FLAGS) -I $(D_HEADER) -c $< -o $@
+
+$(D_OBJS_E)%.o		:	$(D_SRCS_E)%.c $(INCS) Makefile $(LIBFTLIB)
+						mkdir -p $(D_OBJS_E)
+						$(CC) $(FLAGS) -I $(D_HEADER) -c $< -o $@
+
+$(D_OBJS_B)%.o		:	$(D_SRCS_B)%.c $(INCS) Makefile $(LIBFTLIB)
+						mkdir -p $(D_OBJS_B)
+						$(CC) $(FLAGS) -I $(D_HEADER) -c $< -o $@
+
+$(D_OBJS_H)%.o		:	$(D_SRCS_H)%.c $(INCS) Makefile $(LIBFTLIB)
+						mkdir -p $(D_OBJS_H)
+						$(CC) $(FLAGS) -I $(D_HEADER) -c $< -o $@
+
+$(D_OBJS_X)%.o		:	$(D_SRCS_X)%.c $(INCS) Makefile $(LIBFTLIB)
+						mkdir -p $(D_OBJS_X)
+						$(CC) $(FLAGS) -I $(D_HEADER) -c $< -o $@
+
+$(D_OBJS_F)%.o		:	$(D_SRCS_F)%.c $(INCS) Makefile $(LIBFTLIB)
+						mkdir -p $(D_OBJS_F)
+						$(CC) $(FLAGS) -I $(D_HEADER) -c $< -o $@
+
+$(D_OBJS_L)%.o		:	$(D_SRCS_L)%.c $(INCS) Makefile $(LIBFTLIB)
+						mkdir -p $(D_OBJS_L)
+						$(CC) $(FLAGS) -I $(D_HEADER) -c $< -o $@
+
+$(D_OBJS_FR)%.o		:	$(D_SRCS_FR)%.c $(INCS) Makefile $(LIBFTLIB)
+						mkdir -p $(D_OBJS_FR)
+						$(CC) $(FLAGS) -I $(D_HEADER) -c $< -o $@
+
+$(D_OBJS_ERR)%.o	:	$(D_SRCS_ERR)%.c $(INCS) Makefile $(LIBFTLIB)
+						mkdir -p $(D_OBJS_ERR)
+						$(CC) $(FLAGS) -I $(D_HEADER) -c $< -o $@
 
 clean	:
 			$(RM) $(OBJS)
