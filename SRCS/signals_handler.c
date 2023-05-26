@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   signals_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/10 11:25:20 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 15:02:51 by rrebois          ###   ########lyon.fr   */
+/*   Created: 2023/05/26 09:11:24 by rrebois           #+#    #+#             */
+/*   Updated: 2023/05/26 13:06:50 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void	ft_free_pp(char **ptr)
+void	handler_sigint(int	signal)
 {
-	size_t	x;
-
-	x = 0;
-	if (ptr == NULL)
+	if (signal != SIGINT)
 		return ;
-	while (ptr[x] != 0)
+	if (signal == SIGINT)
 	{
-		free(ptr[x]);
-		x++;
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_redisplay();
 	}
-	free(ptr);
-	ptr = NULL;
+}
+
+void	handler_hd_sigint(int signal)
+{
+	if (signal != SIGINT)
+		return ;
+	if (signal == SIGINT)
+		exit (0); //penser a free tout dans le child
 }

@@ -53,6 +53,7 @@ LST_SRCS		=	main.c \
 					utils.c \
 					envp_utils.c \
 					signals.c \
+					signals_handler.c \
 					wait.c \
 					close.c
 
