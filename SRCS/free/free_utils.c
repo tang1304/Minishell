@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:25:20 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/25 10:51:01 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/26 15:02:51 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,14 @@ void	free_content_env_node(t_env *tmp)
 	tmp->next = NULL;
 	free(tmp);
 	tmp = NULL;
+}
+
+void	free_structures(t_data *data)
+{
+	if (lstlencmd(data->cmd) > 0)
+	{
+		free_data(data, &free_cmd_strct);
+		ft_free_pp(data->paths);
+	}
+	free_data(data, &free_hd_strct);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/25 15:51:26 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/26 15:00:57 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <termios.h>
 
 typedef struct s_lexer
 {
@@ -98,6 +99,7 @@ typedef struct s_env
 typedef struct s_data
 {
 	char				*str; // command typed by user
+	char				*strtrim;
 	char				*prompt; // has to be free at the end
 	char				*prompt_pwd;
 	char				**envp;
@@ -112,6 +114,7 @@ typedef struct s_data
 	pid_t				*pids;
 	int					stdin_save;
 	int					stdout_save;
+	size_t				max_index;
 	struct s_env		*env;
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
@@ -292,6 +295,7 @@ void		free_all(t_data *data);
 void		ft_free_pp(char **ptr);
 void		free_content_cmd_node(t_command *tmp);
 void		free_content_env_node(t_env *tmp);
+void		free_structures(t_data *data);
 
 /*	exec_data_creation.c	*/
 void		restore_stds(t_data *data);
@@ -310,6 +314,11 @@ void		wait_child(t_data *data);
 
 /*	signals.c	*/
 void	signal_set(void);
+void	signal_hd_set(void);
+
+/*	signals_handler.c	*/
+void	handler_sigint(int signal);
+void	handler_hd_sigint(int signal);
 
 /*	close.c	*/
 void	close_heredoc_pipes(t_data *data);
