@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/17 12:31:41 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 10:02:31 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,11 @@ void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
 			lexer->infile = NULL;
 		}
 		lexer->hd_file = 1;
-		data->hd->LIMITER[data->hd->heredoc] = ft_strdup(file);
 		lexer->hd_number = data->hd->heredoc;
 		data->hd->heredoc++;
 	}
 	else
-	{
-		data->hd->LIMITER[data->hd->heredoc] = ft_strdup(file);
 		data->hd->heredoc++;
-	}
 }
 
 t_lexer	*find_start(t_lexer *tmp)

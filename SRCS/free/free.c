@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
 /*   Updated: 2023/05/30 13:36:30 by tgellon          ###   ########lyon.fr   */
@@ -68,8 +68,8 @@ void	free_data_strct(t_data *data)
 void	free_hd_strct(t_data *data)
 {
 	data->hd->heredoc = 0;
-	if (data->hd->LIMITER != NULL)
-		ft_free_pp(data->hd->LIMITER);//!!! ne se free pas
+	if (data->hd->LIMITER)
+		ft_free_pp(data->hd->LIMITER);
 	if (data->hd->fd != NULL)//pose problème, sans ça ça roule
 	{
 		while (data->hd->heredoc < data->hd->hd_count)
