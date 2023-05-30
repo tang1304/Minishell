@@ -217,8 +217,9 @@ void		expand(t_data *data);
 /*	expander_var.c	*/
 char		*get_var(t_data *data, char *s);
 char		*join_all(char *s, char *b, char *e, char *a);
-void		expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index);
-void		free_struct_expand(t_substr *str);
+void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index);
+void	number_xpd(t_data *data, t_substr *s, size_t *i, size_t index);
+void	free_struct_expand(t_substr *str);
 
 /*	expander_quotes.c	*/
 char		*str_quotes_removal(char *str);
@@ -229,6 +230,10 @@ char		*expand_line(t_data *data, char *str);
 void		prepare_expand_hd(t_data *data);
 void		expand_dollar_hd(t_data *data, t_substr *s, size_t *i);
 void		remove_limiter_quotes(t_data *data);
+
+/*	expand_heredoc_utils.c	*/
+void	question_mark_hd(t_substr *s, size_t *i);
+void	number_xpd_hd(t_data *data, t_substr *s, size_t *i);
 
 /*	expand_utils.c	*/
 void		modify_lxr_nds(t_data *data, t_substr *s, size_t index);
