@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:25:20 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 08:14:03 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 13:33:07 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_free_pp(char **ptr)
 	while (ptr[x] != 0)
 	{
 		free(ptr[x]);
-		ptr[x] = NULL;
+		// ptr[x] = NULL;
 		x++;
 	}
 	free(ptr);
