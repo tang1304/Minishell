@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/30 12:20:16 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 14:31:54 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,37 @@
 
 void	question_mark(t_data *data, t_substr *s, size_t *i, size_t index)
 {
-	char	*buf;
+	// char	*buf;
 
 	if (*i > 1)
 		s->sub_b = ft_substr(s->s, 0, *i - 1);
 	while (ft_isalnum(s->s[*i]) == 1)
 		*i = *i + 1;
 	s->sub_a = ft_substr(s->s, *i + 1, ft_strlen(s->s) - *i);
-	buf = ft_substr(s->s, ft_strlen(s->sub_b), *i - (ft_strlen(s->sub_b)));
+	// buf = ft_substr(s->s, ft_strlen(s->sub_b), *i - (ft_strlen(s->sub_b)));
 	s->sub_m = ft_itoa(g_status);
 	if (check_space_expand(data, s, index) == 1)
 		return ;
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
-	free(buf);
+	s->s = join_all(s->s, s->sub_b, s->sub_m, s->sub_a);
+}
+
+void	number_xpd(t_data *data, t_substr *s, size_t *i, size_t index)
+{
+	char	*buf;
+
+	if (*i > 1)
+		s->sub_b = ft_substr(s->s, 0, *i - 1);
+printf("STRING BEFORE = %s\n", s->sub_b);
+	buf = ft_substr(s->s, ft_strlen(s->sub_b) + 1, *i);
+printf("STRING expand = %s\n", s->sub_m);
+	s->sub_a = ft_substr(s->s, *i + 1, ft_strlen(s->s) - *i);
+printf("STRING AFTER = %s\n", s->sub_a);
+	// buf = ft_substr(s->s, ft_strlen(s->sub_b), *i - (ft_strlen(s->sub_b)));
+	s->sub_m = get_var(data, buf);
+	if (check_space_expand(data, s, index) == 1)
+		return ;
+	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
 	s->s = join_all(s->s, s->sub_b, s->sub_m, s->sub_a);
 }
 
@@ -40,6 +58,11 @@ void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index)
 	{
 		question_mark(data, s, i, index);
 		return ;//add function with signals later
+	}
+	else if (ft_isdigit(s->s[*i]) == 1)
+	{
+		number_xpd(data, s, i, index);
+		return;
 	}
 	if (*i > 1)
 		s->sub_b = ft_substr(s->s, 0, *i - 1);
