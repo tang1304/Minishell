@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-//ls <TODO | wc <Makefile >outer | test >out working fiiiiiiine !!!!!
+
 void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
 {
 	if (i == 0)
@@ -67,12 +67,12 @@ void	add_infile(t_data *data, char *file, size_t index, int valid)
 			return ;
 		}
 		tmp = tmp->next;
-	}//ajouter node avec derniere redir dans le cas ou ls |>out
+	}
 }
 
 void	add_outfile(t_data *data, char *file, size_t index, int valid)
 {
-	t_lexer	*tmp; // si multiples inf or
+	t_lexer	*tmp;
 
 	tmp = data->lexer;
 	while (tmp->index != index)

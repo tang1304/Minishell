@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:14:42 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/19 14:40:06 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 15:11:16 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,29 @@ void	add_cmd_index(t_data *data)
 	while (tmp != NULL)
 	{
 		tmp->index = i;
-// if (tmp->word != NULL)
-// 	// printf("word: %s index: %ld\n", tmp->word, tmp->index);
-// else
-	// printf("token: %s index: %ld\n", tmp->token, tmp->index);
 		i++;
 		tmp = tmp->next;
 	}
+}
+
+void	fillup_cmd_node(t_command *new, t_lexer *tmp)
+{
+	if (tmp->infile != NULL)
+		new->infile = ft_strdup(tmp->infile);
+	if (tmp->outfile != NULL)
+		new->outfile = ft_strdup(tmp->outfile);
+	if (tmp->hd_file != 0)
+		new->heredoc_file = tmp->hd_file;
+	if (tmp->hd_number != -1)
+		new->heredoc_num = tmp->hd_number;
+	if (new->inf_err == 0)
+		new->inf_err = tmp->inf_err;
+	if (new->pipe_b == 0)
+		new->pipe_b = tmp->pipe_b;
+	if (new->pipe_a == 0)
+		new->pipe_a = tmp->pipe_a;
+	if (new->fdin == 0)
+		new->fdin = tmp->fdin;
+	if (new->fdout == 0)
+		new->fdout = tmp->fdout;
 }
