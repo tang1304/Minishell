@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 08:42:50 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 12:42:58 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,7 @@ void		expand(t_data *data);
 char		*get_var(t_data *data, char *s);
 char		*join_all(char *s, char *b, char *e, char *a);
 void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index);
+void	free_struct_expand(t_substr *str);
 
 /*	expander_quotes.c	*/
 char		*str_quotes_removal(char *str);
