@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:47:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/30 08:54:31 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 13:32:31 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,12 @@ static void	loop_on_path(t_data *data, char **cmd_args)
 	int		i;
 	char	*cmd;
 
+	if (!data->paths || !data->paths[0])
+		return ;
 	i = -1;
 	cmd = ft_strjoin("/", cmd_args[0]);
 	if (cmd == NULL)
 		exit_error(data);
-	if (data->paths[0] == NULL)
-		return ;
 	while (data->paths[++i])
 	{
 		join_path_and_cmd(data, cmd, i);

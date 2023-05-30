@@ -112,7 +112,6 @@ char	*join_all(char *s, char *b, char *e, char *a)
 	return (s);
 }
 
-
 // void	free_struct_expand(t_substr *str) //appara;ent useless
 // {
 // 	if (str->before != NULL)

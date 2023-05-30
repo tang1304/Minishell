@@ -21,9 +21,7 @@ void	prompt_loop(t_data *data)
 	signal_set();
 	while (1)
 	{
-		update_pwd(data);
-		prompt = ft_strjoin(data->prompt, data->prompt_pwd);
-		prompt = ft_strjoin_gnl(prompt, "$ ");
+		prompt = update_pwd(data);
 		data->str = ft_strtrim_free(ft_strdup(readline(prompt)), " ");
 		free(prompt);
 		if (ft_strlen(data->str) > 0)

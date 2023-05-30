@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 08:58:51 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 11:38:14 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ static int	ft_pwd(t_data *data)
 {
 	char	*line;
 
-	line = search_env(data, "PWD");
+	(void)data;
+	line = getcwd(NULL, 0);
 	printf("%s\n", line);
+	free(line);
 	return (1);
 }
 

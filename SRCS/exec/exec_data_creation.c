@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 08:52:35 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 12:51:40 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	extract_paths(t_data *data)
 	}
 	if (s != NULL)
 	{
-		printf("\nICIIIIII\n");
 		data->paths = ft_split(s, ':');
 		if (!data->paths)
 			exec_error_handle(data);

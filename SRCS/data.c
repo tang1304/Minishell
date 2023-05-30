@@ -6,17 +6,28 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 09:08:35 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 12:00:02 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void	update_pwd(t_data *data)
+char	*update_pwd(t_data *data)
 {
-	data->oldpwd = search_env(data, "OLDPWD");
-	data->pwd = search_env(data, "PWD");
-	data->prompt_pwd = data->pwd;
+	char	*prompt;
+
+	if (search_env(data, "PWD") == NULL)
+	{
+		data->prompt_pwd = getcwd(NULL, 0);
+		prompt = ft_strjoin_free_s2(data->prompt, data->prompt_pwd);
+	}
+	else
+	{
+		data->prompt_pwd = search_env(data, "PWD");
+		prompt = ft_strjoin(data->prompt, data->prompt_pwd);
+	}
+	prompt = ft_strjoin_gnl(prompt, "$ ");
+	return (prompt);
 }
 
 static char	*envp_handle(char *str)
