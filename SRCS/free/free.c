@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 08:52:57 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 09:30:32 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,14 @@ void	free_data_strct(t_data *data)
 		free(data->path);
 	if (data->envp)
 		ft_free_pp(data->envp);
-	// if (data->paths)
-	// 	ft_free_pp(data->paths);
+	if (data->paths)
+		ft_free_pp(data->paths);
 }
 
 void	free_hd_strct(t_data *data)
 {
 	data->hd->heredoc = 0;
-	if (data->hd->LIMITER)
+	if (data->hd->LIMITER != NULL)
 		ft_free_pp(data->hd->LIMITER);//!!! ne se free pas
 	if (data->hd->fd != NULL)//pose problème, sans ça ça roule
 	{
