@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 08:42:50 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 11:22:22 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int	g_status;
 
 /*	data.c	*/
 void		data_initialize(t_data *data, char **envp);
-void		update_pwd(t_data *data);
+char		*update_pwd(t_data *data);
 char		**get_envp(t_data *data, char **envp);
 
 /*	loop.c	*/

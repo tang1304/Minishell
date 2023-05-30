@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/30 09:01:22 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 11:06:17 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ char	*join_all(char *s, char *b, char *e, char *a)
 		s = ft_strjoin_free(s, a);
 	return (s);
 }
-
 
 // void	free_struct_expand(t_substr *str) appara;ent useless
 // {
