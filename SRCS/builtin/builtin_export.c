@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/25 11:39:56 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 09:07:27 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ static char	**export_var(t_data *data, char *cmd)
 		new_envp[j] = ft_strdup(data->envp[j]);
 		free(data->envp[j]);
 	}
+	free(data->envp);
 	new_envp[n] = ft_strdup(cmd);
 	new_envp[n + 1] = '\0';
 	if (!new_envp[n])

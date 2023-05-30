@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 14:49:41 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 08:58:51 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static void	ft_exit(t_data *data, char **str)
 	if (str[1])
 		printf("minishell: exit: %s: numeric argument required\n", str[1]);
 	free_all(data);
-	// restore_stds(data);
 	if (data->stdin_save > 0 && data->stdout_save > 0)
 	{
 		if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)

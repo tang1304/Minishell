@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/26 11:44:43 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 09:01:22 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,25 @@ char	*get_var(t_data *data, char *s)
 	size_t	i;
 	size_t	k;
 
-	k = 0;
+	k = -1;
 	s = ft_substr(s, 1, ft_strlen(s) - 1);
 	var = ft_strdup("");
-	// if (var == NULL)
-	// 	return (NULL);
-	while (data->envp[k])
+	if (var == NULL)
+		exit_error(data);
+	while (data->envp[++k])
 	{
 		i = 0;
 		while (data->envp[k][i] != '=')
 			i++;
-		if (ft_strncmp(data->envp[k], s, ft_strlen(s)) == 0 && ft_strlen(s) == i)
+		if (ft_strncmp(data->envp[k], s, ft_strlen(s)) == 0 && \
+			ft_strlen(s) == i)
 		{
 			free(var);
 			var = ft_substr(data->envp[k], i + 1, (ft_strlen(*data->envp)));
-			// if (var == NULL)
-			// 	return (NULL);
+			if (var == NULL)
+				exit_error(data);
 			break ;
 		}
-		k++;
 	}
 	return (var);
 }

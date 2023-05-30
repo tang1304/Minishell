@@ -90,7 +90,7 @@ LST_SRCS_H		=	heredoc.c \
 
 LST_SRCS_X		=	exec_data_creation.c \
 					exec.c \
-					exec_dup.c
+					exec_utils.c
 
 LST_SRCS_F		=	add_infile_outfile.c \
 					add_infile_outfile_utils.c \
