@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 10:37:52 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 11:25:36 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static int	pwds_handling(t_data *data)
 			replace_env(data, "OLDPWD", search_env(data, "PWD"));
 		if (search_env(data, "PWD"))
 			replace_env(data, "PWD", current);
-		printf("\nOK\n");
 		var_array_replacement(data, "OLDPWD=", search_env(data, "OLDPWD"));
 		var_array_replacement(data, "PWD=", current);
 		free(current);
