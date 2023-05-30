@@ -18,7 +18,15 @@ void	expand_dollar_hd(t_data *data, t_substr *s, size_t *i)
 
 	*i = *i + 1;
 	if (s->s[*i] == '?')
+	{
+		question_mark_hd(s, i);
 		return ; //add function with signals later
+	}
+	else if (ft_isdigit(s->s[*i]) == 1)
+	{
+		number_xpd_hd(data, s, i);
+		return;
+	}
 	if (*i > 1)
 		s->sub_b = ft_substr(s->s, 0, *i - 1);
 	while (ft_isalnum(s->s[*i]) == 1)
