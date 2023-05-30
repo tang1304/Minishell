@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 12:00:02 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 14:54:29 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ char	*update_pwd(t_data *data)
 	if (search_env(data, "PWD") == NULL)
 	{
 		data->prompt_pwd = getcwd(NULL, 0);
+		if (!data->prompt_pwd)
+		{
+			perror("minishell: pwd: ");
+			exit_error(data);
+		}
 		prompt = ft_strjoin_free_s2(data->prompt, data->prompt_pwd);
 	}
 	else
