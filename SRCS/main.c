@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 07:28:41 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 10:39:44 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 11:38:07 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	(void)av;
 	t_data	data;
 
+	(void)av;
 	ft_bzero(&data, sizeof(t_data));
 	if (ac != 1)
 	{
