@@ -76,7 +76,8 @@ LST_SRCS_E		=	expand.c \
 					expander_quotes.c \
 					expander_var.c \
 					expand_utils.c \
-					expand_heredoc.c
+					expand_heredoc.c \
+					expand_heredoc_utils.c
 
 LST_SRCS_B		=	builtins.c \
 					builtin_cd.c \
