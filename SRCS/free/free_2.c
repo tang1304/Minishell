@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 14:39:13 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 08:42:10 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	free_content_env_node(t_env *tmp)
 void	free_loop(t_data *data)
 {
 	free_data(data, &free_cmd_strct);
-	ft_free_pp(data->paths);
+	if (data->paths != NULL)
+		ft_free_pp(data->paths);
 	free_data(data, &free_hd_strct);
 	free(data->str);
 }
@@ -55,6 +56,10 @@ void	free_all(t_data *data)
 	free_data(data, &free_hd_strct);
 	free_data(data, &free_env_strct);
 	free_data_strct(data);
+	if (data->fdin > 0)
+		close(data->fdin);
+	if (data->fdout > 0)
+		close(data->fdout);
 }
 
 void	free_data(t_data *data, void(*f)())

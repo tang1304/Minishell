@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 15:00:57 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/29 12:05:58 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,9 +312,9 @@ void		exec_cmd_lst(t_data *data);
 /*	exec.c	*/
 void		exec(t_data *data, char **cmd);
 
-/*	exec_dup.c	*/
+/*	exec_utils.c	*/
 int			heredoc_check(t_data *data, t_command *cmd);
-void		both_dup2(t_data *data, int in, int out);
+void		exec_error_handle(t_data *data);
 
 /*	wait.c	*/
 void		wait_child(t_data *data);

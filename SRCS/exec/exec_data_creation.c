@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 15:02:48 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 08:52:35 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ void	extract_paths(t_data *data)
 	}
 	if (s != NULL)
 	{
+		printf("\nICIIIIII\n");
 		data->paths = ft_split(s, ':');
-		// if (!data->paths)
-		// 	return ();
+		if (!data->paths)
+			exec_error_handle(data);
 	}
 }
 
@@ -50,7 +51,6 @@ Si pipe et outfile, envoi cmd dans outfile*/
 static void	command_init(t_data *data, t_command *cmd)
 {
 	close(data->pipe[0]);
-	// heredoc_check(data, cmd);
 	if (!cmd->cmd[0])
 		return ;
 	if (cmd->fdin > 0 && !cmd->heredoc_file)
@@ -73,6 +73,7 @@ static void	command_init(t_data *data, t_command *cmd)
 		if (close(data->pipe[1]) == -1)
 			return (perror("Error in child close"));
 	}
+	close(data->pipe[1]);
 }
 
 static void	forking(t_data *data, t_command *cmd, int i)
@@ -90,21 +91,15 @@ static void	forking(t_data *data, t_command *cmd, int i)
 		}
 		else
 			exec(data, cmd->cmd);
-		printf("\nCHILD BUG\n");
 	}
 	else
 	{
 		printf("\nParent\n");
 		if (cmd->pipe_a == 1)
 			close(data->pipe[1]);
-		// if (!cmd->heredoc_file)
-		// {
-			if (dup2(data->pipe[0], STDIN_FILENO) == -1)
-				return (perror("Error with parent dup2"));
-			close(data->pipe[0]);
-		// }
-		// else
-		// 	heredoc_check(data, cmd);
+		if (dup2(data->pipe[0], STDIN_FILENO) == -1)
+			return (perror("Error with parent dup2"));
+		close(data->pipe[0]);
 	}
 }
 
@@ -134,6 +129,7 @@ void	exec_cmd_lst(t_data *data)
 				perror("Pipe error");
 			i = fork();
 			forking(data, tmp, i);
+			close(data->pipe[1]);
 			waitpid(i, &status, 0);
 			g_status = WEXITSTATUS(status);
 		}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_dup.c                                         :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:19:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/25 13:14:19 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/29 13:26:51 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,13 @@ printf("test = %d\n", cmd->heredoc_num);
 	return (0);
 }
 
-void	both_dup2(t_data *data, int in, int out)
+void	exec_error_handle(t_data *data)
 {
-	(void)data;
-
-	if (dup2(in, STDIN_FILENO) == -1)
-	{
-		// frees;
-		exit(EXIT_SUCCESS);
-	}
-	if (dup2(out, STDOUT_FILENO) == -1)
-	{
-		// frees;
-		exit(EXIT_SUCCESS);
-	}
+	free_all(data);
+	close(data->pipe[0]);
+	close(data->pipe[1]);
+	close(data->stdin_save);
+	close(data->stdout_save);
+	close(data->fdin);
+	close(data->fdout);
 }

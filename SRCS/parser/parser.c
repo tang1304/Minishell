@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 08:04:21 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/29 10:09:42 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,17 +145,17 @@ printf("len cmdlst = %ld\n", lstlencmd(t));p = 0;
 			printf("cmd[%d] = %s\n", p, t->cmd[p]);
 			p++;
 		}
-	printf("infile = %s\n", t->infile);
-	printf("inf_err= %d\n", t->inf_err);
-	printf("outfile = %s\n", t->outfile);
-	printf("out_err = %d\n", t->out_err);
-	printf("heredoc? = %d\n", t->heredoc_file);
-	printf("heredoc numba = %d\n", t->heredoc_num);
-	printf("pipe before = %d\n", t->pipe_b);
-	printf("pipe after = %d\n", t->pipe_a);
-	printf("fdin = %d\n", t->fdin);
-	printf("fdout = %d\n", t->fdout);
-	printf("\n");
+	// printf("infile = %s\n", t->infile);
+	// printf("inf_err= %d\n", t->inf_err);
+	// printf("outfile = %s\n", t->outfile);
+	// printf("out_err = %d\n", t->out_err);
+	// printf("heredoc? = %d\n", t->heredoc_file);
+	// printf("heredoc numba = %d\n", t->heredoc_num);
+	// printf("pipe before = %d\n", t->pipe_b);
+	// printf("pipe after = %d\n", t->pipe_a);
+	// printf("fdin = %d\n", t->fdin);
+	// printf("fdout = %d\n", t->fdout);
+	// printf("\n");
 	t=t->next;
 	}
 	printf("data fdin = %d\n", data->fdin);

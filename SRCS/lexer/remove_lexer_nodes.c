@@ -63,6 +63,10 @@ void	remove_front_nodes(t_data *data, size_t len)
 	tmp = data->lexer;
 	data->lexer = tmp->next;
 	data->lexer->prev = NULL;
+	if (tmp->fdin)
+		close(tmp->fdin);
+	if (tmp->fdout)
+		close(tmp->fdout);
 	free_content_lexer_node(tmp);
 }
 
@@ -78,6 +82,10 @@ void	remove_back_nodes(t_data *data)
 		while (tmp->next != NULL)
 			tmp = tmp->next;
 		tmp->prev->next = NULL;
+		if (tmp->fdin)
+			close(tmp->fdin);
+		if (tmp->fdout)
+			close(tmp->fdout);
 		free_content_lexer_node(tmp);
 		times--;
 	}
