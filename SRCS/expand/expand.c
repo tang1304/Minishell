@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/25 10:30:44 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 11:11:20 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static void	expand_quotes(t_data *data, t_substr *str, size_t *i, char c)
 static char	*check_char(t_data *data, char *s, size_t *i, size_t index)
 {
 	t_substr	str;
+	// char		*ptr;
 
 	ft_bzero(&str, sizeof(t_substr));
 	str.s = s;
@@ -73,6 +74,7 @@ static char	*check_char(t_data *data, char *s, size_t *i, size_t index)
 		expand_quotes(data, &str, i, '\'');
 	else
 		expand_quotes(data, &str, i, '"');
+	// ptr = ft_strdup(str.s);
 	// free_struct_expand(&str);
 	return (str.s);
 }
