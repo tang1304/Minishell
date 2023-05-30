@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/25 16:08:48 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 09:08:35 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ char	**get_envp(t_data *data, char **envp)
 	while (envp[i])
 		i++;
 	new_envp = (char **)malloc(sizeof(char *) * (i + 1));
-	// if (!new_envp)
-	// 	;
+	if (!new_envp)
+		exit_error(data);
 	i = -1;
 	while (envp[++i])
 	{
@@ -89,8 +89,7 @@ void	data_initialize(t_data *data, char **envp)
 	char		*user;
 	t_heredoc	doc;
 
-	// data->stdin_save = dup(STDIN_FILENO);
-	// data->stdout_save = dup(STDOUT_FILENO);
+	g_status = 0;
 	ft_bzero(&doc, sizeof(t_heredoc));
 	if (!envp[0])
 		data->envp = env_i_handle(data);

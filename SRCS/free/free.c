@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
 /*   Updated: 2023/05/30 08:52:57 by rrebois          ###   ########lyon.fr   */
@@ -23,8 +23,6 @@ void	free_lexer_strct(t_data *data)
 		free_content_lexer_node(tmp);
 		tmp = data->lexer;
 	}
-	// free_content_lexer_node(data->lexer);
-	// data->lexer = NULL;
 }
 
 void	free_cmd_strct(t_data *data)
@@ -38,8 +36,6 @@ void	free_cmd_strct(t_data *data)
 		free_content_cmd_node(tmp);
 		tmp = data->cmd;
 	}
-	// free_content_cmd_node(data->cmd);
-	// data->cmd = NULL;
 }
 
 void	free_env_strct(t_data *data)
@@ -53,8 +49,6 @@ void	free_env_strct(t_data *data)
 		free_content_env_node(tmp);
 		tmp = data->env;
 	}
-	// free_content_cmd_node(data->cmd);
-	// data->cmd = NULL;
 }
 
 void	free_data_strct(t_data *data)
@@ -74,9 +68,9 @@ void	free_data_strct(t_data *data)
 void	free_hd_strct(t_data *data)
 {
 	data->hd->heredoc = 0;
-	if (data->hd->LIMITER != NULL)
-		ft_free_pp(data->hd->LIMITER);
-	if (data->hd->fd != NULL) //pose problème, sans ça ça roule
+	if (data->hd->LIMITER)
+		ft_free_pp(data->hd->LIMITER);//!!! ne se free pas
+	if (data->hd->fd != NULL)//pose problème, sans ça ça roule
 	{
 		while (data->hd->heredoc < data->hd->hd_count)
 		{
@@ -89,18 +83,4 @@ void	free_hd_strct(t_data *data)
 	data->hd->fd = NULL;
 	data->hd->hd_count = 0;
 	data->hd->heredoc = 0;
-}
-
-void	free_all(t_data *data)
-{
-	free_data(data, &free_cmd_strct);
-	free_data(data, &free_lexer_strct);
-	free_data(data, &free_hd_strct);
-	free_data(data, &free_env_strct);
-	free_data_strct(data);
-}
-
-void	free_data(t_data *data, void(*f)())
-{
-	(*f)(data);
 }

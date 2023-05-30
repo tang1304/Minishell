@@ -24,7 +24,7 @@ void	prompt_loop(t_data *data)
 		update_pwd(data);
 		prompt = ft_strjoin(data->prompt, data->prompt_pwd);
 		prompt = ft_strjoin_gnl(prompt, "$ ");
-		data->str = ft_strdup(readline(prompt));
+		data->str = ft_strtrim_free(ft_strdup(readline(prompt)), " ");
 		free(prompt);
 		if (ft_strlen(data->str) > 0)
 			add_history(data->str);
@@ -38,17 +38,14 @@ void	prompt_loop(t_data *data)
 				expand(data);
 				token_check(data);
 				create_cmd_lst(data);
-	printf("cmd len =%ld\n", lstlencmd(data->cmd));
+	// printf("cmd len =%ld\n", lstlencmd(data->cmd));
 				if (lstlencmd(data->cmd) > 0)
 				{
 					extract_paths(data);
 					exec_cmd_lst(data);
 				}
 			}
-
-		}
-		free_structures(data);
-		close_files(data);
+    }
 // printf("cmd len =%ld\n", lstlencmd(data->cmd));//<Makefile<<a sgf somewhere
 			// if (lstlencmd(data->cmd) > 0)
 			// {
@@ -60,6 +57,7 @@ void	prompt_loop(t_data *data)
 		// if (error_quotes(line) != 0)
 		// 	ft_putstr_fd("Error: Invalid syntax\n", 2);// Send the line into the lexer to check for errors and create the array of cmd/pipes/etc..
 		// ft_printf("%s\n", line);//juste a test line. Gotta be removed at the end
-		free(data->str);
+		close_files(data);
+    free_loop(data);
 	}
 }
