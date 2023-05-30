@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/25 14:22:03 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/29 14:20:24 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static int	var_array_replacement(t_data *data, char *var, char *new)
 		{
 			free(data->envp[i]);
 			data->envp[i] = ft_strjoin(var, new);
+			if (data->envp[i] == NULL)
+				exit_error(data);
 			return (1);
 		}
 	}
@@ -32,26 +34,14 @@ static int	var_array_replacement(t_data *data, char *var, char *new)
 static int	pwds_handling(t_data *data)
 {
 	char	*current;
-	int		check_1;
-	int		check_2;
-	int		check_3;
-	int		check_4;
 
 	current = getcwd(NULL, 0);
 	if (current != NULL)
 	{
-		check_1 = replace_env(data, "OLDPWD", search_env(data, "PWD"));
-		if (check_1 == -1)
-			return (-1);
-		check_2 = replace_env(data, "PWD", current);
-		if (check_2 == -1)
-			return (-1);
-		check_3 = var_array_replacement(data, "OLDPWD=", search_env(data, "OLDPWD"));
-		if (check_3 == -1)
-			return (-1);
-		check_4 = var_array_replacement(data, "PWD=", current);
-		if (check_4 == -1)
-			return (-1);
+		replace_env(data, "OLDPWD", search_env(data, "PWD"));
+		replace_env(data, "PWD", current);
+		var_array_replacement(data, "OLDPWD=", search_env(data, "OLDPWD"));
+		var_array_replacement(data, "PWD=", current);
 		free(current);
 		return (1);
 	}
@@ -68,8 +58,6 @@ static int	cd_home(t_data *data)
 		return (0);
 	chdir(home);
 	check = pwds_handling(data);
-	if (check == -1)
-		return (0);
 	if (check == 0)
 		return (perror("getcwd: "), -1);
 	return (1);
