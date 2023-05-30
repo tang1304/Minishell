@@ -109,12 +109,12 @@ printf("\n\nLEN LIMITER = %ld\n", ft_strlen_pp(data->hd->LIMITER));
 size_t x = 0;
 while (x<ft_strlen_pp(data->hd->LIMITER))
 {
-printf("LIMITER = %s\n", data->hd->LIMITER[x]);
-printf("heredoc val = %ld\n", x);
+// printf("LIMITER = %s\n", data->hd->LIMITER[x]);
+// printf("heredoc val = %ld\n", x);
 x++;
 }
-printf("HD_count = %d\n", data->hd->hd_count);
-printf("heredoc = %d\n", data->hd->heredoc);
+// printf("HD_count = %d\n", data->hd->hd_count);
+// printf("heredoc = %d\n", data->hd->heredoc);
 
 //end test
 
