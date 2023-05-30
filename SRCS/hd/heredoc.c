@@ -35,6 +35,7 @@ void	heredoc_count(t_data *data)
 }
 
 void	heredoc_pipe(t_data *data)
+{
 	char	*line;
 	char	*buffer;
 
@@ -73,7 +74,7 @@ void	create_pipes_hd(t_data *data)
 	}
 	data->hd->heredoc = 0;
 	while (data->hd->heredoc < data->hd->hd_count)
-	{printf("LOOOOOOOOOP!!!\n");
+	{//printf("LOOOOOOOOOP!!!\n");
 		if (pipe(data->hd->fd[data->hd->heredoc]) < 0)
 			return ;//grbage val??
 		data->hd->heredoc++;

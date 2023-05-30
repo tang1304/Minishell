@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:14:42 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 15:11:16 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 16:15:48 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	fillup_cmd_node(t_command *new, t_lexer *tmp)
 		new->heredoc_file = tmp->hd_file;
 	if (tmp->hd_number != -1)
 		new->heredoc_num = tmp->hd_number;
+	if (new->out_err == 0)
+		new->out_err = tmp->out_err;
 	if (new->inf_err == 0)
 		new->inf_err = tmp->inf_err;
 	if (new->pipe_b == 0)

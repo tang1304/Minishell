@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_heredoc_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:38:04 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 14:43:24 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 16:43:13 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void	number_xpd_hd(t_data *data, t_substr *s, size_t *i)
 
 	if (*i > 1)
 		s->sub_b = ft_substr(s->s, 0, *i - 1);
-printf("STRING BEFORE = %s\n", s->sub_b);
+// printf("STRING BEFORE = %s\n", s->sub_b);
 	buf = ft_substr(s->s, ft_strlen(s->sub_b) + 1, *i);
-printf("STRING expand = %s\n", s->sub_m);
+// printf("STRING expand = %s\n", s->sub_m);
 	s->sub_a = ft_substr(s->s, *i + 1, ft_strlen(s->s) - *i);
-printf("STRING AFTER = %s\n", s->sub_a);
+// printf("STRING AFTER = %s\n", s->sub_a);
 	// buf = ft_substr(s->s, ft_strlen(s->sub_b), *i - (ft_strlen(s->sub_b)));
 	s->sub_m = get_var(data, buf);
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:19:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/29 13:26:51 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 16:42:41 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	heredoc_check(t_data *data, t_command *cmd)
 	{
 		// if (!cmd->cmd[0] || !cmd->cmd)
 		// 	return (0);
-		printf("\nheredoc\n");
-printf("test = %d\n", cmd->heredoc_num);
+// 		printf("\nheredoc\n");
+// printf("test = %d\n", cmd->heredoc_num);
 		if (dup2(data->hd->fd[cmd->heredoc_num][0], STDIN_FILENO) == -1)
 			return (perror("Error in heredoc dup2"), 0);
 		if (close(data->hd->fd[cmd->heredoc_num][0]) == -1)
