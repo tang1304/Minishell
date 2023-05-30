@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/29 12:05:58 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 08:42:50 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,6 +330,7 @@ void	handler_hd_sigint(int signal);
 /*	close.c	*/
 void	close_heredoc_pipes(t_data *data);
 void	close_all(t_data *data);
+void	close_files(t_data *data);
 // void	close_pipes_no_cmd(t_data *data);
 
 #endif
