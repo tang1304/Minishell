@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/30 16:03:10 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 16:44:39 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	number_xpd(t_data *data, t_substr *s, size_t *i, size_t index)
 
 	if (*i > 1)
 		s->sub_b = ft_substr(s->s, 0, *i - 1);
-printf("STRING BEFORE = %s\n", s->sub_b);
+// printf("STRING BEFORE = %s\n", s->sub_b);
 	buf = ft_substr(s->s, ft_strlen(s->sub_b) + 1, *i);
-printf("STRING expand = %s\n", s->sub_m);
+// printf("STRING expand = %s\n", s->sub_m);
 	s->sub_a = ft_substr(s->s, *i + 1, ft_strlen(s->s) - *i);
-printf("STRING AFTER = %s\n", s->sub_a);
+// printf("STRING AFTER = %s\n", s->sub_a);
 	// buf = ft_substr(s->s, ft_strlen(s->sub_b), *i - (ft_strlen(s->sub_b)));
 	s->sub_m = get_var(data, buf);
 	if (check_space_expand(data, s, index) == 1)
@@ -98,7 +98,7 @@ char	*get_var(t_data *data, char *s)
 			ft_strlen(ptr) == i)
 		{
 			free(var);
-			var = ft_substr(data->envp[k], i + 1, (ft_strlen(*data->envp)));
+			var = ft_substr(data->envp[k], i + 1, (ft_strlen(data->envp[k])));
 			if (var == NULL)
 				exit_error(data);
 			break ;

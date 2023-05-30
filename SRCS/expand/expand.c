@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/30 14:21:05 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 17:32:50 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,63 @@ static char	*expand_str(t_data *data, t_substr *s)
 	}
 	return (s->middle);
 }
+static char	*word_without_quotes(char *str, int i, int j)
+{
+	char	*new_word;
+
+printf("WORD LEN =%d\n", i);
+	new_word = (char *)malloc(sizeof(char) * (ft_strlen(str) - 1));
+	if (!new_word)
+		return (NULL);
+
+	while (i < j)
+	{printf("Char b = %c|\n", str[i]);
+		new_word[i] = str[i];
+		i++;
+	}
+
+	// while (k < j)
+	// {
+	// 	new_word[k] = str[k + 1];printf("Char m = %c|\n", str[k + 1]);
+	// 	k++;
+	// }
+	// while ((size_t)k < ft_strlen(str) - 2)
+	// {
+	// 	new_word[k] = str[k + 2];printf("Char a = %c|\n", str[k + 2]);
+	// 	k++;
+	// }
+	new_word[i] = '\0';
+	free(str);
+	return (new_word);
+}
+
+static char	*str_quotes_removal_test(char *str, char c)
+{
+	int	i;
+	int	j;
+
+// printf("q_pairs:%d\n", q_pairs);
+	i = 0;
+
+		// printf("LA\n");
+		// i = quote_starting_point(str, i);
+printf("WORD LEN =%d\n", i);
+		j = i+1;
+		// while (((str[i] != '"' && str[j] == '"') 
+		// 		|| (str[i] != '\'' && str[j] == '\'')) && str[j] != '\0')
+		while (str[j] != c && str[j] != '\0')
+		{
+			j++;
+		}
+// printf("quotes-> word :%s\n", str);
+		str = word_without_quotes(str, i, j);
+		// if (!new_word)
+		// 	;
+		// i--;
+// printf("quotes-> word :%s\n", str);
+
+	return (str);
+}
 
 static void	expand_quotes(t_data *data, t_substr *str, size_t *i, char c)
 {
@@ -65,12 +122,13 @@ static void	expand_quotes(t_data *data, t_substr *str, size_t *i, char c)
 	while (str->s[*i] != c)
 		*i = *i + 1;
 	str->middle = ft_substr(str->s, j, *i - j);
+printf("STR Before =%s|\n", str->middle);
 	if (*i + 1 < ft_strlen(str->s))
 		str->after = ft_substr(str->s, *i + 1, ft_strlen(str->s));
 	if (c == '"')
 		str->middle = expand_str(data, str);
 	else
-		str->middle = str_quotes_removal(str->middle);
+		str->middle = str_quotes_removal_test(str->middle, c);
 	*i = ft_strlen(str->before) + ft_strlen(str->middle);
 	str->s = join_all(str->s, str->before, str->middle, str->after);
 }
