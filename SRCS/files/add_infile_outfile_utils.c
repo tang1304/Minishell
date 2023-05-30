@@ -6,12 +6,12 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 10:02:31 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 15:17:28 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-//ls <TODO | wc <Makefile >outer | test >out working fiiiiiiine !!!!!
+
 void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
 {
 	if (i == 0)
@@ -67,12 +67,12 @@ void	add_infile(t_data *data, char *file, size_t index, int valid)
 			return ;
 		}
 		tmp = tmp->next;
-	}//ajouter node avec derniere redir dans le cas ou ls |>out
+	}
 }
 
 void	add_outfile(t_data *data, char *file, size_t index, int valid)
 {
-	t_lexer	*tmp; // si multiples inf or
+	t_lexer	*tmp;
 
 	tmp = data->lexer;
 	while (tmp->index != index)

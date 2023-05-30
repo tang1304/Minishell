@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 14:43:33 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 15:12:02 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd);
 t_command	*cmd_lst_end_node(t_data *data, t_command *command, t_lexer *tmp);
 t_command	*cmd_lst(t_data *data, t_command *command, t_lexer *tmp);
 void		add_cmd_index(t_data *data);
+void		fillup_cmd_node(t_command *new, t_lexer *tmp);
 
 /*	add_infile_outfile.c	*/
 void		files_validity(t_data *data, t_lexer *tmp, int *valid);
@@ -283,15 +284,17 @@ int		heredoc_redir(t_data *data);
 void	add_heredoc(t_data *data, char *file, size_t index);
 
 /*	utils.c	*/
-void		complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);
-void		complete_out_data(t_data *data, t_lexer *tmp, char *file, int valid);
-char		*ft_strjoin_expand(char *s1, char *s2);
-char		*ft_strjoin_free(char *s1, char *s2);
 char		*ft_strjoin_free_s2(char *s1, char *s2);
 char		*ft_change_str(char *s1, char *s2);
 size_t		lstlen(t_lexer *lexer);
 size_t		lstlencmd(t_command *cmd);
-size_t	ft_strlen_pp(char **s);
+void		complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);
+
+/*	utils2.c	*/
+char		*ft_strjoin_expand(char *s1, char *s2);
+char		*ft_strjoin_free(char *s1, char *s2);
+void		complete_out_data(t_data *data, t_lexer *tmp, char *file, int valid);
+size_t		ft_strlen_pp(char **s);
 
 /*	free.c	*/
 void		free_lexer_strct(t_data *data);

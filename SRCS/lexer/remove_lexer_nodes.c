@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-// A revoir pour ne pas segf dans le cas ou <TODO |>out
 
 void	free_content_lexer_node(t_lexer *tmp)
 {
@@ -89,28 +88,6 @@ void	remove_back_nodes(t_data *data)
 		free_content_lexer_node(tmp);
 		times--;
 	}
-
-
-	// int		count;
-
-	// count = 2;
-	// while (count > 0)
-	// {
-	// 	tmp = data->lexer;
-	// 	while (tmp->next != NULL)
-	// 		tmp = tmp->next;
-	// 	if (tmp->next != NULL)
-	// 		tmp->next = NULL;
-	// 	tmp->prev->next = NULL;
-	// 	if (tmp->prev != NULL)
-	// 		tmp->prev = NULL;
-	// 	if (tmp->word != NULL)
-	// 		tmp->word = NULL;
-	// 	if (tmp->token != NULL)
-	// 		tmp->token = NULL;
-	// 	free(tmp);
-	// 	count--;
-	// }
 }
 
 void	remove_middle_nodes(t_data *data, size_t index)
