@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 11:25:36 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 14:21:42 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ int	ft_cd(t_data *data, char **cmd)
 		return (1);
 	}
 	if (cmd[2])
-		return (printf("minishell: cd: too many arguments\n"), 1);
+		return (g_status = 1, printf("minishell: cd: too many arguments\n"), 1);
 	else if (chdir(cmd[1]) == -1)
-		return (perror("chdir: "), -1);
+		return (g_status = 1, perror("minishell: cd: "), -1);
 	check = pwds_handling(data);
 	if (check == -1)
 		return (0);

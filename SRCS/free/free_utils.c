@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:25:20 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 13:33:16 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 15:28:56 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,21 @@ void	ft_free_paths(t_data *data)
 	}
 	free(data->paths);
 	data->paths = NULL;
+}
+
+void	ft_free_limiter(t_heredoc *hd)
+{
+	size_t	x;
+
+	x = 0;
+	if (hd->LIMITER == NULL)
+		return ;
+	while (hd->LIMITER[x] != 0)
+	{
+		free(hd->LIMITER[x]);
+		hd->LIMITER[x] = NULL;
+		x++;
+	}
+	free(hd->LIMITER);
+	hd->LIMITER = NULL;
 }
