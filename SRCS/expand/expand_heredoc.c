@@ -61,6 +61,7 @@ void	prepare_expand_hd(t_data *data)
 	{
 		j = 0;
 		quote = 0;
+		data->hd->xpd[i] = 0;
 		while (data->hd->LIMITER[i][j] != '\0')
 		{
 			if (data->hd->LIMITER[i][j] == '\'' || \
