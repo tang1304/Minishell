@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 12:42:58 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 13:35:53 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int	g_status;
 
 /*	data.c	*/
 void		data_initialize(t_data *data, char **envp);
-void		update_pwd(t_data *data);
+char		*update_pwd(t_data *data);
 char		**get_envp(t_data *data, char **envp);
 
 /*	loop.c	*/
@@ -304,6 +304,7 @@ void		free_loop(t_data *data);
 
 /*	free_utils.c	*/
 void		ft_free_pp(char **ptr);
+void		ft_free_paths(t_data *data);
 
 /*	exec_data_creation.c	*/
 void		restore_stds(t_data *data);
