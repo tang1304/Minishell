@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:37:02 by rrebois           #+#    #+#             */
 /*   Updated: 2023/05/30 10:03:10 by rrebois          ###   ########lyon.fr   */
