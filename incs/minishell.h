@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
 /*   Updated: 2023/05/30 15:12:02 by rrebois          ###   ########lyon.fr   */
@@ -227,10 +227,10 @@ char		*str_quotes_removal(char *str);
 int			quotes_removal(t_lexer *lexer);
 
 /*	expand_heredoc.c	*/
-char	*expand_line(t_data *data, char *str);
-void	prepare_expand_hd(t_data *data);
-void	expand_dollar_hd(t_data *data, t_substr *s, size_t *i);
-void	remove_limiter_quotes(t_data *data);
+char		*expand_line(t_data *data, char *str);
+void		prepare_expand_hd(t_data *data);
+void		expand_dollar_hd(t_data *data, t_substr *s, size_t *i);
+void		remove_limiter_quotes(t_data *data);
 
 /*	expand_heredoc_utils.c	*/
 void	question_mark_hd(t_substr *s, size_t *i);
@@ -268,10 +268,10 @@ int			existing_var(t_data *data, char *cmd, int i);
 int			ft_unset(t_data *data, char **cmd);
 
 /*	envp_utils.c	*/
-char	*get_shlvl(char *str);
-char	*search_env(t_data *data, char *env);
-int		replace_env(t_data *data, char *env, char *old_env);
-int		add_env_node(t_env **env, char *str);
+char		*get_shlvl(char *str);
+char		*search_env(t_data *data, char *env);
+int			replace_env(t_data *data, char *env, char *old_env);
+int			add_env_node(t_env **env, char *str);
 
 /*	heredoc.c	*/
 void		heredoc_count(t_data *data);
@@ -280,8 +280,8 @@ void		heredoc_pipe(t_data *data);
 void		create_pipes_hd(t_data *data);
 
 /*	heredoc_redir.c	*/
-int		heredoc_redir(t_data *data);
-void	add_heredoc(t_data *data, char *file, size_t index);
+int			heredoc_redir(t_data *data);
+void		add_heredoc(t_data *data, char *file, size_t index);
 
 /*	utils.c	*/
 char		*ft_strjoin_free_s2(char *s1, char *s2);
@@ -313,6 +313,7 @@ void		free_loop(t_data *data);
 /*	free_utils.c	*/
 void		ft_free_pp(char **ptr);
 void		ft_free_paths(t_data *data);
+void		ft_free_limiter(t_heredoc *hd);
 
 /*	exec_data_creation.c	*/
 void		restore_stds(t_data *data);
@@ -330,17 +331,17 @@ void		exec_error_handle(t_data *data);
 void		wait_child(t_data *data);
 
 /*	signals.c	*/
-void	signal_set(void);
-void	signal_hd_set(void);
+void		signal_set(void);
+void		signal_hd_set(void);
 
 /*	signals_handler.c	*/
-void	handler_sigint(int signal);
-void	handler_hd_sigint(int signal);
+void		handler_sigint(int signal);
+void		handler_hd_sigint(int signal);
 
 /*	close.c	*/
-void	close_heredoc_pipes(t_data *data);
-void	close_all(t_data *data);
-void	close_files(t_data *data);
+void		close_heredoc_pipes(t_data *data);
+void		close_all(t_data *data);
+void		close_files(t_data *data);
 // void	close_pipes_no_cmd(t_data *data);
 
 #endif

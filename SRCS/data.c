@@ -19,6 +19,11 @@ char	*update_pwd(t_data *data)
 	if (search_env(data, "PWD") == NULL)
 	{
 		data->prompt_pwd = getcwd(NULL, 0);
+		if (!data->prompt_pwd)
+		{
+			perror("minishell: pwd: ");
+			exit_error(data);
+		}
 		prompt = ft_strjoin_free_s2(data->prompt, data->prompt_pwd);
 	}
 	else

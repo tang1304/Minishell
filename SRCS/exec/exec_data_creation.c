@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 12:51:40 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 15:55:11 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ static void	command_init(t_data *data, t_command *cmd)
 	close(data->pipe[0]);
 	if (!cmd->cmd[0])
 		return ;
-	if (cmd->fdin > 0 && !cmd->heredoc_file)
+	if (cmd->fdin != 0 && !cmd->heredoc_file)
 	{
+		if (cmd->inf_err > 0)
+			return ;
 		printf("\nfdin, no hd: %d\n", cmd->fdin);
 		if (dup2(cmd->fdin, STDIN_FILENO) == -1)
 			return (perror("Error with infile dup2"));
@@ -79,10 +81,10 @@ static void	forking(t_data *data, t_command *cmd, int i)
 {
 	if (i == 0)
 	{
-		printf("\nChild\n");
 		command_init(data, cmd);
+		printf("inf_err: %d\nout_err:%d\n", cmd->inf_err, cmd->out_err);
 		if (cmd->inf_err || cmd->out_err)
-			exit(EXIT_SUCCESS);
+			exit_error(data);
 		if (check_builtins(cmd->cmd) == SUCCESS)
 		{
 			builtins(data, cmd->cmd);
