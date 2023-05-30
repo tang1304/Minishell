@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 11:22:22 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 13:35:53 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,6 +303,7 @@ void		free_loop(t_data *data);
 
 /*	free_utils.c	*/
 void		ft_free_pp(char **ptr);
+void		ft_free_paths(t_data *data);
 
 /*	exec_data_creation.c	*/
 void		restore_stds(t_data *data);
