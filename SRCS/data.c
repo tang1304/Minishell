@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 11:21:27 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 12:00:02 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,16 @@ char	*update_pwd(t_data *data)
 {
 	char	*prompt;
 
-	data->prompt_pwd = getcwd(NULL, 0);
-	prompt = ft_strjoin_free_s2(data->prompt, data->prompt_pwd);
+	if (search_env(data, "PWD") == NULL)
+	{
+		data->prompt_pwd = getcwd(NULL, 0);
+		prompt = ft_strjoin_free_s2(data->prompt, data->prompt_pwd);
+	}
+	else
+	{
+		data->prompt_pwd = search_env(data, "PWD");
+		prompt = ft_strjoin(data->prompt, data->prompt_pwd);
+	}
 	prompt = ft_strjoin_gnl(prompt, "$ ");
 	return (prompt);
 }
