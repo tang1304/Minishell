@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 13:36:30 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 15:31:41 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,21 @@ void	free_env_strct(t_data *data)
 
 void	free_data_strct(t_data *data)
 {
-	if (data->str)
+	if (data->str != NULL)
+	{
 		free(data->str);
+		data->str = NULL;
+	}
 	if (data->prompt)
+	{
 		free(data->prompt);
+		data->prompt = NULL;
+	}
 	if (data->path)
+	{
 		free(data->path);
+		data->path = NULL;
+	}
 	if (data->envp)
 		ft_free_pp(data->envp);
 	if (data->paths)
@@ -69,7 +78,7 @@ void	free_hd_strct(t_data *data)
 {
 	data->hd->heredoc = 0;
 	if (data->hd->LIMITER)
-		ft_free_pp(data->hd->LIMITER);
+		ft_free_limiter(data->hd);
 	if (data->hd->fd != NULL)//pose problème, sans ça ça roule
 	{
 		while (data->hd->heredoc < data->hd->hd_count)

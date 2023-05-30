@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 13:33:27 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 15:13:16 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ void	free_loop(t_data *data)
 	if (!data->paths || data->paths[0] != NULL)
 		ft_free_paths(data);
 	free_data(data, &free_hd_strct);
-	free(data->str);
+	if (data->str)
+	{
+		free(data->str);
+		data->str = NULL;
+	}
 }
 
 void	free_all(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/29 10:09:42 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 15:56:48 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static t_command	*fillup(t_data *data, size_t i, size_t x, t_command *new)
 			new->fdin = tmp->fdin;
 		if (new->fdout == 0)
 			new->fdout = tmp->fdout;
-		// if (new->out_err == 0)//inutile car a priori on cree le fichier donc...
-		// 	new->out_err = tmp->out_err;
+		if (new->out_err == 0)//inutile car a priori on cree le fichier donc...
+			new->out_err = tmp->out_err;
 		j++;
 		i++;
 		tmp = tmp->next;
