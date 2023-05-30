@@ -6,12 +6,24 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/30 11:11:20 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 14:21:05 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 //Attention si hdh"$USER"hdg -> 1 seul node donc quotes pas au début et à la fin
+
+static char	*expand_number(t_data *data, t_substr *s, size_t *j)
+{
+	*j = *j + 1;
+	s->sub_b = ft_substr(s->middle, 0, *j - 1);
+	*j = *j + 1;
+	s->sub_a = ft_substr(s->middle, *j, ft_strlen(s->middle) - *j);
+	s->sub_m = get_var(data, s->sub_m);
+	*j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
+	s->middle = join_all(s->middle, s->sub_b, s->sub_m, s->sub_a);
+	return (s->middle);
+}
 
 static char	*expand_str(t_data *data, t_substr *s)
 {
@@ -34,6 +46,8 @@ static char	*expand_str(t_data *data, t_substr *s)
 			j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
 			s->middle = join_all(s->middle, s->sub_b, s->sub_m, s->sub_a);
 		}
+		else if (s->middle[j] == '$' && ft_isdigit(s->middle[j + 1]) == 1)
+			s->middle = expand_number(data, s, &j);
 		else
 			j++;
 	}
