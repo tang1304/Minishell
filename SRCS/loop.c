@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 15:12:01 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 08:47:31 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ void	prompt_loop(t_data *data)
 					exec_cmd_lst(data);
 				}
 			}
-			free_structures(data);
-		}
 
+		}
+		free_structures(data);
+		close_files(data);
 // printf("cmd len =%ld\n", lstlencmd(data->cmd));//<Makefile<<a sgf somewhere
 			// if (lstlencmd(data->cmd) > 0)
 			// {
