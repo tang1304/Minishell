@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 08:47:31 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 09:37:06 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,8 @@ void	prompt_loop(t_data *data)
 					exec_cmd_lst(data);
 				}
 			}
-    }
-// printf("cmd len =%ld\n", lstlencmd(data->cmd));//<Makefile<<a sgf somewhere
-			// if (lstlencmd(data->cmd) > 0)
-			// {
-			// 	extract_paths(data);
-			// 	// exec_cmd_lst(data);
-			// 	free_data(data, &free_cmd_strct);
-			// }
-	//if (check_error(line) == SUCCESS)
-		// if (error_quotes(line) != 0)
-		// 	ft_putstr_fd("Error: Invalid syntax\n", 2);// Send the line into the lexer to check for errors and create the array of cmd/pipes/etc..
-		// ft_printf("%s\n", line);//juste a test line. Gotta be removed at the end
+		}
 		close_files(data);
-    free_loop(data);
+		free_loop(data);
 	}
 }
