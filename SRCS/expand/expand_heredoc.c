@@ -34,7 +34,6 @@ char	*expand_line(t_data *data, char *str)
 	t_substr	ptr;
 
 	i = 0;
-	ft_bzero(&ptr, sizeof(t_substr));
 	ptr.s = ft_strjoin(str, "\n");
 	if (data->hd->xpd[data->hd->heredoc] == 1)
 		return (ptr.s);
