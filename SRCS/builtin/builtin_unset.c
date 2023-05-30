@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:54:14 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/25 11:33:40 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 08:44:00 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,17 @@ static void	unset_var(t_data *data, char *str)
 				i++;
 			}
 			data->envp[i] = NULL;
+			// if (ft_strncmp(str, "PATH", 5))
+			// {
+			// 	printf("LAAAAAA\n");
+			// 	ft_free_pp(data->paths);
+			// }
 			break ;
 		}
 	}
 }
 
-static t_env	*remove_node(t_env **envp)
+static void	*remove_node(t_env **envp)
 {
 	t_env	*tmp;
 
@@ -85,6 +90,7 @@ int	ft_unset(t_data *data, char **cmd)
 			{
 				unset_var(data, lst->var_name);
 				lst = remove_node(&lst);
+				return (1);
 			}
 			lst = lst->next;
 		}
