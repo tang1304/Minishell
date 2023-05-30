@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/29 10:09:42 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 15:11:41 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,7 @@ static t_command	*fillup(t_data *data, size_t i, size_t x, t_command *new)
 	while (i < x)
 	{
 		new->cmd[j] = ft_strdup(tmp->word);
-		if (tmp->infile != NULL)
-			new->infile = ft_strdup(tmp->infile);
-		if (tmp->outfile != NULL)
-			new->outfile = ft_strdup(tmp->outfile);
-		if (tmp->hd_file != 0)
-			new->heredoc_file = tmp->hd_file;
-		if (tmp->hd_number != -1)
-			new->heredoc_num = tmp->hd_number;
-		if (new->inf_err == 0)
-			new->inf_err = tmp->inf_err;
-		if (new->pipe_b == 0)
-			new->pipe_b = tmp->pipe_b;
-		if (new->pipe_a == 0)
-			new->pipe_a = tmp->pipe_a;
-		if (new->fdin == 0)
-			new->fdin = tmp->fdin;
-		if (new->fdout == 0)
-			new->fdout = tmp->fdout;
-		// if (new->out_err == 0)//inutile car a priori on cree le fichier donc...
-		// 	new->out_err = tmp->out_err;
+		fillup_cmd_node(new, tmp);
 		j++;
 		i++;
 		tmp = tmp->next;
@@ -73,7 +54,7 @@ t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
 {
 	t_command	*new;
 
-	if (i == x) // cancelles creation of empty node at the beginning if <Makefile |ls
+	if (i == x)
 		return (NULL);
 	new = (t_command *)malloc(sizeof(*new));
 	if (new == NULL)
@@ -98,7 +79,7 @@ static void	update_data_structs(t_data *data)
 	close_heredoc_pipes(data);
 }
 
-void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a la fin
+void	create_cmd_lst(t_data *data)
 {
 	t_lexer		*tmp;
 	t_command	*command;
@@ -110,7 +91,7 @@ void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a l
 		while (tmp->next != NULL)
 			tmp = tmp->next;
 		if ((tmp->token == NULL && tmp->word == NULL && lstlen(tmp) == 1))
-			return ;// au cas ou on a <TODO par ex
+			return ;
 		if (tmp->token == NULL)
 		{
 			tmp = data->lexer;
@@ -124,41 +105,4 @@ void	create_cmd_lst(t_data *data)//si ls |>out faut creer un autre node vide a l
 		data->cmd = command;
 	}
 	update_data_structs(data);
-	// ;arche pas i que des pipes
-	//a la fin on peut free le lexer
-
-
-	// TEST ls <TODO -l|wc >outfile -l <<eof
-	// ls <TODO -l|wc >outfile -l <eof
-	// ls <TODO -l <<eof|wc >outfile -l <<eof1 <<eof2 infile todo added instead of null
-
-	int p;
-	t_command *t;
-	t = command;
-	printf("\n\n\n");
-printf("len cmdlst = %ld\n", lstlencmd(t));p = 0;
-	while (t != NULL)
-	{printf("node %d:\n", p);p = 0;
-
-		while (t->cmd[p] != NULL)
-		{
-			printf("cmd[%d] = %s\n", p, t->cmd[p]);
-			p++;
-		}
-	// printf("infile = %s\n", t->infile);
-	// printf("inf_err= %d\n", t->inf_err);
-	// printf("outfile = %s\n", t->outfile);
-	// printf("out_err = %d\n", t->out_err);
-	// printf("heredoc? = %d\n", t->heredoc_file);
-	// printf("heredoc numba = %d\n", t->heredoc_num);
-	// printf("pipe before = %d\n", t->pipe_b);
-	// printf("pipe after = %d\n", t->pipe_a);
-	// printf("fdin = %d\n", t->fdin);
-	// printf("fdout = %d\n", t->fdout);
-	// printf("\n");
-	t=t->next;
-	}
-	printf("data fdin = %d\n", data->fdin);
-	printf("data fdout = %d\n", data->fdout);
-// 	// END TEST
 }

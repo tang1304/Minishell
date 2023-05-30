@@ -51,6 +51,7 @@ LST_SRCS		=	main.c \
 					data.c \
 					loop.c \
 					utils.c \
+					utils2.c \
 					envp_utils.c \
 					signals.c \
 					signals_handler.c \

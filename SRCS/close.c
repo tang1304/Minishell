@@ -6,13 +6,13 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 09:19:14 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 08:42:29 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 15:02:05 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-
-void	close_heredoc_pipes(t_data *data) //ls<<a<<b<<c|wc<<d<<e segfaults
+// Close unused heredoc pipes in parent
+void	close_heredoc_pipes(t_data *data)
 {
 	t_command	*tmp;
 	int			i;
@@ -38,7 +38,7 @@ void	close_heredoc_pipes(t_data *data) //ls<<a<<b<<c|wc<<d<<e segfaults
 		tmp = tmp->next;
 	}
 }
-
+// Close pipes in heredoc children
 void	close_all(t_data *data)
 {
 	int	i;
@@ -54,7 +54,7 @@ void	close_all(t_data *data)
 	close(data->stdout_save);
 	close_files(data);
 }
-
+// Close infiles and outfiles opened
 void	close_files(t_data *data)
 {
 	int	i;
