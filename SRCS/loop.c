@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 09:20:57 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 11:23:01 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ void	prompt_loop(t_data *data)
 	signal_set();
 	while (1)
 	{
-		update_pwd(data);
-		prompt = ft_strjoin(data->prompt, data->prompt_pwd);
-		prompt = ft_strjoin_gnl(prompt, "$ ");
+		prompt = update_pwd(data);
 		data->str = ft_strtrim_free(ft_strdup(readline(prompt)), " ");
 		free(prompt);
 		if (ft_strlen(data->str) > 0)
