@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 07:28:41 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 10:39:44 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 12:22:34 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,3 +26,8 @@ int	main(int ac, char **av, char **envp)
 	data_initialize(&data, envp);
 	return (0);
 }
+
+/*testa a faire
+<<eo'f' cat >out
+<<eof cat >out
+*/
