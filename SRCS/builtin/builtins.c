@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 11:38:14 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 14:47:26 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int	ft_pwd(t_data *data)
 
 	(void)data;
 	line = getcwd(NULL, 0);
+	if (!line)
+		return (perror("pwd: "), 0);
 	printf("%s\n", line);
 	free(line);
 	return (1);
@@ -64,7 +66,7 @@ int	builtins(t_data *data, char **cmd)
 		check = ft_export(data, cmd);
 	else if ((ft_strncmp(cmd[0], "unset", 5) == 0) && len == 5)
 		check = ft_unset(data, cmd);
-	else if ((ft_strncmp(cmd[0], "env", 3) == 0) && len == 3)// a tester apres un export/unset
+	else if ((ft_strncmp(cmd[0], "env", 3) == 0) && len == 3)
 		check = ft_env(data);
 	else if ((ft_strncmp(cmd[0], "exit", 4) == 0) && len == 4)
 		ft_exit(data, cmd);
@@ -86,7 +88,7 @@ int	check_builtins(char **cmd)
 		return (SUCCESS);
 	else if ((ft_strncmp(cmd[0], "unset", 5) == 0) && len == 5)
 		return (SUCCESS);
-	else if ((ft_strncmp(cmd[0], "env", 3) == 0) && len == 3)// a tester apres un export/unset
+	else if ((ft_strncmp(cmd[0], "env", 3) == 0) && len == 3)
 		return (SUCCESS);
 	else if ((ft_strncmp(cmd[0], "exit", 4) == 0) && len == 4)
 		return (SUCCESS);

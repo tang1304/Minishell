@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_infile_outfile_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 15:17:28 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 15:41:48 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,13 @@ void	add_outfile(t_data *data, char *file, size_t index, int valid)
 
 void	ft_error_file(int fd, char *file, int i)
 {
-	if (fd < 0)
-	{
-		printf("minishell: %s: No such file or directory\n", file);
-		return ;
-	}
-	else if (i == 0)
+	(void)fd;
+	// if (fd < 0)
+	// {
+	// 	printf("minishell: %s: No such file or directory\n", file);
+	// 	return ;
+	// }
+	/*else */if (i == 0)
 	{
 		if (access(file, F_OK) != 0)
 			printf("minishell: %s: No such file or directory\n", file);
