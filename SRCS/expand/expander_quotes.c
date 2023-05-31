@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:22 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/30 17:24:37 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 11:10:05 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,24 @@ static char	*word_without_quotes(char *str, int i, int j)
 {
 	char	*new_word;
 	int		k;
-printf("WORD LEN =%d\n", i);
+// printf("WORD LEN =%d\n", i);
 	new_word = (char *)malloc(sizeof(char) * (ft_strlen(str) - 1));
 	if (!new_word)
 		return (NULL);
 	k = -1;
 	while (++k < i)
-	{printf("Char b = %c|\n", str[k]);
+	{//printf("Char b = %c|\n", str[k]);
 		new_word[k] = str[k];
 	}
 
 	while (k < j)
 	{
-		new_word[k] = str[k + 1];printf("Char m = %c|\n", str[k + 1]);
+		new_word[k] = str[k + 1];//printf("Char m = %c|\n", str[k + 1]);
 		k++;
 	}
 	while ((size_t)k < ft_strlen(str) - 2)
 	{
-		new_word[k] = str[k + 2];printf("Char a = %c|\n", str[k + 2]);
+		new_word[k] = str[k + 2];//printf("Char a = %c|\n", str[k + 2]);
 		k++;
 	}
 	new_word[k] = '\0';
@@ -44,15 +44,15 @@ printf("WORD LEN =%d\n", i);
 static int	quote_starting_point(char *str, int i)
 {
 	// int	j;
-printf("i beforer=%d\n", i);
+// printf("i beforer=%d\n", i);
 	// j = 0;
 	while (str[i])
-	{printf("char c = %c\n", str[i]);
+	{//printf("char c = %c\n", str[i]);
 		if (str[i] == '\'' || str[i] == '"')
 			break ;
 		// j++;
 		i++;
-	}printf("WORD LEN =%d\n", i);
+	}//printf("WORD LEN =%d\n", i);
 	return (i);
 }
 
@@ -82,9 +82,9 @@ char	*str_quotes_removal(char *str)
 	int	j;
 	int	k;
 	int	q_pairs;
-printf("STR B =%s|\n", str);
+// printf("STR B =%s|\n", str);
 	q_pairs = quote_pairs(str);
-printf("STR A =%s|\n", str);
+// printf("STR A =%s|\n", str);
 // printf("q_pairs:%d\n", q_pairs);
 	k = -1;
 	i = 0;
@@ -92,7 +92,7 @@ printf("STR A =%s|\n", str);
 	{
 		// printf("LA\n");
 		i = quote_starting_point(str, i);
-printf("WORD LEN =%d\n", i);
+// printf("WORD LEN =%d\n", i);
 		j = i++;
 		// while (((str[i] != '"' && str[j] == '"') 
 		// 		|| (str[i] != '\'' && str[j] == '\'')) && str[j] != '\0')

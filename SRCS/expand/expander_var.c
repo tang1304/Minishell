@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/31 09:49:24 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 11:15:35 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	question_mark(t_data *data, t_substr *s, size_t *i, size_t index)
 		*i = *i + 1;
 	s->sub_a = ft_substr(s->s, *i + 1, ft_strlen(s->s) - *i);
 	// buf = ft_substr(s->s, ft_strlen(s->sub_b), *i - (ft_strlen(s->sub_b)));
-	// s->sub_m = ft_itoa(g_status);
+	s->sub_m = ft_itoa(g_status);
 	if (check_space_expand(data, s, index) == 1)
 		return ;
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
