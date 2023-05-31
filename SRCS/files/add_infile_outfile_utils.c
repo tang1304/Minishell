@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 16:44:50 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 13:01:54 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,21 +98,21 @@ void	ft_error_file(int fd, char *file, int i)
 	(void)fd;
 	// if (fd < 0)
 	// {
-	// 	printf("minishell: %s: No such file or directory\n", file);
+	// 	ft_dprintf(2, "minishell: %s: No such file or directory\n", file);
 	// 	return ;
 	// }
 	/*else */if (i == 0)
 	{
 		if (access(file, F_OK) != 0)
-			printf("minishell: %s: No such file or directory\n", file);
+			ft_dprintf(2, "minishell: %s: No such file or directory\n", file);
 		else if (access(file, R_OK) != 0)
-			printf("minishell: %s: Permission denied\n", file);
+			ft_dprintf(2, "minishell: %s: Permission denied\n", file);
 	}
 	else
 	{
 		if (access(file, F_OK) != 0)
-			printf("minishell: %s: No such file or directory\n", file);
+			ft_dprintf(2, "minishell: %s: No such file or directory\n", file);
 		else if (access(file, W_OK) != 0)
-			printf("minishell: %s: Permission denied\n", file);
+			ft_dprintf(2, "minishell: %s: Permission denied\n", file);
 	}
 }

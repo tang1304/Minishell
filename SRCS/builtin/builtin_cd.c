@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/31 09:49:06 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 12:57:08 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,16 @@ int	ft_cd(t_data *data, char **cmd)
 	{
 		home_check = cd_home(data);
 		if (home_check == 0)
-			return (printf("minishell: cd: HOME not set\n"), 1);
+			return (ft_dprintf(2, "minishell: cd: HOME not set\n"), 1);
 		if (home_check == -1)
 			return (-1);
 		return (1);
 	}
-	// if (cmd[2])
-	// 	return (g_status = 1, printf("minishell: cd: too many arguments\n"), 1);
-	// else if (chdir(cmd[1]) == -1)
-	// 	return (g_status = 1, perror("minishell: cd: "), -1);
+	if (cmd[2])
+		return (g_status = 1, \
+				ft_dprintf(2, "minishell: cd: too many arguments\n"), 1);
+	else if (chdir(cmd[1]) == -1)
+		return (g_status = 1, perror("minishell: cd: "), -1);
 	check = pwds_handling(data);
 	if (check == -1)
 		return (0);

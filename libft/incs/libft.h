@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 18:11:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 14:40:26 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 11:50:25 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_list
 }				t_list;
 
 int		ft_printf(const char *f, ...);
+int		ft_dprintf(int d, const char *f, ...);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
@@ -54,11 +55,15 @@ void	*ft_memchr(const void *s, int c, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 void	ft_putchar(char c, unsigned int *ptr);
+void	ft_dputchar(int d, char c, unsigned int *ptr);
 void	ft_putstr(char *s, unsigned int *ptr);
+void	ft_dputstr(int d, char *s, unsigned int *ptr);
 void	ft_putnbr(int i, unsigned int *ptr);
 void	ft_putnbr_unsigned(unsigned int i, unsigned int *ptr);
 void	ft_convert_address(size_t i, unsigned int *ptr);
+void	ft_dconvert_address(int d, size_t i, unsigned int *ptr);
 void	ft_convert_nbr(unsigned int i, char c, unsigned int *ptr);
+void	ft_dconvert_nbr(int d, unsigned int i, char c, unsigned int *ptr);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);

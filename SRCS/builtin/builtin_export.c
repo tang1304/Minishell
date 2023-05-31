@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/30 09:07:27 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 12:57:25 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ static int	name_check(char *str)
 	i = 0;
 	if ((!ft_isalnum(str[0]) && str[0] != '_') || ft_isdigit(str[0]))
 	{
-		printf("minishell: export: `%s' : not a valid identifier\n", str);
+		ft_dprintf(2, "minishell: export: `%s' : not a valid identifier\n", str);
+		g_status = 1;
 		return (-1);
 	}
 	while (str[++i] && str[i] != '=')
@@ -85,7 +86,9 @@ static int	name_check(char *str)
 			continue ;
 		else
 		{
-			printf("minishell: export: `%s' : not a valid identifier\n", str);
+			ft_dprintf(2, "minishell: export: `%s' : not a valid identifier\n", \
+					str);
+			g_status = 1;
 			return (-1);
 		}
 	}

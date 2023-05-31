@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/31 09:48:53 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 11:13:51 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	data_initialize(t_data *data, char **envp)
 	char		*user;
 	t_heredoc	doc;
 
-	// g_status = 0;
+	g_status = 0;
 	ft_bzero(&doc, sizeof(t_heredoc));
 	if (!envp[0])
 		data->envp = env_i_handle(data);

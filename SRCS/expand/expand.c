@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/31 10:34:05 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 11:06:34 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 //Attention si hdh"$USER"hdg -> 1 seul node donc quotes pas au début et à la fin
 
-static char	*expand_number(t_data *data, t_substr *s, size_t *j)
+char	*expand_number(t_data *data, t_substr *s, size_t *j)
 {
 	*j = *j + 1;
 	s->sub_b = ft_substr(s->middle, 0, *j - 1);
@@ -25,14 +25,14 @@ static char	*expand_number(t_data *data, t_substr *s, size_t *j)
 	return (s->middle);
 }
 
-static char	*expand_str(t_data *data, t_substr *s)
+char	*expand_str(t_data *data, t_substr *s)
 {
 	size_t	j;
 
 	j = 0;
 	while (s->middle[j] != '\0')
 	{
-		if (s->middle[j] == '$' && (ft_isalpha(s->middle[j + 1]) == 1 || \
+		if (s->middle[j] == '$' && (ft_isalpha(s->middle[j + 1]) == 1 || 
 		s->middle[j + 1] == '?'))
 		{
 			j++;

@@ -16,13 +16,13 @@ char	*str_without_single_quotes(char *str, int i, int j) //echo 'aspa -> " '
 {
 	char	*new_word;
 
-printf("WORD LEN =%d\n", i);
+// printf("WORD LEN =%d\n", i);
 	new_word = (char *)malloc(sizeof(char) * (j - i + 1));
 	if (!new_word)
 		return (NULL);
 
 	while (i < j)
-	{printf("Char b = %c|\n", str[i]);
+	{//printf("Char b = %c|\n", str[i]);
 		new_word[i] = str[i];
 		i++;
 	}
@@ -46,11 +46,11 @@ char	*remove_str_middle_quote(char *str, char c)
 	int	i;
 
 	i = 0;
-printf("WORD received =%s\n", str);
+// printf("WORD received =%s\n", str);
 	while (str[i] != c && str[i] != '\0')
 		i++;
 	str = str_without_single_quotes(str, 0, i);
-printf("quotes-> word :%s\n", str);
+// printf("quotes-> word :%s\n", str);
 	return (str);
 }
 
@@ -64,9 +64,9 @@ void	expand_quotes(t_data *data, t_substr *str, size_t *i, char c)
 	*i = *i + 1;
 	while (str->s[*i] != c)
 		*i = *i + 1;
-printf("I VALUE IS = %ld\n", *i);printf("j VALUE IS = %ld\n", j);
+// printf("I VALUE IS = %ld\n", *i);printf("j VALUE IS = %ld\n", j);
 	str->middle = ft_substr(str->s, j, *i - j);
-printf("WORD THAT IS SENT IS =%s\n", str->middle);
+// printf("WORD THAT IS SENT IS =%s\n", str->middle);
 	if (*i + 1 < ft_strlen(str->s))
 		str->after = ft_substr(str->s, *i + 1, ft_strlen(str->s));
 	if (c == '"' && str->middle != NULL)
