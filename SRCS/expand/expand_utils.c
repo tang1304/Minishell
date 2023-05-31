@@ -36,9 +36,9 @@ static void	add_buf_lxr_tail(t_data *data, t_lexer *buf)
 	tmp = data->lexer;
 	add_index(data);
 	while (tmp->next != NULL)
-	{printf("node %ld lexer = %s\n", tmp->index, tmp->word);
+	{//printf("node %ld lexer = %s\n", tmp->index, tmp->word);
 		tmp = tmp->next;
-	}printf("node %ld lexer = %s\n", tmp->index, tmp->word);
+	}//printf("node %ld lexer = %s\n", tmp->index, tmp->word);
 	data->svd_index = tmp->index;
 	if (buf != NULL)
 	{
@@ -74,7 +74,7 @@ void	modify_lxr_nds(t_data *data, t_substr *s, size_t index)//here segf
 	{
 		add_node(&data->lexer, ptr[j], 0);
 		j++;
-	}printf("node after = %s\n", s->sub_a);
+	}//printf("node after = %s\n", s->sub_a);
 	if (ft_strlen(s->sub_a) > 0)
 		add_node(&data->lexer, s->sub_a, 0);
 	add_buf_lxr_tail(data, buf);
@@ -97,13 +97,13 @@ int	check_space_expand(t_data *data, t_substr *s, int index)
 	{
 		modify_lxr_nds(data, s, index);
 
-printf("\nAt the end I have\n\n");
+// printf("\nAt the end I have\n\n");
 	t_lexer	*tmp;
 	tmp = data->lexer;
 	while (tmp->next != NULL)
-	{printf("node %ld lexer = %s\n", tmp->index, tmp->word);
+	{//printf("node %ld lexer = %s\n", tmp->index, tmp->word);
 		tmp = tmp->next;
-	}printf("node %ld lexer = %s\n", tmp->index, tmp->word);
+	}//printf("node %ld lexer = %s\n", tmp->index, tmp->word);
 
 		return (1);
 	}

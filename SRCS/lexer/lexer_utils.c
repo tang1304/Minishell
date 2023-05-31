@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/26 15:11:52 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 16:17:30 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,10 @@ static t_lexer	*new_lexer_node(char *str, int token)
 	if (token == 0)
 	{
 		node->word = ft_strdup(str);
-		// node->infile = NULL;
-		// node->outfile = NULL;
-		// node->token = NULL;
-		// node->inf_err = 0;
-		// node->out_err = 0;
-		// node->hd_file = 0;
-		// node->fdin = 0;
-		// node->fdout = 0;
 		node->hd_number = -1;
-		// node->pipe_b = 0;
-		// node->pipe_a = 0;
-		printf("word: %s\n", node->word);
 	}
 	else
-	{
-		// node->word = NULL;
 		node->token = ft_strdup(str);
-		// printf("token: %s\n", node->token);
-	}
 	node->s_q = 0;
 	node->d_q = 0;
 	node->next = NULL;
@@ -97,10 +82,6 @@ void	add_index(t_data *data)
 	while (tmp != NULL)
 	{
 		tmp->index = i;
-// if (tmp->word != NULL)
-// 	// printf("word: %s index: %ld\n", tmp->word, tmp->index);
-// else
-	// printf("token: %s index: %ld\n", tmp->token, tmp->index);
 		i++;
 		tmp = tmp->next;
 	}

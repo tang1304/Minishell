@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/30 14:21:05 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 10:34:05 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static char	*expand_str(t_data *data, t_substr *s)
 			j++;
 			if (j > 0)
 				s->sub_b = ft_substr(s->middle, 0, j - 1);
-			while (ft_isalnum(s->middle[j]) == 1)// faire 2 func e plus si j = ? ou j = alnum
+			while (ft_isalnum(s->middle[j]) == 1)
 				j++;
-			s->sub_a = ft_substr(s->middle, j, ft_strlen(s->middle) - j);
+			s->sub_a = ft_substr(s->middle, j, ft_strlen(s->middle) - j);// vérifier si on a pas un leak avec sub_b quand on get_var
 			s->sub_m = ft_substr(s->middle, ft_strlen(s->sub_b), j - (ft_strlen(s->sub_b)));
 			s->sub_m = get_var(data, s->sub_m);
 			j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
@@ -52,27 +52,6 @@ static char	*expand_str(t_data *data, t_substr *s)
 			j++;
 	}
 	return (s->middle);
-}
-
-static void	expand_quotes(t_data *data, t_substr *str, size_t *i, char c)
-{
-	size_t	j;
-
-	j = *i + 1;
-	if (*i > 0)
-		str->before = ft_substr(str->s, 0, *i);
-	*i = *i + 1;
-	while (str->s[*i] != c)
-		*i = *i + 1;
-	str->middle = ft_substr(str->s, j, *i - j);
-	if (*i + 1 < ft_strlen(str->s))
-		str->after = ft_substr(str->s, *i + 1, ft_strlen(str->s));
-	if (c == '"')
-		str->middle = expand_str(data, str);
-	else
-		str->middle = str_quotes_removal(str->middle);
-	*i = ft_strlen(str->before) + ft_strlen(str->middle);
-	str->s = join_all(str->s, str->before, str->middle, str->after);
 }
 
 static char	*check_char(t_data *data, char *s, size_t *i, size_t index)
@@ -92,19 +71,6 @@ static char	*check_char(t_data *data, char *s, size_t *i, size_t index)
 	// free_struct_expand(&str);
 	return (str.s);
 }
-
-// static t_lexer	*skip_token(t_lexer *tmp)
-// {
-// 	 if (tmp->token != NULL && ft_strncmp(tmp->token, "<<", 2) == 0 add slash
-// 	 && ft_strlen(tmp->token) == 2)
-// 	 {
-// 		tmp = tmp->next;
-// 		tmp->word = str_quotes_removal(tmp->word);
-// 	 }
-// 	else if (tmp->token != NULL && ft_strncmp(tmp->token, "<<", 2) != 0)
-// 		return (tmp);
-// 	return (tmp);
-// }
 
 void	expand(t_data *data)
 {

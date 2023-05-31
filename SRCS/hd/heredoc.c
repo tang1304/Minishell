@@ -27,26 +27,14 @@ void	heredoc_count(t_data *data)
 		}
 		tmp = tmp->next;
 	}
-	// if (data->hd->hd_count > 0)
-	// {
 	data->hd->LIMITER = (char **)malloc(sizeof(char *) * \
 	(data->hd->hd_count + 1));
 		// if (data->LIMITER == NULL)
 		// 	return error??;
 	data->hd->LIMITER[data->hd->hd_count] = 0;
-	// }// enlever quotes des limiter -> func
 }
 
-
-//test a verifier
-// > hello $USER
-// > hello $'USER'
-// > hello $USER""
-// > hello $U'SER'
-// > hello '$USER'
-// > hello$USER
-
-void	heredoc_pipe(t_data *data) //doble free dans hd <<a<<b puis ls puis <<a<<b double free
+void	heredoc_pipe(t_data *data)
 {
 	char	*line;
 	char	*buffer;
@@ -70,10 +58,6 @@ void	heredoc_pipe(t_data *data) //doble free dans hd <<a<<b puis ls puis <<a<<b 
 		free(line);
 	close_all(data);
 	free_all(data);
-	// free_data(data, &free_hd_struct);
-	// free_data(data, &free_lexer_strct);
-	//free all!!! <Makefile ls |grep <<eof |wc >out
-	// test bible non réalisée
 }
 
 void	create_pipes_hd(t_data *data)
@@ -89,8 +73,8 @@ void	create_pipes_hd(t_data *data)
 		data->hd->heredoc++;
 	}
 	data->hd->heredoc = 0;
-	while (data->hd->heredoc < data->hd->hd_count) //pourquoi ouvre 3 pipes??
-	{printf("LOOOOOOOOOP!!!\n");
+	while (data->hd->heredoc < data->hd->hd_count)
+	{//printf("LOOOOOOOOOP!!!\n");
 		if (pipe(data->hd->fd[data->hd->heredoc]) < 0)
 			return ;//grbage val??
 		data->hd->heredoc++;
@@ -98,61 +82,22 @@ void	create_pipes_hd(t_data *data)
 	data->hd->heredoc = 0;
 }
 
-void	init_heredoc_data(t_data *data) // PB when only <Makefile or <<eof
+void	init_heredoc_data(t_data *data)
 {
 	int			status;
 	pid_t		i;
 
 	create_pipes_hd(data);
-//test
-printf("\n\nLEN LIMITER = %ld\n", ft_strlen_pp(data->hd->LIMITER));
-size_t x = 0;
-while (x<ft_strlen_pp(data->hd->LIMITER))
-{
-printf("LIMITER = %s\n", data->hd->LIMITER[x]);
-printf("heredoc val = %ld\n", x);
-x++;
-}
-printf("HD_count = %d\n", data->hd->hd_count);
-printf("heredoc = %d\n", data->hd->heredoc);
-
-//end test
-
 	while (data->hd->heredoc < data->hd->hd_count)
 	{
 		i = fork();
 		if (i == 0)
-		{printf("Hredoc N%d\n", data->hd->heredoc);
+		{
 			heredoc_pipe(data);
 			exit (SUCCESS);
 		}
 		waitpid(i, &status, 0);
 		data->hd->heredoc++;
-printf("\nHEREDOC COMPLETED\n\n");
 	}
 	data->hd->heredoc = 0;
-
-
-
-
-
-
-	// if (pipe(data->hd->fd) < 0) //Si erreur ->error message?? return?
-	// 	return ;
-	// // if (data->hd->hd_count > 0)
-	// // {
-	// 	while (data->hd->heredoc < data->hd->hd_count)
-	// 	{
-	// 		i = fork();
-	// 		if (i == 0)
-	// 		{
-	// 			init_heredoc(data);
-	// 			exit (SUCCESS); // faudra tout free
-	// 		}
-	// 		waitpid(i, &status, 0);
-	// 		data->hd->heredoc++;
-	// 	}
-	// 	// if (data->hd->hd_as_inf == 0)
-	// 		//close fd[0] et fd[1] + free LIMITER char **
-	// // }
 }
