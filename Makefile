@@ -51,6 +51,7 @@ LST_SRCS		=	main.c \
 					data.c \
 					loop.c \
 					utils.c \
+					utils2.c \
 					envp_utils.c \
 					signals.c \
 					signals_handler.c \
@@ -74,6 +75,7 @@ LST_SRCS_P		=	parser.c \
 
 LST_SRCS_E		=	expand.c \
 					expander_quotes.c \
+					expander_quotes_utils.c \
 					expander_var.c \
 					expand_utils.c \
 					expand_heredoc.c \

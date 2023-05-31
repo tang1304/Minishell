@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:37:02 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 12:42:52 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/30 15:16:49 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	heredoc_redir(t_data *data)
 	t_lexer	*tmp;
 
 	heredoc_count(data);
-printf("IN THIS LINE WE HAVE %d HREDOCS\n", data->hd->hd_count);
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
@@ -37,41 +36,6 @@ printf("IN THIS LINE WE HAVE %d HREDOCS\n", data->hd->hd_count);
 	prepare_expand_hd(data);
 	init_heredoc_data(data);
 	return (SUCCESS);
-
-
-
-
-
-	// test ls<<a<<b<Makefile
-// 	if (lstlen(data->lexer) > 0)
-// 	{
-// 	size_t len = 0;
-// 	tmp = data->lexer;
-// 	while (tmp != NULL)
-// 	{
-// 		len++;
-// 		tmp = tmp->next;
-// 	}
-// 	printf("len: %ld\n", len);
-
-
-// 	t_data	*tmp2;
-// 	tmp2 = data;
-// 	while (tmp2->lexer != NULL)
-// 	{
-// 		ft_printf("\n\n");
-// if (tmp2->lexer->word != NULL)
-// 	ft_printf("word node: %s\n", tmp2->lexer->word);
-// else
-// 	ft_printf("token node: %s\n", tmp2->lexer->token);
-// printf("index: %ld\n", tmp2->lexer->index);
-// ft_printf("infile: %s\n", tmp2->lexer->infile);
-// ft_printf("outfile: %s\n", tmp2->lexer->outfile);
-// ft_printf("hdoc: %d\n",tmp2->lexer->hd_file);
-// ft_printf("hdoc count: %d\n",tmp2->hd->hd_count);
-// 		tmp2->lexer = tmp2->lexer->next;
-// 	}}
-// 	// end test ls <TODO -l|wc -l >out>>out2<Makefile
 }
 
 void	add_heredoc(t_data *data, char *file, size_t index)
