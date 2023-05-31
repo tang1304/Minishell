@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 15:12:02 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 10:39:16 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ enum e_errors
 	HD_ERROR_NUMBER = 13
 };
 
-int	g_status;
+// int	g_status;
 
 /*	data.c	*/
 void		data_initialize(t_data *data, char **envp);
@@ -225,6 +225,11 @@ void	free_struct_expand(t_substr *str);
 /*	expander_quotes.c	*/
 char		*str_quotes_removal(char *str);
 int			quotes_removal(t_lexer *lexer);
+
+/*	expander_quotes_utils.c	*/
+char	*str_without_single_quotes(char *str, int i, int j);
+char	*remove_str_middle_quote(char *str, char c);
+void	expand_quotes(t_data *data, t_substr *str, size_t *i, char c);
 
 /*	expand_heredoc.c	*/
 char		*expand_line(t_data *data, char *str);
