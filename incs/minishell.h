@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/31 10:39:16 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 07:54:14 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ enum e_errors
 	HD_ERROR_NUMBER = 13
 };
 
-// int	g_status;
+int	g_status;
 
 /*	data.c	*/
 void		data_initialize(t_data *data, char **envp);
