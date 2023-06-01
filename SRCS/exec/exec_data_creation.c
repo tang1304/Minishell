@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_data_creation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/01 07:54:09 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 16:23:17 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ static void	command_init(t_data *data, t_command *cmd)
 		// printf("\nNo fdout, Pipe after\n");
 		if (dup2(data->pipe[1], STDOUT_FILENO) == -1)
 			return (perror("Error with stdout dup2"));
-		if (close(data->pipe[1]) == -1)
-			return (perror("Error in child close"));
 	}
 	close(data->pipe[1]);
 }
@@ -87,6 +85,7 @@ static void	forking(t_data *data, t_command *cmd, int i)
 		if (check_builtins(cmd->cmd) == SUCCESS)
 		{
 			builtins(data, cmd->cmd);
+			exec_error_handle(data);
 			exit(EXIT_SUCCESS);
 		}
 		else
@@ -102,6 +101,8 @@ static void	forking(t_data *data, t_command *cmd, int i)
 	}
 }
 
+//fork pour : env, echo(pour redirection), pwd, export -> pour 
+
 void	exec_cmd_lst(t_data *data)
 {
 	int			status;
@@ -111,7 +112,8 @@ void	exec_cmd_lst(t_data *data)
 	tmp = data->cmd;
 	while (tmp)
 	{
-		if (lstlencmd(data->cmd) == 1 && check_builtins(tmp->cmd) == SUCCESS)
+		if (lstlencmd(data->cmd) == 1 && check_builtins(tmp->cmd) == SUCCESS \
+			&& (!tmp->fdout))
 		{
 			builtins(data, tmp->cmd);
 			if (data->stdin_save > 0 && data->stdout_save > 0)
@@ -119,6 +121,12 @@ void	exec_cmd_lst(t_data *data)
 				if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
 					return (perror("Error with closing STDIN/STDOUT saves"));
 			}
+			if (tmp->heredoc_file)
+			{
+			
+				close(data->hd->fd[tmp->heredoc_num][0]);
+				close(data->hd->fd[tmp->heredoc_num][1]);
+			}	
 			return ;
 		}
 		else
@@ -129,10 +137,10 @@ void	exec_cmd_lst(t_data *data)
 			i = fork();
 			forking(data, tmp, i);
 			close(data->pipe[1]);
-			waitpid(i, &status, 0);
-			g_status = WEXITSTATUS(status);
 		}
 		tmp = tmp->next;
 	}
+	waitpid(i, &status, 0);
+	g_status = WEXITSTATUS(status);
 	restore_stds(data);
 }

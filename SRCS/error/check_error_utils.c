@@ -44,8 +44,8 @@ int	error_quotes(char *line, size_t i)
 			while (i < ft_strlen(line) && line[i] != '\'')
 				i++;
 			if (line[i] == '\0')
-				return (printf("minishell: syntax error near unexpected token \
-`\''\n"), QUOTE_FAILURE);
+				return (ft_dprintf(2, "minishell: syntax error near unexpected \
+				token `\''\n"), QUOTE_FAILURE);
 			return (SUCCESS);
 		}
 		if (line[i] == '"')
@@ -54,8 +54,8 @@ int	error_quotes(char *line, size_t i)
 			while (i < ft_strlen(line) && line[i] != '"')
 				i++;
 			if (line[i] == '\0')
-				return (printf("minishell: syntax error near unexpected token \
-`\"'\n"), QUOTE_FAILURE);
+				return (ft_dprintf(2, "minishell: syntax error near unexpected \
+				token `\"'\n"), QUOTE_FAILURE);
 			return (SUCCESS);
 		}
 	}
