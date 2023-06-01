@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 08:19:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/01 14:06:31 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 16:43:47 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static void	check_numeric(char **str)
 
 void	ft_exit(t_data *data, char **str)
 {
-	// char
+	int			err;
+	long long	code;
 
 	printf("exit\n");
 	if (!str[1])
@@ -53,12 +54,21 @@ void	ft_exit(t_data *data, char **str)
 		exit_error(data);
 	}
 	check_numeric(str);
-	if (str[1] && ft_atoi(str[1]) < 255)
-		g_status = ft_atoi(str[1]);
-	// else if (str[1] && (ft_atoi(str[1]) < 0 && ft_atoi(str[1]) > 255))
-	// {
-
-	// }
+	err = 0;
+	if (str[1] && (ft_atoi_ll(str[1], &err) < 255 && err == 0))
+		g_status = ft_atoi_ll(str[1], &err);
+	else
+	{
+		code = ft_atoi_ll(str[1], &err);
+		if (err == 1)
+		{
+			ft_dprintf(2, "minishell: exit: %s: numeric argument required\n", \
+						str[1]);
+			g_status = 2;
+		}
+		else
+			g_status = code;
+	}
 	free_all(data);
 	if (data->stdin_save > 0 && data->stdout_save > 0)
 	{
