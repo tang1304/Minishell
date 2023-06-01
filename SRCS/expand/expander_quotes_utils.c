@@ -54,6 +54,47 @@ printf("quotes-> word :%s\n", str);
 	return (str);
 }
 
+static char	*expand_number(t_data *data, t_substr *s, size_t *j)
+{
+	*j = *j + 1;
+	s->sub_b = ft_substr(s->middle, 0, *j - 1);
+	*j = *j + 1;
+	s->sub_a = ft_substr(s->middle, *j, ft_strlen(s->middle) - *j);
+	s->sub_m = get_var(data, s->sub_m);
+	*j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
+	s->middle = join_all(s->middle, s->sub_b, s->sub_m, s->sub_a);
+	return (s->middle);
+}
+
+static char	*expand_str(t_data *data, t_substr *s)
+{
+	size_t	j;
+
+	j = 0;
+	while (s->middle[j] != '\0')
+	{
+		if (s->middle[j] == '$' && (ft_isalpha(s->middle[j + 1]) == 1 || \
+		s->middle[j + 1] == '?'))
+		{
+			j++;
+			if (j > 0)
+				s->sub_b = ft_substr(s->middle, 0, j - 1);
+			while (ft_isalnum(s->middle[j]) == 1)
+				j++;
+			s->sub_a = ft_substr(s->middle, j, ft_strlen(s->middle) - j);// vérifier si on a pas un leak avec sub_b quand on get_var
+			s->sub_m = ft_substr(s->middle, ft_strlen(s->sub_b), j - (ft_strlen(s->sub_b)));
+			s->sub_m = get_var(data, s->sub_m);
+			j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
+			s->middle = join_all(s->middle, s->sub_b, s->sub_m, s->sub_a);
+		}
+		else if (s->middle[j] == '$' && ft_isdigit(s->middle[j + 1]) == 1)
+			s->middle = expand_number(data, s, &j);
+		else
+			j++;
+	}
+	return (s->middle);
+}
+
 void	expand_quotes(t_data *data, t_substr *str, size_t *i, char c)
 {
 	size_t	j;
