@@ -19,7 +19,7 @@ t_lexer	*update_tmp_index(t_data *data, size_t *i)
 	tmp = data->lexer;
 	while (tmp->index != data->svd_index)
 	{
-		printf("WOOOOOOOOORD = %s\n", tmp->word);
+		printf("WOOOOOOOOORD = %s\n", tmp->word); // a virer
 		tmp = tmp->next;
 	}
 

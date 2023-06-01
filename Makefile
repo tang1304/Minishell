@@ -60,6 +60,7 @@ LST_SRCS		=	main.c \
 
 LST_SRCS_L		=	lexer.c \
 					lexer_utils.c \
+					lexer_update.c \
 					remove_lexer_nodes.c
 
 LST_SRCS_FR		=	free.c \
