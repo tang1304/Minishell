@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:47:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/30 13:32:31 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 11:46:11 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	join_path_and_cmd(t_data *data, char *cmd, int i)
 
 static void	check_if_absolute_path(t_data *data, char **cmd)
 {
-	int	fd;
+	// int	fd;
 
 	if ((cmd[0][0] == '.' && cmd[0][1] == '/' && !ft_isalnum(cmd[0][2])) \
 	|| (cmd[0][0] == '/' && (!ft_isalnum(cmd[0][1]) || cmd[0][1] == '/')))
@@ -31,24 +31,37 @@ static void	check_if_absolute_path(t_data *data, char **cmd)
 		if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
 			return (perror("Error with closing STDIN/STDOUT saves"));
 		exec_error_handle(data);
-		exit(SUCCESS);
+		g_status = 126;
+		exit(g_status);
 	}
-	fd = open(cmd[0], O_RDONLY);
-	if (fd == -1 || access(cmd[0], X_OK))
+	// fd = open(cmd[0], O_RDONLY);
+	// if (fd == -1)
+	// {
+	// 	perror(cmd[0]);
+	// 	if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
+	// 		return (perror("Error with closing STDIN/STDOUT saves"));
+	// 	exec_error_handle(data);
+	// 	g_status = 127;
+	// 	exit(g_status);
+	// }
+	if (!access(cmd[0], X_OK))
 	{
 		perror(cmd[0]);
 		if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
 			return (perror("Error with closing STDIN/STDOUT saves"));
 		exec_error_handle(data);
-		exit(SUCCESS);
+		g_status = 126;
+		exit(g_status);
 	}
 	if (execve(cmd[0], cmd, data->envp) == -1)
 	{
-		close(fd);
+		// close(fd);
+		perror(cmd[0]);
 		if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
 			return (perror("Error with closing STDIN/STDOUT saves"));
 		exec_error_handle(data);
-		exit(SUCCESS);
+		g_status = 127;
+		exit(g_status);
 	}
 }
 
@@ -63,7 +76,8 @@ static void	pre_check_on_cmd(t_data *data, char **cmd)
 		if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
 			return (perror("Error with closing STDIN/STDOUT saves"));
 		exec_error_handle(data);
-		exit(SUCCESS);
+		g_status = 2;
+		exit(g_status);
 	}
 }
 
@@ -87,7 +101,7 @@ static void	loop_on_path(t_data *data, char **cmd_args)
 			{
 				exec_error_handle(data);
 				free(cmd);
-				exit(SUCCESS);
+				exit(g_status);
 			}
 		}
 		free(data->path);
@@ -102,7 +116,8 @@ void	exec(t_data *data, char **cmd)
 	if (cmd[0] == NULL)
 	{
 		exec_error_handle(data);
-		exit(SUCCESS);
+		g_status = 127;
+		exit(g_status);
 	}
 	if (ft_strchr(cmd[0], '/') != NULL)
 		check_if_absolute_path(data, cmd);
@@ -110,5 +125,6 @@ void	exec(t_data *data, char **cmd)
 	write(2, cmd[0], ft_strlen(cmd[0]));
 	write(2, ": command not found\n", 20);
 	exec_error_handle(data);
-	exit(SUCCESS);
+	g_status = 127;
+	exit(g_status);
 }

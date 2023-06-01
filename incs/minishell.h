@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/01 07:54:14 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 10:30:51 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ enum e_errors
 	HD_ERROR_NUMBER = 13
 };
 
-int	g_status;
+uint8_t	g_status;
 
 /*	data.c	*/
 void		data_initialize(t_data *data, char **envp);
@@ -213,8 +213,6 @@ int			add_node(t_lexer **lexer, char *str, int token);
 void		create_cmd_struct(t_data *data);
 
 /*	expand.c	*/
-char		*expand_number(t_data *data, t_substr *s, size_t *j);
-char		*expand_str(t_data *data, t_substr *s);
 void		expand(t_data *data);
 
 /*	expander_var.c	*/
@@ -260,6 +258,9 @@ int			replace_env(t_data *data, char *env, char *old_env);
 
 /*	builtin_echo.c	*/
 int			ft_echo(char **cmd);
+
+/*	builtin_echo.c	*/
+void		ft_exit(t_data *data, char **cmd);
 
 /*	builtin_export.c	*/
 void		ft_list_sort(t_env **env, int size);
