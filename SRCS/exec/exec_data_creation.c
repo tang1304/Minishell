@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/31 09:49:13 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 07:54:09 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	exec_cmd_lst(t_data *data)
 			forking(data, tmp, i);
 			close(data->pipe[1]);
 			waitpid(i, &status, 0);
-			// g_status = WEXITSTATUS(status);
+			g_status = WEXITSTATUS(status);
 		}
 		tmp = tmp->next;
 	}
