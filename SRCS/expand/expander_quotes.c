@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:22 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/31 11:10:05 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 08:22:25 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	*str_quotes_removal(char *str)
 		i = quote_starting_point(str, i);
 // printf("WORD LEN =%d\n", i);
 		j = i++;
-		// while (((str[i] != '"' && str[j] == '"') 
+		// while (((str[i] != '"' && str[j] == '"')
 		// 		|| (str[i] != '\'' && str[j] == '\'')) && str[j] != '\0')
 		while (str[j] != str[i] && str[j] != '\0')
 		{

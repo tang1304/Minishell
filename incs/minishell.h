@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
 /*   Updated: 2023/06/01 10:30:51 by tgellon          ###   ########lyon.fr   */
@@ -202,6 +202,10 @@ void		remove_middle_nodes(t_data *data, size_t index);
 /*	lexer.c	*/
 int			lexer_init(t_data *data);
 int			is_pipe(char *str, int i);
+
+/*	lexer_update.c	*/
+void	update_lexer(t_data *data);
+void	remove_single_node(t_data *data, size_t index);
 
 /*	lexer_utils.c	*/
 void		add_index(t_data *data);
