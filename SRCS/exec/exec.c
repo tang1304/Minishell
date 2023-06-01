@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:47:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/01 11:46:11 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 14:58:08 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,6 @@ static void	check_if_absolute_path(t_data *data, char **cmd)
 		g_status = 126;
 		exit(g_status);
 	}
-	// fd = open(cmd[0], O_RDONLY);
-	// if (fd == -1)
-	// {
-	// 	perror(cmd[0]);
-	// 	if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
-	// 		return (perror("Error with closing STDIN/STDOUT saves"));
-	// 	exec_error_handle(data);
-	// 	g_status = 127;
-	// 	exit(g_status);
-	// }
 	if (!access(cmd[0], X_OK))
 	{
 		perror(cmd[0]);
@@ -55,7 +45,6 @@ static void	check_if_absolute_path(t_data *data, char **cmd)
 	}
 	if (execve(cmd[0], cmd, data->envp) == -1)
 	{
-		// close(fd);
 		perror(cmd[0]);
 		if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
 			return (perror("Error with closing STDIN/STDOUT saves"));
