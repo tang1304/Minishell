@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/01 12:05:33 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 13:23:03 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	expand(t_data *data)
 		}
 		tmp = tmp->next;
 		data->svd_index++;
-	}printf("EXPAND OKKKK!!!\n");
+	}//printf("EXPAND OKKKK!!!\n");
 	// while (tmp->prev != NULL)
 	// 	tmp = tmp->prev;
 	// data->lexer = tmp;
