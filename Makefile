@@ -31,6 +31,7 @@ D_SRCS_F	=	SRCS/files/
 D_SRCS_L	=	SRCS/lexer/
 D_SRCS_FR	=	SRCS/free/
 D_SRCS_ERR	=	SRCS/error/
+D_SRCS_S	=	SRCS/signals/
 
 D_OBJS		=	objs/
 D_OBJS_P	=	objs/parser/
@@ -42,6 +43,7 @@ D_OBJS_F	=	objs/files/
 D_OBJS_L	=	objs/lexer/
 D_OBJS_FR	=	objs/free/
 D_OBJS_ERR	=	objs/error/
+D_OBJS_S	=	objs/signals/
 
 D_LIBFT		=	libft/
 
@@ -53,10 +55,11 @@ LST_SRCS		=	main.c \
 					utils.c \
 					utils2.c \
 					envp_utils.c \
-					signals.c \
-					signals_handler.c \
 					wait.c \
 					close.c
+
+LST_SRCS_S		=	signals.c \
+					signals_handler.c
 
 LST_SRCS_L		=	lexer.c \
 					lexer_utils.c \
@@ -111,6 +114,7 @@ LST_OBJS_F		=	$(LST_SRCS_F:.c=.o)
 LST_OBJS_L		=	$(LST_SRCS_L:.c=.o)
 LST_OBJS_FR		=	$(LST_SRCS_FR:.c=.o)
 LST_OBJS_ERR	=	$(LST_SRCS_ERR:.c=.o)
+LST_OBJS_S		=	$(LST_SRCS_S:.c=.o)
 
 SRCS		=	$(addprefix $(D_SRCS), $(LST_SRCS))
 SRCS_P		=	$(addprefix $(D_SRCS_P), $(LST_SRCS_P))
@@ -122,6 +126,7 @@ SRCS_F		=	$(addprefix $(D_SRCS_F), $(LST_SRCS_F))
 SRCS_L		=	$(addprefix $(D_SRCS_L), $(LST_SRCS_L))
 SRCS_FR		=	$(addprefix $(D_SRCS_FR), $(LST_SRCS_FR))
 SRCS_ERR	=	$(addprefix $(D_SRCS_ERR), $(LST_SRCS_ERR))
+SRCS_S		=	$(addprefix $(D_SRCS_S), $(LST_SRCS_S))
 
 INCS		=	$(addprefix $(D_HEADER), $(HEADER))
 
@@ -135,6 +140,7 @@ OBJS_F		=	$(addprefix $(D_OBJS_F), $(LST_OBJS_F))
 OBJS_L		=	$(addprefix $(D_OBJS_L), $(LST_OBJS_L))
 OBJS_FR		=	$(addprefix $(D_OBJS_FR), $(LST_OBJS_FR))
 OBJS_ERR	=	$(addprefix $(D_OBJS_ERR), $(LST_OBJS_ERR))
+OBJS_S		=	$(addprefix $(D_OBJS_S), $(LST_OBJS_S))
 
 LIBFTLIB	=	$(addprefix $(D_LIBFT), $(LIBFT))
 
@@ -151,8 +157,8 @@ all		:	lib $(NAME)
 lib :
 		$(MAKE) -C $(D_LIBFT)
 
-$(NAME)	:	$(OBJS) $(OBJS_P) $(OBJS_E) $(OBJS_B) $(OBJS_H) $(OBJS_X) $(OBJS_F) $(OBJS_L) $(OBJS_FR) $(OBJS_ERR)
-			$(CC) $(OBJS) $(OBJS_P) $(OBJS_E) $(OBJS_B) $(OBJS_H) $(OBJS_X) $(OBJS_F) $(OBJS_L) $(OBJS_FR) $(OBJS_ERR) -lreadline $(LIBFTLIB) -o $(NAME)
+$(NAME)	:	$(OBJS) $(OBJS_P) $(OBJS_E) $(OBJS_B) $(OBJS_H) $(OBJS_X) $(OBJS_F) $(OBJS_L) $(OBJS_FR) $(OBJS_ERR) $(OBJS_S)
+			$(CC) $(OBJS) $(OBJS_P) $(OBJS_S) $(OBJS_E) $(OBJS_B) $(OBJS_H) $(OBJS_X) $(OBJS_F) $(OBJS_L) $(OBJS_FR) $(OBJS_ERR) -lreadline $(LIBFTLIB) -o $(NAME)
 			@echo "${_GREEN}### ${NAME} created ###${_NOC}\n"
 
 $(D_OBJS)%.o		:	$(D_SRCS)%.c $(INCS) Makefile $(LIBFTLIB)
@@ -193,6 +199,10 @@ $(D_OBJS_FR)%.o		:	$(D_SRCS_FR)%.c $(INCS) Makefile $(LIBFTLIB)
 
 $(D_OBJS_ERR)%.o	:	$(D_SRCS_ERR)%.c $(INCS) Makefile $(LIBFTLIB)
 						mkdir -p $(D_OBJS_ERR)
+						$(CC) $(FLAGS) -I $(D_HEADER) -c $< -o $@
+
+$(D_OBJS_S)%.o		:	$(D_SRCS_S)%.c $(INCS) Makefile $(LIBFTLIB)
+						mkdir -p $(D_OBJS_S)
 						$(CC) $(FLAGS) -I $(D_HEADER) -c $< -o $@
 
 clean	:

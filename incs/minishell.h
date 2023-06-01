@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/01 10:30:51 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 15:29:04 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,10 +345,12 @@ void		wait_child(t_data *data);
 /*	signals.c	*/
 void		signal_set(void);
 void		signal_hd_set(void);
+void		signal_exec_set(void);
 
 /*	signals_handler.c	*/
 void		handler_sigint(int signal);
 void		handler_hd_sigint(int signal);
+void		handler_exec_sigint(int signal);
 
 /*	close.c	*/
 void		close_heredoc_pipes(t_data *data);
