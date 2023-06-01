@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:14:33 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 13:04:30 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 09:11:43 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,4 @@ void	signal_hd_set(void)
 	// sa.sa_flags = SA_RESTART;
 	sa.sa_handler = &handler_hd_sigint;
 	sigaction(SIGINT, &sa, NULL);
-
 }
