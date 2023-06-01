@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atoi_ll.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 08:26:11 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/01 15:35:31 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 16:02:31 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/libft.h"
 
-static void	ft_check(long value, long sign)
+static void	ft_check(long long value, long long sign)
 {
-	if (value * sign > 0 && value * sign > 2147483647)
+	if (value * sign > 0 && value * sign > LLONG_MAX)
 	{
-		exit (0);
+		return (0);
 	}
-	else if (value * sign < 0 && value * sign < -2147483648)
+	else if (value * sign < 0 && value * sign < LLONG_MIN)
 	{
 		exit (0);
 	}
 }
 
-int	ft_atoi(const char *str)
+long long	ft_atoi_ll(const char *str)
 {
-	int		i;
-	long	value;
-	long	sign;
+	int			i;
+	long long	value;
+	long long	sign;
 
 	i = 0;
 	value = 0;
@@ -47,7 +47,7 @@ int	ft_atoi(const char *str)
 			ft_check(value, sign);
 			i++;
 		}
-		return ((int)sign * value);
+		return ((long long int)sign * value);
 	}
 	return (0);
 }
