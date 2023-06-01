@@ -6,53 +6,12 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/31 11:06:34 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 07:56:24 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 //Attention si hdh"$USER"hdg -> 1 seul node donc quotes pas au début et à la fin
-
-char	*expand_number(t_data *data, t_substr *s, size_t *j)
-{
-	*j = *j + 1;
-	s->sub_b = ft_substr(s->middle, 0, *j - 1);
-	*j = *j + 1;
-	s->sub_a = ft_substr(s->middle, *j, ft_strlen(s->middle) - *j);
-	s->sub_m = get_var(data, s->sub_m);
-	*j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
-	s->middle = join_all(s->middle, s->sub_b, s->sub_m, s->sub_a);
-	return (s->middle);
-}
-
-char	*expand_str(t_data *data, t_substr *s)
-{
-	size_t	j;
-
-	j = 0;
-	while (s->middle[j] != '\0')
-	{
-		if (s->middle[j] == '$' && (ft_isalpha(s->middle[j + 1]) == 1 || 
-		s->middle[j + 1] == '?'))
-		{
-			j++;
-			if (j > 0)
-				s->sub_b = ft_substr(s->middle, 0, j - 1);
-			while (ft_isalnum(s->middle[j]) == 1)
-				j++;
-			s->sub_a = ft_substr(s->middle, j, ft_strlen(s->middle) - j);// vérifier si on a pas un leak avec sub_b quand on get_var
-			s->sub_m = ft_substr(s->middle, ft_strlen(s->sub_b), j - (ft_strlen(s->sub_b)));
-			s->sub_m = get_var(data, s->sub_m);
-			j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
-			s->middle = join_all(s->middle, s->sub_b, s->sub_m, s->sub_a);
-		}
-		else if (s->middle[j] == '$' && ft_isdigit(s->middle[j + 1]) == 1)
-			s->middle = expand_number(data, s, &j);
-		else
-			j++;
-	}
-	return (s->middle);
-}
 
 static char	*check_char(t_data *data, char *s, size_t *i, size_t index)
 {
