@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/31 16:23:17 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 12:06:40 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	forking(t_data *data, t_command *cmd, int i)
 		{
 			builtins(data, cmd->cmd);
 			exec_error_handle(data);
-			exit(EXIT_SUCCESS);
+			exit(g_status);
 		}
 		else
 			exec(data, cmd->cmd);
