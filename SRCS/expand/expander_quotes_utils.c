@@ -27,16 +27,6 @@ char	*str_without_single_quotes(char *str, int i, int j) //echo 'aspa -> " '
 		i++;
 	}
 	new_word[i] = '\0';
-	// while (k < j)
-	// {
-	// 	new_word[k] = str[k + 1];printf("Char m = %c|\n", str[k + 1]);
-	// 	k++;
-	// }
-	// while ((size_t)k < ft_strlen(str) - 2)
-	// {
-	// 	new_word[k] = str[k + 2];printf("Char a = %c|\n", str[k + 2]);
-	// 	k++;
-	// }
 	free(str);
 	return (new_word);
 }
@@ -54,15 +44,26 @@ char	*remove_str_middle_quote(char *str, char c)
 	return (str);
 }
 
-static char	*expand_number(t_data *data, t_substr *s, size_t *j)
+static char	*expand_number_mark(t_data *data, t_substr *s, size_t *j, char c)
 {
 	*j = *j + 1;
-	s->sub_b = ft_substr(s->middle, 0, *j - 1);
+	if (*j > 1)
+		s->sub_b = ft_substr(s->middle, 0, *j - 1);
 	*j = *j + 1;
-	s->sub_a = ft_substr(s->middle, *j, ft_strlen(s->middle) - *j);
-	s->sub_m = get_var(data, s->sub_m);
-	*j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
-	s->middle = join_all(s->middle, s->sub_b, s->sub_m, s->sub_a);
+	if (c != '?')
+	{
+		s->sub_a = ft_substr(s->middle, *j, ft_strlen(s->middle) - *j);
+		s->sub_m = get_var(data, s->sub_m); // checker leaks// seems ok
+		*j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
+		s->middle = join_all(s->middle, s->sub_b, s->sub_m, s->sub_a);
+	}
+	else
+	{
+		s->sub_a = ft_substr(s->middle, *j, ft_strlen(s->middle) - *j);
+		s->sub_m = ft_itoa(g_status);
+		*j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
+		s->middle = join_all(s->middle, s->sub_b, s->sub_m, s->sub_a);
+	}
 	return (s->middle);
 }
 
@@ -73,22 +74,22 @@ static char	*expand_str(t_data *data, t_substr *s)
 	j = 0;
 	while (s->middle[j] != '\0')
 	{
-		if (s->middle[j] == '$' && (ft_isalpha(s->middle[j + 1]) == 1 || \
-		s->middle[j + 1] == '?'))
+		if (s->middle[j] == '$' && (ft_isalpha(s->middle[j + 1]) == 1))
 		{
 			j++;
 			if (j > 0)
 				s->sub_b = ft_substr(s->middle, 0, j - 1);
 			while (ft_isalnum(s->middle[j]) == 1)
 				j++;
-			s->sub_a = ft_substr(s->middle, j, ft_strlen(s->middle) - j);// vérifier si on a pas un leak avec sub_b quand on get_var
+			s->sub_a = ft_substr(s->middle, j, ft_strlen(s->middle) - j);// vérifier si on a pas un leak avec sub_b quand on get_var// seems ok
 			s->sub_m = ft_substr(s->middle, ft_strlen(s->sub_b), j - (ft_strlen(s->sub_b)));
 			s->sub_m = get_var(data, s->sub_m);
 			j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
 			s->middle = join_all(s->middle, s->sub_b, s->sub_m, s->sub_a);
 		}
-		else if (s->middle[j] == '$' && ft_isdigit(s->middle[j + 1]) == 1)
-			s->middle = expand_number(data, s, &j);
+		else if (s->middle[j] == '$' && (s->middle[j + 1] == '?' || \
+				ft_isdigit(s->middle[j + 1]) == 1))
+			s->middle = expand_number_mark(data, s, &j, s->middle[j + 1]);
 		else
 			j++;
 	}

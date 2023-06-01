@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/01 07:54:14 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 08:15:04 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,8 +213,6 @@ int			add_node(t_lexer **lexer, char *str, int token);
 void		create_cmd_struct(t_data *data);
 
 /*	expand.c	*/
-char		*expand_number(t_data *data, t_substr *s, size_t *j);
-char		*expand_str(t_data *data, t_substr *s);
 void		expand(t_data *data);
 
 /*	expander_var.c	*/
