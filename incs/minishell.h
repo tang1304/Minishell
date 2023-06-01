@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
 /*   Updated: 2023/06/01 07:54:14 by rrebois          ###   ########lyon.fr   */
@@ -213,14 +213,16 @@ int			add_node(t_lexer **lexer, char *str, int token);
 void		create_cmd_struct(t_data *data);
 
 /*	expand.c	*/
+char		*expand_number(t_data *data, t_substr *s, size_t *j);
+char		*expand_str(t_data *data, t_substr *s);
 void		expand(t_data *data);
 
 /*	expander_var.c	*/
 char		*get_var(t_data *data, char *s);
 char		*join_all(char *s, char *b, char *e, char *a);
-void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index);
-void	number_xpd(t_data *data, t_substr *s, size_t *i, size_t index);
-void	free_struct_expand(t_substr *str);
+void		expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index);
+void		number_xpd(t_data *data, t_substr *s, size_t *i, size_t index);
+void		free_struct_expand(t_substr *str);
 
 /*	expander_quotes.c	*/
 char		*str_quotes_removal(char *str);
