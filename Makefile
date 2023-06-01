@@ -85,6 +85,7 @@ LST_SRCS_E		=	expand.c \
 LST_SRCS_B		=	builtins.c \
 					builtin_cd.c \
 					builtin_echo.c \
+					builtin_exit.c \
 					builtin_unset.c \
 					builtin_export.c \
 					builtin_export_utils.c
