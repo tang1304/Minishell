@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/31 13:01:57 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 12:08:01 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	prompt_loop(t_data *data)
 			if (heredoc_redir(data) == SUCCESS && data->max_index <= INT_MAX)
 			{
 				expand(data);
+				update_lexer(data);
 				token_check(data);
 				create_cmd_lst(data);
 				if (lstlencmd(data->cmd) > 0)
