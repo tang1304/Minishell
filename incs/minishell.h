@@ -3,25 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/01 15:29:04 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 11:45:20 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "../libft/incs/libft.h"
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/wait.h>
-#include <signal.h>
-#include <termios.h>
+# include "../libft/incs/libft.h"
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <signal.h>
+# include <dirent.h>
+
+# define UNSET_ERR	"minishell: unset: `%s': not a valid identifier\n"
 
 typedef struct s_lexer
 {
@@ -98,9 +100,9 @@ typedef struct s_env
 
 typedef struct s_data
 {
-	char				*str; // command typed by user
+	char				*str;
 	char				*strtrim;
-	char				*prompt; // has to be free at the end
+	char				*prompt;
 	char				*prompt_pwd;
 	char				**envp;
 	char				*path;
@@ -108,9 +110,11 @@ typedef struct s_data
 	char				*pwd;
 	char				*oldpwd;
 	size_t				svd_index;
-	int					fdin;//infile
-	int					fdout;//outfile
-	int					pipe[2];//pipes for other cmds NEEDS FREE
+	int					fdin;
+	int					fdout;
+	int					maxfdin;
+	int					maxfdout;
+	int					pipe[2];
 	pid_t				*pids;
 	int					stdin_save;
 	int					stdout_save;
