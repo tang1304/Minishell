@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/01 12:08:01 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 15:00:45 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,15 @@ static void	generate_prompt(t_data *data)
 	char	*prompt;
 
 	prompt = update_pwd(data);
-	data->str = ft_strtrim_free(ft_strdup(readline(prompt)), " ");
+	data->str = readline(prompt);
+	if (data->str == NULL)
+	{
+		write(1, "\n", 1);
+		free_all(data);
+		free(prompt);
+		exit (0);
+	}
+	data->str = ft_strtrim_free(data->str, " ");
 	free(prompt);
 	data->stdin_save = dup(STDIN_FILENO);
 	data->stdout_save = dup(STDOUT_FILENO);
