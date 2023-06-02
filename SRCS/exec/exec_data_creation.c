@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_data_creation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/01 14:12:46 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 11:28:33 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static void	forking(t_data *data, t_command *cmd, int i)
 {
 	if (i == 0)
 	{
+		signal_exec_set();
 		command_init(data, cmd);
 		if (cmd->inf_err || cmd->out_err)
 			exit_error(data);
@@ -102,7 +103,7 @@ static void	forking(t_data *data, t_command *cmd, int i)
 	}
 }
 
-//fork pour : env, echo(pour redirection), pwd, export -> pour 
+//fork pour : env, echo(pour redirection), pwd, export -> pour
 
 void	exec_cmd_lst(t_data *data)
 {
@@ -126,11 +127,11 @@ void	exec_cmd_lst(t_data *data)
 			{
 				close(data->hd->fd[tmp->heredoc_num][0]);
 				close(data->hd->fd[tmp->heredoc_num][1]);
-			}	
+			}
 			return ;
 		}
 		else
-		{
+		{silence_signals();
 			heredoc_check(data, tmp);
 			if (pipe(data->pipe) == -1)
 				perror("Pipe error");
@@ -144,7 +145,7 @@ void	exec_cmd_lst(t_data *data)
 	while (tmp)
 	{
 		waitpid(tmp->pid, &status, 0);
-		tmp = tmp->next;
+		tmp = tmp->next;signal_set();
 	}
 	g_status = WEXITSTATUS(status);
 	restore_stds(data);
