@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:11:24 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 12:40:45 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 14:08:35 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	handler_exec_sigint(int signal) //ne rentre pas la
 	{
 		write(1, "\n", 1);
 		g_status = 128 + signal;//?
-		return (exit(g_status));;// exit (0); //penser a free tout dans le child + close pipes
+		return (exit(g_status));// exit (0); //penser a free tout dans le child + close pipes
 	}
 }
 

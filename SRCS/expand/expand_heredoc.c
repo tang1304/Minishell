@@ -20,12 +20,12 @@ void	expand_dollar_hd(t_data *data, t_substr *s, size_t *i)
 	if (s->s[*i] == '?')
 	{
 		question_mark_hd(s, i);
-		return ; //add function with signals later
+		return ;
 	}
 	else if (ft_isdigit(s->s[*i]) == 1)
 	{
 		number_xpd_hd(data, s, i);
-		return;
+		return ;
 	}
 	if (*i > 1)
 		s->sub_b = ft_substr(s->s, 0, *i - 1);
@@ -33,8 +33,7 @@ void	expand_dollar_hd(t_data *data, t_substr *s, size_t *i)
 		*i = *i + 1;
 	s->sub_a = ft_substr(s->s, *i, ft_strlen(s->s) - *i);
 	buf = ft_substr(s->s, ft_strlen(s->sub_b), *i - (ft_strlen(s->sub_b)));
-	s->sub_m = get_var(data, buf);
-// printf("EXPAND WORD IS NOW = %s\n", s->sub_m);
+	s->sub_m = get_var(data, buf, 0);
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
 	s->s = join_all(s->s, s->sub_b, s->sub_m, s->sub_a);
 }

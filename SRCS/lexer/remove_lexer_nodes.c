@@ -48,7 +48,6 @@ void	free_lst(t_data *data, t_lexer *tmp)
 
 void	remove_front_nodes(t_data *data, size_t len)
 {
-
 	t_lexer	*tmp;
 
 	tmp = data->lexer;
