@@ -36,7 +36,7 @@ void	heredoc_count(t_data *data)
 
 void	heredoc_ctrl_d(t_data *data)
 {
-	printf("minishell: warning: here-document at line %i delimited by \
+	printf("minishell: warning: here-document at line %ld delimited by \
 end-of-file (wanted `%s')\n", data->ctrl_d_val, \
 data->hd->LIMITER[data->hd->heredoc]);
 	close_all(data);
@@ -50,7 +50,7 @@ void	heredoc_pipe(t_data *data)
 	char	*buffer;
 
 	buffer = calloc(sizeof(*buffer), 1);
-	signal_hd_set(data);
+	signal_hd_set();
 	while (1)
 	{
 		line = readline("> ");
