@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:53:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/31 12:56:12 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 15:02:20 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,15 @@ int	error_last_token(char *line)
 		while ((line[len] == ' ' || line[len] == '\t') && (int)len > -1)
 			len--;
 		if (line[len] == '|' || line[len] == '>' || line[len] == '<')
-			return (ft_dprintf(2, "minishell: syntax error near unexpected \
-					token `%c'\n", line[len]), TOKEN_FAILURE);
+			return (ft_dprintf(2, \
+			"minishell: syntax error near unexpected token `%c'\n", line[len]), \
+			TOKEN_FAILURE);
 		return (SUCCESS);
 	}
 	return (SUCCESS);
 }
 
-int	error_great(char *line, size_t i)// regler le cas ou ls > | o erreur au lieu de rien
+int	error_great(char *line, size_t i)
 {
 	int	great;
 
@@ -76,8 +77,8 @@ int	error_great(char *line, size_t i)// regler le cas ou ls > | o erreur au lieu
 			i++;
 		}
 		if (great > 2)
-		return (dprintf(2, "minishell: syntax error near unexpected token \
-`>'\n"), FAILURE);
+			return (dprintf(2, \
+				"minishell: syntax error near unexpected token `>'\n"), FAILURE);
 		i++;
 	}
 	return (SUCCESS);
@@ -101,8 +102,8 @@ int	error_less(char *line, size_t i)
 			i++;
 		}
 		if ((less > 2) || (line[i] == '>' && less > 0))
-			return (ft_dprintf(2, "minishell: syntax error near unexpected \
-					token `<'\n"), FAILURE);
+			return (ft_dprintf(2, \
+				"minishell: syntax error near unexpected token `<'\n"), FAILURE);
 		i++;
 	}
 	return (SUCCESS);
@@ -125,8 +126,8 @@ int	error_check(char *line)
 		}
 		if (line[i] != '\0' && line[i] == '|')
 			if (error_pipes(line, i) != SUCCESS)
-				return (ft_dprintf(2, "minishell: syntax error near unexpected \
-				token `|'\n"), FAILURE);
+				return (ft_dprintf(2, \
+				"minishell: syntax error near unexpected token `|'\n"), FAILURE);
 		if (line[i] == '>' || line[i] == '<')
 			if (check_token(line, i) != SUCCESS)
 				return (FAILURE);
