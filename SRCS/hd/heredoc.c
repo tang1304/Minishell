@@ -34,6 +34,16 @@ void	heredoc_count(t_data *data)
 	data->hd->LIMITER[data->hd->hd_count] = 0;
 }
 
+void	heredoc_ctrl_d(t_data *data)
+{
+	printf("minishell: warning: here-document at line %ld delimited by \
+end-of-file (wanted `%s')\n", data->ctrl_d_val, \
+data->hd->LIMITER[data->hd->heredoc]);
+	close_all(data);
+	free_all(data);
+	exit (SUCCESS);
+}
+
 void	heredoc_pipe(t_data *data)
 {
 	char	*line;
@@ -46,9 +56,10 @@ void	heredoc_pipe(t_data *data)
 		line = readline("> ");
 		if ((ft_strncmp(line, data->hd->LIMITER[data->hd->heredoc], ft_strlen\
 		(line)) == 0 && ft_strlen(data->hd->LIMITER[data->hd->heredoc]) == \
-		ft_strlen(line)) \
-		|| !line)
+		ft_strlen(line)))
 			break ;
+		if (line == NULL)
+			heredoc_ctrl_d(data);
 		line = expand_line(data, line);
 		buffer = ft_strjoin_free(buffer, line);
 	}
@@ -88,6 +99,7 @@ void	init_heredoc_data(t_data *data)
 	pid_t		i;
 
 	create_pipes_hd(data);
+	silence_signals();
 	while (data->hd->heredoc < data->hd->hd_count)
 	{
 		i = fork();
@@ -98,6 +110,8 @@ void	init_heredoc_data(t_data *data)
 		}
 		waitpid(i, &status, 0);
 		data->hd->heredoc++;
+		data->ctrl_d_val++;
 	}
+	signal_set();
 	data->hd->heredoc = 0;
 }
