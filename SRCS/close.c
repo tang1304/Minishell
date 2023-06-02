@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 09:19:14 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/01 15:07:51 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 10:22:05 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,17 @@ void	close_files(t_data *data)
 	int	i;
 
 	i = 0;
-	if (data->fdin > data->fdout)
-		i = data->fdin;
+	if (data->maxfdin > data->maxfdout)
+		i = data->maxfdin;
 	else
-		i = data->fdout;
+		i = data->maxfdout;
 	while (i > 2)
 	{
 		close(i);
 		i--;
 	}
-	close(data->stdin_save);
-	close(data->stdout_save);
+	if (data->stdin_save > 0)
+		close(data->stdin_save);
+	if (data->stdout_save > 0)
+		close(data->stdout_save);
 }

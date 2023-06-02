@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:53:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/01 15:02:20 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 11:22:08 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,13 @@ int	error_great(char *line, size_t i)
 			i++;
 		}
 		if (great > 2)
-			return (dprintf(2, \
+			return (ft_dprintf(2, \
 				"minishell: syntax error near unexpected token `>'\n"), FAILURE);
 		i++;
 	}
 	return (SUCCESS);
 }
-//>out ls<Makefile |wc
+
 int	error_less(char *line, size_t i)
 {
 	int	less;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/01 15:00:45 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 10:31:44 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	generate_prompt(t_data *data)
 		exit (0);
 	}
 	data->str = ft_strtrim_free(data->str, " ");
+	data->str = ft_strtrim_free(data->str, "\t");
 	free(prompt);
 	data->stdin_save = dup(STDIN_FILENO);
 	data->stdout_save = dup(STDOUT_FILENO);

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/25 13:05:29 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 10:40:13 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_list_size(t_env *env)
 	return (len);
 }
 
-static int	env_struct_replacement(t_env *var, char *cmd, int i)
+static int	env_struct_replacement(t_data *data, t_env *var, char *cmd, int i)
 {
 	char	*pos;
 
@@ -41,8 +41,8 @@ static int	env_struct_replacement(t_env *var, char *cmd, int i)
 		else
 			var->var_value = ft_strdup("");
 		var->var_name = ft_strndup(cmd, i);
-		// if (!tmp->var_value)
-		// 	return (0);
+		if (!var->var_value)
+			exit_error(data);
 		return (1);
 	}
 	return (0);
@@ -90,7 +90,7 @@ int	existing_var(t_data *data, char *cmd, int i)
 	tmp = data->env;
 	while (tmp)
 	{
-		if (env_struct_replacement(tmp, cmd, i) == 1)
+		if (env_struct_replacement(data, tmp, cmd, i) == 1)
 			break ;
 		else
 			tmp = tmp->next;

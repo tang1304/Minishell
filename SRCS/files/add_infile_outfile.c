@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_infile_outfile.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 15:17:58 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 10:22:08 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	file_check_access(t_data *data, char *file, int i)
 			return (FILE_ERROR);
 		}
 		return (SUCCESS);
+		data->maxfdin = data->fdin;
 	}
 	else if (i == 1)
 		data->fdout = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
@@ -34,6 +35,7 @@ int	file_check_access(t_data *data, char *file, int i)
 		ft_error_file(data->fdout, file, 1);
 		return (FILE_ERROR);
 	}
+	data->maxfdout = data->fdout;
 	return (SUCCESS);
 }
 

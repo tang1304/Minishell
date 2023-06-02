@@ -16,7 +16,7 @@ int	is_word(char *s, int i, char c)
 {
 	while (s[i] == c)
 		i++;
-	while (s[i] == ' ')
+	while (s[i] == ' ' || s[i] == '\t')
 		i++;
 	if (ft_isprint(s[i]) == 1 && s[i] != '>' && s[i] != '<')
 		return (SUCCESS);
