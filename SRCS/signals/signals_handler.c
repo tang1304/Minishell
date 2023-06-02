@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   signals_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:11:24 by rrebois           #+#    #+#             */
 /*   Updated: 2023/06/02 14:08:35 by rrebois          ###   ########lyon.fr   */
@@ -36,7 +36,7 @@ void	handler_hd_sigint(int signal)
 }
 
 void	handler_exec_sigint(int signal) //ne rentre pas la
-{printf("LA\n");
+{
 	if (signal == SIGINT)
 	{
 		write(1, "\n", 1);

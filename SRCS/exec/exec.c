@@ -6,36 +6,20 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:47:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/02 12:05:44 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 14:23:50 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-static void	join_path_and_cmd(t_data *data, char *cmd, int i)
-{
-	data->path = ft_strjoin(data->paths[i], cmd);
-	if (data->path == NULL)
-		exit_error(data);
-}
-
-static void	check_if_absolute_path(t_data *data, char **cmd)
+static void	access_checks(t_data *data, char **cmd)
 {
 	DIR	*check;
 
-	if ((cmd[0][0] == '.' && cmd[0][1] == '/' && !ft_isalnum(cmd[0][2])) \
-	|| (cmd[0][0] == '/' && (!ft_isalnum(cmd[0][1]) || cmd[0][1] == '/')))
-	{
-		write(2, cmd[0], ft_strlen(cmd[0]));
-		write(2, ": Is a directory\n", 17);
-		exec_error_handle(data);
-		g_status = 126;
-		exit(g_status);
-	}
 	check = opendir(cmd[0]);
 	if (check != NULL)
 	{
-		ft_dprintf(2, "minishell: %s : is a directory\n", cmd[0]);
+		ft_dprintf(2, "minishell: %s : Is a directory\n", cmd[0]);
 		exec_error_handle(data);
 		closedir(check);
 		g_status = 126;
@@ -55,6 +39,20 @@ static void	check_if_absolute_path(t_data *data, char **cmd)
 		g_status = 126;
 		exit(g_status);
 	}
+}
+
+static void	check_if_absolute_path(t_data *data, char **cmd)
+{
+	if ((cmd[0][0] == '.' && cmd[0][1] == '/' && !ft_isalnum(cmd[0][2])) \
+	|| (cmd[0][0] == '/' && (!ft_isalnum(cmd[0][1]) || cmd[0][1] == '/')))
+	{
+		write(2, cmd[0], ft_strlen(cmd[0]));
+		write(2, ": Is a directory\n", 17);
+		exec_error_handle(data);
+		g_status = 126;
+		exit(g_status);
+	}
+	access_checks(data, cmd);
 	if (execve(cmd[0], cmd, data->envp) == -1)
 	{
 		perror(cmd[0]);
@@ -67,7 +65,6 @@ static void	check_if_absolute_path(t_data *data, char **cmd)
 static void	pre_check_on_cmd(t_data *data, char **cmd)
 {
 	(void)data;
-
 	if (cmd[0][0] == '.' && !cmd[0][1])
 	{
 		write(2, "minishell: .: filename argument required\n", 41);

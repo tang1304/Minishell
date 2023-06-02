@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:19:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/02 11:25:51 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 15:04:13 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,42 @@ void	exec_error_handle(t_data *data)
 {
 	free_all(data);
 	close_files(data);
+}
+
+void	join_path_and_cmd(t_data *data, char *cmd, int i)
+{
+	data->path = ft_strjoin(data->paths[i], cmd);
+	if (data->path == NULL)
+		exit_error(data);
+}
+
+void	restore_stds(t_data *data)
+{
+	if (dup2(data->stdin_save, STDIN_FILENO) == -1 \
+	|| dup2(data->stdout_save, STDOUT_FILENO) == -1)
+		return (perror("Error with restoring STDIN/STDOUT dup2"));
+	if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
+		return (perror("Error with closing STDIN/STDOUT saves"));
+}
+
+void	extract_paths(t_data *data)
+{
+	char	*s;
+	t_env	*tmp;
+
+	tmp = data->env;
+	s = NULL;
+	while (tmp)
+	{
+		s = search_env(data, "PATH");
+		if (s != NULL)
+			break ;
+		tmp = tmp->next;
+	}
+	if (s != NULL)
+	{
+		data->paths = ft_split(s, ':');
+		if (!data->paths)
+			exec_error_handle(data);
+	}
 }

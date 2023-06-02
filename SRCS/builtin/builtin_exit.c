@@ -6,13 +6,13 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 08:19:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/02 10:46:02 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 13:33:26 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-static void	check_numeric(char **str)
+static void	check_numeric(t_data *data, char **str)
 {
 	int	i;
 
@@ -25,6 +25,8 @@ static void	check_numeric(char **str)
 		{
 			ft_dprintf(2, "minishell: exit: %s: numeric argument required\n", \
 						str[1]);
+			free_all(data);
+			close_files(data);
 			exit(2);
 		}
 		i++;
@@ -67,7 +69,7 @@ void	ft_exit(t_data *data, char **str)
 		ft_dprintf(2, "minishell: exit: too many arguments\n");
 		exit_error(data);
 	}
-	check_numeric(str);
+	check_numeric(data, str);
 	exit_numeric(str);
 	free_all(data);
 	close_files(data);

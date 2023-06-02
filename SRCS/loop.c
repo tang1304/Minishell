@@ -6,11 +6,13 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 14:07:58 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 15:02:08 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+//Checker que l'on prenne seulement des ASCII en prompt
 
 static void	generate_prompt(t_data *data)
 {
@@ -58,5 +60,7 @@ void	prompt_loop(t_data *data)
 		}
 		close_files(data);
 		free_loop(data);
+		// free_all(data);
+		// exit(EXIT_SUCCESS);
 	}
 }
