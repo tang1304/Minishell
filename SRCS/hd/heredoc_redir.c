@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:37:02 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 15:16:49 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 15:26:23 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	heredoc_redir(t_data *data)
 		if (tmp->token != NULL && ft_strncmp(tmp->token, "<<", 2) == 0 \
 		&& ft_strlen(tmp->token) == 2)
 		{
-			data->hd->LIMITER[data->hd->heredoc] = ft_strdup(tmp->next->word);
+			data->hd->limiter[data->hd->heredoc] = ft_strdup(tmp->next->word);
 			data->hd->heredoc++;
 		}
 		tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 14:44:19 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 15:26:58 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,14 @@
 
 typedef struct s_lexer
 {
-	// char			**cmd; //malloc a free
 	char			*word;
 	char			*token;
-	char			*infile;//free if not NULL
+	char			*infile;
 	int				inf_err;
-	char			*outfile;//free if not NULL
+	char			*outfile;
 	int				out_err;
-	int				fdin;//infile
-	int				fdout;//outfile
+	int				fdin;
+	int				fdout;
 	int				hd_file;
 	int				hd_number;
 	size_t			index;
@@ -63,33 +62,32 @@ typedef struct s_substr
 
 typedef struct s_command
 {
-	char				**cmd;//malloc a free
+	char				**cmd;
 	size_t				index;
 	char				*infile;
 	int					inf_err;
 	char				*outfile;
 	int					out_err;
-	int					heredoc_file; //0 no hd 1 hd useless I think
-	int					heredoc_num; // which limiter it needs to use
+	int					heredoc_file;
+	int					heredoc_num;
 	int					fd[2];
-	int					fdin;//infile
-	int					fdout;//outfile
-	int					pipe_b; // 0 pas de pipe, 1 = pipe = rediriger pipe vers stdin
-	int					pipe_a; // 0 pas de pipe, 1 = pipe = rediriger stdout vers pipe
+	int					fdin;
+	int					fdout;
+	int					pipe_b;
+	int					pipe_a;
 	pid_t				pid;
 	int					child;
 	struct s_command	*next;
 	struct s_command	*prev;
-}				t_command;//ls        | "grep >out" <Makefile| wc -l >outer
+}				t_command;
 
 typedef struct s_heredoc
 {
-	int					hd_count; // number of heredocs (total)
-	// size_t				hd_used; //number of hd actually used
-	int					heredoc; // set to 0 at first
-	char				**LIMITER; // a<<rray of all LIMITERS  A FREE A LA FIIIN meme si 0
-	int					*xpd; //0 no expand, 1 expand
-	int					**fd;//pipe for here_doc
+	int					hd_count;
+	int					heredoc;
+	char				**limiter;
+	int					*xpd;
+	int					**fd;
 }				t_heredoc;
 
 typedef struct s_env
@@ -211,8 +209,8 @@ int			lexer_init(t_data *data);
 int			is_pipe(char *str, int i);
 
 /*	lexer_update.c	*/
-void	update_lexer(t_data *data);
-void	remove_single_node(t_data *data, size_t index);
+void		update_lexer(t_data *data);
+void		remove_single_node(t_data *data, size_t index);
 
 /*	lexer_utils.c	*/
 void		add_index(t_data *data);
@@ -238,9 +236,9 @@ char		*str_quotes_removal(char *str);
 int			quotes_removal(t_lexer *lexer);
 
 /*	expander_quotes_utils.c	*/
-char	*str_without_single_quotes(char *str, int i, int j);
-char	*remove_str_middle_quote(char *str, char c);
-void	expand_quotes(t_data *data, t_substr *str, size_t *i, char c);
+char		*str_without_single_quotes(char *str, int i, int j);
+char		*remove_str_middle_quote(char *str, char c);
+void		expand_quotes(t_data *data, t_substr *str, size_t *i, char c);
 
 /*	expand_heredoc.c	*/
 char		*expand_line(t_data *data, char *str);
@@ -249,8 +247,8 @@ void		expand_dollar_hd(t_data *data, t_substr *s, size_t *i);
 void		remove_limiter_quotes(t_data *data);
 
 /*	expand_heredoc_utils.c	*/
-void	question_mark_hd(t_substr *s, size_t *i);
-void	number_xpd_hd(t_data *data, t_substr *s, size_t *i);
+void		question_mark_hd(t_substr *s, size_t *i);
+void		number_xpd_hd(t_data *data, t_substr *s, size_t *i);
 
 /*	expand_utils.c	*/
 void		modify_lxr_nds(t_data *data, t_substr *s, size_t index);
@@ -297,7 +295,7 @@ void		heredoc_count(t_data *data);
 void		init_heredoc_data(t_data *data);
 void		heredoc_pipe(t_data *data);
 void		create_pipes_hd(t_data *data);
-void	heredoc_ctrl_d(t_data *data);
+void		heredoc_ctrl_d(t_data *data);
 
 /*	heredoc_redir.c	*/
 int			heredoc_redir(t_data *data);
@@ -308,12 +306,14 @@ char		*ft_strjoin_free_s2(char *s1, char *s2);
 char		*ft_change_str(char *s1, char *s2);
 size_t		lstlen(t_lexer *lexer);
 size_t		lstlencmd(t_command *cmd);
-void		complete_inf_data(t_data *data, t_lexer *tmp, char *file, int valid);
+void		complete_inf_data(t_data *data, t_lexer *tmp, char *file, \
+								int valid);
 
 /*	utils2.c	*/
 char		*ft_strjoin_expand(char *s1, char *s2);
 char		*ft_strjoin_free(char *s1, char *s2);
-void		complete_out_data(t_data *data, t_lexer *tmp, char *file, int valid);
+void		complete_out_data(t_data *data, t_lexer *tmp, char *file, \
+								int valid);
 size_t		ft_strlen_pp(char **s);
 
 /*	free.c	*/
@@ -355,13 +355,13 @@ void		wait_child(t_data *data);
 void		signal_set(void);
 void		signal_hd_set(void);
 void		signal_exec_set(void);
-void	silence_signals(void);
+void		silence_signals(void);
 
 /*	signals_handler.c	*/
 void		handler_sigint(int signal);
 void		handler_hd_sigint(int signal);
 void		handler_exec_sigint(int signal);
-void	handler_exec_sigquit(int signal);
+void		handler_exec_sigquit(int signal);
 
 /*	close.c	*/
 void		close_heredoc_pipes(t_data *data);

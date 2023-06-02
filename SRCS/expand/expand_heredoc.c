@@ -69,15 +69,15 @@ void	prepare_expand_hd(t_data *data)
 	if (data->hd->xpd == NULL)
 		return ;//garbage val?
 	i = 0;
-	while (data->hd->LIMITER[i] != 0)
+	while (data->hd->limiter[i] != 0)
 	{
 		j = 0;
 		quote = 0;
 		data->hd->xpd[i] = 0;
-		while (data->hd->LIMITER[i][j] != '\0')
+		while (data->hd->limiter[i][j] != '\0')
 		{
-			if (data->hd->LIMITER[i][j] == '\'' || \
-			data->hd->LIMITER[i][j] == '"')
+			if (data->hd->limiter[i][j] == '\'' || \
+			data->hd->limiter[i][j] == '"')
 				quote = 1;
 			j++;
 		}
@@ -93,9 +93,9 @@ void	remove_limiter_quotes(t_data *data)
 	int	i;
 
 	i = 0;
-	while (data->hd->LIMITER[i] != 0)
+	while (data->hd->limiter[i] != 0)
 	{
-		data->hd->LIMITER[i] = str_quotes_removal(data->hd->LIMITER[i]);
+		data->hd->limiter[i] = str_quotes_removal(data->hd->limiter[i]);
 		i++;
 	}
 }

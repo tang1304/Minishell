@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 15:31:41 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 15:26:23 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	free_data_strct(t_data *data)
 void	free_hd_strct(t_data *data)
 {
 	data->hd->heredoc = 0;
-	if (data->hd->LIMITER)
+	if (data->hd->limiter)
 		ft_free_limiter(data->hd);
 	if (data->hd->fd != NULL)//pose problème, sans ça ça roule
 	{
