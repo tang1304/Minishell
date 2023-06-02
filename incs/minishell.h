@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 11:45:20 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 14:44:19 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <dirent.h>
 
 # define UNSET_ERR	"minishell: unset: `%s': not a valid identifier\n"
+# define SQUOTE_ERR "minishell: syntax error near unexpected token `\''\n"
+# define DQUOTE_ERR "minishell: syntax error near unexpected token `\"'\n"
 
 typedef struct s_lexer
 {
@@ -332,10 +334,10 @@ void		free_loop(t_data *data);
 void		ft_free_pp(char **ptr);
 void		ft_free_paths(t_data *data);
 void		ft_free_limiter(t_heredoc *hd);
-
-/*	exec_data_creation.c	*/
 void		restore_stds(t_data *data);
 void		extract_paths(t_data *data);
+
+/*	exec_data_creation.c	*/
 void		exec_cmd_lst(t_data *data);
 
 /*	exec.c	*/
@@ -344,6 +346,7 @@ void		exec(t_data *data, char **cmd);
 /*	exec_utils.c	*/
 int			heredoc_check(t_data *data, t_command *cmd);
 void		exec_error_handle(t_data *data);
+void		join_path_and_cmd(t_data *data, char *cmd, int i);
 
 /*	wait.c	*/
 void		wait_child(t_data *data);
