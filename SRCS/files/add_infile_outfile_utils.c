@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_infile_outfile_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 12:43:03 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 15:10:46 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,8 @@ void	add_outfile(t_data *data, char *file, size_t index, int valid)
 	}
 }
 
-void	ft_error_file(int fd, char *file, int i)
+void	ft_error_file(char *file, int i)
 {
-	(void)fd;
-
 	if (i == 0)
 	{
 		if (access(file, F_OK) != 0)

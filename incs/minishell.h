@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
 /*   Updated: 2023/06/02 15:26:58 by tgellon          ###   ########lyon.fr   */
@@ -189,7 +189,7 @@ int			check_redirection(t_data *data, char *token, char *file, \
 
 /*	add_infile_outfile_utils.c	*/
 t_lexer		*find_start(t_lexer *tmp);
-void		ft_error_file(int fd, char *file, int i);
+void		ft_error_file(char *file, int i);
 void		add_infile(t_data *data, char *file, size_t index, int valid);
 void		add_outfile(t_data *data, char *file, size_t index, int valid);
 void		add_file_node(t_data *data, t_lexer *lexer, char *file, int i);
@@ -225,13 +225,14 @@ void		create_cmd_struct(t_data *data);
 void		expand(t_data *data);
 
 /*	expander_var.c	*/
-char		*get_var(t_data *data, char *s);
+char		*get_var(t_data *data, char *s, size_t i);
 char		*join_all(char *s, char *b, char *e, char *a);
 void		expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index);
 void		number_xpd(t_data *data, t_substr *s, size_t *i, size_t index);
 void		free_struct_expand(t_substr *str);
 
 /*	expander_quotes.c	*/
+void	set_sub_strs(t_substr *s, size_t j);
 char		*str_quotes_removal(char *str);
 int			quotes_removal(t_lexer *lexer);
 
