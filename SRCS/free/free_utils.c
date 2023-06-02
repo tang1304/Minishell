@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:25:20 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 15:28:56 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 15:26:05 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ void	ft_free_limiter(t_heredoc *hd)
 	size_t	x;
 
 	x = 0;
-	if (hd->LIMITER == NULL)
+	if (hd->limiter == NULL)
 		return ;
-	while (hd->LIMITER[x] != 0)
+	while (hd->limiter[x] != 0)
 	{
-		free(hd->LIMITER[x]);
-		hd->LIMITER[x] = NULL;
+		free(hd->limiter[x]);
+		hd->limiter[x] = NULL;
 		x++;
 	}
-	free(hd->LIMITER);
-	hd->LIMITER = NULL;
+	free(hd->limiter);
+	hd->limiter = NULL;
 }

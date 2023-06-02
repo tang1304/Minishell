@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/01 12:39:59 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 15:26:23 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	expand(t_data *data)
 // printf("index: %ld\n", tmp2->lexer->index);
 // ft_printf("infile: %s\n", tmp2->lexer->infile);
 // ft_printf("outfile: %s\n", tmp2->lexer->outfile);
-// ft_printf("LIMITER: %s\n",tmp2->lexer->LIMITER);
+// ft_printf("limiter: %s\n",tmp2->lexer->limiter);
 // ft_printf("hdoc: %d\n",tmp2->heredoc);
 // 		tmp2->lexer = tmp2->lexer->next;
 // 	}
