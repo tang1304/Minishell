@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:47:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/01 14:58:08 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 12:05:44 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,36 @@ static void	join_path_and_cmd(t_data *data, char *cmd, int i)
 
 static void	check_if_absolute_path(t_data *data, char **cmd)
 {
-	// int	fd;
+	DIR	*check;
 
 	if ((cmd[0][0] == '.' && cmd[0][1] == '/' && !ft_isalnum(cmd[0][2])) \
 	|| (cmd[0][0] == '/' && (!ft_isalnum(cmd[0][1]) || cmd[0][1] == '/')))
 	{
 		write(2, cmd[0], ft_strlen(cmd[0]));
 		write(2, ": Is a directory\n", 17);
-		if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
-			return (perror("Error with closing STDIN/STDOUT saves"));
 		exec_error_handle(data);
 		g_status = 126;
 		exit(g_status);
 	}
-	if (!access(cmd[0], X_OK))
+	check = opendir(cmd[0]);
+	if (check != NULL)
+	{
+		ft_dprintf(2, "minishell: %s : is a directory\n", cmd[0]);
+		exec_error_handle(data);
+		closedir(check);
+		g_status = 126;
+		exit(g_status);
+	}
+	if (access(cmd[0], F_OK) != 0)
 	{
 		perror(cmd[0]);
-		if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
-			return (perror("Error with closing STDIN/STDOUT saves"));
+		exec_error_handle(data);
+		g_status = 127;
+		exit(g_status);
+	}
+	if (access(cmd[0], X_OK) != 0)
+	{
+		perror(cmd[0]);
 		exec_error_handle(data);
 		g_status = 126;
 		exit(g_status);
@@ -46,8 +58,6 @@ static void	check_if_absolute_path(t_data *data, char **cmd)
 	if (execve(cmd[0], cmd, data->envp) == -1)
 	{
 		perror(cmd[0]);
-		if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
-			return (perror("Error with closing STDIN/STDOUT saves"));
 		exec_error_handle(data);
 		g_status = 127;
 		exit(g_status);

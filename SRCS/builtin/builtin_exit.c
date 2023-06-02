@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 08:19:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/01 16:43:47 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 10:46:02 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,11 @@ static void	check_numeric(char **str)
 	return ;
 }
 
-void	ft_exit(t_data *data, char **str)
+static void	exit_numeric(char **str)
 {
 	int			err;
 	long long	code;
 
-	printf("exit\n");
-	if (!str[1])
-	{
-		free_all(data);
-		if (data->stdin_save > 0 && data->stdout_save > 0)
-		{
-			if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
-				return (perror("Error with closing STDIN/STDOUT saves"));
-		}
-		exit(g_status);
-	}
-	if (str[2])
-	{
-		ft_dprintf(2, "minishell: exit: too many arguments\n");
-		exit_error(data);
-	}
-	check_numeric(str);
-	err = 0;
 	if (str[1] && (ft_atoi_ll(str[1], &err) < 255 && err == 0))
 		g_status = ft_atoi_ll(str[1], &err);
 	else
@@ -69,11 +51,25 @@ void	ft_exit(t_data *data, char **str)
 		else
 			g_status = code;
 	}
-	free_all(data);
-	if (data->stdin_save > 0 && data->stdout_save > 0)
+}
+
+void	ft_exit(t_data *data, char **str)
+{
+	printf("exit\n");
+	if (!str[1])
 	{
-		if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
-			return (perror("Error with closing STDIN/STDOUT saves"));
+		free_all(data);
+		close_files(data);
+		exit(g_status);
 	}
+	if (str[2])
+	{
+		ft_dprintf(2, "minishell: exit: too many arguments\n");
+		exit_error(data);
+	}
+	check_numeric(str);
+	exit_numeric(str);
+	free_all(data);
+	close_files(data);
 	exit(g_status);
 }

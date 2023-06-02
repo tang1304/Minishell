@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 15:13:16 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 09:42:40 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	free_all(t_data *data)
 		close(data->fdin);
 	if (data->fdout > 0)
 		close(data->fdout);
+	// close_files(data);
 }
 
 void	free_data(t_data *data, void(*f)())
