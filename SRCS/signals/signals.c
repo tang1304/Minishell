@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:14:33 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 11:30:55 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 11:45:05 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	signal_set(void)
 {
 	struct sigaction	sa;
 
-	ft_bzero(&sa, sizeof(sa));
+	// ft_bzero(&sa, sizeof(sa));
+	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 	sa.sa_handler = &handler_sigint;
 	sigaction(SIGINT, &sa, NULL);
@@ -28,9 +29,8 @@ void	signal_hd_set(void)
 {
 	struct sigaction	sa;
 
-	g_status = 0;
-	ft_bzero(&sa, sizeof(sa));
-	// sigemptyset(&sa.sa_mask);
+	// ft_bzero(&sa, sizeof(sa));
+	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
@@ -42,7 +42,7 @@ void	signal_exec_set(void)
 {
 	struct sigaction	sa;
 printf("LO\n");
-	ft_bzero(&sa, sizeof(sa));
+	// ft_bzero(&sa, sizeof(sa));
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 	sa.sa_handler = &handler_exec_sigint;
