@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 09:19:14 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 15:02:05 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 15:07:51 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	close_heredoc_pipes(t_data *data)
 		tmp = tmp->next;
 	}
 }
+
 // Close pipes in heredoc children
 void	close_all(t_data *data)
 {
@@ -54,6 +55,7 @@ void	close_all(t_data *data)
 	close(data->stdout_save);
 	close_files(data);
 }
+
 // Close infiles and outfiles opened
 void	close_files(t_data *data)
 {
@@ -69,4 +71,6 @@ void	close_files(t_data *data)
 		close(i);
 		i--;
 	}
+	close(data->stdin_save);
+	close(data->stdout_save);
 }
