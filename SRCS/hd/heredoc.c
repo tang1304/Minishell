@@ -85,7 +85,7 @@ void	create_pipes_hd(t_data *data)
 	}
 	data->hd->heredoc = 0;
 	while (data->hd->heredoc < data->hd->hd_count)
-	{//printf("LOOOOOOOOOP!!!\n");
+	{
 		if (pipe(data->hd->fd[data->hd->heredoc]) < 0)
 			return ;//grbage val??
 		data->hd->heredoc++;
