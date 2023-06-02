@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/01 15:29:04 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/02 09:13:13 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_data
 	int					stdin_save;
 	int					stdout_save;
 	size_t				max_index;
+	size_t				ctrl_d_val;
 	struct s_env		*env;
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
@@ -290,6 +291,7 @@ void		heredoc_count(t_data *data);
 void		init_heredoc_data(t_data *data);
 void		heredoc_pipe(t_data *data);
 void		create_pipes_hd(t_data *data);
+void	heredoc_ctrl_d(t_data *data);
 
 /*	heredoc_redir.c	*/
 int			heredoc_redir(t_data *data);
@@ -344,8 +346,9 @@ void		wait_child(t_data *data);
 
 /*	signals.c	*/
 void		signal_set(void);
-void		signal_hd_set(void);
+void		signal_hd_set(t_data *data);
 void		signal_exec_set(void);
+void	silence_signals(void);
 
 /*	signals_handler.c	*/
 void		handler_sigint(int signal);
