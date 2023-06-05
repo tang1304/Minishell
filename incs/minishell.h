@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 15:26:58 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 08:47:57 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,7 @@ void		number_xpd(t_data *data, t_substr *s, size_t *i, size_t index);
 void		free_struct_expand(t_substr *str);
 
 /*	expander_quotes.c	*/
-void	set_sub_strs(t_substr *s, size_t j);
+void		set_sub_strs(t_substr *s, size_t j);
 char		*str_quotes_removal(char *str);
 int			quotes_removal(t_lexer *lexer);
 
@@ -260,7 +260,6 @@ t_lexer		*update_tmp_index(t_data *data, size_t *i);
 int			builtins(t_data *data, char **cmd);
 int			check_builtins(char **cmd);
 
-
 /*	builtin_cd.c	*/
 int			ft_cd(t_data *data, char **cmd);
 char		*search_env(t_data *data, char *env);
@@ -286,10 +285,10 @@ int			existing_var(t_data *data, char *cmd, int i);
 int			ft_unset(t_data *data, char **cmd);
 
 /*	envp_utils.c	*/
-char		*get_shlvl(char *str);
+char		*get_shlvl(t_data *data, char *str);
 char		*search_env(t_data *data, char *env);
 int			replace_env(t_data *data, char *env, char *old_env);
-int			add_env_node(t_env **env, char *str);
+int			add_env_node(t_data *data, t_env **env, char *str);
 
 /*	heredoc.c	*/
 void		heredoc_count(t_data *data);
