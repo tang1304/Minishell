@@ -63,7 +63,7 @@ static void	set_data_xpd(t_data *data)
 	data->hd->xpd = (int *)malloc(sizeof(int) * data->hd->hd_count);
 	// data->hd->xpd = NULL;
 	if (data->hd->xpd == NULL)
-		exit_error(data);
+		exit_error(data, "Error\n");
 }
 
 void	prepare_expand_hd(t_data *data)
