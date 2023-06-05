@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_infile_outfile_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:27:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 15:10:46 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 14:21:35 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 void	add_file_node(t_data *data, t_lexer *lexer, char *file, int i)
 {
 	if (i == 0)
+	{
 		lexer->infile = ft_strdup(file);
+		if (!lexer->infile)
+			exit_error(data, "minishell: malloc error: ");
+	}
 	else if (i == 1)
 	{
 		if (lexer->infile != NULL)

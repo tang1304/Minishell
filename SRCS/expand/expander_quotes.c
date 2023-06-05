@@ -3,30 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   expander_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:22 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/05 08:56:00 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 13:29:31 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void	set_sub_strs(t_substr *s, size_t j)
+void	set_sub_strs(t_data *data, t_substr *s, size_t j)
 {
 	s->sub_a = ft_substr(s->middle, j, ft_strlen(s->middle) - j);
+	if (!s->sub_a)
+		exit_error(data, "minishell: malloc error: ");
 	s->sub_m = ft_substr(s->middle, ft_strlen(s->sub_b), \
 	j - (ft_strlen(s->sub_b)));
+	if (!s->sub_b)
+		exit_error(data, "minishell: malloc error: ");
 }
 
-static char	*word_without_quotes(char *str, int i, int j)
+static char	*word_without_quotes(t_data *data, char *str, int i, int j)
 {
 	char	*new_word;
 	int		k;
 
 	new_word = (char *)malloc(sizeof(char) * (ft_strlen(str) - 1));
-	if (!new_word)//
-		return (NULL);
+	if (!new_word)
+		exit_error(data, "minishell: malloc error: ");
 	k = -1;
 	while (++k < i)
 		new_word[k] = str[k];
@@ -76,7 +80,7 @@ static int	quote_pairs(char *str)
 	return (j);
 }
 
-char	*str_quotes_removal(char *str)
+char	*str_quotes_removal(t_data *data, char *str)
 {
 	int	i;
 	int	j;
@@ -94,9 +98,7 @@ char	*str_quotes_removal(char *str)
 		{
 			j++;
 		}
-		str = word_without_quotes(str, i - 1, j);
-		// if (!new_word)
-		// 	;
+		str = word_without_quotes(data, str, i - 1, j);
 	}
 	return (str);
 }

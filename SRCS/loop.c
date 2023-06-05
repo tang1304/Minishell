@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 10:54:10 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 15:52:05 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,11 @@ static void	generate_prompt(t_data *data)
 	data->str = ft_strtrim_free(data->str, "\t");
 	free(prompt);
 	data->stdin_save = dup(STDIN_FILENO);
+	if (!data->stdin_save)
+		exit_error(data, "minishell: dup error: ");
 	data->stdout_save = dup(STDOUT_FILENO);
+	if (!data->stdout_save)
+		exit_error(data, "minishell: dup error: ");
 }
 
 void	prompt_loop(t_data *data)
@@ -42,7 +46,7 @@ void	prompt_loop(t_data *data)
 		generate_prompt(data);
 		if (ft_strlen(data->str) > 0)
 			add_history(data->str);
-		if (error_check(data->str) == SUCCESS)
+		if (error_check(data, data->str) == SUCCESS)
 		{
 			lexer_init(data);
 			if (heredoc_redir(data) == SUCCESS && data->max_index <= INT_MAX)
