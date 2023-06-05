@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 08:19:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/05 09:07:42 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 14:27:42 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_exit(t_data *data, char **str)
 	if (str[2])
 	{
 		ft_dprintf(2, "minishell: exit: too many arguments\n");
-		exit_error(data, "minishell: malloc error: ");
+		exit_error(data, NULL);
 	}
 	check_numeric(data, str);
 	exit_numeric(str);

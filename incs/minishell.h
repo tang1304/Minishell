@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 15:00:41 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 16:02:24 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ char		**get_envp(t_data *data, char **envp);
 void		prompt_loop(t_data *data);
 
 /*	check_error_input.c	*/
-int			error_check(char *line);
+int			error_check(t_data *data, char *line);
 int			error_pipes(char *line, size_t i);
 int			error_last_token(char *line);
 int			error_great(char *line, size_t i);
@@ -167,6 +167,7 @@ int			check_token(char *s, size_t i);
 
 /*	errors.c	*/
 void		exit_error(t_data *data, char *str);
+void		ascii_check(t_data *data, char *str);
 
 /*	parser.c	*/
 void		check_hidden_nodes(t_data *data);
@@ -226,19 +227,19 @@ void		expand(t_data *data);
 
 /*	expander_var.c	*/
 char		*get_var(t_data *data, char *s, size_t i);
-char		*join_all(char *s, char *b, char *e, char *a);
+char		*join_all(t_data *data, char *s, char *b, char *e, char *a);
 void		expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index);
 void		number_xpd(t_data *data, t_substr *s, size_t *i, size_t index);
 void		free_struct_expand(t_substr *str);
 
 /*	expander_quotes.c	*/
-void		set_sub_strs(t_substr *s, size_t j);
-char		*str_quotes_removal(char *str);
+void		set_sub_strs(t_data *data, t_substr *s, size_t j);
+char		*str_quotes_removal(t_data *data, char *str);
 int			quotes_removal(t_lexer *lexer);
 
 /*	expander_quotes_utils.c	*/
-char		*str_without_single_quotes(char *str, int i, int j);
-char		*remove_str_middle_quote(char *str, char c);
+char		*str_without_single_quotes(t_data *data, char *str, int i, int j);
+char		*remove_str_middle_quote(t_data *data, char *str, char c);
 void		expand_quotes(t_data *data, t_substr *str, size_t *i, char c);
 
 /*	expand_heredoc.c	*/
@@ -248,7 +249,7 @@ void		expand_dollar_hd(t_data *data, t_substr *s, size_t *i);
 void		remove_limiter_quotes(t_data *data);
 
 /*	expand_heredoc_utils.c	*/
-void		question_mark_hd(t_substr *s, size_t *i);
+void		question_mark_hd(t_data *data, t_substr *s, size_t *i);
 void		number_xpd_hd(t_data *data, t_substr *s, size_t *i);
 
 /*	expand_utils.c	*/
@@ -302,19 +303,20 @@ int			heredoc_redir(t_data *data);
 void		add_heredoc(t_data *data, char *file, size_t index);
 
 /*	utils.c	*/
-char		*ft_strjoin_free_s2(char *s1, char *s2);
-char		*ft_change_str(char *s1, char *s2);
+char		*ft_strjoin_free_s2(t_data *data, char *s1, char *s2);
+char		*ft_change_str(t_data *data, char *s1, char *s2);
 size_t		lstlen(t_lexer *lexer);
 size_t		lstlencmd(t_command *cmd);
 void		complete_inf_data(t_data *data, t_lexer *tmp, char *file, \
 								int valid);
 
 /*	utils2.c	*/
-char		*ft_strjoin_expand(char *s1, char *s2);
-char		*ft_strjoin_free(char *s1, char *s2);
+char		*ft_strjoin_expand(t_data *data, char *s1, char *s2);
+char		*ft_strjoin_free(t_data *data, char *s1, char *s2);
 void		complete_out_data(t_data *data, t_lexer *tmp, char *file, \
 								int valid);
 size_t		ft_strlen_pp(char **s);
+char		*substr_check(t_data *data, char *s, size_t i, size_t len);
 
 /*	free.c	*/
 void		free_lexer_strct(t_data *data);

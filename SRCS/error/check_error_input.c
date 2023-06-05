@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:53:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 13:39:23 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 16:03:32 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,14 +109,15 @@ int	error_less(char *line, size_t i)
 	return (SUCCESS);
 }
 
-int	error_check(char *line)
+int	error_check(t_data *data, char *line)
 {
 	size_t	i;
 
-	i = 0;
+	i = -1;
 	if (ft_strlen(line) == 0)
 		return (NO_INPUT);
-	while (line[i] != '\0')
+	ascii_check(data, line);
+	while (line[++i] != '\0')
 	{
 		if (line[i] == '\'' || line[i] == '"')
 		{
@@ -131,7 +132,6 @@ int	error_check(char *line)
 		if (line[i] == '>' || line[i] == '<')
 			if (check_token(line, i) != SUCCESS)
 				return (FAILURE);
-		i++;
 	}
 	if (error_last_token(line) != SUCCESS)
 		return (FAILURE);
