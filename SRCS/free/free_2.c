@@ -61,9 +61,16 @@ void	free_all(t_data *data)
 	free_data(data, &free_env_strct);
 	free_data_strct(data);
 	if (data->fdin > 0)
+	{
 		close(data->fdin);
+		data->fdin = 0;
+	}
 	if (data->fdout > 0)
+	{
 		close(data->fdout);
+		data->fdout = 0;
+	}
+	close_files(data);
 }
 
 void	free_data(t_data *data, void(*f)())
