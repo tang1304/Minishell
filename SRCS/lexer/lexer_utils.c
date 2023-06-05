@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/05 09:03:49 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 11:38:13 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,34 @@ int	quote_handling(char *str, int i, char quote)
 	return (j);
 }
 
-static t_lexer	*new_lexer_node(char *str, int token)
+static t_lexer	*new_lexer_node(t_data *data, char *str, int token)
 {
 	t_lexer	*node;
 
 	node = (t_lexer *)malloc(sizeof(t_lexer));
-	if (!node)//
-		return (NULL);
+	if (!node)
+		exit_error(data, "minishell: malloc error : ");
 	ft_bzero(node, sizeof(t_lexer));
 	if (token == 0)
 	{
 		node->word = ft_strdup(str);
+		if (!node->word)
+		{
+			free(node);
+			exit_error(data, "minishell: malloc error : ");
+		}
 		node->token = NULL;
 		node->hd_number = -1;
 	}
 	else
+	{
 		node->token = ft_strdup(str);
+		if (!node->token)
+		{
+			free(node);
+			exit_error(data, "minishell: malloc error : ");
+		}
+	}
 	node->s_q = 0;
 	node->d_q = 0;
 	node->next = NULL;
@@ -52,14 +64,12 @@ static t_lexer	*new_lexer_node(char *str, int token)
 	return (node);
 }
 
-int	add_node(t_lexer **lexer, char *str, int token)
+int	add_node(t_data *data, t_lexer **lexer, char *str, int token)
 {
 	t_lexer	*new;
 	t_lexer	*tmp;
 
-	new = new_lexer_node(str, token);
-	if (!new)
-		return (0);
+	new = new_lexer_node(data, str, token);
 	if (!*lexer)
 	{
 		*lexer = new;

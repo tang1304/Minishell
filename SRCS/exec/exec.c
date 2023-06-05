@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:47:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/02 14:23:50 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 10:20:46 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static void	loop_on_path(t_data *data, char **cmd_args)
 	i = -1;
 	cmd = ft_strjoin("/", cmd_args[0]);
 	if (cmd == NULL)
-		exit_error(data);
+		exit_error(data, "minishell: malloc error: ");
 	while (data->paths[++i])
 	{
 		join_path_and_cmd(data, cmd, i);
