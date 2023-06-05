@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 09:12:28 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 14:15:39 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*update_pwd(t_data *data)
 		data->prompt_pwd = getcwd(NULL, 0);
 		if (!data->prompt_pwd)
 			exit_error(data, "minishell: getcwd: ");
-		prompt = ft_strjoin_free_s2(data->prompt, data->prompt_pwd);
+		prompt = ft_strjoin_free_s2(data, data->prompt, data->prompt_pwd);
 		if (!prompt)
 			exit_error(data, "minishell: malloc: ");
 	}
@@ -47,9 +47,9 @@ static char	*envp_handle(t_data *data, char *str)
 	else if (ft_strncmp(str, "SHLVL=", 6) == 0)
 		new_envp = get_shlvl(data, str);
 	else if (ft_strncmp(str, "PWD=", 4) == 0)
-		new_envp = ft_strjoin_free_s2("PWD=", getcwd(NULL, 0));
+		new_envp = ft_strjoin_free_s2(data, "PWD=", getcwd(NULL, 0));
 	else if (ft_strncmp(str, "OLDPWD=", 7) == 0)
-		new_envp = ft_strjoin_free_s2("OLDPWD=", getcwd(NULL, 0));
+		new_envp = ft_strjoin_free_s2(data, "OLDPWD=", getcwd(NULL, 0));
 	else
 		new_envp = ft_strdup(str);
 	if (!new_envp)
@@ -69,15 +69,15 @@ char	**env_i_handle(t_data *data)
 	while (++i < 4)
 	{
 		if (i == 0)
-			envp[i] = ft_strjoin_free_s2("PWD=", getcwd(NULL, 0));
+			envp[i] = ft_strjoin_free_s2(data, "PWD=", getcwd(NULL, 0));
 		else if (i == 1)
 			envp[1] = ft_strdup("SHLVL=1");
 		else if (i == 2)
 			envp[2] = ft_strdup("_=/usr/bin/env");
 		else if (i == 3)
-			envp[3] = ft_strjoin_free_s2("OLDPWD=", getcwd(NULL, 0));
+			envp[3] = ft_strjoin_free_s2(data, "OLDPWD=", getcwd(NULL, 0));
 		if (!envp[i] || !add_env_node(data, &data->env, envp[i]))
-			return (NULL);
+			exit_error(data, "minishell: mallor error: ");
 	}
 	envp[4] = NULL;
 	return (envp);
@@ -122,5 +122,7 @@ void	data_initialize(t_data *data, char **envp)
 		data->prompt = ft_strjoin(user, "@minishell:");
 	else
 		data->prompt = ft_strjoin("root", "@minishell:");
+	if (!data->prompt)
+		exit_error(data, "minishell: mallor error: ");
 	prompt_loop(data);
 }

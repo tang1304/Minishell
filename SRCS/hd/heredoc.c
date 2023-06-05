@@ -30,7 +30,7 @@ void	heredoc_count(t_data *data)
 	data->hd->limiter = (char **)malloc(sizeof(char *) * \
 	(data->hd->hd_count + 1));
 	if (data->hd->limiter == NULL)
-		exit_error(data);
+		exit_error(data, "minishell: malloc error: ");
 	data->hd->limiter[data->hd->hd_count] = 0;
 }
 
@@ -61,7 +61,7 @@ void	heredoc_pipe(t_data *data)
 		if (line == NULL)
 			heredoc_ctrl_d(data);
 		line = expand_line(data, line);
-		buffer = ft_strjoin_free(buffer, line);
+		buffer = ft_strjoin_free(data, buffer, line);
 	}
 	write(data->hd->fd[data->hd->heredoc][1], buffer, ft_strlen(buffer));
 	free(buffer);
@@ -75,19 +75,19 @@ void	create_pipes_hd(t_data *data)
 {
 	data->hd->fd = (int **)malloc(sizeof(int *) * data->hd->hd_count);
 	if (data->hd->fd == NULL)
-		exit_error(data);
+		exit_error(data, "minishell: malloc error: ");
 	while (data->hd->heredoc < data->hd->hd_count)
 	{
 		data->hd->fd[data->hd->heredoc] = (int *)malloc(sizeof(int) * 2);
 		if (data->hd->fd[data->hd->heredoc] == NULL)
-			exit_error(data);
+			exit_error(data, "minishell: malloc error: ");
 		data->hd->heredoc++;
 	}
 	data->hd->heredoc = 0;
 	while (data->hd->heredoc < data->hd->hd_count)
 	{
 		if (pipe(data->hd->fd[data->hd->heredoc]) < 0)
-			exit_error(data);
+			exit_error(data, "minishell: pipe error: ");
 		data->hd->heredoc++;
 	}
 	data->hd->heredoc = 0;
