@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
 /*   Updated: 2023/06/05 16:02:24 by tgellon          ###   ########lyon.fr   */
@@ -26,7 +26,7 @@
 # define UNSET_ERR	"minishell: unset: `%s': not a valid identifier\n"
 # define SQUOTE_ERR "minishell: syntax error near unexpected token `\''\n"
 # define DQUOTE_ERR "minishell: syntax error near unexpected token `\"'\n"
-
+# define HEREDOC_LIMIT "minishell: maximum here-document count exceeded\n"
 typedef struct s_lexer
 {
 	char			*word;
@@ -336,8 +336,7 @@ void		free_loop(t_data *data);
 void		ft_free_pp(char **ptr);
 void		ft_free_paths(t_data *data);
 void		ft_free_limiter(t_heredoc *hd);
-void		restore_stds(t_data *data);
-void		extract_paths(t_data *data);
+void		free_hd_limit(t_data *data);
 
 /*	exec_data_creation.c	*/
 void		exec_cmd_lst(t_data *data);
@@ -349,6 +348,8 @@ void		exec(t_data *data, char **cmd);
 int			heredoc_check(t_data *data, t_command *cmd);
 void		exec_error_handle(t_data *data);
 void		join_path_and_cmd(t_data *data, char *cmd, int i);
+void		restore_stds(t_data *data);
+void		extract_paths(t_data *data);
 
 /*	wait.c	*/
 void		wait_child(t_data *data);

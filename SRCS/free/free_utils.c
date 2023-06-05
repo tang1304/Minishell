@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:25:20 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 15:26:05 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 14:56:27 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,17 @@ void	ft_free_limiter(t_heredoc *hd)
 	}
 	free(hd->limiter);
 	hd->limiter = NULL;
+}
+
+void	free_hd_limit(t_data *data)
+{
+	ft_putstr_fd(HEREDOC_LIMIT, STDOUT_FILENO);
+	free_data(data, &free_lexer_strct);
+	free_data(data, &free_env_strct);
+	free_data_strct(data);
+	if (data->stdin_save > 0)
+		close(data->stdin_save);
+	if (data->stdout_save > 0)
+		close(data->stdout_save);
+	exit(EXIT_FAILURE);
 }
