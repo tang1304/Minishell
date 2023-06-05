@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 08:27:49 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 08:30:10 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,15 @@ void	free_all(t_data *data)
 	free_data(data, &free_env_strct);
 	free_data_strct(data);
 	if (data->fdin > 0)
+	{
 		close(data->fdin);
+		data->fdin = 0;
+	}
 	if (data->fdout > 0)
+	{
 		close(data->fdout);
+		data->fdout = 0;
+	}
 	close_files(data);
 }
 
