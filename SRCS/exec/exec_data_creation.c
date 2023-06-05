@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_data_creation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 15:12:03 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 08:25:01 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ static void	no_forking(t_data *data, t_command *cmd)
 	{
 		if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
 			return (perror("Error with closing STDIN/STDOUT saves"));
+		data->stdin_save = 0; //added
+		data->stdout_save = 0; //added
 	}
 	if (cmd->heredoc_file)
 	{
