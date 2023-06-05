@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/31 12:57:25 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 08:48:36 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static char	**export_var(t_data *data, char *cmd)
 	while (data->envp[n])
 		n++;
 	new_envp = malloc(sizeof(char *) * (n + 2));
-	if (!new_envp || !add_env_node(&data->env, cmd))
+	if (!new_envp || !add_env_node(data, &data->env, cmd))
 		return (NULL);
 	while (data->envp[++j])
 	{
@@ -138,7 +138,7 @@ int	ft_export(t_data *data, char **cmd)
 			return (1);
 		if (cmd[j][i] == '\0')
 		{
-			if (!add_env_node(&data->env, cmd[j]))
+			if (!add_env_node(data, &data->env, cmd[j]))
 				return (-1);
 			continue ;
 		}

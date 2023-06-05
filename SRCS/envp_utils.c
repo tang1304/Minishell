@@ -6,13 +6,13 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:08:20 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/30 10:45:27 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 08:54:32 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-char	*get_shlvl(char *str)
+char	*get_shlvl(t_data *data, char *str)
 {
 	char	*newlvl;
 	char	*pos;
@@ -26,12 +26,12 @@ char	*get_shlvl(char *str)
 	pos = ft_strchr(str, '=');
 	lvl = ft_atoi(pos + 1);
 	itoa = ft_itoa(lvl + 1);
-	// if (!itoa)
-	// 	;
+	if (!itoa)
+		exit_error(data);
 	newlvl = ft_strjoin("SHLVL=", itoa);
 	free(itoa);
-	// if (!newlvl)
-	// 	;
+	if (!newlvl)
+		exit_error(data);
 	return (newlvl);
 }
 
@@ -73,7 +73,7 @@ int	replace_env(t_data *data, char *env, char *old_env)
 			else
 				tmp->var_value = ft_strdup(old_env);
 			if (!tmp->var_value)
-				return (-1);
+				exit_error(data);
 			return (1);
 		}
 		tmp = tmp->next;
@@ -82,14 +82,14 @@ int	replace_env(t_data *data, char *env, char *old_env)
 	return (0);
 }
 
-static t_env	*new_env_node(char *str)
+static t_env	*new_env_node(t_data *data, char *str)
 {
 	t_env	*new;
 	char	*pos;
 
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
-		return (0);
+		exit_error(data);
 	new->prev = NULL;
 	new->next = NULL;
 	pos = ft_strchr(str, '=');
@@ -98,24 +98,24 @@ static t_env	*new_env_node(char *str)
 		new->var_name = ft_strndup(str, (size_t)pos - (size_t)str);
 		new->var_value = ft_strdup(pos + 1);
 		if (!new->var_name || !new->var_value)
-			return (0);
+			exit_error(data);
 	}
 	else
 	{
 		new->var_name = ft_strdup(str);
 		new->var_value = ft_strdup("");
-		if (!new->var_name)
-			return (0);
+		if (!new->var_name || !new->var_value)
+			exit_error(data);
 	}
 	return (new);
 }
 
-int	add_env_node(t_env **env, char *str)
+int	add_env_node(t_data *data, t_env **env, char *str)
 {
 	t_env	*tmp;
 	t_env	*new;
 
-	new = new_env_node(str);
+	new = new_env_node(data, str);
 	if (!new)
 		return (0);
 	if (!*env)
