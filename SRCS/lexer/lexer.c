@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 13:45:15 by tgellon           #+#    #+#             */
-/*   Updated: 2023/05/30 15:14:56 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 11:27:16 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	tokenizer(t_data *data, char *str, int i)
 		|| (str[i] == '<' && str[i + 1] == '<'))
 	{
 		token = ft_substr(str, i, 2);
-		if (!add_node(&data->lexer, token, 1))
+		if (!add_node(data, &data->lexer, token, 1))
 			return (-1);
 		free(token);
 		return (2);
@@ -45,7 +45,7 @@ static int	tokenizer(t_data *data, char *str, int i)
 	else
 	{
 		token = ft_substr(str, i, 1);
-		if (!add_node(&data->lexer, token, 1))
+		if (!add_node(data, &data->lexer, token, 1))
 			return (-1);
 		free(token);
 		return (1);
@@ -65,7 +65,7 @@ static int	worder(t_data *data, char *str, int i)
 		j++;
 	}
 	new = ft_substr(str, i, j);
-	if (!add_node(&data->lexer, new, 0))
+	if (!add_node(data, &data->lexer, new, 0))
 		return (-1);
 	free(new);
 	return (j);

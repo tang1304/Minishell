@@ -1,1 +1,12 @@
-     12     101     679
+incs
+libft
+Makefile
+minishell
+minishell_tester
+objs
+out
+out2
+SRCS
+test_mi
+TODO
+valgrind_ignore_leaks.txt
