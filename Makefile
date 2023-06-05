@@ -55,7 +55,6 @@ LST_SRCS		=	main.c \
 					data.c \
 					loop.c \
 					envp_utils.c \
-					wait.c \
 					close.c
 
 LST_SRCS_U		=	utils.c \

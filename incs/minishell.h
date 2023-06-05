@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 15:17:05 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 16:02:24 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ char		**get_envp(t_data *data, char **envp);
 void		prompt_loop(t_data *data);
 
 /*	check_error_input.c	*/
-int			error_check(char *line);
+int			error_check(t_data *data, char *line);
 int			error_pipes(char *line, size_t i);
 int			error_last_token(char *line);
 int			error_great(char *line, size_t i);
@@ -167,6 +167,7 @@ int			check_token(char *s, size_t i);
 
 /*	errors.c	*/
 void		exit_error(t_data *data, char *str);
+void		ascii_check(t_data *data, char *str);
 
 /*	parser.c	*/
 void		check_hidden_nodes(t_data *data);
