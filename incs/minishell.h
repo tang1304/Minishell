@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 11:27:29 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 14:14:44 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define UNSET_ERR	"minishell: unset: `%s': not a valid identifier\n"
 # define SQUOTE_ERR "minishell: syntax error near unexpected token `\''\n"
 # define DQUOTE_ERR "minishell: syntax error near unexpected token `\"'\n"
-
+# define HEREDOC_LIMIT "minishell: maximum here-document count exceeded\n"
 typedef struct s_lexer
 {
 	char			*word;
