@@ -58,15 +58,22 @@ char	*expand_line(t_data *data, char *str)
 	return (ptr.s);
 }
 
+static void	set_data_xpd(t_data *data)
+{
+	data->hd->xpd = (int *)malloc(sizeof(int) * data->hd->hd_count);
+	// data->hd->xpd = NULL;
+	if (data->hd->xpd == NULL)
+		exit_error(data);
+}
+
 void	prepare_expand_hd(t_data *data)
 {
 	int		i;
 	size_t	j;
 	int		quote;
 
-	data->hd->xpd = (int *)malloc(sizeof(int) * data->hd->hd_count);
-	// if (data->hd->xpd == NULL)
-	// 	return (); //garbage val?
+	if (data->hd->hd_count > 0)
+		set_data_xpd(data);
 	i = 0;
 	while (data->hd->limiter[i] != 0)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 08:40:23 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 10:40:54 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	free_loop(t_data *data)
 
 void	free_all(t_data *data)
 {
+	close_files(data);
 	free_data(data, &free_cmd_strct);
 	free_data(data, &free_lexer_strct);
 	free_data(data, &free_hd_strct);
@@ -70,7 +71,6 @@ void	free_all(t_data *data)
 		close(data->fdout);
 		data->fdout = 0;
 	}
-	close_files(data);
 }
 
 void	free_data(t_data *data, void(*f)())
