@@ -76,8 +76,12 @@ void	modify_lxr_nds(t_data *data, t_substr *s, size_t index)
 		buf->prev = NULL;
 	}
 	ptr = ft_split(s->sub_m, ' ');
+	if (!ptr)
+		exit_error(data, "minishell: malloc error: ");
 	free(tmp->word);
-	tmp->word = ft_strdup(ft_strjoin_expand(s->sub_b, ptr[0]));
+	tmp->word = ft_strdup(ft_strjoin_expand(data, s->sub_b, ptr[0]));
+	if (!tmp->word)
+		exit_error(data, "minishell: malloc error: ");
 	add_buf_lxr_tail(data, s, buf, ptr);
 }
 

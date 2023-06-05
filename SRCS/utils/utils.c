@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:03:57 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 14:51:23 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 14:04:12 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-char	*ft_strjoin_free_s2(char *s1, char *s2)
+char	*ft_strjoin_free_s2(t_data *data, char *s1, char *s2)
 {
 	size_t	i;
 	size_t	j;
@@ -24,7 +24,7 @@ char	*ft_strjoin_free_s2(char *s1, char *s2)
 		return (NULL);
 	ptr = (char *)malloc(sizeof(*ptr) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (ptr == NULL)
-		return (NULL);
+		exit_error(data, "minishell: malloc error: ");
 	while (s1[i] != '\0')
 	{
 		ptr[i] = ((char *)s1)[i];
@@ -40,7 +40,7 @@ char	*ft_strjoin_free_s2(char *s1, char *s2)
 	return (free(s2), ptr);
 }
 
-char	*ft_change_str(char *s1, char *s2)
+char	*ft_change_str(t_data *data, char *s1, char *s2)
 {
 	char	*new;
 	int		i;
@@ -48,7 +48,7 @@ char	*ft_change_str(char *s1, char *s2)
 	free(s1);
 	new = malloc(sizeof(char) * (ft_strlen(s2) + 1));
 	if (!new)
-		return (NULL);
+		exit_error(data, "minishell: malloc error: ");
 	i = 0;
 	while (s2[i])
 	{

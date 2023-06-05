@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 09:01:23 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 13:58:00 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static t_command	*fillup(t_data *data, size_t i, size_t x, t_command *new)
 	while (i < x)
 	{
 		new->cmd[j] = ft_strdup(tmp->word);
+		if (!new->cmd[j])
+			exit_error(data, "minishell: malloc error: ");
 		fillup_cmd_node(new, tmp);
 		j++;
 		i++;
@@ -58,11 +60,11 @@ t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd)
 		return (NULL);
 	new = (t_command *)malloc(sizeof(*new));
 	if (new == NULL)
-		exit_error(data);
+		exit_error(data, "minishell: malloc error: ");
 	ft_bzero(new, sizeof(t_command));
 	new->cmd = (char **)malloc(sizeof(char *) * (x - i + 1));
 	if (new->cmd == NULL)
-		exit_error(data);
+		exit_error(data, "minishell: malloc error: ");
 	new->heredoc_num = -1;
 	new = fillup(data, i, x, new);
 	cmd = add_cmd_node(cmd, new);
