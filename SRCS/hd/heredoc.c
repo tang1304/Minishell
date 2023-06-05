@@ -27,6 +27,8 @@ void	heredoc_count(t_data *data)
 		}
 		tmp = tmp->next;
 	}
+	if (data->hd->hd_count > 1024)
+		free_hd_limit(data);
 	data->hd->limiter = (char **)malloc(sizeof(char *) * \
 	(data->hd->hd_count + 1));
 	if (data->hd->limiter == NULL)

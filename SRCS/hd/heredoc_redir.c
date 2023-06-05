@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:37:02 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 15:26:23 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 14:14:23 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,6 @@ int	heredoc_redir(t_data *data)
 		tmp = tmp->next;
 	}
 	data->hd->heredoc = 0;
-	if (data->hd->hd_count > 1024)
-		return (ft_putstr_fd("minishell: Too many pipes, try with fewer \
-		pipes\n", STDOUT_FILENO), free_data(data, free_lexer_strct), \
-		HD_ERROR_NUMBER);
 	prepare_expand_hd(data);
 	init_heredoc_data(data);
 	return (SUCCESS);
