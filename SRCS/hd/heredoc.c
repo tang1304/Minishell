@@ -54,9 +54,9 @@ void	heredoc_pipe(t_data *data)
 	while (1)
 	{
 		line = readline("> ");
-		if ((ft_strncmp(line, data->hd->limiter[data->hd->heredoc], ft_strlen\
-		(line)) == 0 && ft_strlen(data->hd->limiter[data->hd->heredoc]) == \
-		ft_strlen(line)))
+		if ((ft_strncmp(line, data->hd->limiter[data->hd->heredoc], \
+		ft_strlen(line)) == 0 && ft_strlen(line) == \
+		ft_strlen(data->hd->limiter[data->hd->heredoc])))
 			break ;
 		if (line == NULL)
 			heredoc_ctrl_d(data);

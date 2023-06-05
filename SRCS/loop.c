@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 15:02:08 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 10:54:10 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,5 @@ void	prompt_loop(t_data *data)
 		}
 		close_files(data);
 		free_loop(data);
-		// free_all(data);
-		// exit(EXIT_SUCCESS);
 	}
 }
