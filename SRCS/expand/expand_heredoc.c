@@ -66,7 +66,7 @@ void	prepare_expand_hd(t_data *data)
 
 	data->hd->xpd = (int *)malloc(sizeof(int) * data->hd->hd_count);
 	if (data->hd->xpd == NULL)
-		return ;//garbage val?
+		return (); //garbage val?
 	i = 0;
 	while (data->hd->limiter[i] != 0)
 	{
