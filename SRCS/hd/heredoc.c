@@ -29,8 +29,8 @@ void	heredoc_count(t_data *data)
 	}
 	data->hd->limiter = (char **)malloc(sizeof(char *) * \
 	(data->hd->hd_count + 1));
-		// if (data->limiter == NULL)
-		// 	return error??;
+	if (data->hd->limiter == NULL)
+		exit_error(data);
 	data->hd->limiter[data->hd->hd_count] = 0;
 }
 
@@ -75,19 +75,19 @@ void	create_pipes_hd(t_data *data)
 {
 	data->hd->fd = (int **)malloc(sizeof(int *) * data->hd->hd_count);
 	if (data->hd->fd == NULL)
-		return ;//grbage val??
+		exit_error(data);
 	while (data->hd->heredoc < data->hd->hd_count)
 	{
 		data->hd->fd[data->hd->heredoc] = (int *)malloc(sizeof(int) * 2);
 		if (data->hd->fd[data->hd->heredoc] == NULL)
-			return ;//grbage val??
+			exit_error(data);
 		data->hd->heredoc++;
 	}
 	data->hd->heredoc = 0;
 	while (data->hd->heredoc < data->hd->hd_count)
 	{
 		if (pipe(data->hd->fd[data->hd->heredoc]) < 0)
-			return ;//grbage val??
+			exit_error(data);
 		data->hd->heredoc++;
 	}
 	data->hd->heredoc = 0;

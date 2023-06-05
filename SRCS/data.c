@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/01 07:54:13 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 09:01:47 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ char	**env_i_handle(t_data *data)
 
 	i = -1;
 	envp = (char **)malloc(sizeof(char *) * 5);
-	// if (!envp)
-	// 	;
+	envp = NULL;
+	if (!envp) // test
+		return (NULL);
 	while (++i < 4)
 	{
 		if (i == 0)

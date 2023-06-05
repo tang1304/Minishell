@@ -17,7 +17,7 @@ char	*str_without_single_quotes(char *str, int i, int j)
 	char	*new_word;
 
 	new_word = (char *)malloc(sizeof(char) * (j - i + 1));
-	if (!new_word)
+	if (!new_word)//
 		return (NULL);
 	while (i < j)
 	{

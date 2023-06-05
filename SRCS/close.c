@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 09:19:14 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 08:27:24 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 08:59:03 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,16 @@ void	close_all(t_data *data)
 		close(data->hd->fd[i][1]);
 		i++;
 	}
-	close(data->stdin_save);
-	close(data->stdout_save);
+	if (data->stdin_save > 0)
+	{
+		close(data->stdin_save);
+		data->stdin_save = 0;
+	}
+	if (data->stdout_save > 0)
+	{
+		close(data->stdout_save);
+		data->stdout_save = 0;
+	}
 	close_files(data);
 }
 

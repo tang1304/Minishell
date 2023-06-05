@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 15:26:23 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 09:12:15 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,11 @@ void	free_hd_strct(t_data *data)
 			data->hd->heredoc++;
 		}
 		free(data->hd->fd);
+	}
+	if (data->hd->xpd != NULL)
+	{
 		free(data->hd->xpd);
+		data->hd->xpd = NULL;
 	}
 	data->hd->fd = NULL;
 	data->hd->hd_count = 0;

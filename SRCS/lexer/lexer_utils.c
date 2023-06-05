@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/01 11:31:17 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 09:03:49 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_lexer	*new_lexer_node(char *str, int token)
 	t_lexer	*node;
 
 	node = (t_lexer *)malloc(sizeof(t_lexer));
-	if (!node)
+	if (!node)//
 		return (NULL);
 	ft_bzero(node, sizeof(t_lexer));
 	if (token == 0)

@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:22 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/02 15:07:59 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 08:56:00 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*word_without_quotes(char *str, int i, int j)
 	int		k;
 
 	new_word = (char *)malloc(sizeof(char) * (ft_strlen(str) - 1));
-	if (!new_word)
+	if (!new_word)//
 		return (NULL);
 	k = -1;
 	while (++k < i)
