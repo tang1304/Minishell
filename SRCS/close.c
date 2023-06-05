@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 09:19:14 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 08:27:24 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 10:45:59 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,20 @@ void	close_heredoc_pipes(t_data *data)
 	}
 }
 
-// Close pipes in heredoc children and files
+// Close remaining opened pipes in parent
+static void	close_left_pipes(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->hd->hd_count)
+	{
+		close(data->hd->fd[i][0]);
+		close(data->hd->fd[i][1]);
+		i++;
+	}
+}
+
 void	close_all(t_data *data)
 {
 	int	i;
@@ -51,8 +64,16 @@ void	close_all(t_data *data)
 		close(data->hd->fd[i][1]);
 		i++;
 	}
-	close(data->stdin_save);
-	close(data->stdout_save);
+	if (data->stdin_save > 0)
+	{
+		close(data->stdin_save);
+		data->stdin_save = 0;
+	}
+	if (data->stdout_save > 0)
+	{
+		close(data->stdout_save);
+		data->stdout_save = 0;
+	}
 	close_files(data);
 }
 
@@ -75,4 +96,5 @@ void	close_files(t_data *data)
 		close(data->stdin_save);
 	if (data->stdout_save > 0)
 		close(data->stdout_save);
+	close_left_pipes(data);
 }

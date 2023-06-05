@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 15:11:05 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 09:51:10 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	file_check_access(t_data *data, char *file, int i)
 			ft_error_file(file, 0);
 			return (FILE_ERROR);
 		}
-		return (SUCCESS);
 		data->maxfdin = data->fdin;
+		return (SUCCESS);
 	}
 	else if (i == 1)
 		data->fdout = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);

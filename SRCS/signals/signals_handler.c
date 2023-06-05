@@ -6,13 +6,13 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:11:24 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 08:14:52 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 10:52:39 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-void	handler_sigint(int	signal)
+void	handler_sigint(int signal)
 {
 	if (signal == SIGINT)
 	{
