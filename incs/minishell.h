@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 14:14:44 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 15:00:41 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,8 +334,7 @@ void		free_loop(t_data *data);
 void		ft_free_pp(char **ptr);
 void		ft_free_paths(t_data *data);
 void		ft_free_limiter(t_heredoc *hd);
-void		restore_stds(t_data *data);
-void		extract_paths(t_data *data);
+void		free_hd_limit(t_data *data);
 
 /*	exec_data_creation.c	*/
 void		exec_cmd_lst(t_data *data);
@@ -347,6 +346,8 @@ void		exec(t_data *data, char **cmd);
 int			heredoc_check(t_data *data, t_command *cmd);
 void		exec_error_handle(t_data *data);
 void		join_path_and_cmd(t_data *data, char *cmd, int i);
+void		restore_stds(t_data *data);
+void		extract_paths(t_data *data);
 
 /*	wait.c	*/
 void		wait_child(t_data *data);

@@ -28,23 +28,7 @@ void	heredoc_count(t_data *data)
 		tmp = tmp->next;
 	}
 	if (data->hd->hd_count > 1024)
-	{
-		ft_putstr_fd(HEREDOC_LIMIT, STDOUT_FILENO);
-		free_data(data, &free_lexer_strct);
-		free_data(data, &free_env_strct);
-		free_data_strct(data);
-		if (data->stdin_save > 0)
-			close(data->stdin_save);
-		if (data->stdout_save > 0)
-			close(data->stdout_save);
-		exit(EXIT_FAILURE);
-	}
-		// exit_error(data, HEREDOC_LIMIT);
-	// {
-	//
-	// }
-		// return (ft_putstr_fd(HEREDOC_LIMIT, STDOUT_FILENO),
-		// free_data(data, free_lexer_strct), HD_ERROR_NUMBER);
+		free_hd_limit(data);
 	data->hd->limiter = (char **)malloc(sizeof(char *) * \
 	(data->hd->hd_count + 1));
 	if (data->hd->limiter == NULL)
