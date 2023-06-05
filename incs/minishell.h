@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 08:47:57 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 11:27:29 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ int			check_token(char *s, size_t i);
 // int		count_quote(char *s, size_t *i, char c);
 
 /*	errors.c	*/
-void		exit_error(t_data *data);
+void		exit_error(t_data *data, char *str);
 
 /*	parser.c	*/
 void		check_hidden_nodes(t_data *data);
@@ -216,7 +216,7 @@ void		remove_single_node(t_data *data, size_t index);
 void		add_index(t_data *data);
 int			ft_isspace(char c);
 int			quote_handling(char *str, int i, char quote);
-int			add_node(t_lexer **lexer, char *str, int token);
+int			add_node(t_data *data, t_lexer **lexer, char *str, int token);
 
 /*	cmd_struct.c	*/
 void		create_cmd_struct(t_data *data);
@@ -278,7 +278,7 @@ int			print_export(t_env **env);
 
 /*	builtin_export_utils.c	*/
 int			ft_list_size(t_env *env);
-int			envp_replacement(char **var, char *cmd);
+int			envp_replacement(t_data *data, char **var, char *cmd);
 int			existing_var(t_data *data, char *cmd, int i);
 
 /*	builtin_unset.c	*/
