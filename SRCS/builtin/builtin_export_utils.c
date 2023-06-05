@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/02 10:40:13 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 09:25:31 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,19 @@ static int	env_struct_replacement(t_data *data, t_env *var, char *cmd, int i)
 		else
 			var->var_value = ft_strdup("");
 		var->var_name = ft_strndup(cmd, i);
-		if (!var->var_value)
-			exit_error(data);
+		if (!var->var_value || !var->var_name)
+			exit_error(data, "minishell: malloc error: ");
 		return (1);
 	}
 	return (0);
 }
 
-int	envp_replacement(char **var, char *cmd)
+int	envp_replacement(t_data *data, char **var, char *cmd)
 {
 	free(*var);
 	*var = ft_strdup(cmd);
 	if (!*var)
-		return (0);
+		exit_error(data, "minishell: malloc error: ");
 	return (1);
 }
 
@@ -101,7 +101,7 @@ int	existing_var(t_data *data, char *cmd, int i)
 		if (ft_strncmp(data->envp[j], cmd, i) == 0)
 		{
 			if (ft_strchr(cmd, '='))
-				envp_replacement(&data->envp[j], cmd);
+				envp_replacement(data, &data->envp[j], cmd);
 			else
 				remove_from_env(data, cmd);
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 09:20:18 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 09:12:28 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,21 @@ char	*update_pwd(t_data *data)
 	{
 		data->prompt_pwd = getcwd(NULL, 0);
 		if (!data->prompt_pwd)
-		{
-			perror("minishell: pwd: ");
-			exit_error(data);
-		}
+			exit_error(data, "minishell: getcwd: ");
 		prompt = ft_strjoin_free_s2(data->prompt, data->prompt_pwd);
+		if (!prompt)
+			exit_error(data, "minishell: malloc: ");
 	}
 	else
 	{
 		data->prompt_pwd = search_env(data, "PWD");
 		prompt = ft_strjoin(data->prompt, data->prompt_pwd);
+		if (!prompt)
+			exit_error(data, "minishell: malloc: ");
 	}
 	prompt = ft_strjoin_gnl(prompt, "$ ");
+	if (!prompt)
+		exit_error(data, "minishell: malloc: ");
 	return (prompt);
 }
 
@@ -49,6 +52,8 @@ static char	*envp_handle(t_data *data, char *str)
 		new_envp = ft_strjoin_free_s2("OLDPWD=", getcwd(NULL, 0));
 	else
 		new_envp = ft_strdup(str);
+	if (!new_envp)
+		exit_error(data, "minishell: mallor error: ");
 	return (new_envp);
 }
 
@@ -59,9 +64,8 @@ char	**env_i_handle(t_data *data)
 
 	i = -1;
 	envp = (char **)malloc(sizeof(char *) * 5);
-	envp = NULL;
-	if (!envp) // test
-		return (NULL);
+	if (!envp)
+		exit_error(data, "minishell: malloc error: ");
 	while (++i < 4)
 	{
 		if (i == 0)
@@ -89,13 +93,13 @@ char	**get_envp(t_data *data, char **envp)
 		i++;
 	new_envp = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!new_envp)
-		exit_error(data);
+		exit_error(data, "minishell: malloc error: ");
 	i = -1;
 	while (envp[++i])
 	{
 		new_envp[i] = envp_handle(data, envp[i]);
 		if (!new_envp || !add_env_node(data, &data->env, new_envp[i]))
-			return (NULL);
+			exit_error(data, "minishell: malloc error: ");
 	}
 	new_envp[i] = NULL;
 	return (new_envp);

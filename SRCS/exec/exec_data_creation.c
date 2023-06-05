@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_data_creation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 08:25:01 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 10:27:55 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	forking(t_data *data, t_command *cmd, int i)
 		signal_exec_set();
 		command_init(data, cmd);
 		if (cmd->inf_err || cmd->out_err)
-			exit_error(data);
+			exit_error(data, NULL);
 		if (check_builtins(cmd->cmd) == SUCCESS)
 		{
 			builtins(data, cmd->cmd);
@@ -70,16 +70,10 @@ static void	prepare_forking(t_data *data, t_command *cmd)
 	silence_signals();
 	heredoc_check(data, cmd);
 	if (pipe(data->pipe) == -1)
-	{
-		perror("Pipe error");
-		exit_error(data);
-	}
+		exit_error(data, "minishell: pipe error: ");
 	cmd->pid = fork();
 	if (cmd->pid == -1)
-	{
-		perror("Fork error");
-		exit_error(data);
-	}
+		exit_error(data, "minishell: fork error: ");
 	forking(data, cmd, cmd->pid);
 	close(data->pipe[1]);
 }

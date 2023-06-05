@@ -23,10 +23,20 @@ t_lexer	*update_tmp_index(t_data *data, size_t *i)
 	return (tmp);
 }
 
-static void	add_buf_lxr_tail(t_data *data, t_lexer *buf)
+static void	add_buf_lxr_tail(t_data *data, t_substr *s, t_lexer *buf, \
+							char **ptr)
 {
 	t_lexer	*tmp;
+	size_t	j;
 
+	j = 1;
+	while (ptr[j] != 0)
+	{
+		add_node(data, &data->lexer, ptr[j], 0);
+		j++;
+	}
+	if (ft_strlen(s->sub_a) > 0)
+		add_node(data, &data->lexer, s->sub_a, 0);
 	tmp = data->lexer;
 	add_index(data);
 	while (tmp->next != NULL)
@@ -54,12 +64,10 @@ static t_lexer	*set_tmp(t_data *data, size_t index)
 
 void	modify_lxr_nds(t_data *data, t_substr *s, size_t index)
 {
-	size_t	j;
 	t_lexer	*tmp;
 	t_lexer	*buf;
 	char	**ptr;
 
-	j = 1;
 	buf = NULL;
 	tmp = set_tmp(data, index);
 	if (tmp->next != NULL)
@@ -70,14 +78,7 @@ void	modify_lxr_nds(t_data *data, t_substr *s, size_t index)
 	ptr = ft_split(s->sub_m, ' ');
 	free(tmp->word);
 	tmp->word = ft_strdup(ft_strjoin_expand(s->sub_b, ptr[0]));
-	while (ptr[j] != 0)
-	{
-		add_node(&data->lexer, ptr[j], 0);
-		j++;
-	}
-	if (ft_strlen(s->sub_a) > 0)
-		add_node(&data->lexer, s->sub_a, 0);
-	add_buf_lxr_tail(data, buf);
+	add_buf_lxr_tail(data, s, buf, ptr);
 }
 
 int	check_space_expand(t_data *data, t_substr *s, int index)

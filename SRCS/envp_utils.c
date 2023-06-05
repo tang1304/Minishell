@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:08:20 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/05 08:54:32 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 09:27:27 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ char	*get_shlvl(t_data *data, char *str)
 	lvl = ft_atoi(pos + 1);
 	itoa = ft_itoa(lvl + 1);
 	if (!itoa)
-		exit_error(data);
+		exit_error(data, "minishell: malloc error: ");
 	newlvl = ft_strjoin("SHLVL=", itoa);
 	free(itoa);
 	if (!newlvl)
-		exit_error(data);
+		exit_error(data, "minishell: malloc error: ");
 	return (newlvl);
 }
 
@@ -73,7 +73,7 @@ int	replace_env(t_data *data, char *env, char *old_env)
 			else
 				tmp->var_value = ft_strdup(old_env);
 			if (!tmp->var_value)
-				exit_error(data);
+				exit_error(data, "minishell: malloc error: ");
 			return (1);
 		}
 		tmp = tmp->next;
@@ -89,7 +89,7 @@ static t_env	*new_env_node(t_data *data, char *str)
 
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
-		exit_error(data);
+		exit_error(data, "minishell: malloc error: ");
 	new->prev = NULL;
 	new->next = NULL;
 	pos = ft_strchr(str, '=');
@@ -98,14 +98,14 @@ static t_env	*new_env_node(t_data *data, char *str)
 		new->var_name = ft_strndup(str, (size_t)pos - (size_t)str);
 		new->var_value = ft_strdup(pos + 1);
 		if (!new->var_name || !new->var_value)
-			exit_error(data);
+			exit_error(data, "minishell: malloc error: ");
 	}
 	else
 	{
 		new->var_name = ft_strdup(str);
 		new->var_value = ft_strdup("");
 		if (!new->var_name || !new->var_value)
-			exit_error(data);
+			exit_error(data, "minishell: malloc error: ");
 	}
 	return (new);
 }
@@ -116,8 +116,6 @@ int	add_env_node(t_data *data, t_env **env, char *str)
 	t_env	*new;
 
 	new = new_env_node(data, str);
-	if (!new)
-		return (0);
 	if (!*env)
 	{
 		*env = new;
