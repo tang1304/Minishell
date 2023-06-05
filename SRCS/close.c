@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 09:19:14 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 08:59:03 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 09:42:07 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ void	close_files(t_data *data)
 		i = data->maxfdin;
 	else
 		i = data->maxfdout;
+printf("data->maxfdout VALUE IS = %d\n", data->maxfdin);
+printf("data->maxfdin VALUE IS = %d\n", data->maxfdout);
+printf("i VALUE IS = %d\n", i);
 	while (i > 2)
 	{
 		close(i);
