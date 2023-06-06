@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 08:35:29 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/06 09:18:59 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 15:22:31 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*join_all_mid(t_data *data, char *str, t_substr *s)
 	if (s->after != NULL)
 		str = ft_strjoin_free(data, str, s->after);
 	if (!str)
-		exit_error(data, "minishell: malloc error : ");
+		exit_error(data, "minishell: malloc error 00: ");
 	return (str);
 }
 
@@ -54,6 +54,6 @@ char	*join_all_sub(t_data *data, char *str, t_substr *s)
 	if (s->sub_a != NULL)
 		str = ft_strjoin_free(data, str, s->sub_a);
 	if (!str)
-		exit_error(data, "minishell: malloc error : ");
+		exit_error(data, "minishell: malloc error 11: ");
 	return (str);
 }
