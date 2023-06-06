@@ -37,7 +37,7 @@ void	expand_dollar_hd(t_data *data, t_substr *s, size_t *i)
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
 	if (s->sub_a || s->sub_m || buf)
 		exit_error(data, "minishell: malloc error: ");
-	s->s = join_all(data, s->s, s->sub_b, s->sub_m, s->sub_a);
+	s->s = join_all_sub(data, s->s, s);
 }
 
 char	*expand_line(t_data *data, char *str)
@@ -63,7 +63,6 @@ char	*expand_line(t_data *data, char *str)
 static void	set_data_xpd(t_data *data)
 {
 	data->hd->xpd = (int *)malloc(sizeof(int) * data->hd->hd_count);
-	// data->hd->xpd = NULL;
 	if (data->hd->xpd == NULL)
 		exit_error(data, "minishell: malloc error: ");
 }

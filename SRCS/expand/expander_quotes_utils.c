@@ -55,14 +55,14 @@ static char	*expand_number_mark(t_data *data, t_substr *s, size_t *j, char c)
 		s->sub_a = ft_substr(s->middle, *j, ft_strlen(s->middle) - *j);
 		s->sub_m = get_var(data, s->sub_m, 0);
 		*j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
-		s->middle = join_all(data, s->middle, s->sub_b, s->sub_m, s->sub_a);
+		s->middle = join_all_sub(data, s->middle, s);
 	}
 	else
 	{
 		s->sub_a = ft_substr(s->middle, *j, ft_strlen(s->middle) - *j);
 		s->sub_m = ft_itoa(g_status);
 		*j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
-		s->middle = join_all(data, s->middle, s->sub_b, s->sub_m, s->sub_a);
+		s->middle = join_all_sub(data, s->middle, s);
 	}
 	if (!s->sub_a || !s->sub_m)
 		exit_error(data, "minishell: malloc error: ");
@@ -86,7 +86,7 @@ static char	*expand_str(t_data *data, t_substr *s)
 			set_sub_strs(data, s, j);
 			s->sub_m = get_var(data, s->sub_m, 0);
 			j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
-			s->middle = join_all(data, s->middle, s->sub_b, s->sub_m, s->sub_a);
+			s->middle = join_all_sub(data, s->middle, s);
 		}
 		else if (s->middle[j] == '$' && (s->middle[j + 1] == '?' || \
 				ft_isdigit(s->middle[j + 1]) == 1))
@@ -123,5 +123,5 @@ void	expand_quotes(t_data *data, t_substr *str, size_t *i, char c)
 	if (!str->middle)
 		exit_error(data, "minishell: malloc error: ");
 	*i = ft_strlen(str->before) + ft_strlen(str->middle);
-	str->s = join_all(data, str->s, str->before, str->middle, str->after);
+	str->s = join_all_mid(data, str->s, str);
 }
