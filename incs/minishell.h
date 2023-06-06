@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/06 08:48:05 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 09:20:08 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ enum e_errors
 	HD_ERROR_NUMBER = 13
 };
 
-uint8_t	g_status;
+extern int	g_status;
 
 /*	data.c	*/
 void		data_initialize(t_data *data, char **envp);
