@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:11:24 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 10:52:39 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 09:34:35 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ void	handler_exec_sigquit(int signal)
 {
 	if (signal == SIGQUIT)
 	{
+		write(1, "Quit (Core dumped)\n", 19);
+		write(1, "\n", 1);
+		rl_replace_line("Quit (Core dumped)", 0);
 		g_status = 128 + signal;//?
 		return (exit(g_status));// exit (0); //penser a free tout dans le child + close pipes
 	}
