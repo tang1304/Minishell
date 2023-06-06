@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/05 14:11:00 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 08:35:53 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	question_mark(t_data *data, t_substr *s, size_t *i, size_t index)
 	if (check_space_expand(data, s, index) == 1)
 		return ;
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
-	s->s = join_all(data, s->s, s->sub_b, s->sub_m, s->sub_a);
+	s->s = join_all(data, s->s, s);
 }
 
 void	number_xpd(t_data *data, t_substr *s, size_t *i, size_t index)
@@ -54,7 +54,7 @@ void	number_xpd(t_data *data, t_substr *s, size_t *i, size_t index)
 	if (check_space_expand(data, s, index) == 1)
 		return ;
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
-	s->s = join_all(data, s->s, s->sub_b, s->sub_m, s->sub_a);
+	s->s = join_all(data, s->s, s);
 }
 
 void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index)
@@ -82,7 +82,7 @@ void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index)
 	if (check_space_expand(data, s, index) == 1)
 		return ;
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
-	s->s = join_all(data, s->s, s->sub_b, s->sub_m, s->sub_a);
+	s->s = join_all(data, s->s, s);
 }
 
 char	*get_var(t_data *data, char *s, size_t i)
@@ -112,27 +112,4 @@ char	*get_var(t_data *data, char *s, size_t i)
 		}
 	}
 	return (free(ptr), free(s), var);
-}
-
-char	*join_all(t_data *data, char *s, char *b, char *e, char *a)
-{
-	free(s);
-	s = NULL;
-	if (b != NULL && e != NULL)
-		s = ft_strjoin_free(data, b, e);
-	else if (b == NULL && e != NULL)
-	{
-		s = ft_strdup(e);
-		free(e);
-	}
-	else if (b != NULL && e == NULL)
-	{
-		s = ft_strdup(b);
-		free(b);
-	}
-	if (a != NULL)
-		s = ft_strjoin_free(data, s, a);
-	if (!s)
-		exit_error(data, "minishell: malloc error : ");
-	return (s);
 }

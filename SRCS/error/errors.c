@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:53:32 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/05 16:01:40 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 08:37:12 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exit_error(t_data *data, char *str)
 	free_all(data);
 	close(data->pipe[0]);
 	close(data->pipe[1]);
-	close_all(data);//changed fro; close_files to close all
+	close_all(data);
 	exit(EXIT_FAILURE);
 }
 
