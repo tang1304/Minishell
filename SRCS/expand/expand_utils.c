@@ -15,13 +15,10 @@
 t_lexer	*update_tmp_index(t_data *data, size_t *i)
 {
 	t_lexer	*tmp;
-printf("DATA INDEX SAVED: %ld\n", data->svd_index);
+
 	tmp = data->lexer;
 	while (tmp->index != data->svd_index)
-	{printf("WORD WE HAVE=%s\n", tmp->word);
 		tmp = tmp->next;
-	}
-
 	if (tmp->word != NULL)
 		*i = ft_strlen(tmp->word);
 	else
@@ -54,41 +51,6 @@ static void	add_buf_lxr_tail(t_data *data, t_substr *s, t_lexer *buf, \
 		buf->prev = tmp;
 	}
 	add_index(data);
-
-
-
-	// test
-// 	size_t len = 0;
-// 	if (lstlen(data->lexer) > 0)
-// 	{
-
-// 	tmp = data->lexer;
-// 	while (tmp != NULL)
-// 	{
-// 		len++;
-// 		tmp = tmp->next;
-// 	}
-// 	printf("len lexer: %ld\n", len);
-
-// 	t_lexer	*tmp2;
-// 	tmp2 = data->lexer;
-// 	while (tmp2 != NULL)
-// 	{
-// 		ft_printf("\n\n");
-// // if (tmp2->word != NULL)
-// 	ft_printf("word node: %s\n", tmp2->word);
-// // else
-// 	ft_printf("token node: %s\n", tmp2->token);
-// printf("index: %ld\n", tmp2->index);
-// ft_printf("infile: %s\n", tmp2->infile);
-// ft_printf("outfile: %s\n", tmp2->outfile);
-// ft_printf("hdoc: %d\n",tmp2->hd_file);
-// // ft_printf("hdoc count: %d\n",tmp2->hd->hd_count);
-// 		tmp2 = tmp2->next;
-// 	}}
-// 	else
-// 		printf("len lexer: %ld\n", len);
-// // 	// end test ls <TODO -l|wc -l >out>>out2<Makefile
 }
 
 static t_lexer	*set_tmp(t_data *data, size_t index)
@@ -109,6 +71,7 @@ void	modify_lxr_nds(t_data *data, t_substr *s, size_t index)
 
 	buf = NULL;
 	tmp = set_tmp(data, index);
+	tmp->rm = 1;
 	if (tmp->next != NULL)
 	{
 		buf = tmp->next;
@@ -120,51 +83,9 @@ void	modify_lxr_nds(t_data *data, t_substr *s, size_t index)
 	add_node(data, &tmp, ptr[0], 0);
 	add_buf_lxr_tail(data, s, buf, ptr);
 	ft_free_pp(ptr);
-	remove_single_node(data, index);
-	add_index(data);
-
-
-
-
-
-
-
-
-// 		// test
-	size_t len = 0;
-	if (lstlen(data->lexer) > 0)
-	{
-
-	tmp = data->lexer;
-	while (tmp != NULL)
-	{
-		len++;
-		tmp = tmp->next;
-	}
-	printf("len lexer: %ld\n", len);
-
-	t_lexer	*tmp2;
-	tmp2 = data->lexer;
-	while (tmp2 != NULL)
-	{
-		ft_printf("\n\n");
-// if (tmp2->word != NULL)
-	ft_printf("word node: %s\n", tmp2->word);
-// else
-	ft_printf("token node: %s\n", tmp2->token);
-printf("index: %ld\n", tmp2->index);
-ft_printf("infile: %s\n", tmp2->infile);
-ft_printf("outfile: %s\n", tmp2->outfile);
-ft_printf("hdoc: %d\n",tmp2->hd_file);
-// ft_printf("hdoc count: %d\n",tmp2->hd->hd_count);
-		tmp2 = tmp2->next;
-	}}
-	else
-		printf("len lexer: %ld\n", len);
-// // 	// end test ls <TODO -l|wc -l >out>>out2<Makefile
 }
 
-int	check_space_expand(t_data *data, t_substr *s, int index)
+int	check_space_expand(t_data *data, t_substr *s, size_t index)
 {
 	size_t	j;
 	int		split;
@@ -180,6 +101,7 @@ int	check_space_expand(t_data *data, t_substr *s, int index)
 	if (split == 1)
 	{
 		modify_lxr_nds(data, s, index);
+		free(s->sub_m);
 		return (1);
 	}
 	return (0);
