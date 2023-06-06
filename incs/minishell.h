@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 16:02:24 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 09:20:08 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define SQUOTE_ERR "minishell: syntax error near unexpected token `\''\n"
 # define DQUOTE_ERR "minishell: syntax error near unexpected token `\"'\n"
 # define HEREDOC_LIMIT "minishell: maximum here-document count exceeded\n"
+
 typedef struct s_lexer
 {
 	char			*word;
@@ -142,7 +143,7 @@ enum e_errors
 	HD_ERROR_NUMBER = 13
 };
 
-uint8_t	g_status;
+extern int	g_status;
 
 /*	data.c	*/
 void		data_initialize(t_data *data, char **envp);

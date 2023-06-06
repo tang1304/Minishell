@@ -6,11 +6,14 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:14:33 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/02 11:45:05 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 08:55:10 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+/* ctrl-\ in a prompt with something written should exit minishell
+*/
 
 void	signal_set(void)
 {

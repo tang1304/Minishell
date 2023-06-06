@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/05 09:28:48 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 08:52:46 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static char	**export_var(t_data *data, char *cmd)
 	}
 	free(data->envp);
 	new_envp[n] = ft_strdup(cmd);
-	new_envp[n + 1] = '\0';
+	new_envp[n + 1] = 0;
 	if (!new_envp[n])
 		exit_error(data, "minishell: malloc error: ");
 	return (new_envp);
