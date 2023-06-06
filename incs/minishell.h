@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/06 08:36:46 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 08:48:05 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define SQUOTE_ERR "minishell: syntax error near unexpected token `\''\n"
 # define DQUOTE_ERR "minishell: syntax error near unexpected token `\"'\n"
 # define HEREDOC_LIMIT "minishell: maximum here-document count exceeded\n"
+
 typedef struct s_lexer
 {
 	char			*word;

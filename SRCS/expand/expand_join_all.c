@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 08:35:29 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/06 08:36:46 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 09:18:59 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*join_all_mid(t_data *data, char *str, t_substr *s)
 {
-	free(s);
+	free(str);
 	str = NULL;
 	if (s->before != NULL && s->middle != NULL)
 		str = ft_strjoin_free(data, s->before, s->middle);
@@ -29,7 +29,7 @@ char	*join_all_mid(t_data *data, char *str, t_substr *s)
 		free(s->before);
 	}
 	if (s->after != NULL)
-		str = ft_strjoin_free(data, s, s->after);
+		str = ft_strjoin_free(data, str, s->after);
 	if (!str)
 		exit_error(data, "minishell: malloc error : ");
 	return (str);
