@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_heredoc_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:38:04 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 13:51:28 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 08:40:17 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	question_mark_hd(t_data *data, t_substr *s, size_t *i)
 	if (!s->sub_m)
 		exit_error(data, "minishell: malloc error: ");
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
-	s->s = join_all(data, s->s, s->sub_b, s->sub_m, s->sub_a);
+	s->s = join_all_sub(data, s->s, s);
 }
 
 void	number_xpd_hd(t_data *data, t_substr *s, size_t *i)
@@ -50,5 +50,5 @@ void	number_xpd_hd(t_data *data, t_substr *s, size_t *i)
 		exit_error(data, "minishell: malloc error: ");
 	s->sub_m = get_var(data, buf, 0);
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
-	s->s = join_all(data, s->s, s->sub_b, s->sub_m, s->sub_a);
+	s->s = join_all_sub(data, s->s, s);
 }
