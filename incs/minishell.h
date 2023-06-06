@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/06 09:20:08 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 09:53:18 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,7 +300,7 @@ void		heredoc_count(t_data *data);
 void		init_heredoc_data(t_data *data);
 void		heredoc_pipe(t_data *data);
 void		create_pipes_hd(t_data *data);
-void		heredoc_ctrl_d(t_data *data);
+void		heredoc_ctrl_d(t_data *data, char *line, char *buffer);
 
 /*	heredoc_redir.c	*/
 int			heredoc_redir(t_data *data);

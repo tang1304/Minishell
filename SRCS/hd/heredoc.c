@@ -36,11 +36,14 @@ void	heredoc_count(t_data *data)
 	data->hd->limiter[data->hd->hd_count] = 0;
 }
 
-void	heredoc_ctrl_d(t_data *data)
+void	heredoc_ctrl_d(t_data *data, char *line, char *buffer)
 {
 	printf("minishell: warning: here-document at line %ld delimited by \
 end-of-file (wanted `%s')\n", data->ctrl_d_val, \
 data->hd->limiter[data->hd->heredoc]);
+	free(buffer);
+	if (line)
+		free(line);
 	close_all(data);
 	free_all(data);
 	exit (SUCCESS);
@@ -61,7 +64,7 @@ void	heredoc_pipe(t_data *data)
 		ft_strlen(data->hd->limiter[data->hd->heredoc])))
 			break ;
 		if (line == NULL)
-			heredoc_ctrl_d(data);
+			heredoc_ctrl_d(data, line, buffer);
 		line = expand_line(data, line);
 		buffer = ft_strjoin_free(data, buffer, line);
 	}
