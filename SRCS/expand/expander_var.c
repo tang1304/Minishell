@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/06 08:43:11 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 13:01:57 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index)
 		s->sub_b = ft_substr(s->s, 0, *i - 1);
 	while (ft_isalnum(s->s[*i]) == 1)
 		*i = *i + 1;
-	s->sub_a = ft_substr(s->s, *i, ft_strlen(s->s) - *i);
+	s->sub_a = ft_substr(s->s, *i, ft_strlen(s->s) - *i + 1);
 	buf = ft_substr(s->s, ft_strlen(s->sub_b), *i - (ft_strlen(s->sub_b)));
 	s->sub_m = get_var(data, buf, 0);
 	if (check_space_expand(data, s, index) == 1)
