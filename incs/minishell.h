@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/06 09:53:18 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 15:06:53 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_lexer
 	int				d_q;
 	int				pipe_b;
 	int				pipe_a;
+	int				rm;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
 }				t_lexer;
@@ -59,6 +60,7 @@ typedef struct s_substr
 	char	*sub_b;
 	char	*sub_m;
 	char	*sub_a;
+	char	*var;
 }				t_substr;
 
 typedef struct s_command
@@ -258,7 +260,7 @@ void		number_xpd_hd(t_data *data, t_substr *s, size_t *i);
 
 /*	expand_utils.c	*/
 void		modify_lxr_nds(t_data *data, t_substr *s, size_t index);
-int			check_space_expand(t_data *data, t_substr *s, int index);
+int			check_space_expand(t_data *data, t_substr *s, size_t index);
 t_lexer		*update_tmp_index(t_data *data, size_t *i);
 
 /*	builtins.c	*/
