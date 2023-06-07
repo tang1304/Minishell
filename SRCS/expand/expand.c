@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/02 14:46:27 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 14:41:50 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,24 @@ static char	*check_char(t_data *data, char *s, size_t *i, size_t index)
 	return (str.s);
 }
 
+static void	remove_nodes(t_data *data)
+{
+	t_lexer	*tmp;
+
+	tmp = data->lexer;
+	while (tmp != NULL)
+	{
+		if (tmp->rm == 1)
+		{
+			remove_single_node(data, tmp->index);
+			tmp = data->lexer;
+			continue ;
+		}
+		tmp = tmp->next;
+	}
+	add_index(data);
+}
+
 void	expand(t_data *data)
 {
 	size_t	i;
@@ -44,11 +62,14 @@ void	expand(t_data *data)
 			while (tmp->word[i] != '\0')
 			{
 				tmp->word = check_char(data, tmp->word, &i, tmp->index);
-				if (tmp->index != data->svd_index)
-					tmp = update_tmp_index(data, &i);
+				if (!tmp->word)
+					tmp = data->lexer;
 			}
+			if (tmp->index != data->svd_index)
+				tmp = update_tmp_index(data, &i);
 		}
 		tmp = tmp->next;
 		data->svd_index++;
 	}
+	remove_nodes(data);
 }
