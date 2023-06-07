@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/06 08:52:46 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 14:08:38 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,11 @@ static int	name_check(char *str)
 			return (-1);
 		}
 	}
+printf("i: %d\n", i);
 	return (i);
 }
 
-static char	**export_var(t_data *data, char *cmd)
+char	**export_var(t_data *data, char *cmd)
 {
 	int		j;
 	int		n;
@@ -134,8 +135,8 @@ int	ft_export(t_data *data, char **cmd)
 		i = name_check(cmd[j]);
 		if (i == -1)
 			continue ;
-		if (existing_var(data, cmd[j], i))
-			return (1);
+		if (existing_var(data, cmd[j], i) > 0)
+			continue ;
 		if (cmd[j][i] == '\0')
 		{
 			if (!add_env_node(data, &data->env, cmd[j]))
