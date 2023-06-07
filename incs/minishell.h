@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/06 09:20:08 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 13:47:22 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,6 +279,7 @@ void		ft_exit(t_data *data, char **cmd);
 /*	builtin_export.c	*/
 void		ft_list_sort(t_env **env, int size);
 int			ft_export(t_data *data, char **cmd);
+char		**export_var(t_data *data, char *cmd);
 int			print_export(t_env **env);
 
 /*	builtin_export_utils.c	*/
