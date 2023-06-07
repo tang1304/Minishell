@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/07 14:08:38 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 14:39:15 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ static int	name_check(char *str)
 			return (-1);
 		}
 	}
-printf("i: %d\n", i);
 	return (i);
 }
 
