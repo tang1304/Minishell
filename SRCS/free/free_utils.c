@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:25:20 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 14:56:27 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 12:13:18 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	ft_free_pp(char **ptr)
 		return ;
 	while (ptr[x] != 0)
 	{
-		free(ptr[x]);
+		if (ptr[x] != NULL)
+			free(ptr[x]);
 		ptr[x] = NULL;
 		x++;
 	}
