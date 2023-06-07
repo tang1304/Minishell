@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/05 09:25:31 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 14:09:29 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,19 @@ static int	env_struct_replacement(t_data *data, t_env *var, char *cmd, int i)
 {
 	char	*pos;
 
-	if (ft_strncmp(var->var_name, cmd, i) == 0)
+	if (ft_strncmp(var->var_name, cmd, i) == 0 && ft_strchr(cmd, '='))
 	{
 		pos = ft_strchr(cmd, '=');
 		free(var->var_name);
-		if (pos)
-		{
-			free(var->var_value);
-			var->var_value = ft_strdup(pos + 1);
-		}
-		else
-			var->var_value = ft_strdup("");
+		free(var->var_value);
+		var->var_value = ft_strdup(pos + 1);
 		var->var_name = ft_strndup(cmd, i);
 		if (!var->var_value || !var->var_name)
 			exit_error(data, "minishell: malloc error: ");
 		return (1);
 	}
+	else if (ft_strncmp(var->var_name, cmd, i) == 0)
+		return (1);
 	return (0);
 }
 
@@ -57,55 +54,66 @@ int	envp_replacement(t_data *data, char **var, char *cmd)
 	return (1);
 }
 
-static void	remove_from_env(t_data *data, char *str)
+char	**export_var_only(t_data *data, char *cmd)
 {
-	int	i;
-	int	j;
+	int		j;
+	int		n;
+	char	**new_envp;
 
-	j = 0;
-	i = -1;
-	while (data->envp[j])
-		j++;
-	while (data->envp[++i])
+	n = 0;
+	j = -1;
+	while (data->envp[n])
+		n++;
+	new_envp = malloc(sizeof(char *) * (n + 2));
+	if (!new_envp)
+		exit_error(data, "minishell: malloc error: ");
+	while (data->envp[++j])
 	{
-		if (ft_strncmp(data->envp[i], str, ft_strlen(str)) == 0)
-		{
-			free(data->envp[i]);
-			while (i < j - 1)
-			{
-				data->envp[i] = data->envp[i + 1];
-				i++;
-			}
-			data->envp[i] = NULL;
-			break ;
-		}
+		new_envp[j] = ft_strdup(data->envp[j]);
+		free(data->envp[j]);
 	}
+	free(data->envp);
+	new_envp[n] = ft_strdup(cmd);
+	new_envp[n + 1] = 0;
+	if (!new_envp[n])
+		exit_error(data, "minishell: malloc error: ");
+	return (new_envp);
 }
+
 
 int	existing_var(t_data *data, char *cmd, int i)
 {
 	t_env	*tmp;
 	int		j;
+	int		export;
 
 	tmp = data->env;
+	export = 0;
 	while (tmp)
 	{
 		if (env_struct_replacement(data, tmp, cmd, i) == 1)
+		{
+			export = 1;
 			break ;
+		}
 		else
 			tmp = tmp->next;
 	}
 	j = -1;
 	while (data->envp[++j])
 	{
-		if (ft_strncmp(data->envp[j], cmd, i) == 0)
+		if (ft_strncmp(data->envp[j], cmd, i) == 0 && ft_strchr(cmd, '=') \
+			&& export == 1)
 		{
-			if (ft_strchr(cmd, '='))
-				envp_replacement(data, &data->envp[j], cmd);
-			else
-				remove_from_env(data, cmd);
-			return (1);
+			envp_replacement(data, &data->envp[j], cmd);
+			export += 1;
+			break ;
+		}
+		else if (export == 1 && ft_strchr(cmd, '='))
+		{
+			data->envp = export_var_only(data, cmd);
+			break ;
 		}
 	}
-	return (0);
+	return (export);
 }
