@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/05 14:34:10 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 13:18:49 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,19 @@ int	add_node(t_data *data, t_lexer **lexer, char *str, int token)
 void	add_index(t_data *data)
 {
 	size_t	i;
+	int		change;
 	t_lexer	*tmp;
 
 	i = 0;
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
+		change = 0;
+		if (tmp->index == data->svd_index)
+			change = 1;
 		tmp->index = i;
+		if (change == 1)
+			data->svd_index = tmp->index;
 		i++;
 		tmp = tmp->next;
 	}
