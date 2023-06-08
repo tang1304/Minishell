@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:53:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 16:03:32 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 08:30:33 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	error_great(char *line, size_t i)
 		if (line[i] == '>')
 			if (is_word(line, i, line[i]) != SUCCESS)
 				great = 5;
-		while (line[i] == '>' && i < ft_strlen(line))
+		while (line[i] == '>' && line[i] != '\0')
 		{
 			great++;
 			i++;
@@ -96,7 +96,7 @@ int	error_less(char *line, size_t i)
 		if (line[i] == '<')
 			if (is_word(line, i, line[i]) != SUCCESS)
 				less = 5;
-		while (line[i] == '<' && i < ft_strlen(line))
+		while (line[i] == '<' && line[i] != '\0')
 		{
 			less++;
 			i++;
