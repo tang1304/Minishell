@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/06 09:16:20 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 10:56:09 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*envp_handle(t_data *data, char *str)
 	else
 		new_envp = ft_strdup(str);
 	if (!new_envp)
-		exit_error(data, "minishell: mallor error: ");
+		return (NULL);
 	return (new_envp);
 }
 
@@ -98,8 +98,11 @@ char	**get_envp(t_data *data, char **envp)
 	while (envp[++i])
 	{
 		new_envp[i] = envp_handle(data, envp[i]);
-		if (!new_envp || !add_env_node(data, &data->env, new_envp[i]))
+		if (!new_envp[i] || !add_env_node(data, &data->env, new_envp[i]))// TODO: leaks
+		{
+			ft_free_pp(new_envp);
 			exit_error(data, "minishell: malloc error: ");
+		}
 	}
 	new_envp[i] = NULL;
 	return (new_envp);
