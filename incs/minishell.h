@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/07 13:47:22 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 11:18:45 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,12 @@ typedef struct s_env
 	struct s_env	*next;
 }				t_env;
 
+typedef struct s_garb
+{
+	void			*ptr;
+	struct s_garb	*next;
+}				t_garb;
+
 typedef struct s_data
 {
 	char				*str;
@@ -127,6 +133,7 @@ typedef struct s_data
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
+	struct s_garbage	*garb;
 }				t_data;
 
 enum e_errors
