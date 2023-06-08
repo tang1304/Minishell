@@ -79,7 +79,7 @@ void	modify_lxr_nds(t_data *data, t_substr *s, size_t index)
 	}
 	ptr = ft_split(s->sub_m, ' ');
 	if (!ptr)
-		exit_error(data, "minishell: malloc error: ");
+		exit_error(data, "minishell: malloc error 12: ");
 	add_node(data, &tmp, ptr[0], 0);
 	add_buf_lxr_tail(data, s, buf, ptr);
 	ft_free_pp(ptr);
