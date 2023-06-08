@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 10:56:09 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 13:05:48 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,11 @@ char	**env_i_handle(t_data *data)
 			envp[2] = ft_strdup("_=/usr/bin/env");
 		else if (i == 3)
 			envp[3] = ft_strjoin_free_s2(data, "OLDPWD=", getcwd(NULL, 0));
-		if (!envp[i] || !add_env_node(data, &data->env, envp[i]))
+		if (!envp[i] || !add_env_node(&data->env, envp[i]))
+		{
+			ft_free_pp(envp);
 			exit_error(data, "minishell: mallor error: ");
+		}
 	}
 	envp[4] = NULL;
 	return (envp);
@@ -98,7 +101,7 @@ char	**get_envp(t_data *data, char **envp)
 	while (envp[++i])
 	{
 		new_envp[i] = envp_handle(data, envp[i]);
-		if (!new_envp[i] || !add_env_node(data, &data->env, new_envp[i]))// TODO: leaks
+		if (!new_envp[i] || !add_env_node(&data->env, new_envp[i]))
 		{
 			ft_free_pp(new_envp);
 			exit_error(data, "minishell: malloc error: ");
