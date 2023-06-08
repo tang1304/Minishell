@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/06 15:37:38 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 16:26:34 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char	*get_var(t_data *data, char *s, size_t i)
 	ptr = ft_substr(s, 1, ft_strlen(s) - 1);
 	var = ft_strdup("");
 	if (var == NULL)
-		exit_error(data, "minishell: malloc error : ");
+		exit_error(data, "minishell: malloc error 22: ");
 	while (data->envp[++k])
 	{
 		i = 0;
@@ -107,7 +107,7 @@ char	*get_var(t_data *data, char *s, size_t i)
 			free(var);
 			var = ft_substr(data->envp[k], i + 1, (ft_strlen(data->envp[k])));
 			if (var == NULL)
-				exit_error(data, "minishell: malloc error : ");
+				exit_error(data, "minishell: malloc error 23: ");
 			break ;
 		}
 	}
