@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/07 16:26:34 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 15:35:07 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,11 @@
 void	question_mark(t_data *data, t_substr *s, size_t *i, size_t index)
 {
 	if (*i > 1)
-	{
 		s->sub_b = ft_substr(s->s, 0, *i - 1);
-		// if (!s->sub_b)
-		// 	exit_error(data, "minishell: malloc_error: ");
-	}
 	while (ft_isalnum(s->s[*i]) == 1)
 		*i = *i + 1;
 	s->sub_a = ft_substr(s->s, *i + 1, ft_strlen(s->s) - *i);
-	// if (!s->sub_a)
-	// 	exit_error(data, "minishell: malloc error :");
 	s->sub_m = ft_itoa(g_status);
-	// if (!s->sub_m)
-	// 	exit_error(data, "minishell: malloc error :");
 	if (check_space_expand(data, s, index) == 1)
 		return ;
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
@@ -39,17 +31,9 @@ void	number_xpd(t_data *data, t_substr *s, size_t *i, size_t index)
 	char	*buf;
 
 	if (*i > 1)
-	{
 		s->sub_b = ft_substr(s->s, 0, *i - 1);
-		// if (!s->sub_b)
-		// 	exit_error(data, "minishell: malloc_error: ");
-	}
 	buf = ft_substr(s->s, ft_strlen(s->sub_b) + 1, *i);
-	// if (!buf)
-	// 	exit_error(data, "minishell: malloc error 123:");
 	s->sub_a = ft_substr(s->s, *i + 1, ft_strlen(s->s) - *i);
-	// if (!s->sub_a)
-	// 	exit_error(data, "minishell: malloc error 456:");
 	s->sub_m = get_var(data, buf, 0);
 	if (check_space_expand(data, s, index) == 1)
 		return ;
