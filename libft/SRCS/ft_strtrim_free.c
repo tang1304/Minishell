@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:29:47 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/26 14:16:56 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 13:53:40 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static size_t	index_back(char *s1, char const *set, size_t start)
 	return (i);
 }
 
-char	*ft_strtrim_free(char *s1, char const *set)
+char	*ft_strtrim_free(char *s1, char const *set, int *err)
 {
 	char	*ptr;
 	size_t	start;
@@ -78,7 +78,7 @@ char	*ft_strtrim_free(char *s1, char const *set)
 	end = index_back(s1, set, start);
 	ptr = (char *)malloc(sizeof(*ptr) * ((end - start) + 1));
 	if (ptr == NULL)
-		return (NULL);
+		return (*err = 1, NULL);
 	while (start + i < end)
 	{
 		ptr[i] = ((char *)s1)[start + i];
