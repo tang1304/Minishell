@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/07 14:09:29 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 15:22:29 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,9 @@ char	**export_var_only(t_data *data, char *cmd)
 	return (new_envp);
 }
 
-
 int	existing_var(t_data *data, char *cmd, int i)
 {
 	t_env	*tmp;
-	int		j;
 	int		export;
 
 	tmp = data->env;
@@ -99,21 +97,6 @@ int	existing_var(t_data *data, char *cmd, int i)
 		else
 			tmp = tmp->next;
 	}
-	j = -1;
-	while (data->envp[++j])
-	{
-		if (ft_strncmp(data->envp[j], cmd, i) == 0 && ft_strchr(cmd, '=') \
-			&& export == 1)
-		{
-			envp_replacement(data, &data->envp[j], cmd);
-			export += 1;
-			break ;
-		}
-		else if (export == 1 && ft_strchr(cmd, '='))
-		{
-			data->envp = export_var_only(data, cmd);
-			break ;
-		}
-	}
+	iterate_pp_envp(data, cmd, i, export);
 	return (export);
 }

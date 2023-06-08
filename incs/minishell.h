@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 12:59:06 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 15:42:59 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,9 @@ int			ft_isspace(char c);
 int			quote_handling(char *str, int i, char quote);
 int			add_node(t_data *data, t_lexer **lexer, char *str, int token);
 
+/*	lexer_utils.c	*/
+void		config_node(t_data *data, char *str, t_lexer *node, int i);
+
 /*	cmd_struct.c	*/
 void		create_cmd_struct(t_data *data);
 
@@ -298,6 +301,10 @@ int			print_export(t_env **env);
 int			ft_list_size(t_env *env);
 int			envp_replacement(t_data *data, char **var, char *cmd);
 int			existing_var(t_data *data, char *cmd, int i);
+char		**export_var_only(t_data *data, char *cmd);
+
+/*	builtin_export_utils2.c	*/
+void		iterate_pp_envp(t_data *data, char *cmd, int i, int export);
 
 /*	builtin_unset.c	*/
 int			ft_unset(t_data *data, char **cmd);
@@ -367,6 +374,10 @@ void		exec_error_handle(t_data *data);
 void		join_path_and_cmd(t_data *data, char *cmd, int i);
 void		restore_stds(t_data *data);
 void		extract_paths(t_data *data);
+void		exec_cmd_lst_wait(t_data *data);
+
+/*	exec_utils2.c	*/
+void		exec_cmd_lst_wait(t_data *data);
 
 /*	wait.c	*/
 void		wait_child(t_data *data);

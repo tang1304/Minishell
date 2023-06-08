@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:50:39 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 10:11:50 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 15:44:06 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,5 @@ char	*substr_check(t_data *data, char *s, size_t i, size_t len)
 
 	(void)data;
 	str = ft_substr(s, i, len);
-	// if (!str)
-	// 	exit_error(data, "minishell: malloc error 24: ");
 	return (str);
 }

@@ -6,20 +6,16 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:14:33 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 13:50:00 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 15:43:48 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-/* ctrl-\ in a prompt with something written should exit minishell
-*/
-
 void	signal_set(void)
 {
 	struct sigaction	sa;
 
-	// ft_bzero(&sa, sizeof(sa));
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 	sa.sa_handler = &handler_sigint;
@@ -32,7 +28,6 @@ void	signal_hd_set(void)
 {
 	struct sigaction	sa;
 
-	// ft_bzero(&sa, sizeof(sa));
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 	sa.sa_handler = SIG_IGN;
@@ -45,7 +40,6 @@ void	signal_exec_set(void)
 {
 	struct sigaction	sa;
 
-	// ft_bzero(&sa, sizeof(sa));
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 	sa.sa_handler = &handler_exec_sigint;
