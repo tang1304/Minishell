@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 12:59:06 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 15:43:17 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ void		remove_single_node(t_data *data, size_t index);
 void		add_index(t_data *data);
 int			ft_isspace(char c);
 int			quote_handling(char *str, int i, char quote);
-int			add_node(t_data *data, t_lexer **lexer, char *str, int token);
+int			add_node(t_lexer **lexer, char *str, int token);
 
 /*	cmd_struct.c	*/
 void		create_cmd_struct(t_data *data);
@@ -333,7 +333,7 @@ char		*ft_strjoin_free(t_data *data, char *s1, char *s2);
 void		complete_out_data(t_data *data, t_lexer *tmp, char *file, \
 								int valid);
 size_t		ft_strlen_pp(char **s);
-char		*substr_check(t_data *data, char *s, size_t i, size_t len);
+char		*ft_substr_check(char *s, size_t i, size_t len, int *err);
 
 /*	free.c	*/
 void		free_lexer_strct(t_data *data);
