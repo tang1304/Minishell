@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:22 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/08 08:09:16 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 08:42:07 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*word_without_quotes(t_data *data, char *str, int i, int j)
 		new_word[k - 2] = str[k];
 		k++;
 	}
-	new_word[k] = '\0';
+	new_word[k - 2] = '\0';
 	free(str);
 	return (new_word);
 }
