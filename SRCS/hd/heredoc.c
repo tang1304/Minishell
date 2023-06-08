@@ -12,41 +12,28 @@
 
 #include "../incs/minishell.h"
 
-void	heredoc_count(t_data *data)
+int	heredoc_ctrl_check(t_data *data, char *line, char *buffer)
 {
-	t_lexer	*tmp;
-
-	tmp = data->lexer;
-	while (tmp != NULL)
+	if (g_status != 130 && line == NULL)
 	{
-		if (tmp->token != NULL)
-		{
-			if (ft_strncmp(tmp->token, "<<", 2) == 0 && \
-			ft_strlen(tmp->token) == 2)
-				data->hd->hd_count++;
-		}
-		tmp = tmp->next;
+		printf("minishell: warning: here-document at line %ld delimited by \
+end-of-file (wanted `%s')\n", data->ctrl_d_val, \
+		data->hd->limiter[data->hd->heredoc]);
+		free(buffer);
+		return (HD_CTRL_D);
 	}
-	if (data->hd->hd_count > 1024)
-		free_hd_limit(data);
-	data->hd->limiter = (char **)malloc(sizeof(char *) * \
-	(data->hd->hd_count + 1));
-	if (data->hd->limiter == NULL)
-		exit_error(data, "minishell: malloc error ");
-	data->hd->limiter[data->hd->hd_count] = 0;
+	else if (g_status == 130)
+	{
+		free(buffer);
+		return (HD_CTRL_C);
+	}
+	else
+		return (SUCCESS);
 }
 
-void	heredoc_ctrl_d(t_data *data, char *line, char *buffer)
+static int	event(void)
 {
-	printf("minishell: warning: here-document at line %ld delimited by \
-end-of-file (wanted `%s')\n", data->ctrl_d_val, \
-data->hd->limiter[data->hd->heredoc]);
-	free(buffer);
-	if (line)
-		free(line);
-	close_all(data);
-	free_all(data);
-	exit (SUCCESS);
+	return (0);
 }
 
 void	heredoc_pipe(t_data *data)
@@ -56,15 +43,17 @@ void	heredoc_pipe(t_data *data)
 
 	buffer = calloc(sizeof(*buffer), 1);
 	signal_hd_set();
-	while (1)
+	g_status = 0;
+	while (g_status != 130)
 	{
 		line = readline("> ");
+		rl_event_hook = event;
 		if ((ft_strncmp(line, data->hd->limiter[data->hd->heredoc], \
 		ft_strlen(line)) == 0 && ft_strlen(line) == \
 		ft_strlen(data->hd->limiter[data->hd->heredoc])))
 			break ;
-		if (line == NULL)
-			heredoc_ctrl_d(data, line, buffer);
+		if (heredoc_ctrl_check(data, line, buffer) != SUCCESS)
+			return ;
 		line = expand_line(data, line);
 		buffer = ft_strjoin_free(data, buffer, line);
 	}
@@ -72,8 +61,6 @@ void	heredoc_pipe(t_data *data)
 	free(buffer);
 	if (line)
 		free(line);
-	close_all(data);
-	free_all(data);
 }
 
 void	create_pipes_hd(t_data *data)
@@ -100,20 +87,11 @@ void	create_pipes_hd(t_data *data)
 
 void	init_heredoc_data(t_data *data)
 {
-	int			status;
-	pid_t		i;
-
 	create_pipes_hd(data);
 	silence_signals();
 	while (data->hd->heredoc < data->hd->hd_count)
 	{
-		i = fork();
-		if (i == 0)
-		{
-			heredoc_pipe(data);
-			exit (SUCCESS);
-		}
-		waitpid(i, &status, 0);
+		heredoc_pipe(data);
 		data->hd->heredoc++;
 		data->ctrl_d_val++;
 	}

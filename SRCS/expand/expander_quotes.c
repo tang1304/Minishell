@@ -27,7 +27,7 @@ void	set_sub_strs(t_data *data, t_substr *s, size_t j)
 static char	*word_without_quotes(t_data *data, char *str, int i, int j)
 {
 	char	*new_word;
-	int		k;(void)j;
+	int		k;
 
 	new_word = (char *)malloc(sizeof(char) * (ft_strlen(str) - 1));
 	if (!new_word)
@@ -35,12 +35,8 @@ static char	*word_without_quotes(t_data *data, char *str, int i, int j)
 	k = -1;
 	while (++k < i)
 		new_word[k] = str[k];
-	k++;
-	while (k < j)
-	{
+	while (++k < j)
 		new_word[k - 1] = str[k];
-		k++;
-	}
 	k++;
 	while ((size_t)k < ft_strlen(str))
 	{
