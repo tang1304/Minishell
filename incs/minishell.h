@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 14:08:55 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 12:59:06 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,12 @@ typedef struct s_env
 	struct s_env	*next;
 }				t_env;
 
+typedef struct s_garb
+{
+	void			*ptr;
+	struct s_garb	*next;
+}				t_garb;
+
 typedef struct s_data
 {
 	char				*str;
@@ -128,6 +134,7 @@ typedef struct s_data
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
+	struct s_garbage	*garb;
 }				t_data;
 
 enum e_errors
@@ -295,11 +302,11 @@ int			existing_var(t_data *data, char *cmd, int i);
 /*	builtin_unset.c	*/
 int			ft_unset(t_data *data, char **cmd);
 
-/*	envp_utils.c	*/
+/*	envp_handle.c	*/
 char		*get_shlvl(t_data *data, char *str);
 char		*search_env(t_data *data, char *env);
 int			replace_env(t_data *data, char *env, char *old_env);
-int			add_env_node(t_data *data, t_env **env, char *str);
+int			add_env_node(t_env **env, char *str);
 
 /*	heredoc.c	*/
 void		init_heredoc_data(t_data *data);
