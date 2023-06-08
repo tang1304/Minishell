@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_data_creation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/06 08:37:30 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 15:23:27 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,14 @@ void	exec_cmd_lst(t_data *data)
 	tmp = data->cmd;
 	while (tmp)
 	{
-		if (lstlencmd(data->cmd) == 1 && check_builtins(tmp->cmd) == SUCCESS \
-			&& (!tmp->fdout))
+		if (lstlencmd(data->cmd) == 1 && check_builtins(tmp->cmd) == SUCCESS)
 		{
-			no_forking(data, tmp);
+			if ((tmp->fdout && ft_strncmp(tmp->cmd[0], "exit", 4) == 0) \
+			|| (tmp->fdout && ft_strncmp(tmp->cmd[0], "cd", 2) == 0) \
+			|| !tmp->fdout)
+				no_forking(data, tmp);
+			else
+				break ;
 			return ;
 		}
 		else
