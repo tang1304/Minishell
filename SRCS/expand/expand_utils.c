@@ -35,11 +35,11 @@ static void	add_buf_lxr_tail(t_data *data, t_substr *s, t_lexer *buf, \
 	j = 1;
 	while (ptr[j] != 0)
 	{
-		add_node(data, &data->lexer, ptr[j], 0);
+		add_node(&data->lexer, ptr[j], 0);
 		j++;
 	}
 	if (ft_strlen(s->sub_a) > 0)
-		add_node(data, &data->lexer, s->sub_a, 0);
+		add_node(&data->lexer, s->sub_a, 0);
 	tmp = data->lexer;
 	add_index(data);
 	while (tmp->next != NULL)
@@ -80,7 +80,7 @@ void	modify_lxr_nds(t_data *data, t_substr *s, size_t index)
 	ptr = ft_split(s->sub_m, ' ');
 	if (!ptr)
 		exit_error(data, "minishell: malloc error 12: ");
-	add_node(data, &tmp, ptr[0], 0);
+	add_node(&tmp, ptr[0], 0);
 	add_buf_lxr_tail(data, s, buf, ptr);
 	ft_free_pp(ptr);
 }

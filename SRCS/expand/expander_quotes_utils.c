@@ -80,7 +80,7 @@ static char	*expand_str(t_data *data, t_substr *s)
 		{
 			j++;
 			if (j > 0)
-				s->sub_b = substr_check(data, s->middle, 0, j - 1);
+				s->sub_b = ft_substr(s->middle, 0, j - 1);
 			while (ft_isalnum(s->middle[j]) == 1)
 				j++;
 			set_sub_strs(data, s, j);
@@ -103,7 +103,7 @@ void	expand_quotes(t_data *data, t_substr *str, size_t *i, char c)
 
 	j = *i + 1;
 	if (*i > 0)
-		str->before = substr_check(data, str->s, 0, *i);
+		str->before = ft_substr(str->s, 0, *i);
 	*i = *i + 1;
 	while (str->s[*i] != c)
 		*i = *i + 1;

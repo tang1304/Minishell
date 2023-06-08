@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 10:40:54 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 16:02:42 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	free_all(t_data *data)
 	}
 }
 
-void	free_data(t_data *data, void(*f)())
+void	free_data(t_data *data, void (*f)(t_data *data))
 {
 	(*f)(data);
 }
