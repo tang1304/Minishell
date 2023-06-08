@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/07 15:23:27 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 10:05:28 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,12 @@ void	exec_cmd_lst(t_data *data)
 			if ((tmp->fdout && ft_strncmp(tmp->cmd[0], "exit", 4) == 0) \
 			|| (tmp->fdout && ft_strncmp(tmp->cmd[0], "cd", 2) == 0) \
 			|| !tmp->fdout)
+			{
 				no_forking(data, tmp);
+				return ;
+			}
 			else
-				break ;
-			return ;
+				prepare_forking(data, tmp);
 		}
 		else
 			prepare_forking(data, tmp);
