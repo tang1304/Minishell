@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/07 14:39:15 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 12:59:28 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	**export_var(t_data *data, char *cmd)
 	while (data->envp[n])
 		n++;
 	new_envp = malloc(sizeof(char *) * (n + 2));
-	if (!new_envp || !add_env_node(data, &data->env, cmd))
+	if (!new_envp || !add_env_node(&data->env, cmd))
 		exit_error(data, "minishell: malloc error: ");
 	while (data->envp[++j])
 	{
@@ -138,7 +138,7 @@ int	ft_export(t_data *data, char **cmd)
 			continue ;
 		if (cmd[j][i] == '\0')
 		{
-			if (!add_env_node(data, &data->env, cmd[j]))
+			if (!add_env_node(&data->env, cmd[j]))
 				return (-1);
 			continue ;
 		}

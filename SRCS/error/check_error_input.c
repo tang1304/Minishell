@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:53:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 09:07:14 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 09:03:53 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	error_less(char *line, size_t i)
 {
 	int	less;
 
-	while (line[i] != '\0')
+	while (line[i])
 	{
 		less = 0;
 		if (line[i] == '<')
