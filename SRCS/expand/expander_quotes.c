@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:22 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/05 13:29:31 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 08:09:16 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	set_sub_strs(t_data *data, t_substr *s, size_t j)
 static char	*word_without_quotes(t_data *data, char *str, int i, int j)
 {
 	char	*new_word;
-	int		k;
+	int		k;(void)j;
 
 	new_word = (char *)malloc(sizeof(char) * (ft_strlen(str) - 1));
 	if (!new_word)
@@ -34,14 +34,16 @@ static char	*word_without_quotes(t_data *data, char *str, int i, int j)
 	k = -1;
 	while (++k < i)
 		new_word[k] = str[k];
+	k++;
 	while (k < j)
 	{
-		new_word[k] = str[k + 1];
+		new_word[k - 1] = str[k];
 		k++;
 	}
-	while ((size_t)k < ft_strlen(str) - 2)
+	k++;
+	while ((size_t)k < ft_strlen(str))
 	{
-		new_word[k] = str[k + 2];
+		new_word[k - 2] = str[k];
 		k++;
 	}
 	new_word[k] = '\0';
@@ -93,12 +95,10 @@ char	*str_quotes_removal(t_data *data, char *str)
 	while (++k < q_pairs)
 	{
 		i = quote_starting_point(str, i);
-		j = i++;
+		j = i + 1;
 		while (str[j] != str[i] && str[j] != '\0')
-		{
 			j++;
-		}
-		str = word_without_quotes(data, str, i - 1, j);
+		str = word_without_quotes(data, str, i, j);
 	}
 	return (str);
 }
