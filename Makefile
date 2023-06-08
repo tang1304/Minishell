@@ -6,7 +6,7 @@
 
 NAME		=	minishell
 
-CC			=	cc -g3 #-fsanitize=address
+CC			=	cc -g3 -fsanitize=address
 
 RM			=	rm -rf
 
@@ -54,6 +54,7 @@ D_LIBFT		=	libft/
 LST_SRCS		=	main.c \
 					data.c \
 					loop.c \
+					envp_handle.c \
 					envp_utils.c \
 					close.c
 
