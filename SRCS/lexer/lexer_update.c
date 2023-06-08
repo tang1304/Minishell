@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:11:59 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/06 12:20:06 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 08:48:47 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	update_lexer(t_data *data)
 	tmp = data->lexer;
 	while (tmp != NULL)
 	{
-		if ((tmp->word == NULL && \
-		tmp->token == NULL))
+		if ((tmp->word == NULL || ft_strlen(tmp->word) == 0) && \
+		tmp->token == NULL)
 		{
 			remove_single_node(data, tmp->index);
 			if (lstlen(data->lexer) == 0)
