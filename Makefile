@@ -6,7 +6,7 @@
 
 NAME		=	minishell
 
-CC			=	cc -g3
+CC			=	cc -g3 -fsanitize=address
 
 RM			=	rm -rf
 
