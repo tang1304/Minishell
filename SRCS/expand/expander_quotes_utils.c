@@ -18,7 +18,7 @@ char	*str_without_single_quotes(t_data *data, char *str, int i, int j)
 
 	new_word = (char *)malloc(sizeof(char) * (j - i + 1));
 	if (!new_word)
-		exit_error(data, "minishell: dup error: ");
+		exit_error(data, "minishell: dup error 16: ");
 	while (i < j)
 	{
 		new_word[i] = str[i];
@@ -46,8 +46,8 @@ static char	*expand_number_mark(t_data *data, t_substr *s, size_t *j, char c)
 	if (*j > 1)
 	{
 		s->sub_b = ft_substr(s->middle, 0, *j - 1);
-		if (!s->sub_b)
-			exit_error(data, "minishell: malloc error: ");
+		// if (!s->sub_b)
+		// 	exit_error(data, "minishell: malloc error 17: ");
 	}
 	*j = *j + 1;
 	if (c != '?')
@@ -64,8 +64,8 @@ static char	*expand_number_mark(t_data *data, t_substr *s, size_t *j, char c)
 		*j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
 		s->middle = join_all_sub(data, s->middle, s);
 	}
-	if (!s->sub_a || !s->sub_m)
-		exit_error(data, "minishell: malloc error: ");
+	// if (!s->sub_a || !s->sub_m)
+	// 	exit_error(data, "minishell: malloc error 18: ");
 	return (s->middle);
 }
 
@@ -108,20 +108,20 @@ void	expand_quotes(t_data *data, t_substr *str, size_t *i, char c)
 	while (str->s[*i] != c)
 		*i = *i + 1;
 	str->middle = ft_substr(str->s, j, *i - j);
-	if (!str->middle)
-		exit_error(data, "minishell: malloc error: ");
+	// if (!str->middle)
+	// 	exit_error(data, "minishell: malloc error 19: ");
 	if (*i + 1 < ft_strlen(str->s))
 	{
 		str->after = ft_substr(str->s, *i + 1, ft_strlen(str->s));
-		if (!str->after)
-			exit_error(data, "minishell: malloc error: ");
+		// if (!str->after)
+		// 	exit_error(data, "minishell: malloc error 20: ");
 	}
 	if (c == '"' && str->middle != NULL)
 		str->middle = expand_str(data, str);
 	else if (c == '\'' && str->middle != NULL)
 		str->middle = remove_str_middle_quote(data, str->middle, c);
-	if (!str->middle)
-		exit_error(data, "minishell: malloc error: ");
+	// if (!str->middle)
+	// 	exit_error(data, "minishell: malloc error 21: ");
 	*i = ft_strlen(str->before) + ft_strlen(str->middle);
 	str->s = join_all_mid(data, str->s, str);
 }

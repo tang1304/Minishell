@@ -284,6 +284,7 @@ void		ft_exit(t_data *data, char **cmd);
 /*	builtin_export.c	*/
 void		ft_list_sort(t_env **env, int size);
 int			ft_export(t_data *data, char **cmd);
+char		**export_var(t_data *data, char *cmd);
 int			print_export(t_env **env);
 
 /*	builtin_export_utils.c	*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:50:39 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/06 14:59:50 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 16:28:46 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_strjoin_free(t_data *data, char *s1, char *s2)
 		return (NULL);
 	ptr = (char *)malloc(sizeof(*ptr) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (ptr == NULL)
-		exit_error(data, "minishell: malloc error: ");
+		exit_error(data, "minishell: malloc error 26: ");
 	while (s1[i] != '\0')
 	{
 		ptr[i] = ((char *)s1)[i];
@@ -68,7 +68,7 @@ void	complete_out_data(t_data *data, t_lexer *tmp, char *file, int valid)
 	{
 		tmp->outfile = ft_strdup(file);
 		if (!tmp->outfile)
-			exit_error(data, "minishell: malloc error: ");
+			exit_error(data, "minishell: malloc error 25: ");
 		return ;
 	}
 	else
@@ -94,8 +94,9 @@ char	*substr_check(t_data *data, char *s, size_t i, size_t len)
 {
 	char	*str;
 
+	(void)data;
 	str = ft_substr(s, i, len);
-	if (!str)
-		exit_error(data, "minishell: malloc error: ");
+	// if (!str)
+	// 	exit_error(data, "minishell: malloc error 24: ");
 	return (str);
 }

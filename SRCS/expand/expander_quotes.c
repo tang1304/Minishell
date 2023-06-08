@@ -14,13 +14,14 @@
 
 void	set_sub_strs(t_data *data, t_substr *s, size_t j)
 {
+	(void)data;
 	s->sub_a = ft_substr(s->middle, j, ft_strlen(s->middle) - j);
-	if (!s->sub_a)
-		exit_error(data, "minishell: malloc error: ");
+	// if (!s->sub_a)
+	// 	exit_error(data, "minishell: malloc error 13: ");
 	s->sub_m = ft_substr(s->middle, ft_strlen(s->sub_b), \
 	j - (ft_strlen(s->sub_b)));
-	if (!s->sub_b)
-		exit_error(data, "minishell: malloc error: ");
+	// if (!s->sub_b)
+	// 	exit_error(data, "minishell: malloc error 14: ");
 }
 
 static char	*word_without_quotes(t_data *data, char *str, int i, int j)
@@ -30,7 +31,7 @@ static char	*word_without_quotes(t_data *data, char *str, int i, int j)
 
 	new_word = (char *)malloc(sizeof(char) * (ft_strlen(str) - 1));
 	if (!new_word)
-		exit_error(data, "minishell: malloc error: ");
+		exit_error(data, "minishell: malloc error 15: ");
 	k = -1;
 	while (++k < i)
 		new_word[k] = str[k];
