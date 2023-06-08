@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 13:05:48 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 13:29:27 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,24 @@ char	*update_pwd(t_data *data)
 	{
 		data->prompt_pwd = getcwd(NULL, 0);
 		if (!data->prompt_pwd)
-			exit_error(data, "minishell: getcwd: ");
+			exit_error(data, "minishell: getcwd ");
 		prompt = ft_strjoin_free_s2(data, data->prompt, data->prompt_pwd);
 		if (!prompt)
-			exit_error(data, "minishell: malloc: ");
+			exit_error(data, "minishell: malloc error ");
 	}
 	else
 	{
 		data->prompt_pwd = search_env(data, "PWD");
 		prompt = ft_strjoin(data->prompt, data->prompt_pwd);
 		if (!prompt)
-			exit_error(data, "minishell: malloc: ");
+			exit_error(data, "minishell: malloc error ");
 	}
 	prompt = ft_strjoin_gnl(prompt, "$ ");
 	if (!prompt)
-		exit_error(data, "minishell: malloc: ");
+	{
+		free(prompt);
+		exit_error(data, "minishell: malloc error ");
+	}
 	return (prompt);
 }
 
