@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:37:02 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 14:14:23 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 11:56:20 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,28 @@ void	add_heredoc(t_data *data, char *file, size_t index)
 		tmp = tmp->next;
 	}
 	add_file_node(data, tmp, file, 2);
+}
+
+void	heredoc_count(t_data *data)
+{
+	t_lexer	*tmp;
+
+	tmp = data->lexer;
+	while (tmp != NULL)
+	{
+		if (tmp->token != NULL)
+		{
+			if (ft_strncmp(tmp->token, "<<", 2) == 0 && \
+			ft_strlen(tmp->token) == 2)
+				data->hd->hd_count++;
+		}
+		tmp = tmp->next;
+	}
+	if (data->hd->hd_count > 1024)
+		free_hd_limit(data);
+	data->hd->limiter = (char **)malloc(sizeof(char *) * \
+	(data->hd->hd_count + 1));
+	if (data->hd->limiter == NULL)
+		exit_error(data, "minishell: malloc error: ");
+	data->hd->limiter[data->hd->hd_count] = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/06 15:06:53 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 14:08:55 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <dirent.h>
+# include <sys/ioctl.h>
 
 # define UNSET_ERR	"minishell: unset: `%s': not a valid identifier\n"
 # define SQUOTE_ERR "minishell: syntax error near unexpected token `\''\n"
@@ -142,7 +143,9 @@ enum e_errors
 	CHILD_SUCCESS = 10,
 	NOT_BUILTIN = 11,
 	NO_INPUT = 12,
-	HD_ERROR_NUMBER = 13
+	HD_ERROR_NUMBER = 13,
+	HD_CTRL_D = 14,
+	HD_CTRL_C = 15
 };
 
 extern int	g_status;
@@ -298,15 +301,15 @@ int			replace_env(t_data *data, char *env, char *old_env);
 int			add_env_node(t_data *data, t_env **env, char *str);
 
 /*	heredoc.c	*/
-void		heredoc_count(t_data *data);
 void		init_heredoc_data(t_data *data);
 void		heredoc_pipe(t_data *data);
 void		create_pipes_hd(t_data *data);
-void		heredoc_ctrl_d(t_data *data, char *line, char *buffer);
+int			heredoc_ctrl_check(t_data *data, char *line, char *buffer);
 
 /*	heredoc_redir.c	*/
 int			heredoc_redir(t_data *data);
 void		add_heredoc(t_data *data, char *file, size_t index);
+void		heredoc_count(t_data *data);
 
 /*	utils.c	*/
 char		*ft_strjoin_free_s2(t_data *data, char *s1, char *s2);

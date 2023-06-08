@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:14:33 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/06 08:55:10 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 13:50:00 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	signal_hd_set(void)
 void	signal_exec_set(void)
 {
 	struct sigaction	sa;
-  
+
 	// ft_bzero(&sa, sizeof(sa));
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
