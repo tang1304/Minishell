@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 13:35:33 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 14:32:49 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,8 @@ void		create_cmd_struct(t_data *data);
 void		expand(t_data *data);
 
 /*	expand_string.c	*/
-void	string_xpd_hd(t_data *data, t_substr *s, size_t *i, char *buffer);
+void		string_xpd_hd(t_data *data, t_substr *s, size_t *i, char *buffer);
+void		string_xpd(t_data *data, t_substr *s, size_t *i, size_t index);
 
 /*	expander_var.c	*/
 char		*get_var(t_data *data, char *s, int *err);
