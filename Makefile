@@ -85,6 +85,7 @@ LST_SRCS_E		=	expand.c \
 					expander_quotes_utils.c \
 					expander_var.c \
 					expand_utils.c \
+					expand_utils2.c \
 					expand_join_all.c \
 					expand_heredoc.c \
 					expand_heredoc_utils.c

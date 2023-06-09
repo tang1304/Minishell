@@ -12,34 +12,32 @@
 
 #include "../incs/minishell.h"
 
-t_lexer	*update_tmp_index(t_data *data, size_t *i)
+static int	pre_adding_nodes(t_data *data, t_substr *s, char **ptr)
 {
-	t_lexer	*tmp;
-
-	tmp = data->lexer;
-	while (tmp->index != data->svd_index)
-		tmp = tmp->next;
-	if (tmp->word != NULL)
-		*i = ft_strlen(tmp->word);
-	else
-		*i = ft_strlen(tmp->token);
-	return (tmp);
-}
-
-static void	add_buf_lxr_tail(t_data *data, t_substr *s, t_lexer *buf, \
-							char **ptr)
-{
-	t_lexer	*tmp;
 	size_t	j;
 
 	j = 1;
 	while (ptr[j] != 0)
 	{
-		add_node(&data->lexer, ptr[j], 0);
+		if (!add_node(&data->lexer, ptr[j], 0))
+			return (0);
 		j++;
 	}
 	if (ft_strlen(s->sub_a) > 0)
-		add_node(&data->lexer, s->sub_a, 0);
+	{
+		if (!add_node(&data->lexer, s->sub_a, 0))
+			return (0);
+	}
+	return (1);
+}
+
+static int	add_buf_lxr_tail(t_data *data, t_substr *s, t_lexer *buf, \
+							char **ptr)
+{
+	t_lexer	*tmp;
+
+	if (!pre_adding_nodes(data, s, ptr))
+		return (0);
 	tmp = data->lexer;
 	add_index(data);
 	while (tmp->next != NULL)
@@ -51,6 +49,7 @@ static void	add_buf_lxr_tail(t_data *data, t_substr *s, t_lexer *buf, \
 		buf->prev = tmp;
 	}
 	add_index(data);
+	return (1);
 }
 
 static t_lexer	*set_tmp(t_data *data, size_t index)
@@ -79,9 +78,17 @@ void	modify_lxr_nds(t_data *data, t_substr *s, size_t index)
 	}
 	ptr = ft_split(s->sub_m, ' ');
 	if (!ptr)
-		exit_error(data, "minishell: malloc error 12: ");
-	add_node(&tmp, ptr[0], 0);
-	add_buf_lxr_tail(data, s, buf, ptr);
+		exit_error(data, "minishell: malloc error ");
+	if (!add_node(&tmp, ptr[0], 0))
+	{
+		ft_free_pp(ptr);
+		exit_error(data, "minishell: malloc error ");
+	}
+	if (!add_buf_lxr_tail(data, s, buf, ptr))
+	{
+		ft_free_pp(ptr);
+		exit_error(data, "minishell: malloc error ");
+	}
 	ft_free_pp(ptr);
 }
 
