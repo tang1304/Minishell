@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/09 09:14:48 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 09:35:52 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,15 @@ static t_lexer	*new_lexer_node(char *str, int token)
 		return (NULL);
 	ft_bzero(node, sizeof(t_lexer));
 	if (token == 0)
-		config_node(data, str, node, 0);
+	{
+		if (config_node(str, node, 0) != SUCCESS)
+			return (free(node), NULL);
+	}
 	else
-		config_node(data, str, node, 1);
+	{
+		if (config_node(str, node, 1) != SUCCESS)
+			return (free(node), NULL);
+	}
 	return (node);
 }
 

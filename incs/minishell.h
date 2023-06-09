@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 09:11:21 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 09:37:15 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,8 @@ enum e_errors
 	NO_INPUT = 12,
 	HD_ERROR_NUMBER = 13,
 	HD_CTRL_D = 14,
-	HD_CTRL_C = 15
+	HD_CTRL_C = 15,
+	ERR_NODE = 16
 };
 
 extern int	g_status;
@@ -232,8 +233,8 @@ int			ft_isspace(char c);
 int			quote_handling(char *str, int i, char quote);
 int			add_node(t_lexer **lexer, char *str, int token);
 
-/*	lexer_utils.c	*/
-void		config_node(t_data *data, char *str, t_lexer *node, int i);
+/*	lexer_utils2.c	*/
+int			config_node(char *str, t_lexer *node, int i);
 
 /*	cmd_struct.c	*/
 void		create_cmd_struct(t_data *data);
