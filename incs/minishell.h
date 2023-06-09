@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 13:26:59 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 14:21:41 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,9 +238,10 @@ void		create_cmd_struct(t_data *data);
 void		expand(t_data *data);
 
 /*	expand_string.c	*/
-void	string_xpd_hd(t_data *data, t_substr *s, size_t *i, char *buffer);
+void		string_xpd_hd(t_data *data, t_substr *s, size_t *i, char *buffer);
 
 /*	expander_var.c	*/
+void		question_mark(t_data *data, t_substr *s, size_t *i, size_t index);
 char		*get_var(t_data *data, char *s, int *err);
 void		expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index);
 void		number_xpd(t_data *data, t_substr *s, size_t *i, size_t index);
@@ -364,7 +365,6 @@ void		free_substr_strct(t_substr *s);
 void		free_substr_strct_hd(t_substr *s);
 
 /*	free_utils.c	*/
-void		free_substr_strct(t_substr *s);
 void		ft_free_pp(char **ptr);
 void		ft_free_paths(t_data *data);
 void		ft_free_limiter(t_heredoc *hd);
