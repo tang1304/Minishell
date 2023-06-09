@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
 /*   Updated: 2023/06/09 14:21:41 by tgellon          ###   ########lyon.fr   */
@@ -239,6 +239,7 @@ void		expand(t_data *data);
 
 /*	expand_string.c	*/
 void		string_xpd_hd(t_data *data, t_substr *s, size_t *i, char *buffer);
+void		string_xpd(t_data *data, t_substr *s, size_t *i, size_t index);
 
 /*	expander_var.c	*/
 void		question_mark(t_data *data, t_substr *s, size_t *i, size_t index);
