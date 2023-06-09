@@ -59,13 +59,15 @@ LST_SRCS		=	main.c \
 					close.c
 
 LST_SRCS_U		=	utils.c \
-					utils2.c
+					utils2.c \
+					utils3.c
 
 LST_SRCS_S		=	signals.c \
 					signals_handler.c
 
 LST_SRCS_L		=	lexer.c \
 					lexer_utils.c \
+					lexer_utils2.c \
 					lexer_update.c \
 					remove_lexer_nodes.c
 
@@ -95,14 +97,16 @@ LST_SRCS_B		=	builtins.c \
 					builtin_exit.c \
 					builtin_unset.c \
 					builtin_export.c \
-					builtin_export_utils.c
+					builtin_export_utils.c \
+					builtin_export_utils2.c
 
 LST_SRCS_H		=	heredoc.c \
 					heredoc_redir.c
 
 LST_SRCS_X		=	exec_data_creation.c \
 					exec.c \
-					exec_utils.c
+					exec_utils.c \
+					exec_utils2.c
 
 LST_SRCS_F		=	add_infile_outfile.c \
 					add_infile_outfile_utils.c \
