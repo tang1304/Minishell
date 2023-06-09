@@ -46,6 +46,8 @@ char	*expand_line(t_data *data, char *str)
 	i = 0;
 	ft_bzero(&ptr, sizeof(t_substr));
 	ptr.s = ft_strjoin(str, "\n");
+	if (!ptr.s)
+		exit_error(data, "minishell: malloc error");
 	if (data->hd->xpd[data->hd->heredoc] == 1)
 		return (ptr.s);
 	while (ptr.s[i] != '\0')

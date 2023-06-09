@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 09:04:28 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 09:11:21 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,11 @@ typedef struct s_env
 	struct s_env	*next;
 }				t_env;
 
-typedef struct s_garb
-{
-	void			*ptr;
-	struct s_garb	*next;
-}				t_garb;
+// typedef struct s_garb
+// {
+// 	void			*ptr;
+// 	struct s_garb	*next;
+// }				t_garb;
 
 typedef struct s_data
 {
@@ -133,7 +133,7 @@ typedef struct s_data
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
-	struct s_garbage	*garb;
+	// struct s_garbage	*garb;
 }				t_data;
 
 enum e_errors
@@ -230,7 +230,7 @@ void		remove_single_node(t_data *data, size_t index);
 void		add_index(t_data *data);
 int			ft_isspace(char c);
 int			quote_handling(char *str, int i, char quote);
-int			add_node(t_data *data, t_lexer **lexer, char *str, int token);
+int			add_node(t_lexer **lexer, char *str, int token);
 
 /*	lexer_utils.c	*/
 void		config_node(t_data *data, char *str, t_lexer *node, int i);
@@ -273,8 +273,10 @@ void		number_xpd_hd(t_data *data, t_substr *s, size_t *i);
 
 /*	expand_utils.c	*/
 void		modify_lxr_nds(t_data *data, t_substr *s, size_t index);
-int			check_space_expand(t_data *data, t_substr *s, size_t index);
+
+/*	expand_utils2.c	*/
 t_lexer		*update_tmp_index(t_data *data, size_t *i);
+int			check_space_expand(t_data *data, t_substr *s, size_t index);
 
 /*	builtins.c	*/
 int			builtins(t_data *data, char **cmd);
@@ -337,7 +339,7 @@ void		complete_inf_data(t_data *data, t_lexer *tmp, char *file, \
 void		complete_out_data(t_data *data, t_lexer *tmp, char *file, \
 								int valid);
 size_t		ft_strlen_pp(char **s);
-char		*substr_check(t_data *data, char *s, size_t i, size_t len);
+char		*ft_substr_check(char *s, size_t i, size_t len, int *err);
 
 /*	utils3.c	*/
 char		*ft_strjoin_free_s2(t_data *data, char *s1, char *s2);

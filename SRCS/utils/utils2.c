@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:50:39 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 08:21:41 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 09:16:05 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,28 @@ size_t	ft_strlen_pp(char **s)
 	return (i);
 }
 
-char	*substr_check(t_data *data, char *s, size_t i, size_t len)
+char	*ft_substr_check(char *s, size_t start, size_t len, int *err)
 {
-	char	*str;
+	char	*ptr;
+	size_t	i;
 
-	(void)data;
-	str = ft_substr(s, i, len);
-	return (str);
+	if (s == NULL)
+		return (NULL);
+	if (start > ft_strlen(s))
+		len = 0;
+	else if (start + len > ft_strlen(s))
+		len = ft_strlen(s) - start;
+	ptr = (char *)malloc(sizeof(*ptr) * (len + 1));
+	if (ptr == NULL)
+		return (*err = 1, NULL);
+	i = 0;
+	while (i < len && s[start + i] != '\0')
+	{
+		ptr[i] = *(char *)(s + start + i);
+		i++;
+	}
+	ptr[i] = '\0';
+	if (ptr[0] == '\0')
+		return (free(ptr), NULL);
+	return (ptr);
 }

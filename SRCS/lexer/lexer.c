@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 13:45:15 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/05 11:27:16 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 15:54:46 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,27 @@ static int	is_token(char *str, int i)
 static int	tokenizer(t_data *data, char *str, int i)
 {
 	char	*token;
+	int		err;
 
+	err = 0;
 	if ((str[i] == '>' && str[i + 1] == '>') \
 		|| (str[i] == '<' && str[i + 1] == '<'))
 	{
-		token = ft_substr(str, i, 2);
-		if (!add_node(data, &data->lexer, token, 1))
+		token = ft_substr_check(str, i, 2, &err);
+		if (err < 0)
 			return (-1);
+		if (!add_node(&data->lexer, token, 1))
+			return (free (token), -1);
 		free(token);
 		return (2);
 	}
 	else
 	{
-		token = ft_substr(str, i, 1);
-		if (!add_node(data, &data->lexer, token, 1))
+		token = ft_substr_check(str, i, 1, &err);
+		if (err < 0)
 			return (-1);
+		if (!add_node(&data->lexer, token, 1))
+			return (free(token), -1);
 		free(token);
 		return (1);
 	}
@@ -56,7 +62,9 @@ static int	worder(t_data *data, char *str, int i)
 {
 	char	*new;
 	int		j;
+	int		err;
 
+	err = 0;
 	j = 0;
 	while (str[i + j] && !ft_isspace(str[i + j]) && !is_token(str, i + j))
 	{
@@ -64,9 +72,11 @@ static int	worder(t_data *data, char *str, int i)
 			j = j + quote_handling(str, i + j, str[i + j]);
 		j++;
 	}
-	new = ft_substr(str, i, j);
-	if (!add_node(data, &data->lexer, new, 0))
+	new = ft_substr_check(str, i, j, &err);
+	if (err > 0)
 		return (-1);
+	if (!add_node(&data->lexer, new, 0))
+		return (free(new), -1);
 	free(new);
 	return (j);
 }
@@ -86,7 +96,7 @@ int	lexer_init(t_data *data)
 		else if (!is_token(data->str, i) && i < ft_strlen(data->str))
 			j = worder(data, data->str, i);
 		if (j == -1)
-			return (0);
+			exit_error(data, "minishell: malloc error");
 		i = i + j;
 	}
 	add_index(data);
