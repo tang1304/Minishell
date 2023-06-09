@@ -35,8 +35,6 @@ void	expand_dollar_hd(t_data *data, t_substr *s, size_t *i)
 	buf = ft_substr(s->s, ft_strlen(s->sub_b), *i - (ft_strlen(s->sub_b)));
 	s->sub_m = get_var(data, buf, 0);
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
-	if (s->sub_a || s->sub_m || buf)
-		// exit_error(data, "minishell: malloc error ");
 	s->s = join_all_sub(data, s->s, s);
 }
 
