@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 14:32:49 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 14:21:41 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,7 @@ void		string_xpd_hd(t_data *data, t_substr *s, size_t *i, char *buffer);
 void		string_xpd(t_data *data, t_substr *s, size_t *i, size_t index);
 
 /*	expander_var.c	*/
+void		question_mark(t_data *data, t_substr *s, size_t *i, size_t index);
 char		*get_var(t_data *data, char *s, int *err);
 void		expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index);
 void		number_xpd(t_data *data, t_substr *s, size_t *i, size_t index);
