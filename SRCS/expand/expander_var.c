@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/09 14:53:59 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 15:26:24 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,10 @@ char	*get_var(t_data *data, char *s, int *err)
 	if (var == NULL)
 	{
 		*err = 1;
-		return (free(ptr), NULL);
+		return (free(ptr), free(s), NULL);
 	}
 	var = envp_loop(data, var, ptr, err);
 	if (*err > 0)
-		return (free(s), NULL);
-	return (free(ptr), var);
+		return (free(ptr), free(s), NULL);
+	return (free(ptr), free(s), var);
 }
