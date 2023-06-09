@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:25:20 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 11:14:16 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 08:57:28 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
+
+void	free_substr_strct(t_substr *s)
+{
+	if (s->s)
+		free(s->s);
+	if (s->before)
+		free(s->before);
+	if (s->middle)
+		free(s->middle);
+	if (s->after)
+		free(s->after);
+	if (s->sub_b)
+		free(s->sub_b);
+	if (s->sub_m)
+		free(s->sub_m);
+	if (s->sub_a)
+		free(s->sub_a);
+	ft_bzero(s, sizeof(t_substr));
+	free(s);
+	s = NULL;
+}
 
 void	ft_free_pp(char **ptr)
 {
