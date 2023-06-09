@@ -25,3 +25,25 @@ t_lexer	*update_tmp_index(t_data *data, size_t *i)
 		*i = ft_strlen(tmp->token);
 	return (tmp);
 }
+
+int	check_space_expand(t_data *data, t_substr *s, size_t index)
+{
+	size_t	j;
+	int		split;
+
+	j = 0;
+	split = 0;
+	while (s->sub_m[j] != '\0')
+	{
+		if (s->sub_m[j] == ' ')
+			split = 1;
+		j++;
+	}
+	if (split == 1)
+	{
+		modify_lxr_nds(data, s, index);
+		free(s->sub_m);
+		return (1);
+	}
+	return (0);
+}

@@ -62,11 +62,31 @@ static t_lexer	*set_tmp(t_data *data, size_t index)
 	return (tmp);
 }
 
+static void	add_split_node(t_data *data, t_substr *s, t_lexer *tmp, \
+							t_lexer *buf)
+{
+	char	**ptr;
+
+	ptr = ft_split(s->sub_m, ' ');
+	if (!ptr)
+		exit_error(data, "minishell: malloc error ");// mettre expand_error;
+	if (!add_node(&tmp, ptr[0], 0))
+	{
+		ft_free_pp(ptr);
+		exit_error(data, "minishell: malloc error ");// mettre expand_error;
+	}
+	if (!add_buf_lxr_tail(data, s, buf, ptr))
+	{
+		ft_free_pp(ptr);
+		exit_error(data, "minishell: malloc error ");// mettre expand_error;
+	}
+	ft_free_pp(ptr);
+}
+
 void	modify_lxr_nds(t_data *data, t_substr *s, size_t index)
 {
 	t_lexer	*tmp;
 	t_lexer	*buf;
-	char	**ptr;
 
 	buf = NULL;
 	tmp = set_tmp(data, index);
@@ -76,40 +96,5 @@ void	modify_lxr_nds(t_data *data, t_substr *s, size_t index)
 		buf = tmp->next;
 		buf->prev = NULL;
 	}
-	ptr = ft_split(s->sub_m, ' ');
-	if (!ptr)
-		exit_error(data, "minishell: malloc error ");
-	if (!add_node(&tmp, ptr[0], 0))
-	{
-		ft_free_pp(ptr);
-		exit_error(data, "minishell: malloc error ");
-	}
-	if (!add_buf_lxr_tail(data, s, buf, ptr))
-	{
-		ft_free_pp(ptr);
-		exit_error(data, "minishell: malloc error ");
-	}
-	ft_free_pp(ptr);
-}
-
-int	check_space_expand(t_data *data, t_substr *s, size_t index)
-{
-	size_t	j;
-	int		split;
-
-	j = 0;
-	split = 0;
-	while (s->sub_m[j] != '\0')
-	{
-		if (s->sub_m[j] == ' ')
-			split = 1;
-		j++;
-	}
-	if (split == 1)
-	{
-		modify_lxr_nds(data, s, index);
-		free(s->sub_m);
-		return (1);
-	}
-	return (0);
+	add_split_node(data, s, tmp, buf);
 }
