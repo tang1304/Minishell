@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/09 14:40:38 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 14:53:59 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,48 +88,12 @@ void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index)
 		string_xpd(data, s, i, index);
 }
 
-// static int	envp_loop(t_data *data, char *var, char *ptr, size_t k)
-// {
-// 	size_t	i;
-// 	int		err;
-
-// 	err = 0;
-// 	while (data->envp[++k])
-// 	{
-// 		i = 0;
-// 		while (data->envp[k][i] != '=')
-// 			i++;
-// 		if (ft_strncmp(data->envp[k], ptr, ft_strlen(ptr)) == 0 && \
-// 			ft_strlen(ptr) == i)
-// 		{
-// 			free(var);
-// 			var = ft_substr_check(data->envp[k], i + 1, \
-// 									(ft_strlen(data->envp[k])), &err);
-// 			if (&err > 0)
-// 				return (err);
-// 			break ;
-// 		}
-// 	}
-// 	return (err);
-// }
-
-char	*get_var(t_data *data, char *s, int *err)
+static char	*envp_loop(t_data *data, char *var, char *ptr, int *err)
 {
-	char	*var;
-	char	*ptr;
+	size_t	i;
 	size_t	k;
-	size_t i;
 
-	err = 0;
 	k = -1;
-	ptr = ft_substr_check(s, 1, ft_strlen(s) - 1, err);
-	if (err > 0)
-		return (free(s), NULL);
-	var = ft_strdup("");
-	if (var == NULL)
-		return (free(ptr), NULL);
-	// if (envp_loop(data, var, ptr, k) == 1)
-	// 	return (free(ptr), free(s), NULL);
 	while (data->envp[++k])
 	{
 		i = 0;
@@ -141,10 +105,30 @@ char	*get_var(t_data *data, char *s, int *err)
 			free(var);
 			var = ft_substr_check(data->envp[k], i + 1, \
 									(ft_strlen(data->envp[k])), err);
-			if (err > 0)
-				return (free(ptr), NULL);
+			if (*err > 0)
+				return (NULL);
 			break ;
 		}
 	}
+	return (var);
+}
+
+char	*get_var(t_data *data, char *s, int *err)
+{
+	char	*var;
+	char	*ptr;
+
+	ptr = ft_substr_check(s, 1, ft_strlen(s) - 1, err);
+	if (*err > 0)
+		return (free(s), NULL);
+	var = ft_strdup("");
+	if (var == NULL)
+	{
+		*err = 1;
+		return (free(ptr), NULL);
+	}
+	var = envp_loop(data, var, ptr, err);
+	if (*err > 0)
+		return (free(s), NULL);
 	return (free(ptr), var);
 }
