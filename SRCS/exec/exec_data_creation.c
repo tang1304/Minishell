@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_data_creation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 10:05:28 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 15:34:24 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ static void	no_forking(t_data *data, t_command *cmd)
 
 void	exec_cmd_lst(t_data *data)
 {
-	int			status;
 	t_command	*tmp;
 
 	tmp = data->cmd;
@@ -120,13 +119,5 @@ void	exec_cmd_lst(t_data *data)
 			prepare_forking(data, tmp);
 		tmp = tmp->next;
 	}
-	tmp = data->cmd;
-	while (tmp)
-	{
-		waitpid(tmp->pid, &status, 0);
-		tmp = tmp->next;
-	}
-	signal_set();
-	g_status = WEXITSTATUS(status);
-	restore_stds(data);
+	exec_cmd_lst_wait(data);
 }
