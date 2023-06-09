@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:22 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/08 15:37:17 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 15:19:33 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	set_sub_strs(t_data *data, t_substr *s, size_t j)
 {
 	(void)data;
 	s->sub_a = ft_substr(s->middle, j, ft_strlen(s->middle) - j);
-	s->sub_m = ft_substr(s->middle, ft_strlen(s->sub_b), \
+	data->buf = ft_substr(s->middle, ft_strlen(s->sub_b), \
 	j - (ft_strlen(s->sub_b)));
 }
 
