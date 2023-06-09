@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 08:59:00 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 09:04:28 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,7 +354,7 @@ void		free_hd_strct(t_data *data);
 /*	free_2.c	*/
 void		free_content_cmd_node(t_command *tmp);
 void		free_content_env_node(t_env *tmp);
-void		free_data(t_data *data, void(*f)());
+void		free_data(t_data *data, void (*f)(t_data *data));
 void		free_all(t_data *data);
 void		free_loop(t_data *data);
 
