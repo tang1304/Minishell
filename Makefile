@@ -6,7 +6,7 @@
 
 NAME		=	minishell
 
-CC			=	cc -g3 -fsanitize=address
+CC			=	cc -g3 #-fsanitize=address
 
 RM			=	rm -rf
 
@@ -73,6 +73,7 @@ LST_SRCS_L		=	lexer.c \
 
 LST_SRCS_FR		=	free.c \
 					free_2.c \
+					free_3.c \
 					free_utils.c
 
 LST_SRCS_ERR	=	check_error_input.c \
@@ -83,6 +84,7 @@ LST_SRCS_P		=	parser.c \
 					parser_utils.c
 
 LST_SRCS_E		=	expand.c \
+					expand_string.c \
 					expander_quotes.c \
 					expander_quotes_utils.c \
 					expander_var.c \
