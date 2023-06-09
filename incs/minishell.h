@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 09:37:15 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 12:16:30 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ typedef struct s_data
 	int					stdout_save;
 	size_t				max_index;
 	size_t				ctrl_d_val;
+	char				*buf;
 	struct s_env		*env;
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
@@ -181,6 +182,7 @@ int			check_token(char *s, size_t i);
 /*	errors.c	*/
 void		exit_error(t_data *data, char *str);
 void		expand_error(t_data *data, t_substr *s, char *str);
+void		expand_error_hd(t_data *data, t_substr *s, char *buffer, char *str);
 void		ascii_check(t_data *data, char *str);
 
 /*	parser.c	*/
@@ -242,6 +244,9 @@ void		create_cmd_struct(t_data *data);
 /*	expand.c	*/
 void		expand(t_data *data);
 
+/*	expand_string.c	*/
+void	string_xpd_hd(t_data *data, t_substr *s, size_t *i, char *buffer);
+
 /*	expander_var.c	*/
 char		*get_var(t_data *data, char *s, size_t i);
 void		expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index);
@@ -263,14 +268,14 @@ char		*remove_str_middle_quote(t_data *data, char *str, char c);
 void		expand_quotes(t_data *data, t_substr *str, size_t *i, char c);
 
 /*	expand_heredoc.c	*/
-char		*expand_line(t_data *data, char *str);
+char		*expand_line(t_data *data, char *str, char *buffer);
 void		prepare_expand_hd(t_data *data);
-void		expand_dollar_hd(t_data *data, t_substr *s, size_t *i);
+void		expand_dollar_hd(t_data *data, t_substr *s, size_t *i, char *buffer);
 void		remove_limiter_quotes(t_data *data);
 
 /*	expand_heredoc_utils.c	*/
-void		question_mark_hd(t_data *data, t_substr *s, size_t *i);
-void		number_xpd_hd(t_data *data, t_substr *s, size_t *i);
+void		question_mark_hd(t_data *data, t_substr *s, size_t *i, char *buffer);
+void		number_xpd_hd(t_data *data, t_substr *s, size_t *i, char *buffer);
 
 /*	expand_utils.c	*/
 void		modify_lxr_nds(t_data *data, t_substr *s, size_t index);
@@ -360,6 +365,10 @@ void		free_content_env_node(t_env *tmp);
 void		free_data(t_data *data, void (*f)(t_data *data));
 void		free_all(t_data *data);
 void		free_loop(t_data *data);
+
+/*	free_3.c	*/
+void		free_substr_strct(t_substr *s);
+void		free_substr_strct_hd(t_substr *s);
 
 /*	free_utils.c	*/
 void		free_substr_strct(t_substr *s);
