@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/09 13:31:36 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 13:38:50 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	question_mark(t_data *data, t_substr *s, size_t *i, size_t index)
 	if (err > 0)
 		expand_error(data, s, "minishell: malloc error");
 	s->sub_m = ft_itoa(g_status);
-free(s->sub_m);
-s->sub_m = NULL;
 	if (s->sub_m == NULL)
 		expand_error(data, s, "minishell: malloc error");
 	if (check_space_expand(data, s, index) == 1)

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 13:26:59 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 13:35:33 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,7 +364,6 @@ void		free_substr_strct(t_substr *s);
 void		free_substr_strct_hd(t_substr *s);
 
 /*	free_utils.c	*/
-void		free_substr_strct(t_substr *s);
 void		ft_free_pp(char **ptr);
 void		ft_free_paths(t_data *data);
 void		ft_free_limiter(t_heredoc *hd);
