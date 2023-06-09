@@ -83,7 +83,7 @@ static char	*expand_str(t_data *data, t_substr *s)
 			while (ft_isalnum(s->middle[j]) == 1)
 				j++;
 			set_sub_strs(data, s, j);
-			s->sub_m = get_var(data, s->sub_m, &err);
+			s->sub_m = get_var(data, data->buf, &err);
 			j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
 			s->middle = join_all_sub(data, s->middle, s);
 		}

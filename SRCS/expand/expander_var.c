@@ -72,48 +72,12 @@ void	number_xpd(t_data *data, t_substr *s, size_t *i, size_t index)
 	s->s = join_all_sub(data, s->s, s);
 }
 
-// static int	envp_loop(t_data *data, char *var, char *ptr, size_t k)
-// {
-// 	size_t	i;
-// 	int		err;
-
-// 	err = 0;
-// 	while (data->envp[++k])
-// 	{
-// 		i = 0;
-// 		while (data->envp[k][i] != '=')
-// 			i++;
-// 		if (ft_strncmp(data->envp[k], ptr, ft_strlen(ptr)) == 0 && \
-// 			ft_strlen(ptr) == i)
-// 		{
-// 			free(var);
-// 			var = ft_substr_check(data->envp[k], i + 1, \
-// 									(ft_strlen(data->envp[k])), &err);
-// 			if (&err > 0)
-// 				return (err);
-// 			break ;
-// 		}
-// 	}
-// 	return (err);
-// }
-
-char	*get_var(t_data *data, char *s, int *err)
+static char	*envp_loop(t_data *data, char *var, char *ptr, int *err)
 {
-	char	*var;
-	char	*ptr;
+	size_t	i;
 	size_t	k;
-	size_t i;
 
-	err = 0;
 	k = -1;
-	ptr = ft_substr_check(s, 1, ft_strlen(s) - 1, err);
-	if (err > 0)
-		return (free(s), NULL);
-	var = ft_strdup("");
-	if (var == NULL)
-		return (*err = 1, free(ptr), free(s), NULL);
-	// if (envp_loop(data, var, ptr, k) == 1)
-	// 	return (free(ptr), free(s), NULL);
 	while (data->envp[++k])
 	{
 		i = 0;
@@ -125,10 +89,30 @@ char	*get_var(t_data *data, char *s, int *err)
 			free(var);
 			var = ft_substr_check(data->envp[k], i + 1, \
 									(ft_strlen(data->envp[k])), err);
-			if (err > 0)
-				return (free(ptr), free(s), NULL);
+			if (*err > 0)
+				return (NULL);
 			break ;
 		}
 	}
+	return (var);
+}
+
+char	*get_var(t_data *data, char *s, int *err)
+{
+	char	*var;
+	char	*ptr;
+
+	ptr = ft_substr_check(s, 1, ft_strlen(s) - 1, err);
+	if (*err > 0)
+		return (free(s), NULL);
+	var = ft_strdup("");
+	if (var == NULL)
+	{
+		*err = 1;
+		return (free(ptr), free(s), NULL);
+	}
+	var = envp_loop(data, var, ptr, err);
+	if (*err > 0)
+		return (free(ptr), free(s), NULL);
 	return (free(ptr), free(s), var);
 }
