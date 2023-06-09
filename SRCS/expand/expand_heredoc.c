@@ -12,37 +12,24 @@
 
 #include "../incs/minishell.h"
 
-void	expand_dollar_hd(t_data *data, t_substr *s, size_t *i)
+void	expand_dollar_hd(t_data *data, t_substr *s, size_t *i, char *buffer)
 {
-	char	*buf;
-	int		err;
-
-	err = 0;
 	*i = *i + 1;
 	if (s->s[*i] == '?')
 	{
-		question_mark_hd(data, s, i);
+		question_mark_hd(data, s, i, buffer);
 		return ;
 	}
 	else if (ft_isdigit(s->s[*i]) == 1)
 	{
-		number_xpd_hd(data, s, i);
+		number_xpd_hd(data, s, i, buffer);
 		return ;
 	}
-	if (*i > 1)
-		s->sub_b = ft_substr(s->s, 0, *i - 1);
-	while (ft_isalnum(s->s[*i]) == 1)
-		*i = *i + 1;
-	s->sub_a = ft_substr(s->s, *i, ft_strlen(s->s) - *i);
-	buf = ft_substr(s->s, ft_strlen(s->sub_b), *i - (ft_strlen(s->sub_b)));
-	s->sub_m = get_var(data, buf, &err);
-	// if (err > 0)
-	// 	;
-	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
-	s->s = join_all_sub(data, s->s, s);
+	else
+		string_xpd_hd(data, s, i, buffer);
 }
 
-char	*expand_line(t_data *data, char *str)
+char	*expand_line(t_data *data, char *str, char *buffer)
 {
 	size_t		i;
 	t_substr	ptr;
@@ -51,13 +38,16 @@ char	*expand_line(t_data *data, char *str)
 	ft_bzero(&ptr, sizeof(t_substr));
 	ptr.s = ft_strjoin(str, "\n");
 	if (!ptr.s)
+	{
+		free(buffer);
 		exit_error(data, "minishell: malloc error");
+	}
 	if (data->hd->xpd[data->hd->heredoc] == 1)
 		return (ptr.s);
 	while (ptr.s[i] != '\0')
 	{
 		if (ptr.s[i] == '$' && ptr.s[i + 1] && ptr.s[i + 1] != ' ')
-			expand_dollar_hd(data, &ptr, &i);
+			expand_dollar_hd(data, &ptr, &i, buffer);
 		else
 			i++;
 	}
