@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/09 15:26:24 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 14:20:35 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,30 @@ void	question_mark(t_data *data, t_substr *s, size_t *i, size_t index)
 	s->s = join_all_sub(data, s->s, s);
 }
 
+static void	sub_number_xpd(t_data *data, t_substr *s, size_t *i, int *err)
+{
+	if (*i > 1)
+	{
+		s->sub_b = ft_substr_check(s->s, 0, *i - 1, err);
+		if (err > 0)
+			expand_error(data, s, "minishell: malloc_error");
+	}
+	s->sub_a = ft_substr_check(s->s, *i + 1, ft_strlen(s->s) - *i, err);
+	if (err > 0)
+		expand_error(data, s, "minishell: malloc error");
+}
+
 void	number_xpd(t_data *data, t_substr *s, size_t *i, size_t index)
 {
 	char	*buf;
 	int		err;
 
 	err = 0;
-	if (*i > 1)
-	{
-		s->sub_b = ft_substr_check(s->s, 0, *i - 1, &err);
-		if (err > 0)
-			expand_error(data, s, "minishell: malloc_error");
-	}
+	sub_number_xpd(data, s, i, &err);
 	buf = ft_substr_check(s->s, ft_strlen(s->sub_b) + 1, *i, &err);
 	if (err > 0)
 		expand_error(data, s, "minishell: malloc error");
-	s->sub_a = ft_substr_check(s->s, *i + 1, ft_strlen(s->s) - *i, &err);
-	if (err > 0)
-	{
-		free(buf);
-		expand_error(data, s, "minishell: malloc error");
-	}
 	s->sub_m = get_var(data, buf, &err);
-// err = 1;
 	if (err > 0)
 	{
 		free(buf);
@@ -69,23 +70,6 @@ void	number_xpd(t_data *data, t_substr *s, size_t *i, size_t index)
 		return ;
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
 	s->s = join_all_sub(data, s->s, s);
-}
-
-void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index)
-{
-	*i = *i + 1;
-	if (s->s[*i] == '?')
-	{
-		question_mark(data, s, i, index);
-		return ;
-	}
-	else if (ft_isdigit(s->s[*i]) == 1)
-	{
-		number_xpd(data, s, i, index);
-		return ;
-	}
-	else
-		string_xpd(data, s, i, index);
 }
 
 static char	*envp_loop(t_data *data, char *var, char *ptr, int *err)
