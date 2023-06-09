@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/08 12:18:00 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 15:42:22 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,9 @@ static t_lexer	*new_lexer_node(t_data *data, char *str, int token)
 		exit_error(data, "minishell: malloc error : ");
 	ft_bzero(node, sizeof(t_lexer));
 	if (token == 0)
-	{
-		node->word = ft_strdup(str);
-		if (!node->word)
-		{
-			free(node);
-			exit_error(data, "minishell: malloc error : ");
-		}
-		node->hd_number = -1;
-	}
+		config_node(data, str, node, 0);
 	else
-	{
-		node->token = ft_strdup(str);
-		if (!node->token)
-		{
-			free(node);
-			exit_error(data, "minishell: malloc error : ");
-		}
-	}
+		config_node(data, str, node, 1);
 	return (node);
 }
 

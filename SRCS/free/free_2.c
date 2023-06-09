@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 10:40:54 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 09:03:38 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	free_all(t_data *data)
 	}
 }
 
-void	free_data(t_data *data, void(*f)())
+void	free_data(t_data *data, void (*f)(t_data *data))
 {
 	(*f)(data);
 }
