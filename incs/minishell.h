@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 12:16:30 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 13:26:59 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,6 @@ typedef struct s_env
 	struct s_env	*next;
 }				t_env;
 
-// typedef struct s_garb
-// {
-// 	void			*ptr;
-// 	struct s_garb	*next;
-// }				t_garb;
-
 typedef struct s_data
 {
 	char				*str;
@@ -134,7 +128,6 @@ typedef struct s_data
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
-	// struct s_garbage	*garb;
 }				t_data;
 
 enum e_errors
@@ -248,7 +241,7 @@ void		expand(t_data *data);
 void	string_xpd_hd(t_data *data, t_substr *s, size_t *i, char *buffer);
 
 /*	expander_var.c	*/
-char		*get_var(t_data *data, char *s, size_t i);
+char		*get_var(t_data *data, char *s, int *err);
 void		expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index);
 void		number_xpd(t_data *data, t_substr *s, size_t *i, size_t index);
 void		free_struct_expand(t_substr *str);

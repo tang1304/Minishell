@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_join_all.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 08:35:29 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 15:36:22 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 10:11:54 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,13 @@ char	*join_all_sub(t_data *data, char *str, t_substr *s)
 		str = ft_strdup(s->sub_b);
 		free(s->sub_b);
 	}
+	if (!str)
+		expand_error(data, s, "minishell: malloc error");
 	if (s->sub_a != NULL)
+	{
 		str = ft_strjoin_free(data, str, s->sub_a);
+		if (!str)
+			expand_error(data, s, "minishell: malloc error");
+	}
 	return (str);
 }

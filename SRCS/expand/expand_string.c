@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 12:01:24 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 12:19:29 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 13:30:47 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	string_xpd_hd(t_data *data, t_substr *s, size_t *i, char *buffer)
 	*i - (ft_strlen(s->sub_b)), &err);
 	if (err > 0)
 		expand_error_hd(data, s, buffer, "minishell: malloc_error: ");
-	s->sub_m = get_var(data, buf, 0);
+	s->sub_m = get_var(data, data->buf, &err);
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
 	s->s = join_all_sub(data, s->s, s);
 }
