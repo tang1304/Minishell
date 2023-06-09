@@ -41,7 +41,7 @@ void	heredoc_pipe(t_data *data)
 	char	*line;
 	char	*buffer;
 
-	buffer = calloc(sizeof(*buffer), 1);
+	buffer = ft_calloc(sizeof(*buffer), 1);
 	signal_hd_set();
 	g_status = 0;
 	while (g_status != 130)
@@ -54,8 +54,8 @@ void	heredoc_pipe(t_data *data)
 			break ;
 		if (heredoc_ctrl_check(data, line, buffer) != SUCCESS)
 			return ;
-		line = expand_line(data, line);
-		buffer = ft_strjoin_free(data, buffer, line);
+		line = expand_line(data, line, buffer);
+		buffer = ft_strjoin_free(data, buffer, line);//si malloc err leak in expand_line
 	}
 	write(data->hd->fd[data->hd->heredoc][1], buffer, ft_strlen(buffer));
 	free(buffer);

@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 10:22:03 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 12:18:08 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ void	free_data_strct(t_data *data)
 		ft_free_pp(data->envp);
 	if (data->paths)
 		ft_free_paths(data);
+	if (data->buf)
+	{
+		free(data->buf);
+		data->buf = NULL;
+	}
 }
 
 void	free_hd_strct(t_data *data)
