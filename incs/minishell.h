@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 09:11:21 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 12:52:22 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,6 @@ typedef struct s_env
 	struct s_env	*next;
 }				t_env;
 
-// typedef struct s_garb
-// {
-// 	void			*ptr;
-// 	struct s_garb	*next;
-// }				t_garb;
-
 typedef struct s_data
 {
 	char				*str;
@@ -133,7 +127,6 @@ typedef struct s_data
 	struct s_heredoc	*hd;
 	struct s_lexer		*lexer;
 	struct s_command	*cmd;
-	// struct s_garbage	*garb;
 }				t_data;
 
 enum e_errors
@@ -151,7 +144,8 @@ enum e_errors
 	NO_INPUT = 12,
 	HD_ERROR_NUMBER = 13,
 	HD_CTRL_D = 14,
-	HD_CTRL_C = 15
+	HD_CTRL_C = 15,
+	ERR_NODE = 16
 };
 
 extern int	g_status;
@@ -232,8 +226,8 @@ int			ft_isspace(char c);
 int			quote_handling(char *str, int i, char quote);
 int			add_node(t_lexer **lexer, char *str, int token);
 
-/*	lexer_utils.c	*/
-void		config_node(t_data *data, char *str, t_lexer *node, int i);
+/*	lexer_utils2.c	*/
+int			config_node(char *str, t_lexer *node, int i);
 
 /*	cmd_struct.c	*/
 void		create_cmd_struct(t_data *data);
@@ -242,7 +236,7 @@ void		create_cmd_struct(t_data *data);
 void		expand(t_data *data);
 
 /*	expander_var.c	*/
-char		*get_var(t_data *data, char *s, size_t i);
+char		*get_var(t_data *data, char *s, int *err);
 void		expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index);
 void		number_xpd(t_data *data, t_substr *s, size_t *i, size_t index);
 void		free_struct_expand(t_substr *str);

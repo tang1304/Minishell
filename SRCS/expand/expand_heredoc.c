@@ -15,7 +15,9 @@
 void	expand_dollar_hd(t_data *data, t_substr *s, size_t *i)
 {
 	char	*buf;
+	int		err;
 
+	err = 0;
 	*i = *i + 1;
 	if (s->s[*i] == '?')
 	{
@@ -33,7 +35,9 @@ void	expand_dollar_hd(t_data *data, t_substr *s, size_t *i)
 		*i = *i + 1;
 	s->sub_a = ft_substr(s->s, *i, ft_strlen(s->s) - *i);
 	buf = ft_substr(s->s, ft_strlen(s->sub_b), *i - (ft_strlen(s->sub_b)));
-	s->sub_m = get_var(data, buf, 0);
+	s->sub_m = get_var(data, buf, &err);
+	// if (err > 0)
+	// 	;
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
 	s->s = join_all_sub(data, s->s, s);
 }
