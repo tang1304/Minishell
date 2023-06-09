@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 08:50:54 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/08 15:42:22 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 09:14:48 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int	quote_handling(char *str, int i, char quote)
 	return (j);
 }
 
-static t_lexer	*new_lexer_node(t_data *data, char *str, int token)
+static t_lexer	*new_lexer_node(char *str, int token)
 {
 	t_lexer	*node;
 
 	node = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!node)
-		exit_error(data, "minishell: malloc error : ");
+		return (NULL);
 	ft_bzero(node, sizeof(t_lexer));
 	if (token == 0)
 		config_node(data, str, node, 0);
@@ -44,12 +44,14 @@ static t_lexer	*new_lexer_node(t_data *data, char *str, int token)
 	return (node);
 }
 
-int	add_node(t_data *data, t_lexer **lexer, char *str, int token)
+int	add_node(t_lexer **lexer, char *str, int token)
 {
 	t_lexer	*new;
 	t_lexer	*tmp;
 
-	new = new_lexer_node(data, str, token);
+	new = new_lexer_node(str, token);
+	if (!new)
+		return (0);
 	if (!*lexer)
 	{
 		*lexer = new;

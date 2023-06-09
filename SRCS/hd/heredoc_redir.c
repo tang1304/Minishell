@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:37:02 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 09:27:22 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 16:31:51 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	heredoc_redir(t_data *data)
 		&& ft_strlen(tmp->token) == 2)
 		{
 			data->hd->limiter[data->hd->heredoc] = ft_strdup(tmp->next->word);
+			if (!data->hd->limiter[data->hd->heredoc])
+				exit_error(data, "minishell: malloc error");
 			data->hd->heredoc++;
 		}
 		tmp = tmp->next;

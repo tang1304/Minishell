@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/08 15:35:07 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 09:12:01 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,23 @@
 
 void	question_mark(t_data *data, t_substr *s, size_t *i, size_t index)
 {
+	int	err;
+
+	err = 0;
 	if (*i > 1)
-		s->sub_b = ft_substr(s->s, 0, *i - 1);
+	{
+		s->sub_b = ft_substr_check(s->s, 0, *i - 1, &err);
+		if (err > 0)
+			exit_error(data, "minishell: malloc_error: ");
+	}
 	while (ft_isalnum(s->s[*i]) == 1)
 		*i = *i + 1;
-	s->sub_a = ft_substr(s->s, *i + 1, ft_strlen(s->s) - *i);
+	s->sub_a = ft_substr_check(s->s, *i + 1, ft_strlen(s->s) - *i, &err);
+	if (err > 0)
+		exit_error(data, "minishell: malloc error :"); // mettre expand_error;
 	s->sub_m = ft_itoa(g_status);
+	if (s->sub_m == NULL)
+		exit_error(data, "minishell: malloc error :");// mettre expand_error;
 	if (check_space_expand(data, s, index) == 1)
 		return ;
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
