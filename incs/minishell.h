@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 15:42:59 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 08:59:00 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_substr
 	char	*sub_b;
 	char	*sub_m;
 	char	*sub_a;
-	char	*var;
 }				t_substr;
 
 typedef struct s_command
@@ -180,6 +179,7 @@ int			check_token(char *s, size_t i);
 
 /*	errors.c	*/
 void		exit_error(t_data *data, char *str);
+void		expand_error(t_data *data, t_substr *s, char *str);
 void		ascii_check(t_data *data, char *str);
 
 /*	parser.c	*/
@@ -327,7 +327,6 @@ void		add_heredoc(t_data *data, char *file, size_t index);
 void		heredoc_count(t_data *data);
 
 /*	utils.c	*/
-char		*ft_strjoin_free_s2(t_data *data, char *s1, char *s2);
 char		*ft_change_str(t_data *data, char *s1, char *s2);
 size_t		lstlen(t_lexer *lexer);
 size_t		lstlencmd(t_command *cmd);
@@ -335,12 +334,15 @@ void		complete_inf_data(t_data *data, t_lexer *tmp, char *file, \
 								int valid);
 
 /*	utils2.c	*/
-char		*ft_strjoin_expand(t_data *data, char *s1, char *s2);
-char		*ft_strjoin_free(t_data *data, char *s1, char *s2);
 void		complete_out_data(t_data *data, t_lexer *tmp, char *file, \
 								int valid);
 size_t		ft_strlen_pp(char **s);
 char		*substr_check(t_data *data, char *s, size_t i, size_t len);
+
+/*	utils3.c	*/
+char		*ft_strjoin_free_s2(t_data *data, char *s1, char *s2);
+char		*ft_strjoin_expand(t_data *data, char *s1, char *s2);
+char		*ft_strjoin_free(t_data *data, char *s1, char *s2);
 
 /*	free.c	*/
 void		free_lexer_strct(t_data *data);
@@ -357,6 +359,7 @@ void		free_all(t_data *data);
 void		free_loop(t_data *data);
 
 /*	free_utils.c	*/
+void		free_substr_strct(t_substr *s);
 void		ft_free_pp(char **ptr);
 void		ft_free_paths(t_data *data);
 void		ft_free_limiter(t_heredoc *hd);

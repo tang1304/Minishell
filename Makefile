@@ -59,7 +59,8 @@ LST_SRCS		=	main.c \
 					close.c
 
 LST_SRCS_U		=	utils.c \
-					utils2.c
+					utils2.c \
+					utils3.c
 
 LST_SRCS_S		=	signals.c \
 					signals_handler.c
