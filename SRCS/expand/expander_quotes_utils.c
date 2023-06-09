@@ -42,6 +42,9 @@ char	*remove_str_middle_quote(t_data *data, char *str, char c)
 
 static char	*expand_number_mark(t_data *data, t_substr *s, size_t *j, char c)
 {
+	int	err;
+
+	err = 0;
 	*j = *j + 1;
 	if (*j > 1)
 		s->sub_b = ft_substr(s->middle, 0, *j - 1);
@@ -49,7 +52,7 @@ static char	*expand_number_mark(t_data *data, t_substr *s, size_t *j, char c)
 	if (c != '?')
 	{
 		s->sub_a = ft_substr(s->middle, *j, ft_strlen(s->middle) - *j);
-		s->sub_m = get_var(data, s->sub_m, 0);
+		s->sub_m = get_var(data, s->sub_m, &err);
 		*j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
 		s->middle = join_all_sub(data, s->middle, s);
 	}
@@ -66,7 +69,9 @@ static char	*expand_number_mark(t_data *data, t_substr *s, size_t *j, char c)
 static char	*expand_str(t_data *data, t_substr *s)
 {
 	size_t	j;
+	int		err;
 
+	err = 0;
 	j = 0;
 	while (s->middle[j] != '\0')
 	{
@@ -78,7 +83,7 @@ static char	*expand_str(t_data *data, t_substr *s)
 			while (ft_isalnum(s->middle[j]) == 1)
 				j++;
 			set_sub_strs(data, s, j);
-			s->sub_m = get_var(data, s->sub_m, 0);
+			s->sub_m = get_var(data, s->sub_m, &err);
 			j = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
 			s->middle = join_all_sub(data, s->middle, s);
 		}
