@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 15:43:17 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 08:30:23 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,9 @@ void		number_xpd_hd(t_data *data, t_substr *s, size_t *i);
 /*	expand_utils.c	*/
 void		modify_lxr_nds(t_data *data, t_substr *s, size_t index);
 int			check_space_expand(t_data *data, t_substr *s, size_t index);
+t_lexer		*update_tmp_index(t_data *data, size_t *i);
+
+/*	expand_utils2.c	*/
 t_lexer		*update_tmp_index(t_data *data, size_t *i);
 
 /*	builtins.c	*/
