@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 14:21:41 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 16:04:33 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,7 @@ char		*join_all_mid(t_data *data, char *str, t_substr *s);
 char		*join_all_sub(t_data *data, char *str, t_substr *s);
 
 /*	expander_quotes.c	*/
-void		set_sub_strs(t_data *data, t_substr *s, size_t j);
+void		set_sub_strs(t_data *data, t_substr *s, size_t j, int *err);
 char		*str_quotes_removal(t_data *data, char *str);
 int			quotes_removal(t_lexer *lexer);
 
