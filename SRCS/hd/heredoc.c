@@ -42,6 +42,8 @@ void	heredoc_pipe(t_data *data)
 	char	*buffer;
 
 	buffer = ft_calloc(sizeof(*buffer), 1);
+	if (!buffer)
+		exit_error(data, "minishell: malloc error ");
 	signal_hd_set();
 	g_status = 0;
 	while (g_status != 130)

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:19:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/09 16:15:37 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 08:34:59 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ void	join_path_and_cmd(t_data *data, char *cmd, int i)
 {
 	data->path = ft_strjoin(data->paths[i], cmd);
 	if (data->path == NULL)
+	{
+		free(cmd);
 		exit_error(data, "minishell: malloc error: ");
+	}
 }
 
 void	restore_stds(t_data *data)
@@ -67,9 +70,6 @@ void	extract_paths(t_data *data)
 	{
 		data->paths = ft_split(s, ':');
 		if (!data->paths)
-		{
-			printf("ici\n");
 			exec_error_handle(data);
-		}
 	}
 }
