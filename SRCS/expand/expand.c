@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/12 08:48:26 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 08:56:56 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index)
 							(ft_strlen(s->sub_b)), &err);
 	if (err > 0)
 		expand_error(data, s, "minishell: malloc error");
-	s->sub_m = get_var(data, buf, &err);
+	s->sub_m = get_var(data, data->buf, &err);
 	if (err > 0)
 		expand_error(data, s, "minishell: malloc error");
 	if (check_space_expand(data, s, index) == 1)
