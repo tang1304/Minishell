@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/01 08:19:40 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 13:09:47 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	ft_env(t_data *data)
 	return (1);
 }
 
-int	builtins(t_data *data, char **cmd)
+int	builtins(t_data *data, t_command *cmd_struct, char **cmd)
 {
 	int	len;
 	int	check;
@@ -43,7 +43,7 @@ int	builtins(t_data *data, char **cmd)
 	check = 0;
 	len = ft_strlen(cmd[0]);
 	if ((ft_strncmp(cmd[0], "echo", 4) == 0) && len == 4)
-		check = ft_echo(cmd);
+		check = ft_echo(cmd, cmd_struct);
 	else if ((ft_strncmp(cmd[0], "cd", 2) == 0) && len == 2)
 		check = ft_cd(data, cmd);
 	else if ((ft_strncmp(cmd[0], "pwd", 3) == 0) && len == 3)
