@@ -38,6 +38,7 @@ INCS		=	$(addprefix $(D_HEADER), $(HEADER))
 
 OBJS		=	$(subst $(D_SRCS), $(D_OBJS), $(SRCS:.c=.o))
 
+
 # COLORS
 _NOC	:=	\033[0m
 
@@ -45,10 +46,11 @@ _RED	:=	\033[1;31m
 
 _GREEN	:=	\033[1;32m
 
+
 #rules
 all		:	$(NAME)
 
-$(NAME)	:	$(OBJS) $(INCS) Makefile
+$(NAME)	:	$(OBJS) $(INCS) Makefile $(NAME)
 			ar -rcs $(NAME) $(OBJS) $(INCS)
 			@echo "${_GREEN}### $(NAME) created ! ###${_NOC}\n"
 
