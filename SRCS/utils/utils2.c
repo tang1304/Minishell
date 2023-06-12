@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:50:39 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 09:16:05 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 15:51:17 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	complete_out_data(t_data *data, t_lexer *tmp, char *file, int valid)
 	{
 		tmp->outfile = ft_strdup(file);
 		if (!tmp->outfile)
-			exit_error(data, "minishell: malloc error 25: ");
+			exit_error(data, "minishell: malloc error");
 		return ;
 	}
 	else
