@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/12 13:53:37 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 14:08:03 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ static int	check_nbr_question(t_data *data, t_substr *s, size_t *i, \
 	}
 	else if (ft_isdigit(s->s[*i]) == 1)
 	{
+		printf("ici\n");
 		number_xpd(data, s, i, index);
+		printf("la\n");
 		return (0);
 	}
 	return (1);
