@@ -82,7 +82,7 @@ static char	*expand_number_mark(t_data *data, t_substr *s, size_t *j, char c)
 	return (s->middle);
 }
 
-static char	*expand_str(t_data *data, t_substr *s, int *err)
+char	*expand_str(t_data *data, t_substr *s, int *err)
 {
 	size_t	j;
 
