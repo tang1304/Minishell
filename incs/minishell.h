@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 08:28:29 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 09:21:39 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 # define MINISHELL_H
 
 # include "../libft/incs/libft.h"
-# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <sys/stat.h>
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <signal.h>
@@ -414,6 +412,5 @@ void		handler_exec_sigquit(int signal);
 void		close_heredoc_pipes(t_data *data);
 void		close_all(t_data *data);
 void		close_files(t_data *data);
-// void	close_pipes_no_cmd(t_data *data);
 
 #endif
