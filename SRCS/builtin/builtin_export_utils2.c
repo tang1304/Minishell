@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:11:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 10:58:54 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 12:01:30 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@ void	iterate_pp_envp(t_data *data, char *cmd, int i, int export)
 		{
 			envp_replacement(data, &data->envp[j], cmd);
 			export += 1;
-			break ;
+			return ;
 		}
+	}
+	if (export == 1 && ft_strchr(cmd, '='))
+	{
+		data->envp = export_var_only(data, cmd);
+		return ;
 	}
 }

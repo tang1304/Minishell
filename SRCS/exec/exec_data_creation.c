@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_data_creation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 15:34:24 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 11:38:30 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	exec_cmd_lst(t_data *data)
 {
 	t_command	*tmp;
 
+	g_status = 0;
 	tmp = data->cmd;
 	while (tmp)
 	{

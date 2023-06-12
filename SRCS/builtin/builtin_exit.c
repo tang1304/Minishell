@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 08:19:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/07 14:55:38 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 11:35:36 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,30 @@ static void	exit_numeric(char **str)
 	}
 }
 
+static int	check_num_multiple_args(t_data *data, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[0] == '-' || str[0] == '+')
+			i++;
+		if (!ft_isdigit(str[i]))
+		{
+			ft_dprintf(2, "minishell: exit: %s: numeric argument required\n", \
+						str[1]);
+			free_all(data);
+			close_files(data);
+			exit(2);
+		}
+		i++;
+	}
+	ft_dprintf(2, "minishell: exit: too many arguments\n");
+	g_status = 1;
+	return (0);
+}
+
 void	ft_exit(t_data *data, char **str)
 {
 	printf("exit\n");
@@ -67,8 +91,8 @@ void	ft_exit(t_data *data, char **str)
 	check_numeric(data, str);
 	if (str[2])
 	{
-		ft_dprintf(2, "minishell: exit: too many arguments\n");
-		exit_error(data, NULL);
+		if (!check_num_multiple_args(data, str[1]))
+			return ;
 	}
 	exit_numeric(str);
 	free_all(data);
