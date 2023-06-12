@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 08:19:06 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 09:09:42 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 10:51:12 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,14 @@ char	*ft_strjoin_expand(t_data *data, char *s1, char *s2)
 	return (ptr);
 }
 
-char	*ft_strjoin_free(t_data *data, char *s1, char *s2)
+static char	*add_strs(t_data *data, char *s1, char *s2)
 {
+	char	*ptr;
 	int		i;
 	size_t	j;
-	char	*ptr;
 
 	i = -1;
 	j = 0;
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
 	ptr = (char *)malloc(sizeof(*ptr) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (ptr == NULL)
 	{
@@ -96,5 +94,17 @@ char	*ft_strjoin_free(t_data *data, char *s1, char *s2)
 		j++;
 	}
 	ptr[i] = '\0';
+	return (ptr);
+}
+
+char	*ft_strjoin_free(t_data *data, char *s1, char *s2)
+{
+	char	*ptr;
+
+	if (s1 == NULL)
+		return (s2);
+	if (s2 == NULL)
+		return (s1);
+	ptr = add_strs(data, s1, s2);
 	return (free_strs(s1, s2), ptr);
 }
