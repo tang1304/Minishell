@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 09:21:39 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 13:11:54 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,7 +284,7 @@ int			check_space_expand(t_data *data, t_substr *s, size_t index);
 void		substrs_prep(t_data *data, t_substr *s, size_t *i);
 
 /*	builtins.c	*/
-int			builtins(t_data *data, char **cmd);
+int			builtins(t_data *data, t_command *cmd_struct, char **cmd);
 int			check_builtins(char **cmd);
 
 /*	builtin_cd.c	*/
@@ -293,7 +293,7 @@ char		*search_env(t_data *data, char *env);
 int			replace_env(t_data *data, char *env, char *old_env);
 
 /*	builtin_echo.c	*/
-int			ft_echo(char **cmd);
+int			ft_echo(char **cmd, t_command *cmd_struct);
 
 /*	builtin_echo.c	*/
 void		ft_exit(t_data *data, char **cmd);

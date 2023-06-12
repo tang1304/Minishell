@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:43:06 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 11:45:16 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 13:32:25 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	echo_n_check(char **cmd)
 	return (0);
 }
 
-int	ft_echo(char **cmd)
+int	ft_echo(char **cmd, t_command *cmd_struct)
 {
 	int	i;
 	int	n_check;
@@ -56,7 +56,8 @@ int	ft_echo(char **cmd)
 		while (cmd[++i])
 		{
 			printf("%s", cmd[i]);
-			g_status = 0;
+			if (cmd_struct->inf_err == 0 && cmd_struct->out_err == 0)
+				g_status = 0;
 			if (cmd[i + 1])
 				printf(" ");
 		}

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 11:38:30 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 13:41:51 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	forking(t_data *data, t_command *cmd, int i)
 			exit_error(data, NULL);
 		if (check_builtins(cmd->cmd) == SUCCESS)
 		{
-			builtins(data, cmd->cmd);
+			builtins(data, cmd, cmd->cmd);
 			exec_error_handle(data);
 			g_status = 0;
 			exit(g_status);
@@ -80,7 +80,9 @@ static void	prepare_forking(t_data *data, t_command *cmd)
 
 static void	no_forking(t_data *data, t_command *cmd)
 {
-	builtins(data, cmd->cmd);
+	if (cmd->inf_err || cmd->out_err)
+		return ;
+	builtins(data, cmd, cmd->cmd);
 	if (data->stdin_save > 0 && data->stdout_save > 0)
 	{
 		if (close(data->stdin_save) == -1 || close(data->stdout_save) == -1)
@@ -100,7 +102,6 @@ void	exec_cmd_lst(t_data *data)
 {
 	t_command	*tmp;
 
-	g_status = 0;
 	tmp = data->cmd;
 	while (tmp)
 	{
