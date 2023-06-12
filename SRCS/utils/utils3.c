@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 08:19:06 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 11:12:18 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 08:56:05 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ char	*ft_strjoin_free(t_data *data, char *s1, char *s2)
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
 	ptr = (char *)malloc(sizeof(*ptr) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-// free(ptr);
-// ptr = NULL;
 	if (ptr == NULL)
 		exit_error(data, "minishell: malloc error 26: ");
 	while (s1[i] != '\0')

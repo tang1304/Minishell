@@ -82,6 +82,7 @@ LST_SRCS_P		=	parser.c \
 
 LST_SRCS_E		=	expand.c \
 					expand_string.c \
+					expander_quotes_main.c \
 					expander_quotes.c \
 					expander_quotes_utils.c \
 					expander_var.c \
