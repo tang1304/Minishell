@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:19:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/08 15:19:51 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 16:15:37 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ void	extract_paths(t_data *data)
 	{
 		data->paths = ft_split(s, ':');
 		if (!data->paths)
+		{
+			printf("ici\n");
 			exec_error_handle(data);
+		}
 	}
 }

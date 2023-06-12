@@ -16,8 +16,6 @@ HEADER		=	minishell.h
 
 LIBFT		=	libft.a
 
-
-
 # DIRECTORIES
 D_HEADER	=	incs/
 
@@ -48,7 +46,6 @@ D_OBJS_S	=	objs/signals/
 D_OBJS_U	=	objs/utils/
 
 D_LIBFT		=	libft/
-
 
 # FILES MINISHELL
 LST_SRCS		=	main.c \
