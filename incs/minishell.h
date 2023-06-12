@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 16:04:33 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 08:28:29 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -387,6 +387,7 @@ void		exec_cmd_lst_wait(t_data *data);
 
 /*	exec_utils2.c	*/
 void		exec_cmd_lst_wait(t_data *data);
+void		loop_on_path(t_data *data, char **cmd_args, char *cmd, int i);
 
 /*	wait.c	*/
 void		wait_child(t_data *data);

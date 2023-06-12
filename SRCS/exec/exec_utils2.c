@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:20:04 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 15:20:23 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 08:28:23 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,20 @@ void	exec_cmd_lst_wait(t_data *data)
 	signal_set();
 	g_status = WEXITSTATUS(status);
 	restore_stds(data);
+}
+
+void	loop_on_path(t_data *data, char **cmd_args, char *cmd, int i)
+{
+	join_path_and_cmd(data, cmd, i);
+	if (access(data->path, X_OK) == 0)
+	{
+		if (execve(data->path, cmd_args, data->envp) == -1)
+		{
+			exec_error_handle(data);
+			free(cmd);
+			exit(g_status);
+		}
+	}
+	free(data->path);
+	data->path = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:47:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/05 10:20:46 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 08:27:28 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	pre_check_on_cmd(t_data *data, char **cmd)
 	}
 }
 
-static void	loop_on_path(t_data *data, char **cmd_args)
+static void	prepare_loop_on_path(t_data *data, char **cmd_args)
 {
 	int		i;
 	char	*cmd;
@@ -89,20 +89,7 @@ static void	loop_on_path(t_data *data, char **cmd_args)
 	if (cmd == NULL)
 		exit_error(data, "minishell: malloc error: ");
 	while (data->paths[++i])
-	{
-		join_path_and_cmd(data, cmd, i);
-		if (access(data->path, X_OK) == 0)
-		{
-			if (execve(data->path, cmd_args, data->envp) == -1)
-			{
-				exec_error_handle(data);
-				free(cmd);
-				exit(g_status);
-			}
-		}
-		free(data->path);
-		data->path = NULL;
-	}
+		loop_on_path(data, cmd_args, cmd, i);
 	free(cmd);
 }
 
@@ -117,7 +104,7 @@ void	exec(t_data *data, char **cmd)
 	}
 	if (ft_strchr(cmd[0], '/') != NULL)
 		check_if_absolute_path(data, cmd);
-	loop_on_path(data, cmd);
+	prepare_loop_on_path(data, cmd);
 	write(2, cmd[0], ft_strlen(cmd[0]));
 	write(2, ": command not found\n", 20);
 	exec_error_handle(data);
