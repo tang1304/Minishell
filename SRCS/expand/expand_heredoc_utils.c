@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:38:04 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 08:43:51 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 08:58:36 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	number_xpd_hd(t_data *data, t_substr *s, size_t *i, char *buffer)
 	s->sub_a = ft_substr_check(s->s, *i + 1, ft_strlen(s->s) - *i, &err);
 	if (err > 0)
 		expand_error_hd(data, s, buffer, "minishell: malloc_error: ");
-	s->sub_m = get_var(data, buf, &err);
+	s->sub_m = get_var(data, data->buf, &err);
 	if (err > 0)
 		expand_error_hd(data, s, buffer, "minishell: malloc_error: ");
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
