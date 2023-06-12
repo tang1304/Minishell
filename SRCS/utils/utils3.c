@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 08:19:06 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 11:12:18 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 09:09:42 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,24 +72,23 @@ char	*ft_strjoin_expand(t_data *data, char *s1, char *s2)
 
 char	*ft_strjoin_free(t_data *data, char *s1, char *s2)
 {
-	size_t	i;
+	int		i;
 	size_t	j;
 	char	*ptr;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
 	ptr = (char *)malloc(sizeof(*ptr) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-// free(ptr);
-// ptr = NULL;
 	if (ptr == NULL)
-		exit_error(data, "minishell: malloc error 26: ");
-	while (s1[i] != '\0')
 	{
-		ptr[i] = ((char *)s1)[i];
-		i++;
+		free(s1);
+		free(s2);
+		exit_error(data, "minishell: malloc error");
 	}
+	while (s1[++i] != '\0')
+		ptr[i] = ((char *)s1)[i];
 	while (s2[j] != '\0')
 	{
 		ptr[i] = ((char *)s2)[j];
