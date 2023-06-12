@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:14:42 by rrebois           #+#    #+#             */
-/*   Updated: 2023/05/30 16:15:48 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 08:19:01 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,8 @@ void	add_cmd_index(t_data *data)
 	}
 }
 
-void	fillup_cmd_node(t_command *new, t_lexer *tmp)
+static void	fillup_cmd_node_other_values(t_command *new, t_lexer *tmp)
 {
-	if (tmp->infile != NULL)
-		new->infile = ft_strdup(tmp->infile);
-	if (tmp->outfile != NULL)
-		new->outfile = ft_strdup(tmp->outfile);
 	if (tmp->hd_file != 0)
 		new->heredoc_file = tmp->hd_file;
 	if (tmp->hd_number != -1)
@@ -87,4 +83,21 @@ void	fillup_cmd_node(t_command *new, t_lexer *tmp)
 		new->fdin = tmp->fdin;
 	if (new->fdout == 0)
 		new->fdout = tmp->fdout;
+}
+
+void	fillup_cmd_node(t_data *data, t_command *new, t_lexer *tmp)
+{
+	if (tmp->infile != NULL)
+	{
+		new->infile = ft_strdup(tmp->infile);
+		if (tmp->infile == NULL)
+			exit_error(data, "minishell: malloc error: ");
+	}
+	if (tmp->outfile != NULL)
+	{
+		new->outfile = ft_strdup(tmp->outfile);
+		if (new->outfile == NULL)
+			exit_error(data, "minishell: malloc error: ");
+	}
+	fillup_cmd_node_other_values(new, tmp);
 }

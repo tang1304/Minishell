@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:52:51 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 13:58:00 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 08:19:03 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static t_command	*fillup(t_data *data, size_t i, size_t x, t_command *new)
 		new->cmd[j] = ft_strdup(tmp->word);
 		if (!new->cmd[j])
 			exit_error(data, "minishell: malloc error: ");
-		fillup_cmd_node(new, tmp);
+		fillup_cmd_node(data, new, tmp);
 		j++;
 		i++;
 		tmp = tmp->next;

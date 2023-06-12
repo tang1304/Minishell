@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 16:04:33 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 08:19:07 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd);
 t_command	*cmd_lst_end_node(t_data *data, t_command *command, t_lexer *tmp);
 t_command	*cmd_lst(t_data *data, t_command *command, t_lexer *tmp);
 void		add_cmd_index(t_data *data);
-void		fillup_cmd_node(t_command *new, t_lexer *tmp);
+void		fillup_cmd_node(t_data *data, t_command *new, t_lexer *tmp);
 
 /*	add_infile_outfile.c	*/
 void		files_validity(t_data *data, t_lexer *tmp, int *valid);
