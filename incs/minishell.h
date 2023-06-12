@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 08:19:07 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 08:53:54 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,16 +260,20 @@ int			quotes_removal(t_lexer *lexer);
 /*	expander_quotes_utils.c	*/
 char		*str_without_single_quotes(t_data *data, char *str, int i, int j);
 char		*remove_str_middle_quote(t_data *data, char *str, char c);
+
+/*	expander_quotes_main.c	*/
 void		expand_quotes(t_data *data, t_substr *str, size_t *i, char c);
 
 /*	expand_heredoc.c	*/
 char		*expand_line(t_data *data, char *str, char *buffer);
 void		prepare_expand_hd(t_data *data);
-void		expand_dollar_hd(t_data *data, t_substr *s, size_t *i, char *buffer);
+void		expand_dollar_hd(t_data *data, t_substr *s, size_t *i, \
+							char *buffer);
 void		remove_limiter_quotes(t_data *data);
 
 /*	expand_heredoc_utils.c	*/
-void		question_mark_hd(t_data *data, t_substr *s, size_t *i, char *buffer);
+void		question_mark_hd(t_data *data, t_substr *s, size_t *i, \
+							char *buffer);
 void		number_xpd_hd(t_data *data, t_substr *s, size_t *i, char *buffer);
 
 /*	expand_utils.c	*/
@@ -278,6 +282,7 @@ void		modify_lxr_nds(t_data *data, t_substr *s, size_t index);
 /*	expand_utils2.c	*/
 t_lexer		*update_tmp_index(t_data *data, size_t *i);
 int			check_space_expand(t_data *data, t_substr *s, size_t index);
+void		substrs_prep(t_data *data, t_substr *s, size_t *i);
 
 /*	builtins.c	*/
 int			builtins(t_data *data, char **cmd);

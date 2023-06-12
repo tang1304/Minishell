@@ -47,3 +47,21 @@ int	check_space_expand(t_data *data, t_substr *s, size_t index)
 	}
 	return (0);
 }
+
+void	substrs_prep(t_data *data, t_substr *s, size_t *i)
+{
+	int	err;
+
+	err = 0;
+	if (*i > 1)
+	{
+		s->sub_b = ft_substr_check(s->s, 0, *i - 1, &err);
+		if (err > 0)
+			expand_error(data, s, "minishell: malloc_error1");
+	}
+	while (ft_isalnum(s->s[*i]) == 1)
+		*i = *i + 1;
+	s->sub_a = ft_substr_check(s->s, *i, ft_strlen(s->s) - *i + 1, &err);
+	if (err > 0)
+		expand_error(data, s, "minishell: malloc error2");
+}
