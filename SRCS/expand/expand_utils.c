@@ -69,16 +69,16 @@ static void	add_split_node(t_data *data, t_substr *s, t_lexer *tmp, \
 
 	ptr = ft_split(s->sub_m, ' ');
 	if (!ptr)
-		exit_error(data, "minishell: malloc error ");// mettre expand_error;
+		exit_error(data, "minishell: malloc error ");
 	if (!add_node(&tmp, ptr[0], 0))
 	{
 		ft_free_pp(ptr);
-		exit_error(data, "minishell: malloc error ");// mettre expand_error;
+		exit_error(data, "minishell: malloc error ");
 	}
 	if (!add_buf_lxr_tail(data, s, buf, ptr))
 	{
 		ft_free_pp(ptr);
-		exit_error(data, "minishell: malloc error ");// mettre expand_error;
+		exit_error(data, "minishell: malloc error ");
 	}
 	ft_free_pp(ptr);
 }
