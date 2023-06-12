@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 10:07:42 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/08 15:22:29 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 10:59:09 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	existing_var(t_data *data, char *cmd, int i)
 		else
 			tmp = tmp->next;
 	}
-	iterate_pp_envp(data, cmd, i, export);
+	if (export == 1)
+		iterate_pp_envp(data, cmd, i, export);
 	return (export);
 }
