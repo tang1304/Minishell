@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/13 10:31:24 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 12:14:09 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define SQUOTE_ERR "minishell: syntax error near unexpected token `\''\n"
 # define DQUOTE_ERR "minishell: syntax error near unexpected token `\"'\n"
 # define HEREDOC_LIMIT "minishell: maximum here-document count exceeded\n"
+# define HD_START_D "minishell: warning: here-document at line %ld "
+# define HD_END_D "delimited by end-of-file (wanted `%s')\n"
 
 typedef struct s_lexer
 {
@@ -168,7 +170,6 @@ int			error_less(char *line, size_t i);
 int			is_word(char *s, int i, char c);
 int			error_quotes(char *line, size_t i);
 int			check_token(char *s, size_t i);
-// int		count_quote(char *s, size_t *i, char c);
 
 /*	errors.c	*/
 void		exit_error(t_data *data, char *str);
@@ -407,8 +408,6 @@ void		silence_signals(void);
 void		handler_sigint(int signal);
 void		handler_hd_sigint(int signal);
 void		handler_exec(int signal);
-// void		handler_exec_sigint(int signal);
-// void		handler_exec_sigquit(int signal);
 
 /*	close.c	*/
 void		close_heredoc_pipes(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:28:26 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/13 12:03:45 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 12:08:21 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void	forking(t_data *data, t_command *cmd, int i)
 {
 	if (i == 0)
 	{
-		signal_exec_set();
 		command_init(data, cmd);
 		if (cmd->inf_err || cmd->out_err)
 			exit_error(data, NULL);
@@ -57,7 +56,6 @@ static void	forking(t_data *data, t_command *cmd, int i)
 	}
 	else
 	{
-		silence_signals();
 		if (cmd->pipe_a == 1)
 			close(data->pipe[1]);
 		if (dup2(data->pipe[0], STDIN_FILENO) == -1)
@@ -68,6 +66,7 @@ static void	forking(t_data *data, t_command *cmd, int i)
 
 static void	prepare_forking(t_data *data, t_command *cmd)
 {
+	signal_exec_set();
 	heredoc_check(data, cmd);
 	if (pipe(data->pipe) == -1)
 		exit_error(data, "minishell: pipe error: ");
