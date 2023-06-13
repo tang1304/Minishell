@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 08:19:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/12 11:35:36 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 15:21:07 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void	exit_numeric(char **str)
 	int			err;
 	long long	code;
 
+	err = 0;
 	if (str[1] && (ft_atoi_ll(str[1], &err) < 255 && err == 0))
 		g_status = ft_atoi_ll(str[1], &err);
 	else

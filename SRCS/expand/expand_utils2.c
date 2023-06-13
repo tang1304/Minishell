@@ -52,7 +52,7 @@ int	check_space_expand(t_data *data, t_substr *s, size_t index)
 	j = 0;
 	split = 0;
 	if (check_only_space(s->sub_m))
-		return (0);
+		return (2);
 	while (s->sub_m[j] != '\0')
 	{
 		if (s->sub_m[j] == ' ')
@@ -67,6 +67,8 @@ int	check_space_expand(t_data *data, t_substr *s, size_t index)
 	}
 	return (0);
 }
+
+// if (!*delimiter)
 
 void	substrs_prep(t_data *data, t_substr *s, size_t *i)
 {
