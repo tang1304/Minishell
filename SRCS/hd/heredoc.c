@@ -14,7 +14,7 @@
 
 int	heredoc_ctrl_check(t_data *data, char *line, char *buffer)
 {
-	if (g_status != 130 && line == NULL)//
+	if (g_status != 130 && line == NULL)
 	{
 		printf(HD_START_D HD_END_D, data->ctrl_d_val, \
 				data->hd->limiter[data->hd->heredoc]);
