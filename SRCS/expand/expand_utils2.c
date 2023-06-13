@@ -26,6 +26,24 @@ t_lexer	*update_tmp_index(t_data *data, size_t *i)
 	return (tmp);
 }
 
+static int	check_only_space(char *str)
+{
+	size_t	space;
+	size_t	i;
+
+	space = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ')
+			space++;
+		i++;
+	}
+	if (i == space)
+		return (1);
+	return (0);
+}
+
 int	check_space_expand(t_data *data, t_substr *s, size_t index)
 {
 	size_t	j;
@@ -33,6 +51,8 @@ int	check_space_expand(t_data *data, t_substr *s, size_t index)
 
 	j = 0;
 	split = 0;
+	if (check_only_space(s->sub_m))
+		return (0);
 	while (s->sub_m[j] != '\0')
 	{
 		if (s->sub_m[j] == ' ')
