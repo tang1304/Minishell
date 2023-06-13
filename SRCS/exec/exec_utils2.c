@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:20:04 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/13 10:34:07 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 11:58:04 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 void	exec_cmd_lst_wait(t_data *data)
 {
 	t_command	*tmp;
-	int			status;
 
 	tmp = data->cmd;
 	while (tmp)
 	{
-		waitpid(tmp->pid, &status, 0);
+		waitpid(tmp->pid, &g_status, 0);
 		tmp = tmp->next;
 	}
+	if (WIFEXITED(g_status))
+		g_status = WEXITSTATUS(g_status);
+	else if (WIFSIGNALED(g_status))
+		g_status = 128 + WTERMSIG(g_status);
 	signal_set();
-	g_status = WEXITSTATUS(status);
 	restore_stds(data);
 }
 
