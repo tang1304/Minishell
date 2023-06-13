@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:47:12 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/12 08:27:28 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 10:53:20 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static void	check_if_absolute_path(t_data *data, char **cmd)
 
 static void	pre_check_on_cmd(t_data *data, char **cmd)
 {
-	(void)data;
 	if (cmd[0][0] == '.' && !cmd[0][1])
 	{
 		write(2, "minishell: .: filename argument required\n", 41);

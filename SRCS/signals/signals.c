@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:14:33 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 15:43:48 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 12:00:13 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ void	signal_exec_set(void)
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	sa.sa_handler = &handler_exec_sigint;
+	sa.sa_handler = handler_exec;
 	sigaction(SIGINT, &sa, NULL);
-	sa.sa_handler = &handler_exec_sigquit;
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
