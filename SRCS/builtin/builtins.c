@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 13:09:47 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 14:59:36 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,28 @@ int	check_builtins(char **cmd)
 	else if ((ft_strncmp(cmd[0], "env", 3) == 0) && len == 3)
 		return (SUCCESS);
 	else if ((ft_strncmp(cmd[0], "exit", 4) == 0) && len == 4)
+		return (SUCCESS);
+	return (NOT_BUILTIN);
+}
+
+int	check_builtins_lexer(char *cmd)
+{
+	int	len;
+
+	len = ft_strlen(cmd);
+	if ((ft_strncmp(cmd, "echo", 4) == 0) && len == 4)
+		return (SUCCESS);
+	else if ((ft_strncmp(cmd, "cd", 2) == 0) && len == 2)
+		return (SUCCESS);
+	else if ((ft_strncmp(cmd, "pwd", 3) == 0) && len == 3)
+		return (SUCCESS);
+	else if ((ft_strncmp(cmd, "export", 6) == 0) && len == 6)
+		return (SUCCESS);
+	else if ((ft_strncmp(cmd, "unset", 5) == 0) && len == 5)
+		return (SUCCESS);
+	else if ((ft_strncmp(cmd, "env", 3) == 0) && len == 3)
+		return (SUCCESS);
+	else if ((ft_strncmp(cmd, "exit", 4) == 0) && len == 4)
 		return (SUCCESS);
 	return (NOT_BUILTIN);
 }
