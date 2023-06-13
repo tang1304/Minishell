@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 14:59:57 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 10:31:24 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,8 +406,9 @@ void		silence_signals(void);
 /*	signals_handler.c	*/
 void		handler_sigint(int signal);
 void		handler_hd_sigint(int signal);
-void		handler_exec_sigint(int signal);
-void		handler_exec_sigquit(int signal);
+void		handler_exec(int signal);
+// void		handler_exec_sigint(int signal);
+// void		handler_exec_sigquit(int signal);
 
 /*	close.c	*/
 void		close_heredoc_pipes(t_data *data);

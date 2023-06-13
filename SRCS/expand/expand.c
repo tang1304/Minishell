@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/12 14:42:08 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 09:42:50 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ static char	*check_char(t_data *data, char *s, size_t *i, size_t index)
 		expand_quotes(data, &str, i, '"');
 	else
 		*i = *i + 1;
+	if (str.s == NULL)
+	{
+		str.s = malloc(sizeof(char *) * 1);
+		str.s[0] = '\0';
+	}
 	return (str.s);
 }
 

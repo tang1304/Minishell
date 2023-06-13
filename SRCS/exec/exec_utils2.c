@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:20:04 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 08:28:23 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 10:00:41 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	exec_cmd_lst_wait(t_data *data)
 		waitpid(tmp->pid, &status, 0);
 		tmp = tmp->next;
 	}
-	signal_set();
 	g_status = WEXITSTATUS(status);
 	restore_stds(data);
 }
