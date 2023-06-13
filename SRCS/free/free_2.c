@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 12:33:48 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/09 09:12:21 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 16:10:47 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	free_loop(t_data *data)
 	free_data(data, &free_cmd_strct);
 	if (!data->paths || data->paths[0] != NULL)
 		ft_free_paths(data);
+	free_data(data, &free_lexer_strct);
 	free_data(data, &free_hd_strct);
 	if (data->str)
 	{

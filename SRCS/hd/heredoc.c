@@ -25,6 +25,7 @@ int	heredoc_ctrl_check(t_data *data, char *line, char *buffer)
 	else if (g_status == 130)
 	{
 		free(buffer);
+		data->stop = 1;
 		return (HD_CTRL_C);
 	}
 	else
