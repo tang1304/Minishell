@@ -14,11 +14,11 @@
 
 int	heredoc_ctrl_check(t_data *data, char *line, char *buffer)
 {
-	if (g_status != 130 && line == NULL)
+	if (g_status != 130 && line == NULL)//
 	{
 		printf("minishell: warning: here-document at line %ld delimited by \
-end-of-file (wanted `%s')\n", data->ctrl_d_val, \
-		data->hd->limiter[data->hd->heredoc]);
+				end-of-file (wanted `%s')\n", data->ctrl_d_val, \
+				data->hd->limiter[data->hd->heredoc]);
 		write(data->hd->fd[data->hd->heredoc][1], buffer, ft_strlen(buffer));
 		free(buffer);
 		return (HD_CTRL_D);
