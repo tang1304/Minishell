@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:53:10 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 09:03:53 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 09:19:47 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	error_last_token(char *line)
 	len = ft_strlen(line) - 1;
 	while ((int)len > -1)
 	{
-		while ((line[len] == ' ' || line[len] == '\t') && (int)len > -1)
+		while ((line[len] == ' ' || line[len] == '\t') && (int)len > 0)
 			len--;
 		if (line[len] == '|' || line[len] == '>' || line[len] == '<')
 			return (ft_dprintf(2, \

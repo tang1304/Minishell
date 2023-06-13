@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 12:36:28 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 09:07:42 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 15:01:03 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ int	ft_cd(t_data *data, char **cmd)
 	int		home_check;
 	int		check;
 
-	if (cmd[0] && (!cmd[1] || cmd[1][0] == '\0' \
-		|| (cmd[1][0] == '~' && !cmd[1][1])))
+	if (cmd[0] && (!cmd[1] || (cmd[1][0] == '~' && !cmd[1][1])))
 	{
 		home_check = cd_home(data);
 		if (home_check == 0)

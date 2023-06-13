@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_join_all.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 08:35:29 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 14:18:14 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 08:21:44 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,13 @@ char	*join_all_mid(t_data *data, char *str, t_substr *s)
 	{
 		str = ft_strdup(s->middle);
 		free(s->middle);
+		s->middle = NULL;
 	}
 	else if (s->before != NULL && s->middle == NULL)
 	{
 		str = ft_strdup(s->before);
 		free(s->before);
 	}
-	if (!str)
-		expand_error(data, s, "minishell: malloc error");//can be null
 	if (s->after != NULL)
 		str = ft_strjoin_free(data, str, s->after);
 	return (str);
@@ -52,8 +51,6 @@ char	*join_all_sub(t_data *data, char *str, t_substr *s)
 		str = ft_strdup(s->sub_b);
 		free(s->sub_b);
 	}
-	if (!str)
-		expand_error(data, s, "minishell: malloc error");//can be null
 	if (s->sub_a != NULL)
 	{
 		str = ft_strjoin_free(data, str, s->sub_a);
