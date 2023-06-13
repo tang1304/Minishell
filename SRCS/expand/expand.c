@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
 /*   Updated: 2023/06/13 16:04:15 by rrebois          ###   ########lyon.fr   */
@@ -86,6 +86,12 @@ void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index)
 		expand_error(data, s, "minishell: malloc error");
 	if (check_space_expand(data, s, index) == 1)
 		return ;
+	if (check_space_expand(data, s, index) == 2)
+	{
+		free(s->sub_m);
+		s->sub_m = malloc(sizeof(char *) * 1);
+		s->sub_m[0] = '\0';
+	}
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
 	s->s = join_all_sub(data, s->s, s);
 }
@@ -99,7 +105,7 @@ static int	check_word(t_data *data, size_t index)
 	while (tmp->index != index)
 		tmp = tmp->next;
 	if ((ft_strncmp(tmp->word, "\"\"", 2) == 0 || ft_strncmp(tmp->word, \
-	 "\'\'", 2) == 0) && (ft_strlen(tmp->word) == 2 && !tmp->prev))
+		"\'\'", 2) == 0) && (ft_strlen(tmp->word) == 2 && !tmp->prev))
 		return (100);
 	else if ((ft_strncmp(tmp->word, "\"\"", 2) == 0 || ft_strncmp(tmp->word, \
 	"\'\'", 2) == 0) && ft_strlen(tmp->word) == 2 && tmp->prev)
