@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:14:33 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/13 10:33:38 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 11:57:03 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	signal_hd_set(void)
 void	signal_exec_set(void)
 {
 	struct sigaction	sa;
+
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
