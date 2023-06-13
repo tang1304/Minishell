@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 11:38:01 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 16:07:33 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static void	generate_prompt(t_data *data)
 	data->str = readline(prompt);
 	if (data->str == NULL)
 		readline_err(data, prompt);
+	if (ft_strlen(data->str) > 0)
+		add_history(data->str);
 	data->str = ft_strtrim_free(data->str, " ", &err);
 	data->str = ft_strtrim_free(data->str, "\t", &err);
 	if (err == 1)
@@ -52,8 +54,8 @@ void	prompt_loop(t_data *data)
 	while (1)
 	{
 		generate_prompt(data);
-		if (ft_strlen(data->str) > 0)
-			add_history(data->str);
+		// if (ft_strlen(data->str) > 0)
+		// 	add_history(data->str);
 		if (error_check(data, data->str) == SUCCESS)
 		{
 			lexer_init(data);
