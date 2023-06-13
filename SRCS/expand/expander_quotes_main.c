@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_quotes_main.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 08:53:02 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 08:53:18 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 09:44:20 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
