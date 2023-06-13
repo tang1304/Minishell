@@ -66,8 +66,9 @@ static void	add_split_node(t_data *data, t_substr *s, t_lexer *tmp, \
 							t_lexer *buf)
 {
 	char	**ptr;
-
+printf("str:%s|\n", s->sub_m);
 	ptr = ft_split(s->sub_m, ' ');
+printf("ptr:%s|\n", ptr[0]);
 	if (!ptr)
 		exit_error(data, "minishell: malloc error ");
 	if (!add_node(&tmp, ptr[0], 0))
