@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:50:17 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/12 14:22:36 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 14:41:47 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	sub_number_xpd(t_data *data, t_substr *s, size_t *i, int *err)
 void	number_xpd(t_data *data, t_substr *s, size_t *i, size_t index)
 {
 	int		err;
-//echo $5"$5 '$5'"'$5'
+
 	err = 0;
 	sub_number_xpd(data, s, i, &err);
 	s->sub_m = get_var(data, data->buf, &err);
