@@ -6,7 +6,7 @@
 /*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/13 12:04:30 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 13:58:13 by rrebois          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,30 @@ void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index)
 	s->s = join_all_sub(data, s->s, s);
 }
 
+
+static int	check_word(t_data *data, size_t index)
+{
+	t_lexer	*tmp;
+
+	tmp = data->lexer;
+	while (tmp->index != index)
+		tmp = tmp->next;
+	if ((ft_strncmp(tmp->word, "\"\"", 2) == 0 || ft_strncmp(tmp->word, \
+	 "\'\'", 2) == 0) && (ft_strlen(tmp->word) == 2 && !tmp->prev))
+		return (100);
+	else if ((ft_strncmp(tmp->word, "\"\"", 2) == 0 || ft_strncmp(tmp->word, \
+	"\'\'", 2) == 0) && ft_strlen(tmp->word) == 2 && tmp->prev)
+	{
+		free(tmp->word);
+		tmp->word = malloc(sizeof(char *) * 2);
+		tmp->word[0] = ' ';
+		tmp->word[1] = '\0';
+		return (101);
+	}
+	// printf("%d", ft_strncmp(tmp->word, "\"\"", 2));
+	return (0);
+}
+
 void	expand(t_data *data)
 {
 	size_t	i;
@@ -102,6 +126,11 @@ void	expand(t_data *data)
 		i = 0;
 		if (tmp->word != NULL)
 		{
+			if (check_word(data, tmp->index) != SUCCESS)
+			{
+				tmp = tmp->next;
+				continue ;
+			}
 			while (tmp->word[i] != '\0')
 			{
 				tmp->word = check_char(data, tmp->word, &i, tmp->index);
