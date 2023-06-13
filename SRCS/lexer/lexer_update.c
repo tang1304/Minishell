@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:11:59 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/08 08:51:20 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 15:54:48 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	update_lexer(t_data *data)
 	while (tmp != NULL)
 	{
 		if ((tmp->word == NULL || ft_strlen(tmp->word) == 0) && \
-		tmp->token == NULL)
+			tmp->token == NULL)
 		{
 			remove_single_node(data, tmp->index);
 			if (lstlen(data->lexer) == 0)

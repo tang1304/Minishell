@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 13:11:54 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 14:59:57 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,6 +286,7 @@ void		substrs_prep(t_data *data, t_substr *s, size_t *i);
 /*	builtins.c	*/
 int			builtins(t_data *data, t_command *cmd_struct, char **cmd);
 int			check_builtins(char **cmd);
+int			check_builtins_lexer(char *cmd);
 
 /*	builtin_cd.c	*/
 int			ft_cd(t_data *data, char **cmd);
