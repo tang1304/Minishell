@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/13 16:04:15 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 11:26:10 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ static int	check_word(t_data *data, size_t index)
 		"\'\'", 2) == 0) && (ft_strlen(tmp->word) == 2 && !tmp->prev))
 		return (100);
 	else if ((ft_strncmp(tmp->word, "\"\"", 2) == 0 || ft_strncmp(tmp->word, \
-	"\'\'", 2) == 0) && ft_strlen(tmp->word) == 2 && tmp->prev)
+	"\'\'", 2) == 0) && ft_strlen(tmp->word) == 2 && tmp->prev && \
+	ft_strncmp(tmp->prev->word, "echo", 4) != 0)
 	{
 		free(tmp->word);
 		tmp->word = malloc(sizeof(char *) * 2);

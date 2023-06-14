@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/13 16:14:33 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 10:05:51 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ void	prompt_loop(t_data *data)
 	while (1)
 	{
 		generate_prompt(data);
-		// if (ft_strlen(data->str) > 0)
-		// 	add_history(data->str);
 		if (error_check(data, data->str) == SUCCESS)
 		{
 			lexer_init(data);
