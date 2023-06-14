@@ -68,8 +68,6 @@ int	check_space_expand(t_data *data, t_substr *s, size_t index)
 	return (0);
 }
 
-// if (!*delimiter)
-
 void	substrs_prep(t_data *data, t_substr *s, size_t *i)
 {
 	int	err;
@@ -86,4 +84,22 @@ void	substrs_prep(t_data *data, t_substr *s, size_t *i)
 	s->sub_a = ft_substr_check(s->s, *i, ft_strlen(s->s) - *i + 1, &err);
 	if (err > 0)
 		expand_error(data, s, "minishell: malloc error2");
+}
+
+void	remove_nodes(t_data *data)
+{
+	t_lexer	*tmp;
+
+	tmp = data->lexer;
+	while (tmp != NULL)
+	{
+		if (tmp->rm == 1)
+		{
+			remove_single_node(data, tmp->index);
+			tmp = data->lexer;
+			continue ;
+		}
+		tmp = tmp->next;
+	}
+	add_index(data);
 }

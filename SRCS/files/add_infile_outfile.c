@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_infile_outfile.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:44 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/06 14:45:46 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 13:37:25 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,13 @@ void	remove_nodes_redirection(t_data *data, size_t index)
 		remove_middle_nodes(data, index);
 }
 
-void	files_validity(t_data *data, t_lexer *tmp, int *valid)
+static int	files_validity(t_data *data, t_lexer *tmp, int *valid)
 {
+	if (!tmp->next)
+	{
+		ft_dprintf(2, "minishell: ambiguous redirect\n");
+		return (FAILURE);
+	}
 	if (*valid != SUCCESS)
 	{
 		if (ft_strncmp(tmp->token, "<", 1) != 0)
@@ -89,9 +94,10 @@ void	files_validity(t_data *data, t_lexer *tmp, int *valid)
 		remove_nodes_redirection(data, tmp->index);
 	}
 	add_index(data);
+	return (SUCCESS);
 }
 
-void	token_check(t_data *data)
+int	token_check(t_data *data)
 {
 	t_lexer	*tmp;
 	int		valid;
@@ -104,7 +110,8 @@ void	token_check(t_data *data)
 			valid = 0;
 		if (tmp->token != NULL && ft_strncmp(tmp->token, "|", 1) != 0)
 		{
-			files_validity(data, tmp, &valid);
+			if (files_validity(data, tmp, &valid) != SUCCESS)
+				return (FAILURE);
 			tmp = data->lexer;
 		}
 		if (data->lexer == NULL)
@@ -114,4 +121,5 @@ void	token_check(t_data *data)
 		tmp = tmp->next;
 	}
 	add_pipes_redir(data);
+	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:28:23 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/12 11:40:52 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 13:07:06 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,5 +133,5 @@ void	data_initialize(t_data *data, char **envp)
 		data->prompt = ft_strjoin("root", "@minishell:");
 	if (!data->prompt)
 		exit_error(data, "minishell: mallor error: ");
-	prompt_loop(data);
+	prompt_loop_init(data);
 }

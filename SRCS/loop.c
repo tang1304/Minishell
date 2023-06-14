@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 09:47:34 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/14 10:05:51 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 13:10:40 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,33 @@ static void	generate_prompt(t_data *data)
 		exit_error(data, "minishell: dup error ");
 }
 
-void	prompt_loop(t_data *data)
+static int	prompt_loop(t_data *data)
+{
+	lexer_init(data);
+	if (heredoc_redir(data) == SUCCESS && data->max_index <= INT_MAX)
+	{
+		if (data->stop == 0)
+		{
+			expand(data);
+			update_lexer(data);
+			if (token_check(data) != SUCCESS)
+			{
+				close_files(data);
+				free_loop(data);
+				return (FAILURE);
+			}
+			create_cmd_lst(data);
+			if (lstlencmd(data->cmd) > 0)
+			{
+				extract_paths(data);
+				exec_cmd_lst(data);
+			}
+		}
+	}
+	return (SUCCESS);
+}
+
+void	prompt_loop_init(t_data *data)
 {
 	signal_set();
 	while (1)
@@ -57,22 +83,8 @@ void	prompt_loop(t_data *data)
 		generate_prompt(data);
 		if (error_check(data, data->str) == SUCCESS)
 		{
-			lexer_init(data);
-			if (heredoc_redir(data) == SUCCESS && data->max_index <= INT_MAX)
-			{
-				if (data->stop == 0)
-				{
-					expand(data);
-					update_lexer(data);
-					token_check(data);
-					create_cmd_lst(data);
-					if (lstlencmd(data->cmd) > 0)
-					{
-						extract_paths(data);
-						exec_cmd_lst(data);
-					}
-				}
-			}
+			if (prompt_loop(data) == FAILURE)
+				continue ;
 		}
 		close_files(data);
 		free_loop(data);

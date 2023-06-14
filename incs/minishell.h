@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:20:18 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/13 16:06:03 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 13:30:49 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ char		*update_pwd(t_data *data);
 char		**get_envp(t_data *data, char **envp);
 
 /*	loop.c	*/
-void		prompt_loop(t_data *data);
+void		prompt_loop_init(t_data *data);
 
 /*	check_error_input.c	*/
 int			error_check(t_data *data, char *line);
@@ -179,7 +179,6 @@ void		expand_error_hd(t_data *data, t_substr *s, char *buffer, char *str);
 void		ascii_check(t_data *data, char *str);
 
 /*	parser.c	*/
-void		check_hidden_nodes(t_data *data);
 void		create_cmd_lst(t_data *data);
 t_command	*cmd_node(t_data *data, size_t i, size_t x, t_command *cmd);
 
@@ -190,9 +189,8 @@ void		add_cmd_index(t_data *data);
 void		fillup_cmd_node(t_data *data, t_command *new, t_lexer *tmp);
 
 /*	add_infile_outfile.c	*/
-void		files_validity(t_data *data, t_lexer *tmp, int *valid);
 void		remove_nodes_redirection(t_data *data, size_t index);
-void		token_check(t_data *data);
+int			token_check(t_data *data);
 int			file_check_access(t_data *data, char *file, int i);
 int			check_redirection(t_data *data, char *token, char *file, \
 								size_t index);
@@ -216,7 +214,6 @@ void		remove_middle_nodes(t_data *data, size_t index);
 
 /*	lexer.c	*/
 int			lexer_init(t_data *data);
-int			is_pipe(char *str, int i);
 
 /*	lexer_update.c	*/
 void		update_lexer(t_data *data);
@@ -231,22 +228,16 @@ int			add_node(t_lexer **lexer, char *str, int token);
 /*	lexer_utils2.c	*/
 int			config_node(char *str, t_lexer *node, int i);
 
-/*	cmd_struct.c	*/
-void		create_cmd_struct(t_data *data);
-
 /*	expand.c	*/
 void		expand(t_data *data);
 
 /*	expand_string.c	*/
 void		string_xpd_hd(t_data *data, t_substr *s, size_t *i, char *buffer);
-void		string_xpd(t_data *data, t_substr *s, size_t *i, size_t index);
 
 /*	expander_var.c	*/
 void		question_mark(t_data *data, t_substr *s, size_t *i, size_t index);
 char		*get_var(t_data *data, char *s, int *err);
-void		expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index);
 void		number_xpd(t_data *data, t_substr *s, size_t *i, size_t index);
-void		free_struct_expand(t_substr *str);
 
 /*	expand_join_all.c	*/
 char		*join_all_mid(t_data *data, char *str, t_substr *s);
@@ -255,7 +246,6 @@ char		*join_all_sub(t_data *data, char *str, t_substr *s);
 /*	expander_quotes.c	*/
 void		set_sub_strs(t_data *data, t_substr *s, size_t j, int *err);
 char		*str_quotes_removal(t_data *data, char *str);
-int			quotes_removal(t_lexer *lexer);
 
 /*	expander_quotes_utils.c	*/
 char		*str_without_single_quotes(t_data *data, char *str, int i, int j);
@@ -284,6 +274,7 @@ void		modify_lxr_nds(t_data *data, t_substr *s, size_t index);
 t_lexer		*update_tmp_index(t_data *data, size_t *i);
 int			check_space_expand(t_data *data, t_substr *s, size_t index);
 void		substrs_prep(t_data *data, t_substr *s, size_t *i);
+void		remove_nodes(t_data *data);
 
 /*	builtins.c	*/
 int			builtins(t_data *data, t_command *cmd_struct, char **cmd);
@@ -395,9 +386,6 @@ void		exec_cmd_lst_wait(t_data *data);
 /*	exec_utils2.c	*/
 void		exec_cmd_lst_wait(t_data *data);
 void		loop_on_path(t_data *data, char **cmd_args, char *cmd, int i);
-
-/*	wait.c	*/
-void		wait_child(t_data *data);
 
 /*	signals.c	*/
 void		signal_set(void);
