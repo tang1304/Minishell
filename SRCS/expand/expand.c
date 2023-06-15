@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 09:45:08 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/14 13:53:51 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/06/15 09:18:22 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,28 +55,6 @@ static void	expand_dollar(t_data *data, t_substr *s, size_t *i, size_t index)
 	*i = ft_strlen(s->sub_b) + ft_strlen(s->sub_m);
 	s->s = join_all_sub(data, s->s, s);
 }
-
-// static char	*check_char(t_data *data, char *s, size_t *i, size_t index)
-// {
-// 	t_substr	str;
-
-// 	ft_bzero(&str, sizeof(t_substr));
-// 	str.s = s;
-// 	if (s[*i] == '$' && s[*i + 1] && s[*i + 1] != ' ')
-// 		expand_dollar(data, &str, i, index);
-// 	else if (s[*i] == '\'')
-// 		expand_quotes(data, &str, i, '\'');
-// 	else if (s[*i] == '"')
-// 		expand_quotes(data, &str, i, '"');
-// 	else
-// 		*i = *i + 1;
-// 	if (str.s == NULL)
-// 	{
-// 		str.s = malloc(sizeof(char *) * 1);
-// 		str.s[0] = '\0';
-// 	}
-// 	return (str.s);
-// }
 
 static void	check_char(t_data *data, t_lexer *l, size_t *i)
 {
@@ -146,12 +124,6 @@ void	expand(t_data *data)
 				continue ;
 			}
 			check_char(data, tmp, &i);
-			// while (tmp->word[i] != '\0')
-			// {
-			// 	tmp->word = check_char(data, tmp->word, &i, tmp->index);
-			// 	if (!tmp->word)
-			// 		tmp = data->lexer;
-			// }
 			if (tmp->index != data->svd_index)
 				tmp = update_tmp_index(data, &i);
 		}

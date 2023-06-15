@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrebois <rrebois@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 09:19:14 by rrebois           #+#    #+#             */
-/*   Updated: 2023/06/05 10:45:59 by rrebois          ###   ########lyon.fr   */
+/*   Updated: 2023/06/15 08:30:11 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
-// Close unused heredoc pipes in parent
+
 void	close_heredoc_pipes(t_data *data)
 {
 	t_command	*tmp;
@@ -39,7 +39,6 @@ void	close_heredoc_pipes(t_data *data)
 	}
 }
 
-// Close remaining opened pipes in parent
 static void	close_left_pipes(t_data *data)
 {
 	int	i;
@@ -77,7 +76,6 @@ void	close_all(t_data *data)
 	close_files(data);
 }
 
-// Close infiles and outfiles opened
 void	close_files(t_data *data)
 {
 	int	i;
