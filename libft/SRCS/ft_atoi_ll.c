@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 12:04:43 by tgellon           #+#    #+#             */
-/*   Updated: 2023/06/01 16:37:40 by tgellon          ###   ########lyon.fr   */
+/*   Created: 2022/11/10 08:26:11 by rrebois           #+#    #+#             */
+/*   Updated: 2023/08/04 08:35:28 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../incs/libft.h"
 
 long long	ft_atoi_ll(const char *str, int *err)
 {
@@ -38,3 +38,4 @@ long long	ft_atoi_ll(const char *str, int *err)
 	}
 	return ((long long)output);
 }
+
