@@ -6,7 +6,7 @@
 /*   By: tgellon <tgellon@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 08:26:11 by rrebois           #+#    #+#             */
-/*   Updated: 2023/08/04 08:35:28 by tgellon          ###   ########lyon.fr   */
+/*   Updated: 2023/11/03 15:29:52 by tgellon          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,3 @@ long long	ft_atoi_ll(const char *str, int *err)
 	}
 	return ((long long)output);
 }
-
