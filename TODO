@@ -1,3 +1,0 @@
-valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full --track-fds=yes --show-leak-kinds=all --track-origins=yes --verbose --show-mismatched-frees=yes --read-var-info=yes
-
-Changer dans echeck_error_input les ft_putstr_fd /write &ft_printf par printf
